@@ -1,3 +1,9 @@
 
 .DS_Store
 /java/bin/*
+
+java/.classpath
+
+java/.project
+
+java/.DS_Store
