@@ -7,3 +7,17 @@ java/.classpath
 java/.project
 
 java/.DS_Store
+
+java/.idea/.name
+
+java/.idea/compiler.xml
+
+java/.idea/copyright/profiles_settings.xml
+
+java/.idea/misc.xml
+
+java/.idea/modules.xml
+
+java/.idea/workspace.xml
+
+java/Catan.iml
