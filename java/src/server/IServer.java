@@ -5,7 +5,8 @@ package server;
  */
 public interface IServer {
     /**
-     * 
+     * @pre username valid, password valid
+     * @post 
      * @param userName
      * @param password
      * @return
