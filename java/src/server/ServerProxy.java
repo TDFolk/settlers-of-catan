@@ -6,7 +6,7 @@ import com.sun.org.apache.xpath.internal.operations.String;
 import shared.definitions.CatanColor;
 
 /**
- * The ServerProxy acts as the 'inbewteen' for the client and the server. Sends requests to and receives data from
+ * The ServerProxy acts as the 'in between' for the client and the server. Sends requests to and receives data from
  * the server to give to the client
  * Created by jihoon on 9/16/2016.
  */
