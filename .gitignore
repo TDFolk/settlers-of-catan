@@ -8,6 +8,8 @@ java/.project
 
 java/.DS_Store
 
+java/.idea/*
+
 java/.idea/.name
 
 java/.idea/compiler.xml
