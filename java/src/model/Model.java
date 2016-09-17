@@ -16,6 +16,14 @@ public class Model {
     private Map map;
     private List players;
     private Robber robber;
+    /**
+     * the player currently in possession of the longest road, begins as null
+     */
+    private Player longestRoad = null;
+    /**
+     * the player currently in possession of the largest army, begins as null
+     */
+    private Player largestArmy = null;
 
     protected Model() {}
 

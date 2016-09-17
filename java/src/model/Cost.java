@@ -2,6 +2,7 @@ package model;
 
 /**
  * The cost in resources of a object. If a player does not have all of these costs satisfied, then they may not buy the object.
+ * Also used for trading as a convenient
  *
  * Created by kcwillmore on 9/17/16.
  */
