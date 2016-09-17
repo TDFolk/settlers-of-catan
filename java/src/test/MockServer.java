@@ -73,7 +73,7 @@ public class MockServer implements IServer {
     }
 
     @Override
-    public Boolean utilChangeLoglevel() {
+    public Boolean utilChangeLogLevel() {
         return null;
     }
 }
