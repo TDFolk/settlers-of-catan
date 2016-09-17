@@ -13,6 +13,11 @@ public class MockServer implements IServer {
     }
 
     @Override
+    public Boolean userLogin(String userName, String password) {
+        return null;
+    }
+
+    @Override
     public Boolean userRegister() {
         return null;
     }
