@@ -2,12 +2,34 @@ package server;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.sun.org.apache.xpath.internal.operations.String;
 import shared.definitions.CatanColor;
 
 /**
+ * The ServerProxy acts as the 'inbewteen' for the client and the server. Sends requests to and receives data from
+ * the server to give to the client
  * Created by jihoon on 9/16/2016.
  */
 public class ServerProxy implements IServer {
+
+    /**
+     * @param port port id used to connect to the server
+     * @param host host id used to connect to the server
+     */
+    private String port;
+    private String host;
+
+    /**
+     *
+     * @param port port id used to connect to the server
+     * @param host host id used to connect to the server
+     */
+    public ServerProxy(String port, String host){
+
+        this.port = port;
+        this.host = host;
+
+    }
 
     /**
      * Logs the caller in to the server, sets their catan.user HTTP cookie
