@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 import java.util.Set;
@@ -108,7 +109,9 @@ public interface IServer {
      */
     public boolean gameAddAI(String typeAI);
 
-    // Anytime Commands -----
+    /**
+     * Anytime Commands
+     */
 
     /**
      * Posts a message to the chat
@@ -119,7 +122,9 @@ public interface IServer {
      */
     public boolean sendChat(String content);
 
-    // Miscellaneous Commands -----
+    /**
+     * Miscellaneous Commands
+     */
 
     /**
      * Determines if a trade will be accepted or not
@@ -145,7 +150,9 @@ public interface IServer {
      */
     public boolean discardCards(JsonObject discardedCards);
 
-    // Rolling Commands -----
+    /**
+     * Roll Commands
+     */
 
     /**
      * Rolls the dice
@@ -158,7 +165,11 @@ public interface IServer {
      */
     public boolean rollNumber(int number);
 
-    // Playing Commands -----
+    /**
+     * Playing Commands (General Preconditions)
+     * @pre It is your turn;
+     *          the client model's status is 'Playing'
+     */
 
     /**
      * Builds a road
@@ -206,11 +217,11 @@ public interface IServer {
      * Proposes a trade
      * @pre you have the resources you are offering
      * @post the trade is offered to the other player(stored in the server model)
-     * @param offer
-     * @param playerIndex
+     * @param offer negative numbers mean you get those cards
+     * @param receiver the recipient of the trade offer(playerIndex)
      * @return
      */
-    public boolean offerTrade(JsonObject offer, int playerIndex);
+    public boolean offerTrade(JsonObject offer, int receiver);
 
 
     /**
@@ -226,6 +237,101 @@ public interface IServer {
      */
     public boolean maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource);
 
+    /**
+     * Robs a player
+     * @pre The robber is not being kept in the same location;
+     *          if a player is being robbed(i.e., victimIndex != 1), the player
+     *          being robbed has resource cards
+     * @post the robber is in the new location;
+     *          the player is being robbed(if any) gave you one of his resource cards(randomly selected)
+     * @param location the new robber location
+     * @param victimIndex -1 if not robbing anyone, else, player you are robbing(playerIndex)
+     * @return success of a robbed player
+     */
+    public boolean robPlayer(HexLocation location, int victimIndex);
+
+    /**
+     * @pre None(except the preconditions for the 'Playing' section)
+     * @post The cards in your new dev card hand have been transferred to your old dev card hand;
+     *          it is the next player's turn
+     */
+    public void finishTurn();
+
+    /**
+     * @pre You have the required resources(1 ore, 1 wheat, 1 sheep)
+     *          there are dev cards left in the deck
+     * @post You have a new card;
+     *          if it is a monument card, it has been added to your old dev card hand;
+     *          if it is a non-monument card, it has been added to your new dev card
+     *          hand (unplayable this turn)
+     */
+    public void buyDevCard();
+
+    /**
+     * Dev Card Commands (General Preconditions)
+     * @Pre It is your turn;
+     *          the client model status is 'Playing';
+     *          you have the specific card you want to play in your old dev card hand;
+     *          you have not yet played a non-monument dev card this turn
+     */
+
+    /**
+     * What happens when a soldier dev card is played
+     * @pre The robber is not being kept in the same location;
+     *          if a player is being robbed(i.e., victimIndex != -1), the player
+     *          being robbed has resource cards
+     * @post The robber is in the new location;
+     *          the player being robbed(if any) gave you one of his resource cards (randomly selected);
+     *          if applicable, "largest army" is awarded;
+     *          you are not allowed to play other dev cards during this turn(except monument)
+     * @param location the new robber location
+     * @param victimIndex playerIndex, or -1 if you are not robbing anyone
+     * @return success of played soldier dev card
+     */
+    public boolean soldier(HexLocation location, int victimIndex);
+
+
+    /**
+     * What happens when a year of plenty dev card is played
+     * @pre the two specified resources are in the bank
+     * @post you gained the two specified resources
+     * @param resource1 the first resource you want to receive
+     * @param resource2 the second resource you want to recieve
+     * @return success of a played year of plenty dev card
+     */
+    public boolean yearOfPlenty(ResourceType resource1, ResourceType resource2);
+
+    /**
+     * What happens when a road building dev card is played
+     * @pre The first road location(spot1) is connected to one of your roads;
+     *          the second road location(spot2) is connected to one of your roads or to
+     *          the first road location(spot1);
+     *          neither road location is on water;
+     *          you have at least two unused roads
+     * @post You have two fewer unused roads;
+     *          two new roads appear on the map at the specified locations;
+     *          if applicable, "longest road" has been awarded
+     * @param spot1 first road location
+     * @param spot2 second road location
+     * @return success of a played road building dev card
+     */
+    public boolean roadBuilding(EdgeLocation spot1, EdgeLocation spot2);
+
+    /**
+     * What happens when a monopoly dev card is played
+     * @pre None(except the general preconditions)
+     * @post All of the other players have given you all of their resource cards of the specified type
+     * @param resource the resource being taken from the other players
+     * @return success of a played monopoly dev card
+     */
+    public boolean monopoly(ResourceType resource);
+
+    /**
+     * What happens when a monument dev card is played
+     * @pre You have enough monument cards to win the game(10 victory points)
+     * @post you gained a victory point
+     */
+    public void monument();
 
 
 }
