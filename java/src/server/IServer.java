@@ -30,5 +30,5 @@ public interface IServer {
 
     public Boolean gameAddAI();
 
-    public Boolean utilChangeLoglevel();
+    public Boolean utilChangeLogLevel();
 }
