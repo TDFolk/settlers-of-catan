@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import shared.definitions.CatanColor;
 
 /**
+ * This interface provides the means of communicating with the server back and forth.
  * Created by jihoon on 9/16/2016.
  */
 public interface IServer {
@@ -100,4 +101,6 @@ public interface IServer {
      * @return success of adding an AI
      */
     public boolean gameAddAI(String typeAI);
+
+    
 }
