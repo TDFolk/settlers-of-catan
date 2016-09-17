@@ -47,6 +47,5 @@ public class Player {
     public boolean canPlaceRoad(EdgeLocation edge) {
     	return false;
     }
-    
-    
+
 }
