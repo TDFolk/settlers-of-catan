@@ -4,6 +4,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.sun.org.apache.xpath.internal.operations.String;
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
+import shared.locations.EdgeLocation;
+import shared.locations.VertexLocation;
 
 /**
  * The ServerProxy acts as the 'in between' for the client and the server. Sends requests to and receives data from
@@ -31,6 +34,7 @@ public class ServerProxy implements IServer {
 
     }
 
+
     /**
      * Logs the caller in to the server, sets their catan.user HTTP cookie
      *
@@ -42,7 +46,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean userLogin(String username, String password) {
+    public boolean userLogin(java.lang.String username, java.lang.String password) {
         return false;
     }
 
@@ -58,7 +62,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean userRegister(String username, String password) {
+    public boolean userRegister(java.lang.String username, java.lang.String password) {
         return false;
     }
 
@@ -86,7 +90,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonObject gameCreate(String gameName) {
+    public JsonObject gameCreate(java.lang.String gameName) {
         return null;
     }
 
@@ -106,7 +110,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameJoin(String userCookie, int gameID, CatanColor color) {
+    public boolean gameJoin(java.lang.String userCookie, int gameID, CatanColor color) {
         return false;
     }
 
@@ -151,7 +155,152 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameAddAI(String typeAI) {
+    public boolean gameAddAI(java.lang.String typeAI) {
+        return false;
+    }
+
+    /**
+     * Posts a message to the chat
+     *
+     * @param content the message you want to send
+     * @return success of if the chat contains your message
+     * @pre None
+     * @post The chat contains your message at the end
+     */
+    @Override
+    public boolean sendChat(java.lang.String content) {
+        return false;
+    }
+
+    /**
+     * Determines if a trade will be accepted or not
+     *
+     * @param willAccept Whether or not you accept the offered trade
+     * @return if the trade was accepted or not
+     * @pre You have been offered a trade;
+     * you have the required resources
+     * @post If accepted, you and the player who offered swap the specified resources;
+     * if you decline, no resources are exchanged;
+     * the trade offer is removed
+     */
+    @Override
+    public boolean acceptTrade(boolean willAccept) {
+        return false;
+    }
+
+    /**
+     * Discards the desired cards from the resource hand
+     *
+     * @param discardedCards the cards you are discarding
+     * @return success of discarded cards
+     * @pre The status of the client model is 'Discarding';
+     * you have over 7 cards;
+     * you have the cards you're choosing to discard
+     * @post You gave up the specified resources;
+     * if you're the last one to discard, the client model status changes to 'Robbing'
+     */
+    @Override
+    public boolean discardCards(JsonObject discardedCards) {
+        return false;
+    }
+
+    /**
+     * Rolls the dice
+     *
+     * @param number the number you rolled
+     * @return success of the roll
+     * @pre It is your turn;
+     * the number is in the range 2-12;
+     * the client model's status is 'Rolling'
+     * @post The client model's status is now in 'Discarding' or 'Robbing' or 'Playing'
+     */
+    @Override
+    public boolean rollNumber(int number) {
+        return false;
+    }
+
+    /**
+     * Builds a road
+     *
+     * @param isFree       whether or not you get this piece for free (i.e., setup)
+     * @param roadLocation the new road's location
+     * @return success of built road
+     * @pre The road location is open;
+     * the road location is connected to another road owned by the player;
+     * the road location is not on water;
+     * you have the required resources(1 wood, 1 brick = 1 road);
+     * Setup round: Must be placed by settlement owned by the player with no adjacent road
+     * @post You lost the resources required to build a road;
+     * the road is on the map at the specified location;
+     * if applicable, "longest road" is awarded
+     */
+    @Override
+    public boolean buildRoad(boolean isFree, EdgeLocation roadLocation) {
+        return false;
+    }
+
+    /**
+     * Builds a settlement
+     *
+     * @param isFree         whether or not you get this piece for free(i.e, setup)
+     * @param vertexLocation the location of the settlement
+     * @return success of build settlement
+     * @pre The settlement location is open;
+     * the settlement location is not on water;
+     * the settlement location is connected to one of your roads, exept during setup;
+     * you have the required resources(1 wood, 1 brick, 1 wheat, 1 sheep = 1 settlement)
+     * @post you lost the resources required to build a settlement;
+     * the settlement is on the map at the specified location
+     */
+    @Override
+    public boolean buildSettlement(boolean isFree, VertexLocation vertexLocation) {
+        return false;
+    }
+
+    /**
+     * Builds a city
+     *
+     * @param vertexLocation the location of the city
+     * @return success of build city
+     * @pre The city location is where you currently have a settlement;
+     * you have the required resources(2 wheat, 3 ore = 1 city)
+     * @post You lost the resources required to build a city;
+     * the city is on the map at the specified location;
+     * you got a settlement back
+     */
+    @Override
+    public boolean buildCity(VertexLocation vertexLocation) {
+        return false;
+    }
+
+    /**
+     * Proposes a trade
+     *
+     * @param offer
+     * @param playerIndex
+     * @return
+     * @pre you have the resources you are offering
+     * @post the trade is offered to the other player(stored in the server model)
+     */
+    @Override
+    public boolean offerTrade(JsonObject offer, int playerIndex) {
+        return false;
+    }
+
+    /**
+     * Trades with a port
+     *
+     * @param ratio          trade ratio
+     * @param inputResource  what you are giving
+     * @param outputResource what you are getting
+     * @return success of a maritime trade
+     * @pre You have the resources you are giving;
+     * for ratios less than 4, you have the correct port for the trade
+     * @post The trade has been executed;
+     * the offered resources are in the bank, and the requested resource has been received
+     */
+    @Override
+    public boolean maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource) {
         return false;
     }
 }
