@@ -6,6 +6,11 @@ package server;
 public class ServerProxy implements IServer {
 
     @Override
+    public Boolean userLogin(String userName, String password) {
+        return null;
+    }
+
+    @Override
     public Boolean userLogin() {
         return null;
     }
