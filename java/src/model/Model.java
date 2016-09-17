@@ -15,7 +15,6 @@ public class Model {
     private Game game;
     private Map map;
     private List players;
-    private Robber robber;
     /**
      * the player currently in possession of the longest road, begins as null
      */
