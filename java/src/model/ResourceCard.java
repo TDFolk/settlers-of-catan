@@ -5,7 +5,7 @@ package model;
  */
 public class ResourceCard {
 	protected enum Resource {
-		STONE, BRICK, WOOD, SHEEP, WHEAT
+		ORE, BRICK, WOOD, SHEEP, WHEAT
 	}
 	
 	private Resource type;
