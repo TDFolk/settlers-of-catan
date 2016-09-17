@@ -8,25 +8,16 @@ package model;
 public class Cost {
 
     int brickCost;
-    int grainCost;
     int oreCost;
     int sheepCost;
+    int wheatCost;
     int woodCost;
 
-    /**
-     * Constructor, put in the values that the cost of a class will be.
-     *
-     * @param brickCost
-     * @param grainCost
-     * @param oreCost
-     * @param sheepCost
-     * @param woodCost
-     */
-    public Cost(int brickCost, int grainCost, int oreCost, int sheepCost, int woodCost) {
+    public Cost(int brickCost, int oreCost, int sheepCost, int wheatCost, int woodCost) {
         this.brickCost = brickCost;
-        this.grainCost = grainCost;
         this.oreCost = oreCost;
         this.sheepCost = sheepCost;
+        this.wheatCost = wheatCost;
         this.woodCost = woodCost;
     }
 
@@ -34,8 +25,8 @@ public class Cost {
         return brickCost;
     }
 
-    public int getGrainCost() {
-        return grainCost;
+    public int getWheatCost() {
+        return wheatCost;
     }
 
     public int getOreCost() {
