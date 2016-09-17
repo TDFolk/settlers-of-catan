@@ -7,13 +7,17 @@ package server;
  */
 public class ServerPoller {
 
+    /**
+     * @proxy reference to the server proxy that the poller will use to poll the server
+     * @TIME_INTERVAL time interval that will be used to poll the server
+     */
     private IServer proxy;
     private final long TIME_INTERVAL = 1000;
 
     /**
      *
      * @param proxyServer A reference to the proxy or mock server interface which the poller will go through
-     *                    to check
+     *                    to check the version of the server model
      */
     public ServerPoller(IServer proxyServer){
 
@@ -21,8 +25,16 @@ public class ServerPoller {
 
     }
 
+    /**
+     * @pre non-null proxy reference
+     * @post will poll the proxy once every TIME_INTERVAL amount of time
+     */
     public void startPoller(){}
 
+    /**
+     * @pre none
+     * @post none
+     */
     public void stopPoller(){}
 
 }
