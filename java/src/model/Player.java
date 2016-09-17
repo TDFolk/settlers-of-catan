@@ -6,6 +6,8 @@ import shared.locations.VertexLocation;
 
 import java.util.List;
 
+import exception.ResourceException;
+import model.ResourceCard.Resource;
 import model.development_cards.DevelopmentCard;
 
 /**
@@ -20,6 +22,30 @@ public class Player {
     
     public Player() {
     	
+    }
+    
+    
+    
+    
+    
+    public void playCard() {
+
+    }
+    
+    public void drawResourceCard(Resource type) {
+    	
+    }
+    
+    /**
+     * Make a trade with another player.
+     * @pre The Player in the trade must be a valid Player in the current game, and 
+     * 				the Player making the trade offer must have the resources being offered
+     * @post If accepted, both Players will have the other's offered resources, otherwise nothing is changed.
+     * @param trade 
+     * @return Returns true if the trade was accepted
+     */
+    public boolean makeTrade(Trade trade) throws ResourceException {
+    	return false;
     }
     
     
@@ -45,6 +71,15 @@ public class Player {
     }
     
     public boolean canPlaceRoad(EdgeLocation edge) {
+    	return false;
+    }
+    
+    /**
+     * Determines if the player has enough resources to make the trade
+     * @param offer the resources being offered for the trade
+     * @return Returns true if the player has the resources specified in the offer, false otherwise.
+     */
+    public boolean canMakeTrade(Cost offer) {
     	return false;
     }
 
