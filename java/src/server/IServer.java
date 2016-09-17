@@ -4,7 +4,13 @@ package server;
  * Created by jihoon on 9/16/2016.
  */
 public interface IServer {
-    public Boolean userLogin();
+    /**
+     * 
+     * @param userName
+     * @param password
+     * @return
+     */
+    public Boolean userLogin(String userName, String password);
 
     public Boolean userRegister();
 
@@ -30,5 +36,5 @@ public interface IServer {
 
     public Boolean gameAddAI();
 
-    public Boolean utilChangeLoglevel();
+    public Boolean utilChangeLogLevel();
 }

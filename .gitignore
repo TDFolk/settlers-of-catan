@@ -24,3 +24,5 @@ java/Catan.iml
 java/java.iml
 
 *.log
+*.xml
+java/.idea/workspace.xml
