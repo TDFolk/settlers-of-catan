@@ -12,5 +12,5 @@ public class Player {
     private CatanColor color;
     private List<Settlement> settlements;
     private List<Road> roads;
-    
+
 }
