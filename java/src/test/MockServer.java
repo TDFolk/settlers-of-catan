@@ -20,7 +20,6 @@ public class MockServer implements IServer {
      * @post if successful, server returns 200 HTTP success response, HTTP response headers set the catan.user cookie
      * if invalid, returns a 400 HTTP response with an error message
      */
-    @Override
     public boolean userLogin(String username, String password) {
         return false;
     }
