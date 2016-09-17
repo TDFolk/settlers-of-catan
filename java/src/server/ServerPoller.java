@@ -25,13 +25,13 @@ public class ServerPoller {
 
     }
 
-    /**
+    /**Begins the constant polling cylce of the server proxy
      * @pre non-null proxy reference
      * @post will poll the proxy once every TIME_INTERVAL amount of time
      */
     public void startPoller(){}
 
-    /**
+    /**Ends the polling cycle
      * @pre none
      * @post none
      */
