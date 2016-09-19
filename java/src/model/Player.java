@@ -14,11 +14,24 @@ import model.development_cards.DevelopmentCard;
  * Created by kcwillmore on 9/17/16.
  */
 public class Player {
+	private String name;
     private CatanColor color;
     private List<Settlement> settlements;
+    private List<City> cities;
     private List<Road> roads;
     private List<ResourceCard> resourceCards;
     private List<DevelopmentCard> developmentCards;
+    private List<DevelopmentCard> newDevelopmentCards;
+    private int playerID;
+    private int playerIndex;
+    private boolean discarded;
+    private boolean playedDevCard;
+    private int monuments;
+    private int soldiers;
+    private int victoryPoints;
+    
+    
+    
     
     public Player() {
     	
@@ -36,7 +49,27 @@ public class Player {
     	
     }
     
+    public void buySettlement(VertexLocation vertex) {
+    	
+    }
+    
+    public void buyCity(VertexLocation vertex) {
+    	
+    }
+    
+    public void buyRoad(EdgeLocation edge) {
+    	
+    }
+    
     public void buyDevelopmentCard() {
+    	
+    }
+    
+    public void playDevelopmentCard() {
+    	
+    }
+    
+    public void discard(List<ResourceCard> cards) {
     	
     }
     

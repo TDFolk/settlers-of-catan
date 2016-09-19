@@ -8,26 +8,30 @@ package model;
 public class Trade {
 
     /**
-     * the player who initialized the trade
+     * The player who initialized the trade
      */
     Player sender;
     
     /**
-     * the player who is being offered a trade by the sender
+     * The player who is being offered a trade by the sender.
      * this player is the one who would ultimately choose to accept or reject this trade
      */
     Player receiver;
     
     /**
-     * the resources that the sender is offering up for trade from their resources
+     * The resources that the sender is offering up for trade from their resources
      */
     Cost offer;
     
     /**
-     * the resources that the sender is asking in return from the reciever's resources
+     * The resources that the sender is asking in return from the reciever's resources
      */
     Cost request;
 
+    /**
+     * Determines if both players have the resources to make the trade
+     * @return true if both players have the resources required
+     */
     public boolean canTrade() {
         return false;
     }
