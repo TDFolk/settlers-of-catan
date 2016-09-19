@@ -14,6 +14,10 @@ public class Facade {
     protected Facade() {
     }
 
+    /**
+     * Gets the current instance of the facade
+     * @return current instance of the facade
+     */
     public static Facade getInstance() {
         if (instance == null) {
             instance = new Facade();
@@ -21,5 +25,9 @@ public class Facade {
         return instance;
     }
 
+    /**
+     * Replaces the old model with the new model returned from the server
+     * @param newModel the new model returned from the server
+     */
     public void replaceModel(JsonObject newModel) {}
 }

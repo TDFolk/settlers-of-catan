@@ -12,7 +12,6 @@ public class Model {
     private static Model instance = null;
 
     private Bank bank;
-    private Game game;
     private Map map;
     private List players;
     /**
@@ -26,10 +25,18 @@ public class Model {
 
     protected Model() {}
 
+
     public static Model getInstance() {
         if(instance == null) {
             instance = new Model();
         }
         return instance;
+    }
+
+    /**
+     * Initialize/reinitialize all of the data in the model from the info returned by the server
+     */
+    public void initializeData() {
+
     }
 }
