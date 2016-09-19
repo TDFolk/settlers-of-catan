@@ -13,7 +13,7 @@ public class Model {
 
     private Bank bank;
     private Map map;
-    private List players;
+    private List<Player> players;
     /**
      * the player currently in possession of the longest road, begins as null
      */

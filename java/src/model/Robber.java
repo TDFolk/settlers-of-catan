@@ -9,7 +9,7 @@ import shared.locations.HexLocation;
  */
 public class Robber {
 
-    HexLocation location;
+    private HexLocation location;
 
     /**
      * Robber constructor
