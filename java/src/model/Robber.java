@@ -23,7 +23,13 @@ public class Robber {
         this.location = location;
     }
 
-    public boolean takeResource() {
+    /**
+     * Determines if the robber can rob
+     * @pre none
+     * @post none
+     * @return success if robber can take the resource
+     */
+    public boolean canTakeResource() {
         return false;
     }
 }

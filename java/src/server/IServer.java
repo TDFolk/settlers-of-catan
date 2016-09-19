@@ -219,7 +219,7 @@ public interface IServer {
      * @post the trade is offered to the other player(stored in the server model)
      * @param offer negative numbers mean you get those cards
      * @param receiver the recipient of the trade offer(playerIndex)
-     * @return
+     * @return success of offered trade; was it accepted
      */
     public boolean offerTrade(JsonObject offer, int receiver);
 

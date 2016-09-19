@@ -1,5 +1,6 @@
 package model;
 
+import exception.PlacementException;
 import shared.locations.VertexLocation;
 
 /**
@@ -10,11 +11,24 @@ public class Settlement {
 
     private VertexLocation location;
     
-    public void place(VertexLocation location) {
+    /**
+     * Places a settlement at the specified VertexLocation on the map.
+     * @pre The settlement cannot be placed within two adjacent vertices of another settlement or city, 
+     * 				and must be placed connected to a road of the same color
+     * @post The settlement is placed on the map at the specified VertexLocation
+     * @param location The vertex to place the settlement
+     * @throws PlacementException if the settlement cannot be placed at the specified location
+     */
+    public void place(VertexLocation location) throws PlacementException {
     	
     }
 
-    public boolean canPlace() {
+    /**
+     * Checks if the location is a valid vertex for the settlement to be placed.
+     * @param location the location to place the settlement
+     * @return true if the location is a valid vertex for placement
+     */
+    public boolean canPlace(VertexLocation location) {
         return false;
     }
 }
