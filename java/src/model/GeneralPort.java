@@ -4,6 +4,7 @@ import shared.locations.EdgeLocation;
 
 /**
  * Specialized type of port: GeneralPort.  This class handles the trades that players perform with random types of resources.
+ * Handles 3:1 trading
  * Created by jihoon on 9/19/2016.
  */
 public class GeneralPort extends Port {

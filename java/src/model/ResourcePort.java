@@ -4,6 +4,7 @@ import shared.locations.EdgeLocation;
 
 /**
  * Specialized type of port: ResourcePort.  This class handles the trades that players make with a specific resource
+ * Handles 2:1 trades
  * Created by jihoon on 9/19/2016.
  */
 public class ResourcePort extends Port {
