@@ -36,6 +36,10 @@ public class Player {
     	
     }
     
+    public void buyDevelopmentCard() {
+    	
+    }
+    
     /**
      * Make a trade with another player.
      * @pre The Player in the trade must be a valid Player in the current game, and 
