@@ -10,23 +10,23 @@ public class Trade {
     /**
      * The player who initialized the trade
      */
-    Player sender;
+    private Player sender;
     
     /**
      * The player who is being offered a trade by the sender.
      * this player is the one who would ultimately choose to accept or reject this trade
      */
-    Player receiver;
+    private Player receiver;
     
     /**
      * The resources that the sender is offering up for trade from their resources
      */
-    Cost offer;
+    private Cost offer;
     
     /**
      * The resources that the sender is asking in return from the reciever's resources
      */
-    Cost request;
+    private Cost request;
 
     /**
      * Determines if both players have the resources to make the trade
