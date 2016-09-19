@@ -8,8 +8,6 @@ import model.Cost;
 public abstract class DevelopmentCard {
 
     private static final Cost cost = new Cost(0,1,1,1,0);
-    
-    public abstract void doAction();
 
     /**
      * Checks the current game model and determines if a player meets the requirements to play a dev card

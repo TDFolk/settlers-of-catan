@@ -5,9 +5,14 @@ package model.development_cards;
  */
 public class RoadBuildingCard extends DevelopmentCard {
 
+	/**
+	 * Checks the current game model and determines if a player meets the requirements to play a dev card
+	 * @pre none
+	 * @post none
+	 * @return success of if the current game model allows the play of a dev card
+	 */
 	@Override
-	public void doAction() {
-		// TODO Auto-generated method stub
-		
+	public boolean canPlay() {
+		return super.canPlay();
 	}
 }
