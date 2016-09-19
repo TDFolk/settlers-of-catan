@@ -1,5 +1,6 @@
 package model;
 
+import exception.PlacementException;
 import shared.locations.VertexLocation;
 
 /**
@@ -16,8 +17,9 @@ public class Settlement {
      * 				and must be placed connected to a road of the same color
      * @post The settlement is placed on the map at the specified VertexLocation
      * @param location The vertex to place the settlement
+     * @throws PlacementException if the settlement cannot be placed at the specified location
      */
-    public void place(VertexLocation location) {
+    public void place(VertexLocation location) throws PlacementException {
     	
     }
 
