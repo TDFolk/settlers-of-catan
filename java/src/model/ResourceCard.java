@@ -1,6 +1,7 @@
 package model;
 
 /**
+ * Represents the object of a specified resource card
  * Created by kcwillmore on 9/17/16.
  */
 public class ResourceCard {
@@ -18,11 +19,4 @@ public class ResourceCard {
 		return type;
 	}
 
-	public boolean canPickUp() {
-		return false;
-	}
-
-	public boolean canUse() {
-		return false;
-	}
 }

@@ -3,6 +3,7 @@ package model;
 import shared.locations.EdgeLocation;
 
 /**
+ * Represents the object and can do's of a port
  * Created by kcwillmore on 9/17/16.
  */
 public class Port {
@@ -13,6 +14,11 @@ public class Port {
      */
     private ResourceCard.Resource portType;
 
+    /**
+     * Constructor of the port
+     * @param location where the port is on the map
+     * @param portType the type of resource that can be traded in the port
+     */
     public Port(EdgeLocation location, ResourceCard.Resource portType) {
         this.location = location;
         this.portType = portType;
@@ -26,6 +32,12 @@ public class Port {
         return portType;
     }
 
+    /**
+     * Determines if a player can trade with the port
+     * @pre none
+     * @post none
+     * @return success of if a player can trade with the port
+     */
     public boolean canTrade() {
         return false;
     }
