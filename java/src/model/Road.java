@@ -1,6 +1,7 @@
 package model;
 
 import exception.PlacementException;
+import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 
 /**
@@ -8,7 +9,7 @@ import shared.locations.EdgeLocation;
  */
 public class Road {
     private static final Cost cost = new Cost(1,0,0,0,1);
-
+    private CatanColor color;
     private EdgeLocation location;
 
     /**
