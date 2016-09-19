@@ -2,6 +2,7 @@ package test;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.sun.org.apache.xpath.internal.operations.String;
 import server.IServer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -15,6 +16,27 @@ import shared.locations.VertexLocation;
  */
 public class MockServer implements IServer {
 
+
+    /**
+     * @param port port id used to connect to the server
+     * @param host host id used to connect to the server
+     */
+    private String port;
+    private String host;
+
+    /**
+     *
+     * @param port port id used to connect to the server
+     * @param host host id used to connect to the server
+     */
+    public MockServer(String port, String host){
+
+        this.port = port;
+        this.host = host;
+
+    }
+
+
     /**
      * Logs the caller in to the server, sets their catan.user HTTP cookie
      *
@@ -26,7 +48,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean userLogin(String username, String password) {
+    public boolean userLogin(java.lang.String username, java.lang.String password) {
         return false;
     }
 
@@ -42,7 +64,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean userRegister(String username, String password) {
+    public boolean userRegister(java.lang.String username, java.lang.String password) {
         return false;
     }
 
@@ -70,7 +92,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonObject gameCreate(String gameName) {
+    public JsonObject gameCreate(java.lang.String gameName) {
         return null;
     }
 
@@ -90,7 +112,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameJoin(String userCookie, int gameID, CatanColor color) {
+    public boolean gameJoin(java.lang.String userCookie, int gameID, CatanColor color) {
         return false;
     }
 
@@ -135,7 +157,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameAddAI(String typeAI) {
+    public boolean gameAddAI(java.lang.String typeAI) {
         return false;
     }
 
@@ -148,7 +170,7 @@ public class MockServer implements IServer {
      * @post The chat contains your message at the end
      */
     @Override
-    public boolean sendChat(String content) {
+    public boolean sendChat(java.lang.String content) {
         return false;
     }
 
