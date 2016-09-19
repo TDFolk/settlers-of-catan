@@ -18,7 +18,11 @@ public class ResourceCard {
 		return type;
 	}
 
-	public boolean canPlay() {
+	public boolean canPickUp() {
+		return false;
+	}
+
+	public boolean canUse() {
 		return false;
 	}
 }
