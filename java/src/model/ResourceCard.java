@@ -17,4 +17,8 @@ public class ResourceCard {
 	public Resource getType() {
 		return type;
 	}
+
+	public boolean canPlay() {
+		return false;
+	}
 }

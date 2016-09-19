@@ -25,4 +25,8 @@ public class Port {
     public ResourceCard.Resource getPortType() {
         return portType;
     }
+
+    public boolean canTrade() {
+        return false;
+    }
 }

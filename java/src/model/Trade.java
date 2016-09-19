@@ -27,6 +27,9 @@ public class Trade {
      * the resources that the sender is asking in return from the reciever's resources
      */
     Cost request;
-    
+
+    public boolean canTrade() {
+        return false;
+    }
 
 }

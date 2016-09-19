@@ -22,4 +22,8 @@ public class Robber {
     public void setLocation(HexLocation location) {
         this.location = location;
     }
+
+    public boolean takeResource() {
+        return false;
+    }
 }
