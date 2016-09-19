@@ -11,6 +11,11 @@ public class Robber {
 
     HexLocation location;
 
+    /**
+     * Robber constructor
+     *
+     * @param location where the robber will begin, should be a desert hex
+     */
     public Robber(HexLocation location) {
         this.location = location;
     }

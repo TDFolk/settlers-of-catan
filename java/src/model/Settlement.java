@@ -1,16 +1,26 @@
 package model;
 
 import exception.PlacementException;
+import shared.definitions.CatanColor;
 import shared.locations.VertexLocation;
 
 /**
  * Created by kcwillmore on 9/17/16.
  */
-public class Settlement {
+public class Settlement extends Building {
     private static final Cost cost = new Cost(1,0,1,1,1);
 
-    private VertexLocation location;
-    
+    /**
+     * Settlement constructor, requires a place to go and a player/color associated
+     *
+     * @param color    the color of the player who is building the Building
+     * @param location the vertex location where the building is to go
+     */
+    public Settlement(CatanColor color, VertexLocation location) {
+        super(color, location);
+    }
+
+
     /**
      * Places a settlement at the specified VertexLocation on the map.
      * @pre The settlement cannot be placed within two adjacent vertices of another settlement or city, 

@@ -13,6 +13,17 @@ public class Road {
     private EdgeLocation location;
 
     /**
+     * Road constructor
+     *
+     * @param color the color of the player who owns this road
+     * @param location the edge location of the road piece, null if unplaced
+     */
+    public Road(CatanColor color, EdgeLocation location) {
+        this.color = color;
+        this.location = location;
+    }
+
+    /**
      * Places a road on the specified EdgeLocation
      * @pre The road must be placed adjacent to another road or building of the same color, 
      * 				but cannot be placed passing through a settlement of a different color

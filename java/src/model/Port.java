@@ -8,10 +8,6 @@ import shared.locations.EdgeLocation;
  */
 public class Port {
     private EdgeLocation location;
-    /**
-     * the resource type that the port can trade for at a 2:1 ratio
-     * if the resource type is set to "null" then it is a generic port that instead trades 3:1
-     */
 
     /**
      * Constructor for port

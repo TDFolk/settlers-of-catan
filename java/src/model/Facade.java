@@ -11,7 +11,7 @@ import com.google.gson.JsonObject;
 public class Facade {
     private static Facade instance = null;
 
-    protected Facade() {
+    private Facade() {
     }
 
     /**

@@ -23,7 +23,7 @@ public class Model {
      */
     private Player largestArmy = null;
 
-    protected Model() {}
+    private Model() {}
 
 
     public static Model getInstance() {

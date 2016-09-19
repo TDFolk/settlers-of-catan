@@ -1,6 +1,7 @@
 package model;
 
 import exception.PlacementException;
+import shared.definitions.CatanColor;
 import shared.locations.VertexLocation;
 
 /**
@@ -9,8 +10,16 @@ import shared.locations.VertexLocation;
 public class City extends Building {
     private static final Cost cost = new Cost(0,3,0,2,0);
 
-    private VertexLocation location;
-    
+    /**
+     * City constructor
+     *
+     * @param color the color of the player putting the city down
+     * @param location the vertex where the city is to go
+     */
+    public City(CatanColor color, VertexLocation location) {
+        super(color, location);
+    }
+
     /**
      * Replaces a Settlement on the Map with a City instead
      * @pre There must be a Settlement of the same color at the specified location

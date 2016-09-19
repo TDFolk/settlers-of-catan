@@ -29,6 +29,21 @@ public class Trade {
     private Cost request;
 
     /**
+     * Trade constructor, makes a trade offer between two players and what each one would give the other in exchange
+     *
+     * @param sender the player initializing the trade
+     * @param receiver the player who will accept or reject the trade
+     * @param offer what the sender is offering up from their resources
+     * @param request what the sender expects in return from the recipient
+     */
+    public Trade(Player sender, Player receiver, Cost offer, Cost request) {
+        this.sender = sender;
+        this.receiver = receiver;
+        this.offer = offer;
+        this.request = request;
+    }
+
+    /**
      * Determines if both players have the resources to make the trade
      * @return true if both players have the resources required
      */

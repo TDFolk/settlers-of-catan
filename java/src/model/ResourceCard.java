@@ -10,7 +10,13 @@ public class ResourceCard {
 	}
 	
 	private Resource type;
-	
+
+	/**
+	 * Resource Card constructor, makes a card with one of the five resource types
+	 * used for paying costs and stuff
+	 *
+	 * @param type the resource this card will represent (brick/ore/sheep/wheat/wood)
+	 */
 	public ResourceCard(Resource type) {
 		this.type = type;
 	}
