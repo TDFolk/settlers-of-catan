@@ -8,16 +8,20 @@ import shared.locations.HexLocation;
  * Created by kcwillmore on 9/17/16.
  */
 public class Robber {
+    private static Robber instance = null;
 
     private HexLocation location;
 
     /**
      * Robber constructor
-     *
-     * @param location where the robber will begin, should be a desert hex
      */
-    public Robber(HexLocation location) {
-        this.location = location;
+    private Robber() {}
+
+    public Robber getInstance() {
+        if (instance == null) {
+            instance = new Robber();
+        }
+        return instance;
     }
 
     public HexLocation getLocation() {
