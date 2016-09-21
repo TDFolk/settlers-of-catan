@@ -1,7 +1,7 @@
 package decoder;
 
 import com.google.gson.JsonObject;
-import model.Model;
+import model.Game;
 
 /**
  * This class parses the JSON data and also turns objects into JSON objects to send back to the server
@@ -20,7 +20,7 @@ public class Decoder {
      * @param json the JSON object to be parsed in order to populate the model
      * @return new model to be written to the database
      */
-    public Model parseJson(String json){
+    public Game parseJson(String json){
         return null;
     }
 

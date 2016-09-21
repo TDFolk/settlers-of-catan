@@ -3,7 +3,7 @@ package model;
 import com.google.gson.JsonObject;
 
 /**
- * Facade class that stands between the Model and all other components. Anything that would access or change anything
+ * Facade class that stands between the Game and all other components. Anything that would access or change anything
  * about the model MUST go through this class.
  *
  * Created by kcwillmore on 9/17/16.

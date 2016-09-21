@@ -3,13 +3,13 @@ package model;
 import java.util.List;
 
 /**
- * Model class, contains collections of all model objects within the game
+ * Game class, contains collections of all model objects within the game
  * Singleton because there can Only Be One
  *
  * Created by kcwillmore on 9/17/16.
  */
-public class Model {
-    private static Model instance = null;
+public class Game {
+    private static Game instance = null;
 
     private Bank bank;
     private Map map;
@@ -23,12 +23,12 @@ public class Model {
      */
     private Player largestArmy = null;
 
-    private Model() {}
+    private Game() {}
 
 
-    public static Model getInstance() {
+    public static Game getInstance() {
         if(instance == null) {
-            instance = new Model();
+            instance = new Game();
         }
         return instance;
     }
