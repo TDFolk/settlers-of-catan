@@ -1,7 +1,8 @@
 package server;
 
-/**The poller is responsible for continuously polling, or asking, the server if the current client model is up to date
- * or not. Triggers an update on the client side when the version of the current client model
+/**The poller runs on its own thread on a timer (around 1-3 second intervals).
+ * On those time intervals it gets all the model info from the server to determine any changes.
+ * Triggers an update on the client side when the version of the current client model
  * version number does not match that of the server model
  * Created by //Brandon on 9/16/2016.
  */
