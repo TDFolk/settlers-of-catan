@@ -17,9 +17,10 @@ public class Decoder {
 
     /**
      * This function parses the JSON sent from the server to populate the model class
+     * @param json the JSON object to be parsed in order to populate the model
      * @return new model to be written to the database
      */
-    public Model parseJson(){
+    public Model parseJson(String json){
         return null;
     }
 
