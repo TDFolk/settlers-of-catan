@@ -24,7 +24,7 @@ public class Player {
     private List<ResourceCard> resourceCards;
     private List<DevelopmentCard> developmentCards;
     private List<DevelopmentCard> newDevelopmentCards;
-    private int playerID;
+    private PlayerID playerID;
     private int playerIndex;
     private boolean discarded;
     private boolean playedDevCard;
@@ -220,6 +220,11 @@ public class Player {
      */
     public boolean canMakeTrade(Cost offer) {
     	return false;
+    }
+    
+    
+    public int getPlayerID() {
+    	return playerID.getID();
     }
 
 }
