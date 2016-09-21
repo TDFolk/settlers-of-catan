@@ -17,7 +17,7 @@ public class Robber {
      */
     private Robber() {}
 
-    public Robber getInstance() {
+    public static Robber getInstance() {
         if (instance == null) {
             instance = new Robber();
         }
