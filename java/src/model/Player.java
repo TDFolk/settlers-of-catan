@@ -21,7 +21,7 @@ public class Player {
     private List<Settlement> settlements;
     private List<City> cities;
     private List<Road> roads;
-    private List<ResourceCard> resourceCards;
+    private ResourceValues resourceCards;
     private List<DevelopmentCard> developmentCards;
     private List<DevelopmentCard> newDevelopmentCards;
     private PlayerID playerID;
@@ -40,9 +40,11 @@ public class Player {
     public Player() {
     	
     }
-    
-    
-    
+
+    public ResourceValues getResourceCards() {
+        return resourceCards;
+    }
+
     /**
      * Takes a resource card from the bank and adds it to the player's list of resource cards
      * @pre A card exists in the bank's resource deck of that type
