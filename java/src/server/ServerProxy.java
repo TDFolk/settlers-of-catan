@@ -2,12 +2,21 @@ package server;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.sun.org.apache.xpath.internal.operations.String;
+import exception.PageNotFoundException;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.Authenticator;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 /**
  * The ServerProxy acts as the 'in between' for the client and the server. Sends requests to and receives data from
@@ -419,5 +428,41 @@ public class ServerProxy implements IServer {
     @Override
     public void monument() {
 
+    }
+
+    /**
+     * function to send commands and gain access to server
+     * @param methodName string of command, example: /user/login
+     * @throws PageNotFoundException
+     * @throws MalformedURLException
+     */
+    private String httpAccess(String methodName) throws PageNotFoundException, MalformedURLException, IOException{
+        try {
+            //WORK ON methodName <<<<<<<<<<<<<<<<<<<<<<
+            URL url = new URL(methodName);
+            HttpURLConnection http = (HttpURLConnection)url.openConnection();
+            //AUTHENTICATION HERE????????????????
+            http.setAllowUserInteraction(true);
+            http.setRequestMethod("GET");
+            http.connect();
+
+            InputStream input = http.getInputStream();
+            BufferedReader br =  new BufferedReader(new InputStreamReader(input));
+            StringBuilder sb = new StringBuilder();
+            String line = null;
+            while ((line = br.readLine()) != null){
+                sb.append(line + "\n");
+            }
+            return sb.toString();
+        }
+        catch (PageNotFoundException pageException){
+
+        }
+        catch (MalformedURLException urlException){
+
+        }
+        catch (IOException ioException){
+
+        }
     }
 }
