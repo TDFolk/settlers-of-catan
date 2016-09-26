@@ -218,7 +218,7 @@ public class Player {
      * @param offer the resources being offered for the trade
      * @return Returns true if the player has the resources specified in the offer, false otherwise.
      */
-    public boolean canMakeTrade(Cost offer) {
+    public boolean canMakeTrade(ResourceValues offer) {
     	return false;
     }
     
