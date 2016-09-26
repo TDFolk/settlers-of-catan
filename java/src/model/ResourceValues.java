@@ -97,6 +97,8 @@ public class ResourceValues {
     	}
     }
 
+    //todo make a generic getresource setresource based on the resourcetype enum
+
     /**
      * Compares this resource pool to the cost asked of it to see whether there is enough of every resource to pay the cost
      *
