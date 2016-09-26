@@ -55,6 +55,26 @@ public class ResourceValues {
         return wood;
     }
 
+    public void setBrick(int brick) {
+        this.brick = brick;
+    }
+
+    public void setOre(int ore) {
+        this.ore = ore;
+    }
+
+    public void setSheep(int sheep) {
+        this.sheep = sheep;
+    }
+
+    public void setWheat(int wheat) {
+        this.wheat = wheat;
+    }
+
+    public void setWood(int wood) {
+        this.wood = wood;
+    }
+
     /**
      * Compares this resource pool to the cost asked of it to see whether there is enough of every resource to pay the cost
      *
