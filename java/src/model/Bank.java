@@ -7,6 +7,11 @@ import exception.CardException;
 import exception.ResourceException;
 import model.ResourceCard.Resource; 
 import model.development_cards.DevelopmentCard;
+import model.development_cards.MonopolyCard;
+import model.development_cards.PlentyCard;
+import model.development_cards.RoadBuildingCard;
+import model.development_cards.SoldierCard;
+import model.development_cards.VictoryPointCard;
 
 /**
  * Created by kcwillmore on 9/17/16.
@@ -22,7 +27,8 @@ public class Bank {
 
 	/**
 	 * Constructor of the bank
-	 * Populates bank with starting amount of resources in each resource deck
+	 * Populates bank with starting amount of resources in each resource deck and
+	 * 		the proper development cards.
 	 */
 	public Bank () {
 		for (int i = 0; i < 19; i++) {
@@ -32,6 +38,16 @@ public class Bank {
 			sheepCards.add(new ResourceCard(Resource.SHEEP));
 			wheatCards.add(new ResourceCard(Resource.WHEAT));
 		}	
+		
+		for (int i = 0; i < 14; i++)
+			developmentCards.add(new SoldierCard());
+		for (int i = 0; i < 5; i++)
+			developmentCards.add(new VictoryPointCard());
+		for (int i = 0; i < 2; i++) {
+			developmentCards.add(new MonopolyCard());
+			developmentCards.add(new PlentyCard());
+			developmentCards.add(new RoadBuildingCard());
+		}
 	}
 
 	/**
@@ -43,7 +59,22 @@ public class Bank {
 	 * @return the resource requested by the player
 	 */
 	public ResourceCard drawResourceCard(Resource resourceType) throws CardException {
-		return null;
+		List<ResourceCard> deck;
+		switch (resourceType) {
+		case BRICK: deck = brickCards; break;
+		case ORE: deck = oreCards; break;
+		case SHEEP: deck = sheepCards; break;
+		case WHEAT: deck = wheatCards; break;
+		case WOOD: deck = woodCards; break;
+		default: return null;
+		}
+		
+		ResourceCard card = null;
+		if (deck.size() > 0)
+			card = deck.remove(0);
+		else throw new CardException();
+		
+		return card;
 	}
 
 	/**
@@ -54,7 +85,13 @@ public class Bank {
 	 * @return a random dev card back to the player
 	 */
 	public DevelopmentCard drawDevelopmentCard() throws CardException {
-		return null;
+		DevelopmentCard card = null;
+		
+		if (developmentCards.size() > 0)
+			card = developmentCards.remove(0);
+		else throw new CardException();
+		
+		return card;
 	}
 	
 	/**
@@ -63,7 +100,17 @@ public class Bank {
 	 * @return true if a card can be drawn from the specified resource type's deck
 	 */
 	public boolean canDrawResourceCard(Resource resourceType) {
-		return false;
+		List<ResourceCard> deck;
+		switch (resourceType) {
+		case BRICK: deck = brickCards; break;
+		case ORE: deck = oreCards; break;
+		case SHEEP: deck = sheepCards; break;
+		case WHEAT: deck = wheatCards; break;
+		case WOOD: deck = woodCards; break;
+		default: return false;
+		}
+		
+		return deck.size() > 0;
 	}
 	
 	/**
@@ -71,6 +118,6 @@ public class Bank {
 	 * @return true if a card can be drawn from the development card deck
 	 */
 	public boolean canDrawDevelopmentCard() {
-		return false;
+		return developmentCards.size() > 0;
 	}
 }
