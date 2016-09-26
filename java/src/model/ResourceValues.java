@@ -20,14 +20,14 @@ public class ResourceValues {
     /**
      * ResourceValues constructor, given the different values of a cost. Each cost may be 0 or greater
      *
+     * @pre All parameters must be > 0
      * @param brick brick resource value
      * @param ore stone resource value
      * @param sheep wool resource value
      * @param wheat grain resource value
      * @param wood lumber resource value
      */
-    public ResourceValues(int brick, int ore, int sheep, int wheat, int wood) throws ResourceException{
-        if (brick < 0 || ore < 0 || sheep < 0 || wheat < 0 || wood < 0) throw new ResourceException();
+    public ResourceValues(int brick, int ore, int sheep, int wheat, int wood) {
         this.brick = brick;
         this.ore = ore;
         this.sheep = sheep;
