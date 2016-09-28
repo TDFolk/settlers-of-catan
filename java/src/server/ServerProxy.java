@@ -464,5 +464,6 @@ public class ServerProxy implements IServer {
         catch (IOException ioException){
 
         }
+        return "";
     }
 }
