@@ -228,5 +228,13 @@ public class Player {
     public int getPlayerID() {
     	return playerID.getID();
     }
+    
+    public void setPlayerIndex(int index) {
+    	playerIndex = index;
+    }
+    
+    public int getPlayerIndex() {
+    	return playerIndex;
+    }
 
 }

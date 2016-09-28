@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -13,11 +14,18 @@ public class TurnTracker {
 	private int turn;
 	
 	/**
+	 * Constructs a new TurnTracker with no players
+	 */
+	public TurnTracker() {
+		playerOrder = new ArrayList<Player>();;
+	}
+	
+	/**
 	 * Constructs a new TurnTracker with the given list of players
 	 * @param players The players at the start of the game
 	 */
 	public TurnTracker(List<Player> players) {
-		
+		playerOrder = players;
 	}
 	
 	
@@ -26,7 +34,8 @@ public class TurnTracker {
 	 * @param player the player to add
 	 */
 	public void addPlayer(Player player) {
-		
+		player.setPlayerIndex(playerOrder.size());
+		playerOrder.add(player);
 	}
 	
 	/**
@@ -34,7 +43,8 @@ public class TurnTracker {
 	 * @param player The player to remove from the game
 	 */
 	public void removePlayer(Player player) {
-		
+		playerOrder.remove(player);
+		player.setPlayerIndex(-1);
 	}
 	
 	/**
