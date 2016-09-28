@@ -1,5 +1,6 @@
 package server;
 
+import model.Facade;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -13,6 +14,8 @@ public class ServerPollerTest {
         IServer mock = new MockServer("","");
         ServerPoller test = new ServerPoller(mock);
         test.startPoller();
+        Thread.sleep(5000);
+
     }
 
     @Test
