@@ -26,15 +26,15 @@ public class ConnectException extends Exception {
 //    }
 
     public ConnectException(){
-
+        return;
     }
 
     public ConnectException(String message){
         super(message);
     }
 
-    public ConnectException(Throwable throwable){
-        super(throwable);
+    public ConnectException(Throwable cause){
+        super(cause);
     }
 
     /**

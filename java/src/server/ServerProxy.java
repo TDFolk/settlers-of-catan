@@ -65,6 +65,7 @@ public class ServerProxy implements IServer {
     public boolean userLogin(String username, String password) {
         try{
             //call do Post here and throw the ConnectException
+            getCommand("", 1); //place holder
         }
         catch(ConnectException ce) {
             ce.printStackTrace();
@@ -441,6 +442,41 @@ public class ServerProxy implements IServer {
     @Override
     public void monument() {
 
+    }
+
+    private Object getCommand (String methodName, int version) throws ConnectException{
+        URL url;
+        try {
+
+            //Concatenate the URL command
+            String urlCommand = urlPrefix + methodName + "?version=" + version;
+            url = new URL(urlCommand);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("GET");
+
+            //Checks to see if the server returns a 200 response
+            if(connection.getResponseCode() == HttpURLConnection.HTTP_OK){
+
+            }
+            //if it's a bad response, the server returns a 400 response
+//            else if(connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
+//
+//            }
+            //throw a new exception if server returns a 400 response
+            else {
+                throw new ConnectException(String.format("getCommand failed: %s (http code %d)", methodName,
+                        connection.getResponseCode()));
+            }
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private Object postCommand (){
+
+        return null;
     }
 
     /**
