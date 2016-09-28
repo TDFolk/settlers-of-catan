@@ -41,6 +41,7 @@ public class Robber {
      */
     public boolean canTakeResource(Player victim) {
         //todo figure out how to tell if a hex has settlements around it and whom they belong to
+        return false;
     }
 
     public boolean canPlaceRobber(HexLocation newLocation) {

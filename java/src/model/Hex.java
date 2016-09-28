@@ -11,6 +11,7 @@ public class Hex {
 	private Resource resource;
 	private HexLocation location;
 	private int numberToken;
+	//boolean robbed?
 
 	/**
 	 * Constructor of hex tile

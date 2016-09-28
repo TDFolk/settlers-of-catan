@@ -29,5 +29,5 @@ public abstract class Port {
      * This function checks if the player can trade with a specific port
      * @return true if player can trade with this port
      */
-    public abstract boolean canTrade();
+    public abstract boolean canTrade(Player player);
 }
