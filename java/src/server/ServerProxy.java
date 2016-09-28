@@ -29,8 +29,8 @@ public class ServerProxy implements IServer {
     private String host = "localhost";
     private String port = "8081";
     private String urlPrefix = "http://" + host + ":" + port;
-    private final String HTTP_GET = "GET";
-    private final String HTTP_POST = "POST";
+//    private final String HTTP_GET = "GET";
+//    private final String HTTP_POST = "POST";
     private String catanUser = null;
     private String catanGame = null;
 
@@ -444,7 +444,7 @@ public class ServerProxy implements IServer {
 
     }
 
-    private Object getCommand (String methodName, int version) throws ConnectException{
+    private Object doGetCommand (String methodName, int version) throws ConnectException{
         URL url;
         try {
 
@@ -456,7 +456,7 @@ public class ServerProxy implements IServer {
 
             //Checks to see if the server returns a 200 response
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK){
-
+                
             }
             //if it's a bad response, the server returns a 400 response
 //            else if(connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
@@ -464,7 +464,7 @@ public class ServerProxy implements IServer {
 //            }
             //throw a new exception if server returns a 400 response
             else {
-                throw new ConnectException(String.format("getCommand failed: %s (http code %d)", methodName,
+                throw new ConnectException(String.format("doGetCommand failed: %s (http code %d)", methodName,
                         connection.getResponseCode()));
             }
         }
@@ -474,7 +474,7 @@ public class ServerProxy implements IServer {
         return null;
     }
 
-    private Object postCommand (){
+    private Object doPostCommand (){
 
         return null;
     }
