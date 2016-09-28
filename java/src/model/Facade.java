@@ -26,6 +26,11 @@ public class Facade {
         return instance;
     }
 
+    public int getVersionNumber()
+    {
+        return Game.getInstance().getVersionNumber();
+    }
+
     /**
      * Replaces the old model with the new model returned from the server
      * @param newModel the new model returned from the server
