@@ -30,7 +30,6 @@ public class ServerPoller {
             System.out.println(TIME_INTERVAL/1000  + " second/s has/have passed");
             currentModel = proxy.gameModelVersion(versionNumber);
             Facade.getInstance().replaceModel(currentModel);
-            versionNumber++;
         }
     };
 

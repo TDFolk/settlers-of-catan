@@ -1,8 +1,7 @@
-package test;
+package server;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.sun.org.apache.xpath.internal.operations.String;
 import server.IServer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
