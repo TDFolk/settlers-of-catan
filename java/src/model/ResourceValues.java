@@ -1,5 +1,6 @@
 package model;
 
+import model.ResourceCard.Resource;
 import exception.ResourceException;
 
 /**
@@ -54,6 +55,17 @@ public class ResourceValues {
     public int getWood() {
         return wood;
     }
+    
+    public int getResource(Resource resource) {
+    	switch (resource) {
+    	case BRICK: return brick;
+    	case ORE: return ore;
+    	case SHEEP: return sheep;
+    	case WHEAT: return wheat;
+    	case WOOD: return wood;
+    	}
+    	return 0;
+    }
 
     public void setBrick(int brick) {
         this.brick = brick;
@@ -73,6 +85,16 @@ public class ResourceValues {
 
     public void setWood(int wood) {
         this.wood = wood;
+    }
+    
+    public void setResource(Resource resource, int num) {
+    	switch (resource) {
+    	case BRICK: brick = num; break;
+    	case ORE: ore = num; break;
+    	case SHEEP: sheep = num; break;
+    	case WHEAT: wheat = num; break;
+    	case WOOD: wood = num; break;
+    	}
     }
 
     /**
