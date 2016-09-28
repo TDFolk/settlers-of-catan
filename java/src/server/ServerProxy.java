@@ -455,16 +455,26 @@ public class ServerProxy implements IServer {
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("GET");
 
+
+//            if(catanUser != null && catanGame != null) {
+//                connection.setRequestProperty("Cookie", "catan.user=" + catanUser + "; catan.game=" + catanGame);
+//            }
+//            else if(catanUser != null){
+//                connection.setRequestProperty("Cookie", "catan.user=" + catanUser);
+//            }
+
             //Checks to see if the server returns a 200 response
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK){
                 InputStream input = connection.getInputStream();
                 return getResponseBodyData(input);
             }
-            //if it's a bad response, the server returns a 400 response
+
+//            if it's a bad response, the server returns a 400 response
 //            else if(connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
 //
 //            }
-            //throw a new exception if server returns a 400 response
+//            throw a new exception if server returns a 400 response
+
             else {
                 throw new ConnectException(String.format("doGetCommand failed: %s (http code %d)", methodName,
                         connection.getResponseCode()));
@@ -479,35 +489,6 @@ public class ServerProxy implements IServer {
     private String doPostCommand (){
 
         return null;
-    }
-
-    /**
-     * function to send commands and gain access to server
-     * @param methodName string of command, example: /user/login
-     */
-    private String httpAccess(String methodName){
-        try {
-            //WORK ON methodName <<<<<<<<<<<<<<<<<<<<<<
-            URL url = new URL(methodName);
-            HttpURLConnection http = (HttpURLConnection)url.openConnection();
-            //AUTHENTICATION HERE????????????????
-            http.setAllowUserInteraction(true);
-            http.setRequestMethod("GET");
-            http.connect();
-
-            InputStream input = http.getInputStream();
-            BufferedReader br =  new BufferedReader(new InputStreamReader(input));
-            StringBuilder sb = new StringBuilder();
-            String line;
-            while ((line = br.readLine()) != null){
-                sb.append(line + "\n");
-            }
-            return sb.toString();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return "";
     }
 
     private String getResponseBodyData(InputStream input) throws IOException{
