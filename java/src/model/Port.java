@@ -6,7 +6,7 @@ import shared.locations.EdgeLocation;
  * This class represents the game object, ports
  * Created by jihoon on 9/17/16.
  */
-public class Port {
+public abstract class Port {
     private EdgeLocation location;
 
     /**
@@ -29,7 +29,5 @@ public class Port {
      * This function checks if the player can trade with a specific port
      * @return true if player can trade with this port
      */
-    public boolean canTrade() {
-        return false;
-    }
+    public abstract boolean canTrade();
 }

@@ -97,8 +97,6 @@ public class ResourceValues {
     	}
     }
 
-    //todo make a generic getresource setresource based on the resourcetype enum
-
     /**
      * Compares this resource pool to the cost asked of it to see whether there is enough of every resource to pay the cost
      *
@@ -111,5 +109,14 @@ public class ResourceValues {
                 sheep >= cost.sheep &&
                 wheat >= cost.wheat &&
                 wood >= cost.wood;
+    }
+
+    /**
+     * Gets the sum total of all different resources in this values
+     *
+     * @return sum of the five resources
+     */
+    public int size() {
+        return brick + ore + sheep + wheat + wood;
     }
 }

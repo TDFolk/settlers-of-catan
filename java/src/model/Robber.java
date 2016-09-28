@@ -36,9 +36,14 @@ public class Robber {
      * Determines if the robber can rob
      * @pre none
      * @post none
+     * @param victim the player you want to steal from
      * @return success if robber can take the resource
      */
-    public boolean canTakeResource() {
-        return false;
+    public boolean canTakeResource(Player victim) {
+        //todo figure out how to tell if a hex has settlements around it and whom they belong to
+    }
+
+    public boolean canPlaceRobber(HexLocation newLocation) {
+        return newLocation != location;
     }
 }
