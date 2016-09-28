@@ -8,9 +8,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
-import java.io.BufferedReader;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -63,9 +61,10 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean userLogin(String username, String password) {
+        String loginCommand = "/user/login";
         try{
             //call do Post here and throw the ConnectException
-            getCommand("", 1); //place holder
+            doGetCommand("", 1); //place holder
         }
         catch(ConnectException ce) {
             ce.printStackTrace();
@@ -86,6 +85,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean userRegister(String username, String password) {
+        String registerCommand = "/user/register";
         return false;
     }
 
@@ -99,6 +99,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public JsonArray gameList() {
+
         return null;
     }
 
@@ -444,11 +445,11 @@ public class ServerProxy implements IServer {
 
     }
 
-    private Object doGetCommand (String methodName, int version) throws ConnectException{
+    private String doGetCommand (String methodName, int version) throws ConnectException{
         URL url;
         try {
 
-            //Concatenate the URL command
+            //Concatenate the entire URL command
             String urlCommand = urlPrefix + methodName + "?version=" + version;
             url = new URL(urlCommand);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
@@ -456,7 +457,8 @@ public class ServerProxy implements IServer {
 
             //Checks to see if the server returns a 200 response
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK){
-                
+                InputStream input = connection.getInputStream();
+                return getResponseBodyData(input);
             }
             //if it's a bad response, the server returns a 400 response
 //            else if(connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
@@ -474,7 +476,7 @@ public class ServerProxy implements IServer {
         return null;
     }
 
-    private Object doPostCommand (){
+    private String doPostCommand (){
 
         return null;
     }
@@ -506,6 +508,17 @@ public class ServerProxy implements IServer {
             e.printStackTrace();
         }
         return "";
+    }
+
+    private String getResponseBodyData(InputStream input) throws IOException{
+        byte[] buffer = new byte[1024];
+        int length = 0;
+        StringBuilder sb = new StringBuilder();
+        while((length = input.read(buffer, 0, length)) != -1) {
+            sb.append(new String(buffer, 0, length));
+        }
+        String responseBodyData = sb.toString();
+        return responseBodyData;
     }
 
     public String getCatanUser() {
