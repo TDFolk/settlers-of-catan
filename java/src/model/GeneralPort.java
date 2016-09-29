@@ -37,8 +37,8 @@ public class GeneralPort extends Port {
      * @return true if player can trade with this port
      */
     @Override
-    public boolean canTrade() {
-        return super.canTrade();
+    public boolean canTrade(Player player) {
+        return false;
     }
 
     public ResourceCard.Resource getPortType() {

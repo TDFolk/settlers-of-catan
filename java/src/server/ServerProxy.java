@@ -2,20 +2,15 @@ package server;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import exception.PageNotFoundException;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.Authenticator;
+import java.io.*;
+import java.net.ConnectException;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 
 /**
@@ -29,20 +24,30 @@ public class ServerProxy implements IServer {
      * @param port port id used to connect to the server
      * @param host host id used to connect to the server
      */
-    private String port;
-    private String host;
+    private String host = "localhost";
+    private String port = "8081";
+    private String urlPrefix = "http://" + host + ":" + port;
+//    private final String HTTP_GET = "GET";
+//    private final String HTTP_POST = "POST";
+    private String catanUser = null;
+    private String catanGame = null;
+
+    public ServerProxy(){
+
+    }
 
     /**
      *
      * @param port port id used to connect to the server
      * @param host host id used to connect to the server
      */
-    public ServerProxy(String port, String host){
-
-        this.port = port;
+    public ServerProxy(String host, String port){
         this.host = host;
-
+        this.port = port;
+        this.urlPrefix = "http://" + host + ":" + port;
     }
+
+
 
     /**
      * Logs the caller in to the server, sets their catan.user HTTP cookie
@@ -55,7 +60,15 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean userLogin(java.lang.String username, java.lang.String password) {
+    public boolean userLogin(String username, String password) {
+        String loginCommand = "/user/login";
+        try{
+            //call do Post here and throw the ConnectException
+            doGetCommand("", 1); //place holder
+        }
+        catch(ConnectException ce) {
+            ce.printStackTrace();
+        }
         return false;
     }
 
@@ -71,7 +84,8 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean userRegister(java.lang.String username, java.lang.String password) {
+    public boolean userRegister(String username, String password) {
+        String registerCommand = "/user/register";
         return false;
     }
 
@@ -85,6 +99,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public JsonArray gameList() {
+
         return null;
     }
 
@@ -99,7 +114,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonObject gameCreate(java.lang.String gameName) {
+    public JsonObject gameCreate(String gameName) {
         return null;
     }
 
@@ -119,7 +134,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameJoin(java.lang.String userCookie, int gameID, CatanColor color) {
+    public boolean gameJoin(String userCookie, int gameID, CatanColor color) {
         return false;
     }
 
@@ -164,7 +179,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameAddAI(java.lang.String typeAI) {
+    public boolean gameAddAI(String typeAI) {
         return false;
     }
 
@@ -177,7 +192,7 @@ public class ServerProxy implements IServer {
      * @post The chat contains your message at the end
      */
     @Override
-    public boolean sendChat(java.lang.String content) {
+    public boolean sendChat(String content) {
         return false;
     }
 
@@ -430,40 +445,76 @@ public class ServerProxy implements IServer {
 
     }
 
-    /**
-     * function to send commands and gain access to server
-     * @param methodName string of command, example: /user/login
-     * @throws PageNotFoundException
-     * @throws MalformedURLException
-     */
-    private String httpAccess(String methodName) throws PageNotFoundException, MalformedURLException, IOException{
+    private String doGetCommand (String methodName, int version) throws ConnectException{
+        URL url;
         try {
-            //WORK ON methodName <<<<<<<<<<<<<<<<<<<<<<
-            URL url = new URL(methodName);
-            HttpURLConnection http = (HttpURLConnection)url.openConnection();
-            //AUTHENTICATION HERE????????????????
-            http.setAllowUserInteraction(true);
-            http.setRequestMethod("GET");
-            http.connect();
 
-            InputStream input = http.getInputStream();
-            BufferedReader br =  new BufferedReader(new InputStreamReader(input));
-            StringBuilder sb = new StringBuilder();
-            String line = null;
-            while ((line = br.readLine()) != null){
-                sb.append(line + "\n");
+            //Concatenate the entire URL command
+            String urlCommand = urlPrefix + methodName + "?version=" + version;
+            url = new URL(urlCommand);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("GET");
+
+
+//            if(catanUser != null && catanGame != null) {
+//                connection.setRequestProperty("Cookie", "catan.user=" + catanUser + "; catan.game=" + catanGame);
+//            }
+//            else if(catanUser != null){
+//                connection.setRequestProperty("Cookie", "catan.user=" + catanUser);
+//            }
+
+            //Checks to see if the server returns a 200 response
+            if(connection.getResponseCode() == HttpURLConnection.HTTP_OK){
+                InputStream input = connection.getInputStream();
+                return getResponseBodyData(input);
             }
-            return sb.toString();
-        }
-        catch (PageNotFoundException pageException){
 
-        }
-        catch (MalformedURLException urlException){
+//            if it's a bad response, the server returns a 400 response
+//            else if(connection.getResponseCode() == HttpURLConnection.HTTP_BAD_REQUEST) {
+//
+//            }
+//            throw a new exception if server returns a 400 response
 
+            else {
+                throw new ConnectException(String.format("doGetCommand failed: %s (http code %d)", methodName,
+                        connection.getResponseCode()));
+            }
         }
-        catch (IOException ioException){
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
+    private String doPostCommand (){
+
+        return null;
+    }
+
+    private String getResponseBodyData(InputStream input) throws IOException{
+        byte[] buffer = new byte[1024];
+        int length = 0;
+        StringBuilder sb = new StringBuilder();
+        while((length = input.read(buffer, 0, length)) != -1) {
+            sb.append(new String(buffer, 0, length));
         }
-        return "";
+        String responseBodyData = sb.toString();
+        return responseBodyData;
+    }
+
+    public String getCatanUser() {
+        return catanUser;
+    }
+
+    public void setCatanUser(String catanUser) {
+        this.catanUser = catanUser;
+    }
+
+    public String getCatanGame() {
+        return catanGame;
+    }
+
+    public void setCatanGame(String catanGame) {
+        this.catanGame = catanGame;
     }
 }

@@ -17,12 +17,7 @@ import model.development_cards.VictoryPointCard;
  * Created by kcwillmore on 9/17/16.
  */
 public class Bank {
-	private List<ResourceCard> brickCards = new ArrayList<ResourceCard>();	
-	private List<ResourceCard> oreCards = new ArrayList<ResourceCard>();
-	private List<ResourceCard> sheepCards = new ArrayList<ResourceCard>();
-	private List<ResourceCard> wheatCards = new ArrayList<ResourceCard>();
-	private List<ResourceCard> woodCards = new ArrayList<ResourceCard>();
-	
+	private ResourceValues resourcePool;
 	private List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 
 	/**
@@ -31,13 +26,7 @@ public class Bank {
 	 * 		the proper development cards.
 	 */
 	public Bank () {
-		for (int i = 0; i < 19; i++) {
-			oreCards.add(new ResourceCard(Resource.ORE));
-			brickCards.add(new ResourceCard(Resource.BRICK));
-			woodCards.add(new ResourceCard(Resource.WOOD));
-			sheepCards.add(new ResourceCard(Resource.SHEEP));
-			wheatCards.add(new ResourceCard(Resource.WHEAT));
-		}	
+		resourcePool = new ResourceValues(19,19,19,19,19);
 		
 		for (int i = 0; i < 14; i++)
 			developmentCards.add(new SoldierCard());
@@ -56,25 +45,15 @@ public class Bank {
 	 * @post card is removed from the resource deck
 	 * @param resourceType type of resource to be drawn
 	 * @throws CardException if there is no card in the deck to draw
-	 * @return the resource requested by the player
+	 * @return if the draw was successful
 	 */
-	public ResourceCard drawResourceCard(Resource resourceType) throws CardException {
-		List<ResourceCard> deck;
-		switch (resourceType) {
-		case BRICK: deck = brickCards; break;
-		case ORE: deck = oreCards; break;
-		case SHEEP: deck = sheepCards; break;
-		case WHEAT: deck = wheatCards; break;
-		case WOOD: deck = woodCards; break;
-		default: return null;
+	public boolean drawResourceCard(Resource resourceType) throws CardException {
+		int numResources = resourcePool.getResource(resourceType);
+		if (numResources > 0) {
+			resourcePool.setResource(resourceType, numResources - 1);
+			return true;
 		}
-		
-		ResourceCard card = null;
-		if (deck.size() > 0)
-			card = deck.remove(0);
-		else throw new CardException();
-		
-		return card;
+		throw new CardException();
 	}
 
 	/**
@@ -100,17 +79,7 @@ public class Bank {
 	 * @return true if a card can be drawn from the specified resource type's deck
 	 */
 	public boolean canDrawResourceCard(Resource resourceType) {
-		List<ResourceCard> deck;
-		switch (resourceType) {
-		case BRICK: deck = brickCards; break;
-		case ORE: deck = oreCards; break;
-		case SHEEP: deck = sheepCards; break;
-		case WHEAT: deck = wheatCards; break;
-		case WOOD: deck = woodCards; break;
-		default: return false;
-		}
-		
-		return deck.size() > 0;
+		return resourcePool.getResource(resourceType) > 0;
 	}
 	
 	/**

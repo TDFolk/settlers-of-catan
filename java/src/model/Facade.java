@@ -27,6 +27,22 @@ public class Facade {
     }
 
     /**
+     *
+     * @return the current client version number
+     */
+    public int getVersionNumber()
+    {
+        return Game.getInstance().getVersionNumber();
+    }
+
+    /**
+     * Updates the client version model by one
+     */
+    public void changeVersionNumber()
+    {
+        Game.getInstance().changeVersionNumber();
+    }
+    /**
      * Replaces the old model with the new model returned from the server
      * @param newModel the new model returned from the server
      */

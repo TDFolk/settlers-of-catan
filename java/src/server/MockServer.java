@@ -1,8 +1,9 @@
-package test;
+package server;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.sun.org.apache.xpath.internal.operations.String;
+import com.google.gson.JsonParser;
 import server.IServer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -130,7 +131,11 @@ public class MockServer implements IServer {
      */
     @Override
     public JsonObject gameModelVersion(int versionNumber) {
-        return null;
+
+        JsonParser parser = new JsonParser();
+        JsonObject newModel = parser.parse(jsonModelExample).getAsJsonObject();
+
+        return newModel;
     }
 
     /**
@@ -422,4 +427,144 @@ public class MockServer implements IServer {
     public void monument() {
 
     }
+
+    private String jsonModelExample = "{\n"+
+            "  \"bank\": {\n"+
+            "    \"brick\": \"integer\",\n"+
+            "    \"ore\": \"integer\",\n"+
+            "    \"sheep\": \"integer\",\n"+
+            "    \"wheat\": \"integer\",\n"+
+            "    \"wood\": \"integer\"\n"+
+            "  },\n"+
+            "  \"chat\": {\n"+
+            "    \"lines\": [\n"+
+            "      {\n"+
+            "        \"message\": \"string\",\n"+
+            "        \"source\": \"string\"\n"+
+            "      }\n"+
+            "    ]\n"+
+            "  },\n"+
+            "  \"log\": {\n"+
+            "    \"lines\": [\n"+
+            "      {\n"+
+            "        \"message\": \"string\",\n"+
+            "        \"source\": \"string\"\n"+
+            "      }\n"+
+            "    ]\n"+
+            "  },\n"+
+            "  \"map\": {\n"+
+            "    \"hexes\": [\n"+
+            "      {\n"+
+            "        \"location\": {\n"+
+            "          \"x\": \"integer\",\n"+
+            "          \"y\": \"integer\"\n"+
+            "        },\n"+
+            "        \"resource\": \"string\",\n"+
+            "        \"number\": \"integer\"\n"+
+            "      }\n"+
+            "    ],\n"+
+            "    \"ports\": [\n"+
+            "      {\n"+
+            "        \"resource\": \"string\",\n"+
+            "        \"location\": {\n"+
+            "          \"x\": \"integer\",\n"+
+            "          \"y\": \"integer\"\n"+
+            "        },\n"+
+            "        \"direction\": \"string\",\n"+
+            "        \"ratio\": \"integer\"\n"+
+            "      }\n"+
+            "    ],\n"+
+            "    \"roads\": [\n"+
+            "      {\n"+
+            "        \"owner\": \"index\",\n"+
+            "        \"location\": {\n"+
+            "          \"x\": \"integer\",\n"+
+            "          \"y\": \"integer\",\n"+
+            "          \"direction\": \"string\"\n"+
+            "        }\n"+
+            "      }\n"+
+            "    ],\n"+
+            "    \"settlements\": [\n"+
+            "      {\n"+
+            "        \"owner\": \"index\",\n"+
+            "        \"location\": {\n"+
+            "          \"x\": \"integer\",\n"+
+            "          \"y\": \"integer\",\n"+
+            "          \"direction\": \"string\"\n"+
+            "        }\n"+
+            "      }\n"+
+            "    ],\n"+
+            "    \"cities\": [\n"+
+            "      {\n"+
+            "        \"owner\": \"index\",\n"+
+            "        \"location\": {\n"+
+            "          \"x\": \"integer\",\n"+
+            "          \"y\": \"integer\",\n"+
+            "          \"direction\": \"string\"\n"+
+            "        }\n"+
+            "      }\n"+
+            "    ],\n"+
+            "    \"radius\": \"integer\",\n"+
+            "    \"robber\": {\n"+
+            "      \"x\": \"integer\",\n"+
+            "      \"y\": \"integer\"\n"+
+            "    }\n"+
+            "  },\n"+
+            "  \"players\": [\n"+
+            "    {\n"+
+            "      \"cities\": \"index\",\n"+
+            "      \"color\": \"string\",\n"+
+            "      \"discarded\": \"boolean\",\n"+
+            "      \"monuments\": \"index\",\n"+
+            "      \"name\": \"string\",\n"+
+            "      \"newDevCards\": {\n"+
+            "        \"monopoly\": \"index\",\n"+
+            "        \"monument\": \"index\",\n"+
+            "        \"roadBuilding\": \"index\",\n"+
+            "        \"soldier\": \"index\",\n"+
+            "        \"yearOfPlenty\": \"index\"\n"+
+            "      },\n"+
+            "      \"oldDevCards\": {\n"+
+            "        \"monopoly\": \"index\",\n"+
+            "        \"monument\": \"index\",\n"+
+            "        \"roadBuilding\": \"index\",\n"+
+            "        \"soldier\": \"index\",\n"+
+            "        \"yearOfPlenty\": \"index\"\n"+
+            "      },\n"+
+            "      \"playerIndex\": \"index\",\n"+
+            "      \"playedDevCard\": \"boolean\",\n"+
+            "      \"playerID\": \"integer\",\n"+
+            "      \"resources\": {\n"+
+            "        \"brick\": \"integer\",\n"+
+            "        \"ore\": \"integer\",\n"+
+            "        \"sheep\": \"integer\",\n"+
+            "        \"wheat\": \"integer\",\n"+
+            "        \"wood\": \"integer\"\n"+
+            "      },\n"+
+            "      \"roads\": \"index\",\n"+
+            "      \"settlements\": \"integer\",\n"+
+            "      \"soldiers\": \"integer\",\n"+
+            "      \"victoryPoints\": \"integer\"\n"+
+            "    }\n"+
+            "  ],\n"+
+            "  \"tradeOffer\": {\n"+
+            "    \"sender\": \"integer\",\n"+
+            "    \"receiver\": \"integer\",\n"+
+            "    \"offer\": {\n"+
+            "      \"brick\": \"integer\",\n"+
+            "      \"ore\": \"integer\",\n"+
+            "      \"sheep\": \"integer\",\n"+
+            "      \"wheat\": \"integer\",\n"+
+            "      \"wood\": \"integer\"\n"+
+            "    }\n"+
+            "  },\n"+
+            "  \"turnTracker\": {\n"+
+            "    \"currentTurn\": \"index\",\n"+
+            "    \"status\": \"string\",\n"+
+            "    \"longestRoad\": \"index\",\n"+
+            "    \"largestArmy\": \"index\"\n"+
+            "  },\n"+
+            "  \"version\": \"index\",\n"+
+            "  \"winner\": \"index\"\n"+
+            "}\n";
 }

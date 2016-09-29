@@ -27,10 +27,12 @@ public class ServerPoller {
     TimerTask myTimerTask = new TimerTask() {
         @Override
         public void run() {
-            System.out.println(TIME_INTERVAL/1000  + " second/s has/have passed");
+            System.out.println(TIME_INTERVAL/1000  + " second/s");
             currentModel = proxy.gameModelVersion(versionNumber);
-            Facade.getInstance().replaceModel(currentModel);
-            versionNumber++;
+            if (currentModel != null) {
+                Facade.getInstance().replaceModel(currentModel);
+                versionNumber++;
+            }
         }
     };
 
@@ -48,7 +50,7 @@ public class ServerPoller {
      * @post will poll the proxy once every TIME_INTERVAL amount of time
      */
     public void startPoller(){
-        myTimer.scheduleAtFixedRate(myTimerTask,1000,TIME_INTERVAL);
+        myTimer.scheduleAtFixedRate(myTimerTask,0,TIME_INTERVAL);
     }
 
     /**Ends the polling cycle

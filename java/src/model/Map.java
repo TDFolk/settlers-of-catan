@@ -12,7 +12,8 @@ public class Map {
 	private List<City> cities;
 	private List<Road> roads;
 	private List<Port> ports;
-	private Robber robber;
+	//todo Map<VertexLocation, Building>?
+	//Map<EdgeLocation, Road>?
 
 	/**
 	 * Constructor of a map

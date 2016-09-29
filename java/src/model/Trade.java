@@ -48,7 +48,7 @@ public class Trade {
      * @return true if both players have the resources required
      */
     public boolean canTrade() {
-        return false;
+        return sender.getResourceCards().canPay(offer) && receiver.getResourceCards().canPay(request);
     }
 
 }
