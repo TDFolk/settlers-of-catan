@@ -26,11 +26,12 @@ public class ServerProxy implements IServer {
      */
     private String host = "localhost";
     private String port = "8081";
-    private String urlPrefix = "http://" + host + ":" + port;
+    private String baseUrl = "http://" + host + ":" + port;
 //    private final String HTTP_GET = "GET";
 //    private final String HTTP_POST = "POST";
     private String catanUser = null;
     private String catanGame = null;
+    private String cookie;
 
     public ServerProxy(){
 
@@ -44,7 +45,7 @@ public class ServerProxy implements IServer {
     public ServerProxy(String host, String port){
         this.host = host;
         this.port = port;
-        this.urlPrefix = "http://" + host + ":" + port;
+        this.baseUrl = "http://" + host + ":" + port;
     }
 
 
@@ -63,8 +64,7 @@ public class ServerProxy implements IServer {
     public boolean userLogin(String username, String password) {
         String loginCommand = "/user/login";
         try{
-            //call do Post here and throw the ConnectException
-            doGetCommand("", 1); //place holder
+            doGetCommand(loginCommand);
         }
         catch(ConnectException ce) {
             ce.printStackTrace();
@@ -445,17 +445,64 @@ public class ServerProxy implements IServer {
 
     }
 
-    private String doGetCommand (String methodName, int version) throws ConnectException{
+    private String doPostCommand (String methodName, Object output) throws ConnectException{
+        URL url;
+        try {
+            String urlCommand = baseUrl + methodName;
+            url = new URL(urlCommand);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoOutput(true); //set true in order to send server our response body
+
+            if(cookie != null) {
+                connection.setRequestProperty("Cookie", cookie);
+            }
+
+            connection.connect();
+            OutputStreamWriter osw = new OutputStreamWriter(connection.getOutputStream());
+            osw.write(output.toString());
+            osw.flush();
+
+            if(connection.getResponseCode() == connection.HTTP_OK){
+                String header;
+                int i = 1;
+                while((header = connection.getHeaderFieldKey(i)) != null){
+                    if(header.equals("Set-cookie")){
+                        //get the cookie
+                        String foo = connection.getHeaderField(i);
+                        //trim the cookie where the ';' starts and initialize the cookie variable
+                        cookie = foo.split(";", 2)[0];
+                        InputStream input = connection.getInputStream();
+                        return getResponseBodyData(input);
+                    }
+                }
+            }
+            else {
+                throw new ConnectException(String.format("doPostCommand failed... %s (http code %d)", methodName,
+                        connection.getResponseCode()));
+            }
+
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    private String doGetCommand (String methodName) throws ConnectException{
         URL url;
         try {
 
             //Concatenate the entire URL command
-            String urlCommand = urlPrefix + methodName + "?version=" + version;
+            String urlCommand = baseUrl + methodName;
             url = new URL(urlCommand);
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("GET");
 
-
+            if(cookie != null) {
+                connection.setRequestProperty("Cookie", cookie);
+            }
 //            if(catanUser != null && catanGame != null) {
 //                connection.setRequestProperty("Cookie", "catan.user=" + catanUser + "; catan.game=" + catanGame);
 //            }
@@ -476,18 +523,13 @@ public class ServerProxy implements IServer {
 //            throw a new exception if server returns a 400 response
 
             else {
-                throw new ConnectException(String.format("doGetCommand failed: %s (http code %d)", methodName,
+                throw new ConnectException(String.format("doGetCommand failed... %s (http code %d)", methodName,
                         connection.getResponseCode()));
             }
         }
         catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
-    }
-
-    private String doPostCommand (){
-
         return null;
     }
 
@@ -516,5 +558,37 @@ public class ServerProxy implements IServer {
 
     public void setCatanGame(String catanGame) {
         this.catanGame = catanGame;
+    }
+
+    public String getCookie() {
+        return cookie;
+    }
+
+    public void setCookie(String cookie) {
+        this.cookie = cookie;
+    }
+
+    public String getHost() {
+        return host;
+    }
+
+    public void setHost(String host) {
+        this.host = host;
+    }
+
+    public String getPort() {
+        return port;
+    }
+
+    public void setPort(String port) {
+        this.port = port;
+    }
+
+    public String getBaseUrl() {
+        return baseUrl;
+    }
+
+    public void setBaseUrl(String baseUrl) {
+        this.baseUrl = baseUrl;
     }
 }
