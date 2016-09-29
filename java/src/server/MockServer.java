@@ -50,7 +50,9 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean userLogin(java.lang.String username, java.lang.String password) {
-        return false;
+
+
+        return true;
     }
 
     /**
@@ -66,7 +68,9 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean userRegister(java.lang.String username, java.lang.String password) {
-        return false;
+
+
+        return true;
     }
 
     /**
@@ -79,7 +83,12 @@ public class MockServer implements IServer {
      */
     @Override
     public JsonArray gameList() {
-        return null;
+
+        JsonParser parser = new JsonParser();
+
+        JsonArray gameList = parser.parse(gameListExample).getAsJsonArray();
+
+        return gameList;
     }
 
     /**
@@ -94,7 +103,11 @@ public class MockServer implements IServer {
      */
     @Override
     public JsonObject gameCreate(java.lang.String gameName) {
-        return null;
+
+        JsonParser parser = new JsonParser();
+        JsonObject gameData = parser.parse(gameCreatedExample).getAsJsonObject();
+
+        return gameData;
     }
 
     /**
@@ -114,7 +127,9 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean gameJoin(java.lang.String userCookie, int gameID, CatanColor color) {
-        return false;
+
+
+        return true;
     }
 
     /**
@@ -148,7 +163,11 @@ public class MockServer implements IServer {
      */
     @Override
     public JsonArray gameListAI() {
-        return null;
+
+        JsonParser parser = new JsonParser();
+        JsonArray AIList = parser.parse(gameListAIExample).getAsJsonArray();
+
+        return AIList;
     }
 
     /**
@@ -163,7 +182,8 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean gameAddAI(java.lang.String typeAI) {
-        return false;
+
+        return true;
     }
 
     /**
@@ -176,7 +196,9 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean sendChat(java.lang.String content) {
-        return false;
+
+
+        return true;
     }
 
     /**
@@ -192,7 +214,8 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean acceptTrade(boolean willAccept) {
-        return false;
+
+        return true;
     }
 
     /**
@@ -208,7 +231,9 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean discardCards(JsonObject discardedCards) {
-        return false;
+
+
+        return true;
     }
 
     /**
@@ -222,8 +247,9 @@ public class MockServer implements IServer {
      * @post The client model's status is now in 'Discarding' or 'Robbing' or 'Playing'
      */
     @Override
-    public boolean rollNumber(int number) {
-        return false;
+    public boolean rollNumber(int number)
+    {
+        return true;
     }
 
     /**
@@ -243,7 +269,8 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean buildRoad(boolean isFree, EdgeLocation roadLocation) {
-        return false;
+
+        return true;
     }
 
     /**
@@ -261,7 +288,8 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean buildSettlement(boolean isFree, VertexLocation vertexLocation) {
-        return false;
+
+        return true;
     }
 
     /**
@@ -277,7 +305,9 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean buildCity(VertexLocation vertexLocation) {
-        return false;
+
+
+        return true;
     }
 
     /**
@@ -291,7 +321,9 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean offerTrade(JsonObject offer, int receiver) {
-        return false;
+
+
+        return true;
     }
 
     /**
@@ -308,7 +340,8 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource) {
-        return false;
+
+        return true;
     }
 
     /**
@@ -325,7 +358,8 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean robPlayer(HexLocation location, int victimIndex) {
-        return false;
+
+        return true;
     }
 
     /**
@@ -336,6 +370,7 @@ public class MockServer implements IServer {
     @Override
     public void finishTurn() {
 
+        //THIS DOES NOTHING!!!!!! D:
     }
 
     /**
@@ -348,6 +383,8 @@ public class MockServer implements IServer {
      */
     @Override
     public void buyDevCard() {
+
+        //THIS ALSO DOES NOTHING!!! (FOR THE MOCK's PURPOSES, OF COURSE_
 
     }
 
@@ -367,7 +404,8 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean soldier(HexLocation location, int victimIndex) {
-        return false;
+
+        return true;
     }
 
     /**
@@ -381,7 +419,7 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean yearOfPlenty(ResourceType resource1, ResourceType resource2) {
-        return false;
+        return true;
     }
 
     /**
@@ -401,7 +439,8 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean roadBuilding(EdgeLocation spot1, EdgeLocation spot2) {
-        return false;
+
+        return true;
     }
 
     /**
@@ -414,7 +453,8 @@ public class MockServer implements IServer {
      */
     @Override
     public boolean monopoly(ResourceType resource) {
-        return false;
+
+        return true;
     }
 
     /**
@@ -425,7 +465,7 @@ public class MockServer implements IServer {
      */
     @Override
     public void monument() {
-
+        //WHAT A LOVELY SPACE HOLDER....
     }
 
     private String jsonModelExample = "{\n"+
@@ -567,4 +607,100 @@ public class MockServer implements IServer {
             "  \"version\": \"index\",\n"+
             "  \"winner\": \"index\"\n"+
             "}\n";
+
+    private String gameListExample = "[\n" +
+            "  {\n" +
+            "    \"title\": \"Default Game\",\n" +
+            "    \"id\": 0,\n" +
+            "    \"players\": [\n" +
+            "      {\n" +
+            "        \"color\": \"orange\",\n" +
+            "        \"name\": \"Sam\",\n" +
+            "        \"id\": 0\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"color\": \"blue\",\n" +
+            "        \"name\": \"Brooke\",\n" +
+            "        \"id\": 1\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"color\": \"red\",\n" +
+            "        \"name\": \"Pete\",\n" +
+            "        \"id\": 10\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"color\": \"green\",\n" +
+            "        \"name\": \"Mark\",\n" +
+            "        \"id\": 11\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"title\": \"AI Game\",\n" +
+            "    \"id\": 1,\n" +
+            "    \"players\": [\n" +
+            "      {\n" +
+            "        \"color\": \"orange\",\n" +
+            "        \"name\": \"Pete\",\n" +
+            "        \"id\": 10\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"color\": \"green\",\n" +
+            "        \"name\": \"Steve\",\n" +
+            "        \"id\": -2\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"color\": \"puce\",\n" +
+            "        \"name\": \"Ken\",\n" +
+            "        \"id\": -3\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"color\": \"yellow\",\n" +
+            "        \"name\": \"Hannah\",\n" +
+            "        \"id\": -4\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  },\n" +
+            "  {\n" +
+            "    \"title\": \"Empty Game\",\n" +
+            "    \"id\": 2,\n" +
+            "    \"players\": [\n" +
+            "      {\n" +
+            "        \"color\": \"orange\",\n" +
+            "        \"name\": \"Sam\",\n" +
+            "        \"id\": 0\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"color\": \"blue\",\n" +
+            "        \"name\": \"Brooke\",\n" +
+            "        \"id\": 1\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"color\": \"red\",\n" +
+            "        \"name\": \"Pete\",\n" +
+            "        \"id\": 10\n" +
+            "      },\n" +
+            "      {\n" +
+            "        \"color\": \"green\",\n" +
+            "        \"name\": \"Mark\",\n" +
+            "        \"id\": 11\n" +
+            "      }\n" +
+            "    ]\n" +
+            "  }\n" +
+            "]";
+
+    private String gameCreatedExample = "{\n" +
+            "  \"title\": \"A New Example Name\",\n" +
+            "  \"id\": 15,\n" +
+            "  \"players\": [\n" +
+            "    {},\n" +
+            "    {},\n" +
+            "    {},\n" +
+            "    {}\n" +
+            "  ]\n" +
+            "}";
+
+    private String gameListAIExample = "[\n" +
+            "  \"LARGEST_ARMY\"\n" +
+            "]";
 }
