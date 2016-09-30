@@ -1,5 +1,6 @@
 package model.map;
 
+import model.Player;
 import model.pieces.Building;
 import model.pieces.Road;
 import shared.locations.EdgeLocation;
@@ -52,5 +53,25 @@ public class Map {
 			}
 		}
 		return null;
+	}
+
+	/**
+	 * Determines if a road can be placed at the specified location by checking for
+	 * 		an adjacent road or building of the same color,
+	 * 		and checking if the road is being placed on the other side of a building of another color
+	 * @param location the edge location to place the road
+	 * @return true if a road can be placed at the specified location
+	 */
+	public boolean canPlaceRoad(EdgeLocation location, Player player) {
+		return false;
+	}
+
+	/**
+	 * Checks if the location is a valid vertex for the settlement to be placed.
+	 * @param location the location to place the settlement
+	 * @return true if the location is a valid vertex for placement
+	 */
+	public boolean canPlaceSettlement(VertexLocation location, Player player) {
+		return false;
 	}
 }

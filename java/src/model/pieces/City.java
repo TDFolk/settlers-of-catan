@@ -21,24 +21,26 @@ public class City extends Building {
         super(color, location);
     }
 
-    /**
-     * Replaces a Settlement on the map with a City instead
-     * @pre There must be a Settlement of the same color at the specified location
-     * @post The Settlement is replaced with a City at the specified VertexLocation
-     * @param location The vertex to place the City
-     * @throws PlacementException if the City cannot be placed at the specified location
-     */
-    public void upgradeSettlement(VertexLocation location) throws PlacementException {
-    	
-    }
+//    /**
+//     * Replaces a Settlement on the map with a City instead
+//     * @pre There must be a Settlement of the same color at the specified location
+//     * @post The Settlement is replaced with a City at the specified VertexLocation
+//     * @param location The vertex to place the City
+//     * @throws PlacementException if the City cannot be placed at the specified location
+//     */
+//    public void upgradeSettlement(VertexLocation location) throws PlacementException {
+//
+//    }
+//
+//    /**
+//     * Determines if the specified vertex location has a settlement of the same color,
+//     * 		thus being a valid location to place the City
+//     * @param location the location to place the City
+//     * @return true if a city can be bought for the specified location
+//     */
+//    public boolean canUpgradeSettlement(VertexLocation location) {
+//        return false;
+//    }
 
-    /**
-     * Determines if the specified vertex location has a settlement of the same color, 
-     * 		thus being a valid location to place the City
-     * @param location the location to place the City
-     * @return true if a city can be bought for the specified location
-     */
-    public boolean canUpgradeSettlement(VertexLocation location) {
-        return false;
-    }
+    // I think that the above two functions are pointless, and so commented them out. TODO: second opinion from nick
 }
