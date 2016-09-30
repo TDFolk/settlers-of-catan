@@ -32,26 +32,16 @@ public class Road {
         return location;
     }
 
-    /**
-     * Places a road on the specified EdgeLocation
-     * @pre The road must be placed adjacent to another road or building of the same color, 
-     * 				but cannot be placed passing through a settlement of a different color
-     * @post A road is placed at the specified edge location, thus creating a longer road
-     * @param location The edge location to place the road
-     * @throws PlacementException if the road cannot be placed at the specified location
-     */
-    public void placeRoad(EdgeLocation location) throws PlacementException {
-    	
-    }
-    
-    /**
-     * Determines if a road can be placed at the specified location by checking for 
-     * 		an adjacent road or building of the same color, 
-     * 		and checking if the road is being placed on the other side of a building of another color
-     * @param location the edge location to place the road
-     * @return true if a road can be placed at the specified location
-     */
-    public boolean canPlace(EdgeLocation location) {
-        return false;
-    }
+//    /**
+//     * Places a road on the specified EdgeLocation
+//     * @pre The road must be placed adjacent to another road or building of the same color,
+//     * 				but cannot be placed passing through a settlement of a different color
+//     * @post A road is placed at the specified edge location, thus creating a longer road
+//     * @param location The edge location to place the road
+//     * @throws PlacementException if the road cannot be placed at the specified location
+//     */
+//    public void placeRoad(EdgeLocation location) throws PlacementException {
+//    	this.location = location;
+//    }
+    //todo ask nick, placement vs can place issue (see settlement)
 }
