@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import command.game.GameCreateObject;
 import command.game.GameCreateObjectResult;
+import command.game.GameJoinObject;
 import command.game.GameListObject;
 import command.user.LoginObject;
 import command.user.RegisterObject;
@@ -70,12 +71,7 @@ public class ServerProxy implements IServer {
 
         try{
             String result = doPostCommand(loginCommand, postData);
-            if(result.equals("Success")){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return true;
         }
         catch(ConnectException e) {
             e.printStackTrace();
@@ -102,12 +98,7 @@ public class ServerProxy implements IServer {
 
         try{
             String result = doPostCommand(registerCommand, postData);
-            if(result.equals("Success")){
-                return true;
-            }
-            else{
-                return false;
-            }
+            return true;
         }
         catch(ConnectException e){
             e.printStackTrace();
@@ -158,7 +149,6 @@ public class ServerProxy implements IServer {
     @Override
     public GameCreateObjectResult gameCreate(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String gameName) {
         String gameCreateCommand = "/games/create";
-
         GameCreateObject gameCreateObject = new GameCreateObject(randomTiles, randomNumbers, randomPorts, gameName);
         String postData = gameCreateObject.toJSON();
 
@@ -197,10 +187,14 @@ public class ServerProxy implements IServer {
     @Override
     public boolean gameJoin(String userCookie, int gameID, CatanColor color) {
         String gameJoinCommand = "/games/join";
-        
+        GameJoinObject gameJoinObject = new GameJoinObject(gameID, color);
+        String postData = gameJoinObject.toJSON();
 
         try{
-            String result = doPostCommand(gameJoinCommand, "");
+            String result = doPostCommand(gameJoinCommand, postData);
+
+            return true;
+
         }
         catch(ConnectException e){
             e.printStackTrace();
@@ -222,8 +216,18 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonObject gameModelVersion(int versionNumber) {
-        String gameModelCommand = "/game/model";
+    public String gameModelVersion(int versionNumber) {
+        String gameModelCommand = "/game/model?version=" + versionNumber ;
+
+        try{
+            String result = doGetCommand(gameModelCommand);
+
+            return result;
+
+        }
+        catch(ConnectException e) {
+            e.printStackTrace();
+        }
         return null;
     }
 
