@@ -41,7 +41,15 @@ public class GeneralPort extends Port {
      */
     @Override
     public boolean canTrade(Player player) {
-        Game.getInstance().
+        if (!super.canTrade(player)) {
+            return false;
+        }
+        //checks that the player has enough resources to trade 3:1
+        return player.getResourceCards().getBrick() >= 3 ||
+                player.getResourceCards().getOre() >=3 ||
+                player.getResourceCards().getSheep() >= 3 ||
+                player.getResourceCards().getWheat() >= 3 ||
+                player.getResourceCards().getWood() >= 3;
     }
 
     public ResourceType getPortType() {

@@ -240,4 +240,7 @@ public class Player {
     	return playerIndex;
     }
 
+    public CatanColor getColor() {
+        return color;
+    }
 }
