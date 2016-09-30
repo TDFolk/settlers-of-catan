@@ -102,12 +102,12 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonObject gameCreate(java.lang.String gameName) {
+    public boolean gameCreate(String gameName) {
 
         JsonParser parser = new JsonParser();
         JsonObject gameData = parser.parse(gameCreatedExample).getAsJsonObject();
 
-        return gameData;
+        return true;
     }
 
     /**
