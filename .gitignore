@@ -12,3 +12,5 @@ java/.classpath
 
 java/.project
 >>>>>>> origin/master
+java/dist/catan-client.jar
+*.jar
