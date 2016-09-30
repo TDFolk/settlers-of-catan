@@ -89,7 +89,7 @@ public interface IServer {
      * @param versionNumber version number of the game
      * @return JSON object of the model
      */
-    public JsonObject gameModelVersion(int versionNumber);
+    public String gameModelVersion(int versionNumber);
 
     /**
      * Returns a list of supported AI player types (LARGEST_ARMY is the only supported type currently)
