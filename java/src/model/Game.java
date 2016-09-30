@@ -17,6 +17,8 @@ public class Game {
     private Bank bank;
     private Map map;
     private List<Player> players;
+    private Player user;
+
     /**
      * the player currently in possession of the longest road, begins as null
      */
@@ -54,4 +56,12 @@ public class Game {
     public Map getMap() {
         return map;
     }
+
+    public Bank getBank(){return bank; }
+
+    public List<Player> getPlayers(){return players; }
+
+    public Player getUser(){return user;}
+
+
 }
