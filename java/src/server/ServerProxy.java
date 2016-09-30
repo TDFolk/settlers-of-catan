@@ -549,6 +549,7 @@ public class ServerProxy implements IServer {
                         InputStream input = connection.getInputStream();
                         return getResponseBodyData(input);
                     }
+                    i++;
                 }
             }
             else {
