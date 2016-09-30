@@ -99,6 +99,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public JsonArray gameList() {
+        String gameListCommand = "/games/list";
 
         return null;
     }
@@ -115,6 +116,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public JsonObject gameCreate(String gameName) {
+        String gameCreateCommand = "/games/create";
         return null;
     }
 
@@ -135,6 +137,8 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean gameJoin(String userCookie, int gameID, CatanColor color) {
+        String gameJoinCommand = "/games/join";
+
         return false;
     }
 
@@ -152,6 +156,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public JsonObject gameModelVersion(int versionNumber) {
+        String gameModelCommand = "/game/model";
         return null;
     }
 
@@ -165,6 +170,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public JsonArray gameListAI() {
+        String gameListAICommand = "/game/listAI";
         return null;
     }
 
@@ -180,6 +186,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean gameAddAI(String typeAI) {
+        String gameAddAICommand = "/game/addAI";
         return false;
     }
 
@@ -193,6 +200,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean sendChat(String content) {
+        String sendChatCommand = "/moves/sendChat";
         return false;
     }
 
@@ -209,6 +217,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean acceptTrade(boolean willAccept) {
+        String acceptTradeCommand = "/moves/acceptTrade";
         return false;
     }
 
@@ -225,6 +234,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean discardCards(JsonObject discardedCards) {
+        String discardCardsCommand = "/moves/discardCards";
         return false;
     }
 
@@ -240,6 +250,8 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean rollNumber(int number) {
+        String rollNumberCommand = "/moves/rollNumber";
+
         return false;
     }
 
@@ -260,6 +272,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean buildRoad(boolean isFree, EdgeLocation roadLocation) {
+        String buildRoadCommand = "/moves/buildRoad";
         return false;
     }
 
@@ -278,6 +291,8 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean buildSettlement(boolean isFree, VertexLocation vertexLocation) {
+        String buildSettlementCommand = "/moves/buildSettlement";
+
         return false;
     }
 
@@ -294,6 +309,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean buildCity(VertexLocation vertexLocation) {
+        String buildCityCommand = "/moves/buildCity";
         return false;
     }
 
@@ -308,6 +324,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean offerTrade(JsonObject offer, int receiver) {
+        String offerTradeCommand = "/moves/offerTrade";
         return false;
     }
 
@@ -325,6 +342,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource) {
+        String maritimeTradeCommand = "/moves/maritimeTrade";
         return false;
     }
 
@@ -342,6 +360,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean robPlayer(HexLocation location, int victimIndex) {
+        String robPlayerCommand = "/moves/robPlayer";
         return false;
     }
 
@@ -352,7 +371,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public void finishTurn() {
-
+        String finishTurnCommand = "/moves/finishTurn";
     }
 
     /**
@@ -365,7 +384,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public void buyDevCard() {
-
+        String buyDevCardCommand = "/moves/buyDevCard";
     }
 
     /**
@@ -384,6 +403,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean soldier(HexLocation location, int victimIndex) {
+        String soldierCommand = "/moves/Soldier";
         return false;
     }
 
@@ -398,6 +418,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean yearOfPlenty(ResourceType resource1, ResourceType resource2) {
+        String yearOfPlentyCommand = "/moves/Year_of_Plenty";
         return false;
     }
 
@@ -418,6 +439,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean roadBuilding(EdgeLocation spot1, EdgeLocation spot2) {
+        String roadBuildingCommand = "/moves/Road_Building";
         return false;
     }
 
@@ -431,6 +453,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public boolean monopoly(ResourceType resource) {
+        String monopolyCommand = "/moves/Monopoly";
         return false;
     }
 
@@ -442,7 +465,7 @@ public class ServerProxy implements IServer {
      */
     @Override
     public void monument() {
-
+        String monumentCommand = "/moves/Monument";
     }
 
     private String doPostCommand (String methodName, Object output) throws ConnectException{
