@@ -7,7 +7,8 @@ public class RunTests {
     public static void main(String[] args) {
         String[] testClasses = new String[]
                 {
-                        "server.ServerPollerTest"
+                        "server.ServerPollerTest",
+                        "model.PlayerTest"
                 };
         org.junit.runner.JUnitCore.main(testClasses);
     }
