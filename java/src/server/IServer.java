@@ -2,14 +2,13 @@ package server;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import command.user.LoginObject;
+import command.user.RegisterObject;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
-
-import java.util.Set;
-import java.util.TreeSet;
 
 /**
  * This interface provides the means of communicating with the server back and forth.
@@ -22,8 +21,8 @@ public interface IServer {
      * @pre username not null, password not null
      * @post if successful, server returns 200 HTTP success response, HTTP response headers set the catan.user cookie
      *          if invalid, returns a 400 HTTP response with an error message
-     * @param username String username of player
-     * @param password String password of player
+     * @param username player username to login with
+     * @param password player password to login with
      * @return success of login
      */
     public boolean userLogin(String username, String password);
@@ -34,8 +33,8 @@ public interface IServer {
      * @post if successful, server returns 200 HTTP success response and new account gets created
      *          HTTP response headers set the catan.user cookie
      *          if invalid, returns a 400 HTTP response with an error message
-     * @param username String username of player
-     * @param password String password of player
+     * @param username player username to register with
+     * @param password player password to register with
      * @return success of registration
      */
     public boolean userRegister(String username, String password);

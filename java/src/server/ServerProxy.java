@@ -1,7 +1,11 @@
 package server;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import command.game.GameListObject;
+import command.user.LoginObject;
+import command.user.RegisterObject;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -27,11 +31,9 @@ public class ServerProxy implements IServer {
     private String host = "localhost";
     private String port = "8081";
     private String baseUrl = "http://" + host + ":" + port;
-//    private final String HTTP_GET = "GET";
-//    private final String HTTP_POST = "POST";
     private String catanUser = null;
     private String catanGame = null;
-    private String cookie;
+    private String cookie = null;
 
     public ServerProxy(){
 
@@ -48,13 +50,11 @@ public class ServerProxy implements IServer {
         this.baseUrl = "http://" + host + ":" + port;
     }
 
-
-
     /**
      * Logs the caller in to the server, sets their catan.user HTTP cookie
      *
-     * @param username String username of player
-     * @param password String password of player
+     * @param username player username to login with
+     * @param password player password to login with
      * @return success of login
      * @pre username not null, password not null
      * @post if successful, server returns 200 HTTP success response, HTTP response headers set the catan.user cookie
@@ -63,11 +63,20 @@ public class ServerProxy implements IServer {
     @Override
     public boolean userLogin(String username, String password) {
         String loginCommand = "/user/login";
+        LoginObject loginObject = new LoginObject(username, password);
+        String postData = loginObject.toJSON();
+
         try{
-            doGetCommand(loginCommand);
+            String result = doPostCommand(loginCommand, postData);
+            if(result.equals("Success")){
+                return true;
+            }
+            else{
+                return false;
+            }
         }
-        catch(ConnectException ce) {
-            ce.printStackTrace();
+        catch(ConnectException e) {
+            e.printStackTrace();
         }
         return false;
     }
@@ -75,8 +84,8 @@ public class ServerProxy implements IServer {
     /**
      * Creates a new user account, logs the caller in to server as a new user, and sets their catan.user HTTP cookie
      *
-     * @param username String username of player
-     * @param password String password of player
+     * @param username player name to register with
+     * @param password player password to register with
      * @return success of registration
      * @pre username not null, password not null
      * @post if successful, server returns 200 HTTP success response and new account gets created
@@ -86,6 +95,21 @@ public class ServerProxy implements IServer {
     @Override
     public boolean userRegister(String username, String password) {
         String registerCommand = "/user/register";
+        RegisterObject registerObject = new RegisterObject(username, password);
+        String postData = registerObject.toJSON();
+
+        try{
+            String result = doPostCommand(registerCommand, postData);
+            if(result.equals("Success")){
+                return true;
+            }
+            else{
+                return false;
+            }
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
         return false;
     }
 
@@ -100,6 +124,17 @@ public class ServerProxy implements IServer {
     @Override
     public JsonArray gameList() {
         String gameListCommand = "/games/list";
+        Gson gson = new Gson();
+
+        try{
+            String result = doGetCommand(gameListCommand);
+
+            GameListObject game = gson.fromJson(result, GameListObject.class);
+
+        }
+        catch(ConnectException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
@@ -486,6 +521,7 @@ public class ServerProxy implements IServer {
             osw.write(output.toString());
             osw.flush();
 
+            //if the connection returns a 200, do this
             if(connection.getResponseCode() == connection.HTTP_OK){
                 String header;
                 int i = 1;
@@ -504,8 +540,6 @@ public class ServerProxy implements IServer {
                 throw new ConnectException(String.format("doPostCommand failed... %s (http code %d)", methodName,
                         connection.getResponseCode()));
             }
-
-
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -523,8 +557,10 @@ public class ServerProxy implements IServer {
             HttpURLConnection connection = (HttpURLConnection)url.openConnection();
             connection.setRequestMethod("GET");
 
+
             if(cookie != null) {
                 connection.setRequestProperty("Cookie", cookie);
+                //connection.connect();
             }
 //            if(catanUser != null && catanGame != null) {
 //                connection.setRequestProperty("Cookie", "catan.user=" + catanUser + "; catan.game=" + catanGame);
