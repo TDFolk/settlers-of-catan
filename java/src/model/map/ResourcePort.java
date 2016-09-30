@@ -1,5 +1,6 @@
-package model;
+package model.map;
 
+import model.Player;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 

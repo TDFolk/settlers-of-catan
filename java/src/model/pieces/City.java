@@ -1,6 +1,7 @@
-package model;
+package model.pieces;
 
 import exception.PlacementException;
+import model.ResourceValues;
 import shared.definitions.CatanColor;
 import shared.locations.VertexLocation;
 
@@ -8,7 +9,7 @@ import shared.locations.VertexLocation;
  * Created by kcwillmore on 9/17/16.
  */
 public class City extends Building {
-    private static final ResourceValues RESOURCE_VALUES = new ResourceValues(0,3,0,2,0);
+    private static final ResourceValues COST = new ResourceValues(0,3,0,2,0);
 
     /**
      * City constructor
@@ -21,7 +22,7 @@ public class City extends Building {
     }
 
     /**
-     * Replaces a Settlement on the Map with a City instead
+     * Replaces a Settlement on the map with a City instead
      * @pre There must be a Settlement of the same color at the specified location
      * @post The Settlement is replaced with a City at the specified VertexLocation
      * @param location The vertex to place the City

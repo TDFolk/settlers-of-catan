@@ -1,5 +1,6 @@
-package model;
+package model.pieces;
 
+import model.Player;
 import shared.locations.HexLocation;
 
 /**

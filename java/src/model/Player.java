@@ -1,5 +1,8 @@
 package model;
 
+import model.pieces.City;
+import model.pieces.Road;
+import model.pieces.Settlement;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;

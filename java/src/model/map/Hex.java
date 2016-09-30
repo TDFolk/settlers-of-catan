@@ -1,4 +1,4 @@
-package model;
+package model.map;
 
 import shared.definitions.ResourceType;
 import shared.locations.HexLocation;

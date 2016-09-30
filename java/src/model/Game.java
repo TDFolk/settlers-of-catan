@@ -1,5 +1,7 @@
 package model;
 
+import model.map.Map;
+
 import java.util.List;
 
 /**
@@ -49,5 +51,7 @@ public class Game {
         versionNumber++;
     }
 
-
+    public Map getMap() {
+        return map;
+    }
 }

@@ -1,5 +1,7 @@
-package model;
+package model.map;
 
+import model.Game;
+import model.Player;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 
@@ -39,7 +41,7 @@ public class GeneralPort extends Port {
      */
     @Override
     public boolean canTrade(Player player) {
-        return false;
+        Game.getInstance().
     }
 
     public ResourceType getPortType() {

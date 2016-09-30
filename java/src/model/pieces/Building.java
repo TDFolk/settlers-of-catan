@@ -1,4 +1,4 @@
-package model;
+package model.pieces;
 
 import shared.definitions.CatanColor;
 import shared.locations.VertexLocation;
@@ -20,5 +20,13 @@ public abstract class Building {
 	public Building(CatanColor color, VertexLocation location) {
 		this.color = color;
 		this.location = location;
+	}
+
+	public CatanColor getColor() {
+		return color;
+	}
+
+	public VertexLocation getLocation() {
+		return location;
 	}
 }
