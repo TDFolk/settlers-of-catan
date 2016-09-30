@@ -3,6 +3,8 @@ package server;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import command.game.GameCreateObject;
+import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
 import command.user.LoginObject;
 import command.user.RegisterObject;
@@ -122,23 +124,25 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameList() {
+    public GameListObject gameList() {
         String gameListCommand = "/games/list";
         Gson gson = new Gson();
 
         try{
             String result = doGetCommand(gameListCommand);
-            GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
 
+            GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
             //set the game list object so that we can fetch it from somewhere else
             GameListObject games = new GameListObject();
             games.setGameList(gameList);
-            return true;
+
+            //returns the list of the existing games
+            return games;
         }
         catch(ConnectException e) {
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     /**
@@ -152,22 +156,27 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameCreate(String gameName) {
+    public GameCreateObjectResult gameCreate(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String gameName) {
         String gameCreateCommand = "/games/create";
 
-        String postData = "";
-
+        GameCreateObject gameCreateObject = new GameCreateObject(randomTiles, randomNumbers, randomPorts, gameName);
+        String postData = gameCreateObject.toJSON();
 
         try{
+            //fetch the response body from the server
             String result = doPostCommand(gameCreateCommand, postData);
+            //GameCreateObjectResult response = new GameCreateObjectResult();
 
-
-            return true;
+            //create the object that will hold the response body from server...
+            //use gson to create a new object and return it
+            Gson gson = new Gson();
+            GameCreateObjectResult response = gson.fromJson(result, GameCreateObjectResult.class);
+            return response;
         }
         catch(ConnectException e){
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     /**
@@ -188,6 +197,14 @@ public class ServerProxy implements IServer {
     @Override
     public boolean gameJoin(String userCookie, int gameID, CatanColor color) {
         String gameJoinCommand = "/games/join";
+        
+
+        try{
+            String result = doPostCommand(gameJoinCommand, "");
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
 
         return false;
     }
