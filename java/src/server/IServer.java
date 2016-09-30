@@ -2,6 +2,7 @@ package server;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import command.game.GameListObject;
 import command.user.LoginObject;
 import command.user.RegisterObject;
 import shared.definitions.CatanColor;
@@ -46,7 +47,7 @@ public interface IServer {
      *          if invalid, returns a 400 HTTP response with an error message
      * @return JSONArray containing a list of objects about the server's games
      */
-    public JsonArray gameList();
+    public boolean gameList();
 
     /**
      * Creates a new game on the server
@@ -57,7 +58,7 @@ public interface IServer {
      * @param gameName String gameName of the new game
      * @return a JSON object containing properties of the newly created game
      */
-    public JsonObject gameCreate(String gameName);
+    public boolean gameCreate(String gameName);
 
     /**
      * Adds the player to the specified game and sets their catan.game cookie

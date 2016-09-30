@@ -122,21 +122,23 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonArray gameList() {
+    public boolean gameList() {
         String gameListCommand = "/games/list";
         Gson gson = new Gson();
 
         try{
             String result = doGetCommand(gameListCommand);
+            GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
 
-            GameListObject game = gson.fromJson(result, GameListObject.class);
-
+            //set the game list object so that we can fetch it from somewhere else
+            GameListObject games = new GameListObject();
+            games.setGameList(gameList);
+            return true;
         }
         catch(ConnectException e) {
             e.printStackTrace();
         }
-
-        return null;
+        return false;
     }
 
     /**
@@ -150,9 +152,22 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonObject gameCreate(String gameName) {
+    public boolean gameCreate(String gameName) {
         String gameCreateCommand = "/games/create";
-        return null;
+
+        String postData = "";
+
+
+        try{
+            String result = doPostCommand(gameCreateCommand, postData);
+
+
+            return true;
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+        return false;
     }
 
     /**
@@ -534,6 +549,7 @@ public class ServerProxy implements IServer {
                         InputStream input = connection.getInputStream();
                         return getResponseBodyData(input);
                     }
+                    i++;
                 }
             }
             else {
