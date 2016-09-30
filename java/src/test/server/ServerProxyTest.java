@@ -1,5 +1,6 @@
 package server;
 
+import static org.junit.Assert.*;
 import java.util.concurrent.ThreadLocalRandom;
 import org.junit.Before;
 import org.junit.Test;
@@ -14,7 +15,7 @@ public class ServerProxyTest {
     String port = "8081";
     String username;
     String password;
-    int infoLength = 30;
+    int infoLength = 15;
 
     @Before
     public void initialize()
@@ -25,14 +26,15 @@ public class ServerProxyTest {
 
     @Test
     public void userRegister()
-    {
-
+    {   System.out.println("Registering\nUsername: " + username + " Password: " + password);
+        assertTrue(proxy.userRegister(username, password));
     }
 
     @Test
     public void userLogin()
     {
-
+        System.out.println("Logging in\nUsername: " + username + " Password: " + password);
+        assertTrue(proxy.userLogin(username, password));
     }
 
     public void createRandomUserInfo()
@@ -42,7 +44,7 @@ public class ServerProxyTest {
 
         for(int i = 0; i < infoLength; i++)
         {
-            char nextLetter = (char)ThreadLocalRandom.current().nextInt(97,123+1);
+            char nextLetter = (char)ThreadLocalRandom.current().nextInt(97,122+1);
 
             newName.append(nextLetter);
         }
@@ -51,15 +53,13 @@ public class ServerProxyTest {
 
         for(int i = 0; i < infoLength; i++)
         {
-            char nextLetter = (char)ThreadLocalRandom.current().nextInt(97,123+1);
+            char nextLetter = (char)ThreadLocalRandom.current().nextInt(97,122+1);
 
             newPass.append(nextLetter);
         }
 
         this.password = newPass.toString();
 
-        System.out.println(username);
-        System.out.println(password);
     }
 
 
