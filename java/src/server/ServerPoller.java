@@ -20,18 +20,17 @@ public class ServerPoller {
      */
     private IServer proxy;
     private final long TIME_INTERVAL = 1000;
-    private int versionNumber = 0;
     private static JsonObject currentModel;
 
     Timer myTimer = new Timer();
     TimerTask myTimerTask = new TimerTask() {
         @Override
         public void run() {
-            System.out.println(TIME_INTERVAL/1000  + " second/s");
-            currentModel = proxy.gameModelVersion(versionNumber);
+            //System.out.println(TIME_INTERVAL/1000  + " second/s");
+            currentModel = proxy.gameModelVersion(Facade.getInstance().getVersionNumber());
             if (currentModel != null) {
                 Facade.getInstance().replaceModel(currentModel);
-                versionNumber++;
+                Facade.getInstance().incrementVersionNumber();
             }
         }
     };
@@ -50,7 +49,7 @@ public class ServerPoller {
      * @post will poll the proxy once every TIME_INTERVAL amount of time
      */
     public void startPoller(){
-        myTimer.scheduleAtFixedRate(myTimerTask,0,TIME_INTERVAL);
+        myTimer.scheduleAtFixedRate(myTimerTask,1000,TIME_INTERVAL);
     }
 
     /**Ends the polling cycle
@@ -59,6 +58,14 @@ public class ServerPoller {
      */
     public void stopPoller(){
         myTimer.cancel();
+    }
+
+    public static JsonObject getCurrentModel() {
+        return currentModel;
+    }
+
+    public static void setCurrentModel(JsonObject currentModel) {
+        ServerPoller.currentModel = currentModel;
     }
 
 }

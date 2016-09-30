@@ -11,6 +11,7 @@ import java.util.List;
 public class Game {
     private static Game instance = null;
 
+    private int versionNumber = 0;
     private Bank bank;
     private Map map;
     private List<Player> players;
@@ -39,4 +40,14 @@ public class Game {
     public void initializeData() {
 
     }
+
+    public int getVersionNumber() {
+        return versionNumber;
+    }
+
+    public void incrementVersionNumber() {
+        versionNumber++;
+    }
+
+
 }

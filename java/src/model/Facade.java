@@ -38,9 +38,9 @@ public class Facade {
     /**
      * Updates the client version model by one
      */
-    public void changeVersionNumber()
+    public void incrementVersionNumber()
     {
-        Game.getInstance().changeVersionNumber();
+        Game.getInstance().incrementVersionNumber();
     }
     /**
      * Replaces the old model with the new model returned from the server
