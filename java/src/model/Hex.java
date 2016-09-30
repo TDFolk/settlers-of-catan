@@ -1,14 +1,14 @@
 package model;
 
+import shared.definitions.ResourceType;
 import shared.locations.HexLocation;
-import model.ResourceCard.Resource;
 
 /**
  * Represents a hex tile object used to build the map of the game
  * Created by kcwillmore on 9/17/16.
  */
 public class Hex {
-	private Resource resource;
+	private ResourceType resource;
 	private HexLocation location;
 	private int numberToken;
 	//boolean robbed?
@@ -19,13 +19,13 @@ public class Hex {
 	 * @param location location of the hex on the map
 	 * @param numberToken number that if rolled rewards the given resource
 	 */
-	public Hex(Resource resource, HexLocation location, int numberToken) {
-		
+	public Hex(ResourceType resource, HexLocation location, int numberToken) {
+		this.resource = resource;
+		this.location = location;
+		this.numberToken = numberToken;
 	}
 	
-	
-	
-	public Resource getResourceType() {
+	public ResourceType getResourceType() {
 		return resource;
 	}
 	

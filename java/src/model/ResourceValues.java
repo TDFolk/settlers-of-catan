@@ -1,7 +1,6 @@
 package model;
 
-import model.ResourceCard.Resource;
-import exception.ResourceException;
+import shared.definitions.ResourceType;
 
 /**
  * The value of each of the five Catan resources in an object.
@@ -56,7 +55,7 @@ public class ResourceValues {
         return wood;
     }
     
-    public int getResource(Resource resource) {
+    public int getResource(ResourceType resource) {
     	switch (resource) {
     	case BRICK: return brick;
     	case ORE: return ore;
@@ -87,7 +86,7 @@ public class ResourceValues {
         this.wood = wood;
     }
     
-    public void setResource(Resource resource, int num) {
+    public void setResource(ResourceType resource, int num) {
     	switch (resource) {
     	case BRICK: brick = num; break;
     	case ORE: ore = num; break;

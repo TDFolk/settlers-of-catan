@@ -5,13 +5,13 @@ import java.util.List;
 
 import exception.CardException;
 import exception.ResourceException;
-import model.ResourceCard.Resource; 
 import model.development_cards.DevelopmentCard;
 import model.development_cards.MonopolyCard;
 import model.development_cards.PlentyCard;
 import model.development_cards.RoadBuildingCard;
 import model.development_cards.SoldierCard;
 import model.development_cards.VictoryPointCard;
+import shared.definitions.ResourceType;
 
 /**
  * Created by kcwillmore on 9/17/16.
@@ -47,7 +47,7 @@ public class Bank {
 	 * @throws CardException if there is no card in the deck to draw
 	 * @return if the draw was successful
 	 */
-	public boolean drawResourceCard(Resource resourceType) throws CardException {
+	public boolean drawResourceCard(ResourceType resourceType) throws CardException {
 		int numResources = resourcePool.getResource(resourceType);
 		if (numResources > 0) {
 			resourcePool.setResource(resourceType, numResources - 1);
@@ -78,7 +78,7 @@ public class Bank {
 	 * @param resourceType the resource type to draw
 	 * @return true if a card can be drawn from the specified resource type's deck
 	 */
-	public boolean canDrawResourceCard(Resource resourceType) {
+	public boolean canDrawResourceCard(ResourceType resourceType) {
 		return resourcePool.getResource(resourceType) > 0;
 	}
 	

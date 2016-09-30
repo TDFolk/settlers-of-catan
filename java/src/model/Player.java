@@ -1,6 +1,7 @@
 package model;
 
 import shared.definitions.CatanColor;
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
@@ -9,7 +10,6 @@ import java.util.List;
 import exception.CardException;
 import exception.PlacementException;
 import exception.ResourceException;
-import model.ResourceCard.Resource;
 import model.development_cards.DevelopmentCard;
 
 /**
@@ -52,7 +52,7 @@ public class Player {
      * @throws CardException if there is no card in the bank's resource deck
      * @param type the type of resource card to draw
      */
-    public void drawResourceCard(Resource type) throws CardException {
+    public void drawResourceCard(ResourceType type) throws CardException {
     	
     }
     

@@ -1,5 +1,6 @@
 package model;
 
+import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 
 /**
@@ -9,14 +10,14 @@ import shared.locations.EdgeLocation;
  */
 public class GeneralPort extends Port {
 
-    private ResourceCard.Resource portType;
+    private ResourceType portType;
 
     /**
      * Constructor for port
      *
      * @param location location of the selected port
      */
-    public GeneralPort(EdgeLocation location, ResourceCard.Resource portType) {
+    public GeneralPort(EdgeLocation location, ResourceType portType) {
         super(location);
         this.portType = portType;
     }
@@ -41,7 +42,7 @@ public class GeneralPort extends Port {
         return false;
     }
 
-    public ResourceCard.Resource getPortType() {
+    public ResourceType getPortType() {
         return portType;
     }
 }
