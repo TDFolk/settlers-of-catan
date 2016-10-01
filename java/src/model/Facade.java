@@ -114,5 +114,5 @@ public class Facade {
      * Replaces the old model with the new model returned from the server
      * @param newModel the new model returned from the server
      */
-    public void replaceModel(JsonObject newModel) {}
+    public void replaceModel(String newModel) {}
 }

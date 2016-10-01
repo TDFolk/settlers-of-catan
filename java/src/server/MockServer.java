@@ -154,12 +154,12 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonObject gameModelVersion(int versionNumber) {
+    public String gameModelVersion(int versionNumber) {
 
-        JsonParser parser = new JsonParser();
-        JsonObject newModel = parser.parse(jsonModelExample).getAsJsonObject();
+//        JsonParser parser = new JsonParser();
+//        JsonObject newModel = parser.parse(jsonModelExample).getAsJsonObject();
 
-        return newModel;
+        return jsonModelExample;
     }
 
     /**

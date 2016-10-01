@@ -20,7 +20,7 @@ public class ServerPoller {
      */
     private IServer proxy;
     private final long TIME_INTERVAL = 1000;
-    private static JsonObject currentModel;
+    private String currentModel;
 
     Timer myTimer = new Timer();
     TimerTask myTimerTask = new TimerTask() {
@@ -60,12 +60,12 @@ public class ServerPoller {
         myTimer.cancel();
     }
 
-    public static JsonObject getCurrentModel() {
+    public String getCurrentModel() {
         return currentModel;
     }
 
-    public static void setCurrentModel(JsonObject currentModel) {
-        ServerPoller.currentModel = currentModel;
+    public void setCurrentModel(String currentModel) {
+        this.currentModel = currentModel;
     }
 
 }
