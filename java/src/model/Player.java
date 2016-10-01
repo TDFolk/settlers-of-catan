@@ -4,10 +4,13 @@ import model.pieces.City;
 import model.pieces.Road;
 import model.pieces.Settlement;
 import shared.definitions.CatanColor;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import exception.CardException;
@@ -41,7 +44,9 @@ public class Player {
      * Constructs a new player for the start of a game
      */
     public Player() {
-    	
+    	resourceCards = new ResourceValues(0,0,0,0,0);
+        developmentCards = new ArrayList<>();
+        victoryPoints = 0;
     }
 
     public ResourceValues getResourceCards() {
@@ -56,7 +61,9 @@ public class Player {
      * @param type the type of resource card to draw
      */
     public void drawResourceCard(ResourceType type) throws CardException {
-    	
+        Game.getInstance().getBank().drawResourceCard(type);
+        int numberOfResource = resourceCards.getResource(type);
+        resourceCards.setResource(type, numberOfResource + 1);
     }
     
     /**
@@ -70,7 +77,10 @@ public class Player {
      * @throws PlacementException if the settlement cannot be placed at the specified location
      */
     public void buySettlement(VertexLocation vertex) throws ResourceException, PlacementException {
-    	
+        if (canBuySettlement()) {
+            resourceCards.reduceResources(Settlement.COST);
+            Game.getInstance().getBank().purchaseSettlement();
+        }
     }
     
     /**
@@ -84,7 +94,10 @@ public class Player {
      * @throws PlacementException if the city cannot be placed at the specified location
      */
     public void buyCity(VertexLocation vertex) throws ResourceException, PlacementException {
-    	
+        if (canBuyCity()) {
+            resourceCards.reduceResources(City.COST);
+            Game.getInstance().getBank().purchaseCity();
+        }
     }
     
     /**
@@ -98,7 +111,10 @@ public class Player {
      * @throws PlacementException if the road cannot be placed at the specified location
      */
     public void buyRoad(EdgeLocation edge) throws ResourceException, PlacementException {
-    	
+    	if (canBuyRoad()) {
+    	    resourceCards.reduceResources(Road.COST);
+            Game.getInstance().getBank().purchaseRoad();
+        }
     }
     
     /**
@@ -107,8 +123,12 @@ public class Player {
      * @post The player has a new development card and has spent the resource cards required
      * @throws ResourceException if the player does not have the resources to buy a development card
      */
-    public void buyDevelopmentCard() throws ResourceException {
-    	
+    public void buyDevelopmentCard() throws ResourceException, CardException {
+    	if (canBuyDevelopmentCard()) {
+    	    resourceCards.reduceResources(DevelopmentCard.COST);
+            Game.getInstance().getBank().purchaseDevCard();
+            developmentCards.add(Game.getInstance().getBank().drawDevelopmentCard());
+        }
     }
     
     /**
@@ -119,7 +139,7 @@ public class Player {
      * @throws CardException if the player does not own the card
      */
     public void playDevelopmentCard(DevelopmentCard card) throws CardException {
-    	
+
     }
     
     /**
@@ -151,7 +171,7 @@ public class Player {
      * @return true if the player has the resources to buy a road
      */
     public boolean canBuyRoad() {
-    	return false;
+    	return resourceCards.canPay(Road.COST);
     }
     
     /**
@@ -159,7 +179,7 @@ public class Player {
      * @return true if the player has the resources to buy a settlement
      */
     public boolean canBuySettlement() {
-    	return false;
+        return resourceCards.canPay(Settlement.COST);
     }
     
     /**
@@ -167,7 +187,7 @@ public class Player {
      * @return true if the player has the resources to buy a city
      */
     public boolean canBuyCity() {
-    	return false;
+        return resourceCards.canPay(City.COST);
     }
     
     /**
@@ -175,7 +195,7 @@ public class Player {
      * @return true if the player has the resources to buy a development card
      */
     public boolean canBuyDevelopmentCard() {
-    	return false;
+    	return resourceCards.canPay(DevelopmentCard.COST);
     }
     
     /**
@@ -183,7 +203,10 @@ public class Player {
      * @param card the card to play
      * @return true if the player owns and can play the card
      */
-    public boolean canPlayDevelopmentCard(DevelopmentCard card) {
+    public boolean canPlayDevelopmentCard(DevCardType card) {
+        if (developmentCards.contains(card)) {
+            return true;
+        }
     	return false;
     }
     
@@ -192,8 +215,8 @@ public class Player {
      * @param cards the cards to be discarded
      * @return true if the player owns the cards and can discard them
      */
-    public boolean canDiscard(List<ResourceCard> cards) {
-    	return false;
+    public boolean canDiscard(ResourceValues cards) {
+        return resourceCards.canPay(cards);
     }
 
     /**
@@ -204,7 +227,7 @@ public class Player {
      * @return true if a settlement can be placed at the specified location
      */
     public boolean canPlaceSettlement(VertexLocation vertex) {
-    	return false;
+    	return true;
     }
     
     /**
@@ -215,7 +238,7 @@ public class Player {
      * @return true if a settlement can be placed at the specified location
      */
     public boolean canPlaceRoad(EdgeLocation edge) {
-    	return false;
+    	return true;
     }
     
     /**
@@ -224,7 +247,7 @@ public class Player {
      * @return Returns true if the player has the resources specified in the offer, false otherwise.
      */
     public boolean canMakeTrade(ResourceValues offer) {
-    	return false;
+    	return resourceCards.canPay(offer);
     }
     
     
@@ -242,5 +265,105 @@ public class Player {
 
     public CatanColor getColor() {
         return color;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setColor(CatanColor color) {
+        this.color = color;
+    }
+
+    public List<Settlement> getSettlements() {
+        return settlements;
+    }
+
+    public void setSettlements(List<Settlement> settlements) {
+        this.settlements = settlements;
+    }
+
+    public List<City> getCities() {
+        return cities;
+    }
+
+    public void setCities(List<City> cities) {
+        this.cities = cities;
+    }
+
+    public List<Road> getRoads() {
+        return roads;
+    }
+
+    public void setRoads(List<Road> roads) {
+        this.roads = roads;
+    }
+
+    public void setResourceCards(ResourceValues resourceCards) {
+        this.resourceCards = resourceCards;
+    }
+
+    public List<DevelopmentCard> getDevelopmentCards() {
+        return developmentCards;
+    }
+
+    public void setDevelopmentCards(List<DevelopmentCard> developmentCards) {
+        this.developmentCards = developmentCards;
+    }
+
+    public List<DevelopmentCard> getNewDevelopmentCards() {
+        return newDevelopmentCards;
+    }
+
+    public void setNewDevelopmentCards(List<DevelopmentCard> newDevelopmentCards) {
+        this.newDevelopmentCards = newDevelopmentCards;
+    }
+
+    public void setPlayerID(PlayerID playerID) {
+        this.playerID = playerID;
+    }
+
+    public boolean isDiscarded() {
+        return discarded;
+    }
+
+    public void setDiscarded(boolean discarded) {
+        this.discarded = discarded;
+    }
+
+    public boolean isPlayedDevCard() {
+        return playedDevCard;
+    }
+
+    public void setPlayedDevCard(boolean playedDevCard) {
+        this.playedDevCard = playedDevCard;
+    }
+
+    public int getMonuments() {
+        return monuments;
+    }
+
+    public void setMonuments(int monuments) {
+        this.monuments = monuments;
+    }
+
+    public int getSoldiers() {
+        return soldiers;
+    }
+
+    public void setSoldiers(int soldiers) {
+        this.soldiers = soldiers;
+    }
+
+    public int getVictoryPoints() {
+        return victoryPoints;
+    }
+
+    public void setVictoryPoints(int victoryPoints) {
+        this.victoryPoints = victoryPoints;
     }
 }

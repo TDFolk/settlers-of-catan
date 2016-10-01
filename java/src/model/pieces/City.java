@@ -9,7 +9,7 @@ import shared.locations.VertexLocation;
  * Created by kcwillmore on 9/17/16.
  */
 public class City extends Building {
-    private static final ResourceValues COST = new ResourceValues(0,3,0,2,0);
+    public static final ResourceValues COST = new ResourceValues(0,3,0,2,0);
 
     /**
      * City constructor

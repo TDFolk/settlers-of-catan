@@ -29,7 +29,7 @@ public class ServerPollerTest {
 
     @Test
     public void stopPoller() throws Exception {
-        System.out.println("Testing Stop Poller...\n");
+        System.out.println("Testing Stop Poller\n");
         test.stopPoller();
         assertTrue(true);
     }

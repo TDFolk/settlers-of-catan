@@ -118,4 +118,20 @@ public class ResourceValues {
     public int size() {
         return brick + ore + sheep + wheat + wood;
     }
+
+    public void reduceResources(ResourceValues cost) {
+        brick -= cost.brick;
+        ore -= cost.ore;
+        sheep -= cost.sheep;
+        wheat -= cost.wheat;
+        wood -= cost.wheat;
+    }
+
+    public void increaseResources(ResourceValues cost) {
+        brick += cost.brick;
+        ore += cost.ore;
+        sheep += cost.sheep;
+        wheat += cost.wheat;
+        wood += cost.wheat;
+    }
 }

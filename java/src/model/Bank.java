@@ -1,7 +1,9 @@
 package model;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 import exception.CardException;
 import exception.ResourceException;
@@ -11,6 +13,9 @@ import model.development_cards.PlentyCard;
 import model.development_cards.RoadBuildingCard;
 import model.development_cards.SoldierCard;
 import model.development_cards.VictoryPointCard;
+import model.pieces.City;
+import model.pieces.Road;
+import model.pieces.Settlement;
 import shared.definitions.ResourceType;
 
 /**
@@ -18,6 +23,7 @@ import shared.definitions.ResourceType;
  */
 public class Bank {
 	private ResourceValues resourcePool;
+
 	private List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 
 	/**
@@ -66,12 +72,16 @@ public class Bank {
 	public DevelopmentCard drawDevelopmentCard() throws CardException {
 		DevelopmentCard card = null;
 		
-		if (developmentCards.size() > 0)
+		if (developmentCards.size() > 0) {
+			long seed = System.nanoTime();
+			Collections.shuffle(developmentCards, new Random(seed));
 			card = developmentCards.remove(0);
+		}
 		else throw new CardException();
 		
 		return card;
 	}
+
 	
 	/**
 	 * Determines if a card is in the specified resource type's deck, and thus can be drawn
@@ -88,5 +98,25 @@ public class Bank {
 	 */
 	public boolean canDrawDevelopmentCard() {
 		return developmentCards.size() > 0;
+	}
+
+	public void purchaseCity() {
+		resourcePool.increaseResources(City.COST);
+	}
+
+	public void purchaseSettlement() {
+		resourcePool.increaseResources(Settlement.COST);
+	}
+
+	public void purchaseRoad() {
+		resourcePool.increaseResources(Road.COST);
+	}
+
+	public void purchaseDevCard() {
+		resourcePool.increaseResources(DevelopmentCard.COST);
+	}
+
+	public List<DevelopmentCard> getDevelopmentCards() {
+		return developmentCards;
 	}
 }
