@@ -280,7 +280,7 @@ public class MockServer implements IServer {
      * if applicable, "longest road" is awarded
      */
     @Override
-    public String buildRoad(int playerIndex, RoadLocation roadLocation, boolean free) {
+    public String buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free) {
 
         return jsonModelExample;
     }
