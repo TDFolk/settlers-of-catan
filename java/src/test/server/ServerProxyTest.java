@@ -43,6 +43,9 @@ public class ServerProxyTest {
         result = proxy.gameCreate(true, true, true, "New Game! :D");
         assertNotNull(result);
 
+        //GAME JOIN!!!!-----------------------------------------------------------------------------------
+        //assertTrue(proxy.gameJoin(result.getId(),"red"));
+
     }
 
 
