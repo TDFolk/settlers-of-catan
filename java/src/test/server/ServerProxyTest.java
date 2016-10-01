@@ -48,6 +48,8 @@ public class ServerProxyTest {
 
         //ADD AI------------------------------------------------------------------------------------------
         assertTrue(proxy.gameAddAI("SOME AI!!!"));
+
+        //
     }
 
     @Test
