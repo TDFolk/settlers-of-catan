@@ -205,10 +205,10 @@ public class MockServer implements IServer {
      * @post The chat contains your message at the end
      */
     @Override
-    public boolean sendChat(java.lang.String content) {
+    public String sendChat(int playerIndex, String content) {
 
 
-        return true;
+        return "";
     }
 
     /**
@@ -223,9 +223,9 @@ public class MockServer implements IServer {
      * the trade offer is removed
      */
     @Override
-    public boolean acceptTrade(boolean willAccept) {
+    public String acceptTrade(int playerIndex, boolean willAccept) {
 
-        return true;
+        return "";
     }
 
     /**
