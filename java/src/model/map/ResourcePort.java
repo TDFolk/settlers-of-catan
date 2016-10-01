@@ -41,7 +41,6 @@ public class ResourcePort extends Port {
     @Override
     public boolean canTrade(Player player) {
         return super.canTrade(player) && player.getResourceCards().getResource(portType) >= 2;
-
     }
 
     public ResourceType getPortType() {

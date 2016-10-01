@@ -1,6 +1,5 @@
-package model.development_cards;
+package model.cards_resources;
 
-import model.ResourceCards;
 import shared.definitions.DevCardType;
 
 /**

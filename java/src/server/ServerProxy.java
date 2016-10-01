@@ -6,7 +6,7 @@ import command.game.*;
 import command.player.*;
 import command.user.LoginObject;
 import command.user.RegisterObject;
-import model.ResourceCards;
+import model.cards_resources.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;

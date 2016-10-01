@@ -9,6 +9,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,19 +21,22 @@ public class Map {
 	private List<Building> buildings;
 	private List<Road> roads;
 	private List<Port> ports;
-	private int radius;
+
 
 	/**
 	 * Constructor of a map
-	 * Initializes the dice number tokens that go on the hexes
-	 * Creates hexes, puts number tokens on them. Also creates the ocean hexes
+	 * all the info is pre-made by the database and packaged here for y(our) convenience
 	 *
-	 * @param radius  The radius of the map (it includes the center hex, and the ocean hexes)
+	 * @param hexes that make up the map
+	 * @param buildings on the map
+	 * @param roads on the map
+	 * @param ports on the map
 	 */
-	public Map(int radius) {
-		int[] numberTokens = {2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12};
-
-		this.radius = radius;
+	public Map(List<Hex> hexes, List<Building> buildings, List<Road> roads, List<Port> ports) {
+		this.hexes = hexes;
+		this.buildings = buildings;
+		this.roads = roads;
+		this.ports = ports;
 	}
 
 	/**

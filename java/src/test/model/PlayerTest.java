@@ -1,7 +1,7 @@
 package model;
 
-import model.development_cards.DevelopmentCard;
-import model.development_cards.RoadBuildingCard;
+import model.cards_resources.DevelopmentCard;
+import model.cards_resources.ResourceCards;
 import org.junit.Before;
 import org.junit.Test;
 import shared.definitions.DevCardType;
