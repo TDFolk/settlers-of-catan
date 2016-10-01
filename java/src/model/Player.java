@@ -246,13 +246,9 @@ public class Player {
      * @param offer the resources being offered for the trade
      * @return Returns true if the player has the resources specified in the offer, false otherwise.
      */
-<<<<<<< HEAD
+
     public boolean canMakeTrade(ResourceCards offer) {
     	return resourceCards.canPay(offer);
-=======
-    public boolean canMakeTrade(ResourceCards offer) {
-    	return false;
->>>>>>> origin/master
     }
     
     

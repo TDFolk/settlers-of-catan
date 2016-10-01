@@ -119,7 +119,7 @@ public class ResourceCards {
         return brick + ore + sheep + wheat + wood;
     }
 
-    public void reduceResources(ResourceValues cost) {
+    public void reduceResources(ResourceCards cost) {
         brick -= cost.brick;
         ore -= cost.ore;
         sheep -= cost.sheep;
@@ -127,7 +127,7 @@ public class ResourceCards {
         wood -= cost.wheat;
     }
 
-    public void increaseResources(ResourceValues cost) {
+    public void increaseResources(ResourceCards cost) {
         brick += cost.brick;
         ore += cost.ore;
         sheep += cost.sheep;
