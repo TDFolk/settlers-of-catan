@@ -1,13 +1,8 @@
 package server;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import command.game.GameCreateObject;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
-import command.game.GameListObjectResult;
-import command.user.LoginObject;
-import command.user.RegisterObject;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -50,7 +45,7 @@ public interface IServer {
      *          if invalid, returns a 400 HTTP response with an error message
      * @return JSONArray containing a list of objects about the server's games
      */
-    public GameListObjectResult gameList();
+    public GameListObject[] gameList();
 
     /**
      * Creates a new game on the server

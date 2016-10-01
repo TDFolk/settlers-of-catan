@@ -1,7 +1,6 @@
 package server;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import command.game.*;
 import command.user.LoginObject;
@@ -112,7 +111,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public GameListObjectResult gameList() {
+    public GameListObject[] gameList() {
         String gameListCommand = "/games/list";
         Gson gson = new Gson();
 
@@ -121,11 +120,11 @@ public class ServerProxy implements IServer {
 
             GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
 
-            GameListObjectResult games = new GameListObjectResult();
-            games.setGameList(gameList);
+//            GameListObjectResult games = new GameListObjectResult();
+//            games.setGameList(gameList);
 
             //returns the list of the existing games
-            return games;
+            return gameList;
         }
         catch(ConnectException e) {
             e.printStackTrace();
