@@ -53,6 +53,27 @@ public class Player {
         victoryPoints = 0;
     }
 
+    public Player(String name, CatanColor color, List<Settlement> settlements, List<City> cities, List<Road> roads,
+                  ResourceCards resourceCards, List<DevelopmentCard> developmentCards,
+                  List<DevelopmentCard> newDevelopmentCards, PlayerID playerID, int playerIndex, boolean discarded,
+                  boolean playedDevCard, int monuments, int soldiers, int victoryPoints) {
+        this.name = name;
+        this.color = color;
+        this.settlements = settlements;
+        this.cities = cities;
+        this.roads = roads;
+        this.resourceCards = resourceCards;
+        this.developmentCards = developmentCards;
+        this.newDevelopmentCards = newDevelopmentCards;
+        this.playerID = playerID;
+        this.playerIndex = playerIndex;
+        this.discarded = discarded;
+        this.playedDevCard = playedDevCard;
+        this.monuments = monuments;
+        this.soldiers = soldiers;
+        this.victoryPoints = victoryPoints;
+    }
+
     public ResourceCards getResourceCards() {
         return resourceCards;
     }

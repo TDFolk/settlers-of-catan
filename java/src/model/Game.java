@@ -31,7 +31,6 @@ public class Game {
 
     private Game() {}
 
-
     public static Game getInstance() {
         if(instance == null) {
             instance = new Game();

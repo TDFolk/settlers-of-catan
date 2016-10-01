@@ -12,7 +12,8 @@ public class PlayerID {
 	 * @throws PlayerIDException if the id specified is outside the domain [0, 3]
 	 */
 	public PlayerID(int id) throws PlayerIDException {
-		
+		if (id < 0 || id > 3) throw new PlayerIDException();
+		this.id = id;
 	}
 		
 	public int getID() {
