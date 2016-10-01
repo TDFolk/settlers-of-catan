@@ -6,6 +6,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
+import command.player.DiscardedCards;
+import command.player.RoadLocation;
 import model.ResourceCards;
 import server.IServer;
 import shared.definitions.CatanColor;
@@ -136,7 +138,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameJoin(java.lang.String userCookie, int gameID, CatanColor color) {
+    public boolean gameJoin( int gameID, CatanColor color) {
 
 
         return true;
@@ -241,7 +243,7 @@ public class MockServer implements IServer {
      * if you're the last one to discard, the client model status changes to 'Robbing'
      */
     @Override
-    public String discardCards(int playerIndex, ResourceCards discardedCards) {
+    public String discardCards(int playerIndex, DiscardedCards discardedCards) {
 
 
         return jsonModelExample;
@@ -266,7 +268,7 @@ public class MockServer implements IServer {
     /**
      * Builds a road
      *
-     * @param isFree       whether or not you get this piece for free (i.e., setup)
+     * @param free       whether or not you get this piece for free (i.e., setup)
      * @param roadLocation the new road's location
      * @return success of built road
      * @pre The road location is open;
@@ -279,9 +281,9 @@ public class MockServer implements IServer {
      * if applicable, "longest road" is awarded
      */
     @Override
-    public boolean buildRoad(boolean isFree, EdgeLocation roadLocation) {
+    public String buildRoad(int playerIndex, RoadLocation roadLocation, boolean free) {
 
-        return true;
+        return jsonModelExample;
     }
 
     /**
