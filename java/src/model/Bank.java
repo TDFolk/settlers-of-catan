@@ -21,12 +21,7 @@ import shared.definitions.ResourceType;
  * Created by kcwillmore on 9/17/16.
  */
 public class Bank {
-<<<<<<< HEAD
-	private ResourceValues resourcePool;
-
-=======
 	private ResourceCards resourcePool;
->>>>>>> origin/master
 	private List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 
 	/**
