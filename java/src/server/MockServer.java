@@ -6,7 +6,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
-import command.game.GameListObjectResult;
 import server.IServer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -85,7 +84,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public GameListObjectResult gameList() {
+    public GameListObject[] gameList() {
 
 //        JsonParser parser = new JsonParser();
 //
@@ -93,7 +92,7 @@ public class MockServer implements IServer {
 
         Gson gson = new Gson();
 
-        GameListObjectResult list = gson.fromJson(gameListAIExample, GameListObjectResult.class);
+        GameListObject list[] = gson.fromJson(gameListExample, GameListObject[].class);
         return list;
     }
 

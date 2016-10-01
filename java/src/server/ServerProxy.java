@@ -3,6 +3,8 @@ package server;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import command.game.*;
+import command.player.AcceptTradeObject;
+import command.player.SendChatObject;
 import command.user.LoginObject;
 import command.user.RegisterObject;
 import shared.definitions.CatanColor;
@@ -269,7 +271,7 @@ public class ServerProxy implements IServer {
         String postData = gameAddAIObject.toJSON();
 
         try{
-            String result = doPostCommand(gameAddAICommand, postData);
+            doPostCommand(gameAddAICommand, postData);
             return true;
         }
         catch(ConnectException e) {
@@ -287,18 +289,20 @@ public class ServerProxy implements IServer {
      * @post The chat contains your message at the end
      */
     @Override
-    public boolean sendChat(String content) {
+    public String sendChat(int playerIndex, String content) {
         String sendChatCommand = "/moves/sendChat";
-
+        SendChatObject sendChatObject = new SendChatObject(playerIndex, content);
+        String postData = sendChatObject.toJSON();
 
         try{
-            String result = doPostCommand(sendChatCommand, "");
+            return doPostCommand(sendChatCommand, postData);
+
         }
         catch(ConnectException e){
             e.printStackTrace();
         }
 
-        return false;
+        return null;
     }
 
     /**
@@ -313,9 +317,18 @@ public class ServerProxy implements IServer {
      * the trade offer is removed
      */
     @Override
-    public boolean acceptTrade(boolean willAccept) {
+    public String acceptTrade(int playerIndex, boolean willAccept) {
         String acceptTradeCommand = "/moves/acceptTrade";
-        return false;
+        AcceptTradeObject acceptTradeObject = new AcceptTradeObject(playerIndex, willAccept);
+        String postData = acceptTradeObject.toJSON();
+
+        try{
+            return doPostCommand(acceptTradeCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -332,6 +345,14 @@ public class ServerProxy implements IServer {
     @Override
     public boolean discardCards(JsonObject discardedCards) {
         String discardCardsCommand = "/moves/discardCards";
+
+
+        try{
+            doPostCommand(discardCardsCommand, "");
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
         return false;
     }
 

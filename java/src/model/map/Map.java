@@ -103,8 +103,7 @@ public class Map {
 			}
 		}
 		//if no settlement, must have road of same color in any direction
-		return roadsToTheLeft(location, player.getColor()) || roadsToTheRight()
-		return false;
+		return roadsToTheLeft(location, player.getColor()) || roadsToTheRight(location, player.getColor());
 	}
 
 	/**

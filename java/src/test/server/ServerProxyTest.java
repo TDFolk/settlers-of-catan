@@ -4,7 +4,6 @@ import static org.junit.Assert.*;
 import java.util.concurrent.ThreadLocalRandom;
 
 import command.game.GameListObject;
-import command.game.GameListObjectResult;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -45,7 +44,7 @@ public class ServerProxyTest {
     @Test
     public void gameList()
     {
-        GameListObjectResult list;
+        GameListObject list[];
         list = proxy.gameList();
         assertNotNull(list);
     }

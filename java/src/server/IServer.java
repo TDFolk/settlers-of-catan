@@ -118,7 +118,7 @@ public interface IServer {
      * @param content the message you want to send
      * @return success of if the chat contains your message
      */
-    public boolean sendChat(String content);
+    public String sendChat(int playerIndex, String content);
 
     /**
      * Miscellaneous Commands
@@ -134,7 +134,7 @@ public interface IServer {
      * @param willAccept Whether or not you accept the offered trade
      * @return if the trade was accepted or not
      */
-    public boolean acceptTrade(boolean willAccept);
+    public String acceptTrade(int playerIndex, boolean willAccept);
 
     /**
      * Discards the desired cards from the resource hand
