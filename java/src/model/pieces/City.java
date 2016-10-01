@@ -1,6 +1,6 @@
 package model.pieces;
 
-import model.ResourceCards;
+import model.cards_resources.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.locations.VertexLocation;
 

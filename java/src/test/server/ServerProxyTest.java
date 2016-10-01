@@ -8,6 +8,7 @@ import command.game.GameListObject;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import shared.definitions.CatanColor;
 
 /**
  * Created by bvanc on 9/30/2016.
@@ -30,17 +31,29 @@ public class ServerProxyTest {
     }
 
     @Test
-    public void userRegister()
-    {   //System.out.println("Registering\nUsername: " + username + " Password: " + password);
-        assertTrue(proxy.userRegister(username, password));
-    }
-
-    @Test
-    public void userLogin()
+    public void testAll()
     {
-        proxy.userRegister("bob", "bob");
-        //System.out.println("Logging in\nUsername: " + "bob" + " Password: " + "bob");
-        assertTrue(proxy.userLogin("bob", "bob"));
+        //REGISTER----------------------------------------------------------------------------------------
+        assertTrue(proxy.userRegister(username, password));
+
+        //LOGIN-------------------------------------------------------------------------------------------
+        assertTrue(proxy.userLogin(username, password));
+
+        //GAME CREATE-------------------------------------------------------------------------------------
+        GameCreateObjectResult result;
+        result = proxy.gameCreate(true, true, true, "New Game! :D");
+        assertNotNull(result);
+
+        //GAME JOIN!!!!-----------------------------------------------------------------------------------
+        assertTrue(proxy.gameJoin(result.getId(), CatanColor.BLUE));
+
+        //ADD AI------------------------------------------------------------------------------------------
+        assertTrue(proxy.gameAddAI("SOME AI!!!"));
+
+        //SEND CHAT--------------------------------------------------------------------------------------
+        String modelJSON;
+        modelJSON = proxy.sendChat(0,"Here is my message boiiiiii!");
+        assertNotNull(modelJSON);
     }
 
     @Test
@@ -52,12 +65,20 @@ public class ServerProxyTest {
     }
 
     @Test
-    public void gameCreate()
+    public void gameListAI()
     {
-        GameCreateObjectResult result;
-        result = proxy.gameCreate(true, true, true, "New Game! :D");
-        assertNotNull(result);
+        String list;
+        list = proxy.gameListAI();
+        assertNotNull(list);
     }
+
+    @Test
+    public void gameAddAI()
+    {
+
+    }
+
+
 
     public void createRandomUserInfo()
     {

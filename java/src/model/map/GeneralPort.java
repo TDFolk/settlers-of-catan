@@ -12,8 +12,6 @@ import shared.locations.EdgeLocation;
  */
 public class GeneralPort extends Port {
 
-    private ResourceType portType;
-
     /**
      * Constructor for port
      *
@@ -21,17 +19,6 @@ public class GeneralPort extends Port {
      */
     public GeneralPort(EdgeLocation location, ResourceType portType) {
         super(location);
-        this.portType = portType;
-    }
-
-    /**
-     * Returns the edge location where the port is located
-     *
-     * @return location
-     */
-    @Override
-    public EdgeLocation getLocation() {
-        return super.getLocation();
     }
 
     /**
@@ -50,9 +37,5 @@ public class GeneralPort extends Port {
                 player.getResourceCards().getSheep() >= 3 ||
                 player.getResourceCards().getWheat() >= 3 ||
                 player.getResourceCards().getWood() >= 3;
-    }
-
-    public ResourceType getPortType() {
-        return portType;
     }
 }

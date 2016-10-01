@@ -1,4 +1,4 @@
-package model;
+package model.cards_resources;
 
 import shared.definitions.ResourceType;
 

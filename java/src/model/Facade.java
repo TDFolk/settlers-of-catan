@@ -1,12 +1,10 @@
 package model;
 
-import model.development_cards.DevelopmentCard;
+import model.cards_resources.ResourceCards;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
-
-import java.util.List;
 
 
 /**

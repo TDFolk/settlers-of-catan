@@ -1,6 +1,11 @@
 package model;
 
+<<<<<<< HEAD
 import model.map.Port;
+=======
+import model.cards_resources.ResourceCards;
+import model.cards_resources.Trade;
+>>>>>>> origin/master
 import model.pieces.City;
 import model.pieces.Road;
 import model.pieces.Settlement;
@@ -11,13 +16,12 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
 import java.util.ArrayList;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 import exception.CardException;
 import exception.PlacementException;
 import exception.ResourceException;
-import model.development_cards.DevelopmentCard;
+import model.cards_resources.DevelopmentCard;
 
 /**
  * Created by kcwillmore on 9/17/16.

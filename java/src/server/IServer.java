@@ -1,10 +1,11 @@
 package server;
 
 import com.google.gson.JsonObject;
-import com.sun.deploy.model.Resource;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
-import model.ResourceCards;
+import command.player.DiscardedCards;
+import command.player.RoadLocation;
+import model.cards_resources.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -69,12 +70,11 @@ public interface IServer {
      * @post if successful, server returns 200 HTTP success response, player is in game with specified color
      *          server response includes the "Set-cookie" response header settings the catan.game HTTP cookie
      *          if invalid, returns a 400 HTTP response with an error message
-     * @param userCookie String userCookie is the response header
      * @param gameID unique identifier for a particular game
      * @param color player color
      * @return success of joining the game
      */
-    public boolean gameJoin(String userCookie, int gameID, CatanColor color);
+    public boolean gameJoin(int gameID, String color);
 
     /**
      * Returns the current state of the game in JSON format and version number
@@ -181,11 +181,11 @@ public interface IServer {
      * @post You lost the resources required to build a road;
      *          the road is on the map at the specified location;
      *          if applicable, "longest road" is awarded
-     * @param isFree whether or not you get this piece for free (i.e., setup)
+     * @param free whether or not you get this piece for free (i.e., setup)
      * @param roadLocation the new road's location
      * @return success of built road
      */
-    public boolean buildRoad(boolean isFree, EdgeLocation roadLocation);
+    public String buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free);
 
     /**
      * Builds a settlement

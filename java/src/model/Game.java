@@ -1,5 +1,6 @@
 package model;
 
+import model.cards_resources.Bank;
 import model.map.Map;
 
 import java.util.List;

@@ -3,13 +3,10 @@ package server;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import command.game.*;
-import command.player.AcceptTradeObject;
-import command.player.DiscardCardsObject;
-import command.player.RollNumberObject;
-import command.player.SendChatObject;
+import command.player.*;
 import command.user.LoginObject;
 import command.user.RegisterObject;
-import model.ResourceCards;
+import model.cards_resources.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -173,7 +170,7 @@ public class ServerProxy implements IServer {
     /**
      * Adds the player to the specified game and sets their catan.game cookie
      *
-     * @param userCookie String userCookie is the response header
+     *  String userCookie is the response header
      * @param gameID     unique identifier for a particular game
      * @param color      player color
      * @return success of joining the game
@@ -186,7 +183,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameJoin(String userCookie, int gameID, CatanColor color) {
+    public boolean gameJoin(int gameID, String color) {
         String gameJoinCommand = "/games/join";
         GameJoinObject gameJoinObject = new GameJoinObject(gameID, color);
         String postData = gameJoinObject.toJSON();
@@ -392,7 +389,7 @@ public class ServerProxy implements IServer {
     /**
      * Builds a road
      *
-     * @param isFree       whether or not you get this piece for free (i.e., setup)
+     * @param free       whether or not you get this piece for free (i.e., setup)
      * @param roadLocation the new road's location
      * @return success of built road
      * @pre The road location is open;
@@ -405,9 +402,18 @@ public class ServerProxy implements IServer {
      * if applicable, "longest road" is awarded
      */
     @Override
-    public boolean buildRoad(boolean isFree, EdgeLocation roadLocation) {
+    public String buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free) {
         String buildRoadCommand = "/moves/buildRoad";
-        return false;
+        BuildRoadObject buildRoadObject = new BuildRoadObject(playerIndex, roadLocation, free);
+        String postData = buildRoadObject.toJSON();
+
+        try{
+            return doPostCommand(buildRoadCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

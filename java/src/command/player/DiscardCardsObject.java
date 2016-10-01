@@ -1,6 +1,7 @@
 package command.player;
 
-import model.ResourceCards;
+import com.google.gson.Gson;
+import model.cards_resources.ResourceCards;
 
 /**
  * Created by jihoon on 9/30/2016.
@@ -36,6 +37,8 @@ public class DiscardCardsObject {
     }
 
     public String toJSON(){
+//        Gson gson = new Gson();
+//        return gson.toJson(this);
         return "{" +
                 "\"type\": " + "\"" + type + "\"," +
                 "\"playerIndex\": " + "\"" + playerIndex + "\"," +

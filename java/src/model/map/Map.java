@@ -9,6 +9,7 @@ import shared.locations.EdgeLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,19 +21,22 @@ public class Map {
 	private List<Building> buildings;
 	private List<Road> roads;
 	private List<Port> ports;
-	private int radius;
+
 
 	/**
 	 * Constructor of a map
-	 * Initializes the dice number tokens that go on the hexes
-	 * Creates hexes, puts number tokens on them. Also creates the ocean hexes
+	 * all the info is pre-made by the database and packaged here for y(our) convenience
 	 *
-	 * @param radius  The radius of the map (it includes the center hex, and the ocean hexes)
+	 * @param hexes that make up the map
+	 * @param buildings on the map
+	 * @param roads on the map
+	 * @param ports on the map
 	 */
-	public Map(int radius) {
-		int[] numberTokens = {2, 3, 3, 4, 4, 5, 5, 6, 6, 8, 8, 9, 9, 10, 10, 11, 11, 12};
-
-		this.radius = radius;
+	public Map(List<Hex> hexes, List<Building> buildings, List<Road> roads, List<Port> ports) {
+		this.hexes = hexes;
+		this.buildings = buildings;
+		this.roads = roads;
+		this.ports = ports;
 	}
 
 	/**
@@ -40,7 +44,7 @@ public class Map {
 	 * @param location the vertex under scrutiny
 	 * @return the building at that vertex, null if none exists
 	 */
-	private Building getBuildingAtVertex(VertexLocation location) {
+	public Building getBuildingAtVertex(VertexLocation location) {
 		for (Building building : buildings) {
 			if (building.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())) {
 				return building;
@@ -49,7 +53,7 @@ public class Map {
 		return null;
 	}
 
-	private Road getRoadAtEdge(EdgeLocation location) {
+	public Road getRoadAtEdge(EdgeLocation location) {
 		for (Road road: roads) {
 			if (road.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())) {
 				return road;
@@ -112,7 +116,33 @@ public class Map {
 	 * @return true if the location is a valid vertex for placement
 	 */
 	public boolean canPlaceSettlement(VertexLocation location, Player player) {
-		
+		//get the edges surrounding the settlement, once must have a road of same color and none may have a settlement on the other end
+		//edge1 is easy to find, but may be on either the right or the left
+		EdgeLocation adjacentEdge1 = new EdgeLocation(location.getNormalizedLocation().getHexLoc(), EdgeDirection.North);
+		EdgeLocation adjacentEdge2;
+		EdgeLocation adjacentEdge3;
+		//edge1 is to the right of the settlement >-
+		if (edgeToLeftVertex(adjacentEdge1).getNormalizedLocation().equals(location.getNormalizedLocation())) {
+			adjacentEdge2 = edgeToLeftEdge(adjacentEdge1);
+			adjacentEdge3 = edgeToLeftEdge(new EdgeLocation(adjacentEdge1.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.South));
+		}
+		else {
+			//edge1 is to the left of the settlement -<
+			adjacentEdge2 = edgeToRightEdge(adjacentEdge1);
+			adjacentEdge3 = edgeToRightEdge(new EdgeLocation(adjacentEdge1.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.South));
+		}
+
+		//ensures that there is a road that belongs to you at at least one of the three directions
+		if (getRoadAtEdge(adjacentEdge1) != null && getRoadAtEdge(adjacentEdge1).getColor() == player.getColor()
+				|| getRoadAtEdge(adjacentEdge2) != null && getRoadAtEdge(adjacentEdge2).getColor() == player.getColor()
+				|| getRoadAtEdge(adjacentEdge3) != null && getRoadAtEdge(adjacentEdge3).getColor() == player.getColor()) {
+			//ensures that there are no settlements adjacent to your location
+			if (buildingByEdge(adjacentEdge1) == null &&
+					buildingByEdge(adjacentEdge2) == null &&
+					buildingByEdge(adjacentEdge3) == null) {
+				return true;
+			}
+		}
 		return false;
 	}
 

@@ -1,4 +1,4 @@
-package model;
+package model.cards_resources;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,15 +6,10 @@ import java.util.List;
 import java.util.Random;
 
 import exception.CardException;
-import model.development_cards.DevelopmentCard;
-import model.development_cards.MonopolyCard;
-import model.development_cards.PlentyCard;
-import model.development_cards.RoadBuildingCard;
-import model.development_cards.SoldierCard;
-import model.development_cards.VictoryPointCard;
 import model.pieces.City;
 import model.pieces.Road;
 import model.pieces.Settlement;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 
 /**
@@ -33,13 +28,13 @@ public class Bank {
 		resourcePool = new ResourceCards(19,19,19,19,19);
 		
 		for (int i = 0; i < 14; i++)
-			developmentCards.add(new SoldierCard());
+			developmentCards.add(new DevelopmentCard(DevCardType.SOLDIER));
 		for (int i = 0; i < 5; i++)
-			developmentCards.add(new VictoryPointCard());
+			developmentCards.add(new DevelopmentCard(DevCardType.MONUMENT));
 		for (int i = 0; i < 2; i++) {
-			developmentCards.add(new MonopolyCard());
-			developmentCards.add(new PlentyCard());
-			developmentCards.add(new RoadBuildingCard());
+			developmentCards.add(new DevelopmentCard(DevCardType.MONOPOLY));
+			developmentCards.add(new DevelopmentCard(DevCardType.YEAR_OF_PLENTY));
+			developmentCards.add(new DevelopmentCard(DevCardType.ROAD_BUILD));
 		}
 	}
 

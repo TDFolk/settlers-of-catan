@@ -6,6 +6,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
+import command.player.DiscardedCards;
+import command.player.RoadLocation;
 import server.IServer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -135,7 +137,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameJoin(java.lang.String userCookie, int gameID, CatanColor color) {
+    public boolean gameJoin( int gameID, CatanColor color) {
 
 
         return true;
@@ -240,10 +242,10 @@ public class MockServer implements IServer {
      * if you're the last one to discard, the client model status changes to 'Robbing'
      */
     @Override
-    public boolean discardCards(JsonObject discardedCards) {
+    public String discardCards(int playerIndex, DiscardedCards discardedCards) {
 
 
-        return true;
+        return jsonModelExample;
     }
 
     /**
@@ -257,15 +259,15 @@ public class MockServer implements IServer {
      * @post The client model's status is now in 'Discarding' or 'Robbing' or 'Playing'
      */
     @Override
-    public boolean rollNumber(int number)
+    public String rollNumber(int playerIndex, int number)
     {
-        return true;
+        return jsonModelExample;
     }
 
     /**
      * Builds a road
      *
-     * @param isFree       whether or not you get this piece for free (i.e., setup)
+     * @param free       whether or not you get this piece for free (i.e., setup)
      * @param roadLocation the new road's location
      * @return success of built road
      * @pre The road location is open;
@@ -278,9 +280,9 @@ public class MockServer implements IServer {
      * if applicable, "longest road" is awarded
      */
     @Override
-    public boolean buildRoad(boolean isFree, EdgeLocation roadLocation) {
+    public String buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free) {
 
-        return true;
+        return jsonModelExample;
     }
 
     /**

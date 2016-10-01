@@ -1,4 +1,6 @@
-package model;
+package model.cards_resources;
+
+import model.Player;
 
 /**
  * Class representing a singular trade offer and the information
