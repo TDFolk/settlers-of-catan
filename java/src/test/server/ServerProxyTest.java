@@ -46,9 +46,9 @@ public class ServerProxyTest {
         //GAME JOIN!!!!-----------------------------------------------------------------------------------
         //assertTrue(proxy.gameJoin(result.getId(),"red"));
 
+        //ADD AI------------------------------------------------------------------------------------------
+        assertTrue(proxy.gameAddAI("SOME AI!!!"));
     }
-
-
 
     @Test
     public void gameList()
@@ -56,6 +56,20 @@ public class ServerProxyTest {
         GameListObject list[];
         list = proxy.gameList();
         assertNotNull(list);
+    }
+
+    @Test
+    public void gameListAI()
+    {
+        String list;
+        list = proxy.gameListAI();
+        assertNotNull(list);
+    }
+
+    @Test
+    public void gameAddAI()
+    {
+
     }
 
 
