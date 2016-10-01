@@ -255,7 +255,7 @@ public interface IServer {
      * @post The cards in your new dev card hand have been transferred to your old dev card hand;
      *          it is the next player's turn
      */
-    public void finishTurn();
+    public String finishTurn(int playerIndex);
 
     /**
      * @pre You have the required resources(1 ore, 1 wheat, 1 sheep)
@@ -265,7 +265,7 @@ public interface IServer {
      *          if it is a non-monument card, it has been added to your new dev card
      *          hand (unplayable this turn)
      */
-    public void buyDevCard();
+    public String buyDevCard(int playerIndex);
 
     /**
      * Dev Card Commands (General Preconditions)
@@ -288,7 +288,7 @@ public interface IServer {
      * @param victimIndex playerIndex, or -1 if you are not robbing anyone
      * @return success of played soldier dev card
      */
-    public boolean soldier(HexLocation location, int victimIndex);
+    public String soldier(int playerIndex, int victimIndex, HexLocation location);
 
 
     /**
@@ -299,7 +299,7 @@ public interface IServer {
      * @param resource2 the second resource you want to recieve
      * @return success of a played year of plenty dev card
      */
-    public boolean yearOfPlenty(ResourceType resource1, ResourceType resource2);
+    public String yearOfPlenty(int playerIndex, ResourceType resource1, ResourceType resource2);
 
     /**
      * What happens when a road building dev card is played
@@ -315,7 +315,7 @@ public interface IServer {
      * @param spot2 second road location
      * @return success of a played road building dev card
      */
-    public boolean roadBuilding(EdgeLocation spot1, EdgeLocation spot2);
+    public String roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2);
 
     /**
      * What happens when a monopoly dev card is played
@@ -324,14 +324,14 @@ public interface IServer {
      * @param resource the resource being taken from the other players
      * @return success of a played monopoly dev card
      */
-    public boolean monopoly(ResourceType resource);
+    public String monopoly(String resource, int playerIndex);
 
     /**
      * What happens when a monument dev card is played
      * @pre You have enough monument cards to win the game(10 victory points)
      * @post you gained a victory point
      */
-    public void monument();
+    public String monument(int playerIndex);
 
 
 }

@@ -561,8 +561,17 @@ public class ServerProxy implements IServer {
      * it is the next player's turn
      */
     @Override
-    public void finishTurn() {
+    public String finishTurn(int playerIndex) {
         String finishTurnCommand = "/moves/finishTurn";
+        FinishTurnObject finishTurnObject = new FinishTurnObject(playerIndex);
+        String postData = finishTurnObject.toJSON();
+        try{
+            return doPostCommand(finishTurnCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -574,8 +583,17 @@ public class ServerProxy implements IServer {
      * hand (unplayable this turn)
      */
     @Override
-    public void buyDevCard() {
+    public String buyDevCard(int playerIndex) {
         String buyDevCardCommand = "/moves/buyDevCard";
+        BuyDevCardObject buyDevCardObject = new BuyDevCardObject(playerIndex);
+        String postData = buyDevCardObject.toJSON();
+        try{
+            return doPostCommand(buyDevCardCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -593,9 +611,18 @@ public class ServerProxy implements IServer {
      * you are not allowed to play other dev cards during this turn(except monument)
      */
     @Override
-    public boolean soldier(HexLocation location, int victimIndex) {
+    public String soldier(int playerIndex, int victimIndex, HexLocation location) {
         String soldierCommand = "/moves/Soldier";
-        return false;
+        SoldierObject soldierObject = new SoldierObject(playerIndex, victimIndex, location);
+        String postData = soldierObject.toJSON();
+
+        try{
+            return doPostCommand(soldierCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -608,9 +635,17 @@ public class ServerProxy implements IServer {
      * @post you gained the two specified resources
      */
     @Override
-    public boolean yearOfPlenty(ResourceType resource1, ResourceType resource2) {
+    public String yearOfPlenty(int playerIndex, ResourceType resource1, ResourceType resource2) {
         String yearOfPlentyCommand = "/moves/Year_of_Plenty";
-        return false;
+        YearOfPlentyObject yearOfPlentyObject = new YearOfPlentyObject(playerIndex, resource1, resource2);
+        String postData = yearOfPlentyObject.toJSON();
+        try{
+            return doPostCommand(yearOfPlentyCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -629,9 +664,20 @@ public class ServerProxy implements IServer {
      * if applicable, "longest road" has been awarded
      */
     @Override
-    public boolean roadBuilding(EdgeLocation spot1, EdgeLocation spot2) {
+    public String roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
         String roadBuildingCommand = "/moves/Road_Building";
-        return false;
+        RoadBuildingObject roadBuildingObject = new RoadBuildingObject(playerIndex, spot1, spot2);
+        String postData = roadBuildingObject.toJSON();
+
+        try{
+            return doPostCommand(roadBuildingCommand, postData);
+        }
+
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
@@ -643,9 +689,20 @@ public class ServerProxy implements IServer {
      * @post All of the other players have given you all of their resource cards of the specified type
      */
     @Override
-    public boolean monopoly(ResourceType resource) {
+    public String monopoly(String resource, int playerIndex) {
         String monopolyCommand = "/moves/Monopoly";
-        return false;
+        MonopolyObject monopolyObject = new MonopolyObject(resource, playerIndex);
+        String postData = monopolyObject.toJSON();
+
+        try{
+            return doPostCommand(monopolyCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+
+
+        return null;
     }
 
     /**
@@ -655,8 +712,18 @@ public class ServerProxy implements IServer {
      * @post you gained a victory point
      */
     @Override
-    public void monument() {
+    public String monument(int playerIndex) {
         String monumentCommand = "/moves/Monument";
+        MonumentObject monumentObject = new MonumentObject(playerIndex);
+        String postData = monumentObject.toJSON();
+
+        try{
+            return doPostCommand(monumentCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     private String doPostCommand (String methodName, Object output) throws ConnectException{
