@@ -8,11 +8,7 @@ import shared.locations.VertexLocation;
  * Created by kcwillmore on 9/17/16.
  */
 public class City extends Building {
-<<<<<<< HEAD
-    public static final ResourceValues COST = new ResourceValues(0,3,0,2,0);
-=======
-    private static final ResourceCards COST = new ResourceCards(0,3,0,2,0);
->>>>>>> origin/master
+    public static final ResourceCards COST = new ResourceCards(0,3,0,2,0);
 
     /**
      * City constructor

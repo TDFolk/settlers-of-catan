@@ -112,6 +112,7 @@ public class Map {
 	 * @return true if the location is a valid vertex for placement
 	 */
 	public boolean canPlaceSettlement(VertexLocation location, Player player) {
+		
 		return false;
 	}
 

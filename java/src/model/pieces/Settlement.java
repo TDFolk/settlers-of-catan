@@ -8,11 +8,7 @@ import shared.locations.VertexLocation;
  * Created by kcwillmore on 9/17/16.
  */
 public class Settlement extends Building {
-<<<<<<< HEAD
-    public static final ResourceValues COST = new ResourceValues(1,0,1,1,1);
-=======
-    private static final ResourceCards COST = new ResourceCards(1,0,1,1,1);
->>>>>>> origin/master
+    public static final ResourceCards COST = new ResourceCards(1,0,1,1,1);
 
     /**
      * Settlement constructor, requires a place to go and a player/color associated

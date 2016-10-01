@@ -44,7 +44,7 @@ public class Player {
      * Constructs a new player for the start of a game
      */
     public Player() {
-    	resourceCards = new ResourceValues(0,0,0,0,0);
+    	resourceCards = new ResourceCards(0,0,0,0,0);
         developmentCards = new ArrayList<>();
         victoryPoints = 0;
     }
@@ -215,7 +215,7 @@ public class Player {
      * @param cards the cards to be discarded
      * @return true if the player owns the cards and can discard them
      */
-    public boolean canDiscard(ResourceValues cards) {
+    public boolean canDiscard(ResourceCards cards) {
         return resourceCards.canPay(cards);
     }
 
@@ -247,7 +247,7 @@ public class Player {
      * @return Returns true if the player has the resources specified in the offer, false otherwise.
      */
 <<<<<<< HEAD
-    public boolean canMakeTrade(ResourceValues offer) {
+    public boolean canMakeTrade(ResourceCards offer) {
     	return resourceCards.canPay(offer);
 =======
     public boolean canMakeTrade(ResourceCards offer) {
@@ -308,7 +308,7 @@ public class Player {
         this.roads = roads;
     }
 
-    public void setResourceCards(ResourceValues resourceCards) {
+    public void setResourceCards(ResourceCards resourceCards) {
         this.resourceCards = resourceCards;
     }
 
