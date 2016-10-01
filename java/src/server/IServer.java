@@ -5,6 +5,7 @@ import com.google.gson.JsonObject;
 import command.game.GameCreateObject;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
+import command.game.GameListObjectResult;
 import command.user.LoginObject;
 import command.user.RegisterObject;
 import shared.definitions.CatanColor;
@@ -49,7 +50,7 @@ public interface IServer {
      *          if invalid, returns a 400 HTTP response with an error message
      * @return JSONArray containing a list of objects about the server's games
      */
-    public GameListObject gameList();
+    public GameListObjectResult gameList();
 
     /**
      * Creates a new game on the server
@@ -98,7 +99,7 @@ public interface IServer {
      *          body contains a JSON string array enumerating the different types of AI players
      * @return list of supported AI player types
      */
-    public JsonArray gameListAI();
+    public String gameListAI();
 
     /**
      * Adds an AI player to the current game
@@ -109,7 +110,7 @@ public interface IServer {
      * @param typeAI type of the AI being added to the game from the listAI
      * @return success of adding an AI
      */
-    public boolean gameAddAI(String typeAI);
+    public String gameAddAI(String typeAI);
 
     /**
      * Anytime Commands

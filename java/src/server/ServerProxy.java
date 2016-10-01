@@ -3,10 +3,7 @@ package server;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import command.game.GameCreateObject;
-import command.game.GameCreateObjectResult;
-import command.game.GameJoinObject;
-import command.game.GameListObject;
+import command.game.*;
 import command.user.LoginObject;
 import command.user.RegisterObject;
 import shared.definitions.CatanColor;
@@ -115,7 +112,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public GameListObject gameList() {
+    public GameListObjectResult gameList() {
         String gameListCommand = "/games/list";
         Gson gson = new Gson();
 
@@ -123,8 +120,8 @@ public class ServerProxy implements IServer {
             String result = doGetCommand(gameListCommand);
 
             GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
-            //set the game list object so that we can fetch it from somewhere else
-            GameListObject games = new GameListObject();
+
+            GameListObjectResult games = new GameListObjectResult();
             games.setGameList(gameList);
 
             //returns the list of the existing games
@@ -240,8 +237,17 @@ public class ServerProxy implements IServer {
      * body contains a JSON string array enumerating the different types of AI players
      */
     @Override
-    public JsonArray gameListAI() {
+    public String gameListAI() {
         String gameListAICommand = "/game/listAI";
+
+        try{
+            String result = doGetCommand(gameListAICommand);
+            return result;
+
+        }
+        catch(ConnectException e) {
+            e.printStackTrace();
+        }
 
         return null;
     }
@@ -257,9 +263,18 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameAddAI(String typeAI) {
+    public String gameAddAI(String typeAI) {
         String gameAddAICommand = "/game/addAI";
-        return false;
+        Gson gson = new Gson();
+        String postData = gson.toJson(typeAI);
+
+        try{
+            return doPostCommand(gameAddAICommand, postData);
+        }
+        catch(ConnectException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**
@@ -273,6 +288,15 @@ public class ServerProxy implements IServer {
     @Override
     public boolean sendChat(String content) {
         String sendChatCommand = "/moves/sendChat";
+
+
+        try{
+            String result = doPostCommand(sendChatCommand, "");
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+
         return false;
     }
 
@@ -637,8 +661,7 @@ public class ServerProxy implements IServer {
         while((length = input.read(buffer)) != -1) {
             sb.append(new String(buffer, 0, length));
         }
-        String responseBodyData = sb.toString();
-        return responseBodyData;
+        return sb.toString();
     }
 
     public String getCatanUser() {
