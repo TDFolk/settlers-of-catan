@@ -51,14 +51,14 @@ public class ServerProxyTest {
         //assertTrue(proxy.gameAddAI("LARGEST_ARMY"));
 
         //SEND CHAT---------------------------------------------------------------------------------------
-        String modelJSON;
-        modelJSON = proxy.sendChat(0,"Here is my message boiiiiii!");
-        assertNotNull(modelJSON);
-
-        //ACCEPT TRADE------------------------------------------------------------------------------------
-        modelJSON = null;
-        modelJSON = proxy.acceptTrade(0, true);
-        assertNotNull(modelJSON);
+//        String modelJSON;
+//        modelJSON = proxy.sendChat(0,"Here is my message boiiiiii!");
+//        assertNotNull(modelJSON);
+//
+//        //ACCEPT TRADE------------------------------------------------------------------------------------
+//        modelJSON = null;
+//        modelJSON = proxy.acceptTrade(0, true);
+//        assertNotNull(modelJSON);
 
     }
 

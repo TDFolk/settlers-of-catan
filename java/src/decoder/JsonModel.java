@@ -13,11 +13,11 @@ public class JsonModel {
     private int radius;
     private JsonPiece ports[];
     private JsonRobber robber;
-    private JsonPlayer players[];
-    private JsonLog log;
-    private JsonChat chat;
-    private JsonBank bank;
-    private JsonTurnTracker turnTracker;
+//    private JsonPlayer players[];
+//    private JsonLog log;
+//    private JsonChat chat;
+//    private JsonBank bank;
+//    private JsonTurnTracker turnTracker;
     private int winner;
     private int version;
 

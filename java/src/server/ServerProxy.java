@@ -664,7 +664,7 @@ public class ServerProxy implements IServer {
      * if applicable, "longest road" has been awarded
      */
     @Override
-    public String roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
+            public String roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
         String roadBuildingCommand = "/moves/Road_Building";
         RoadBuildingObject roadBuildingObject = new RoadBuildingObject(playerIndex, spot1, spot2);
         String postData = roadBuildingObject.toJSON();

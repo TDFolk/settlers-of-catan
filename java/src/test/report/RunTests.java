@@ -8,7 +8,7 @@ public class RunTests {
         String[] testClasses = new String[]
                 {
                         "server.ServerPollerTest",
-                        //"server.ServerProxyTest",
+                        "server.ServerProxyTest",
                         "model.PlayerTest",
                         "model.BankTest"
                 };

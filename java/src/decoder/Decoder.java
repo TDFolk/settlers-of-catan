@@ -29,18 +29,18 @@ public class Decoder {
      */
     public void parseJson(String json){
 
-        int version = parseVersionNumber();
-        Bank bank = parseBank();
-        ArrayList<Message> chatlist= parseChat();
-        ArrayList<Message> loglist= parseLog();
-        Map map = parseMap();
-        ArrayList<Player> players = parsePlayers();
-        Player user = parseUser();
-        Trade trade = parseActiveTrade(); //null if none is ongoing
-        TurnTracker turntracker = parseTurnTracker();
-        Player winner = parseWinner();
+//        int version = parseVersionNumber();
+//        Bank bank = parseBank();
+//        ArrayList<Message> chatlist= parseChat();
+//        ArrayList<Message> loglist= parseLog();
+//        Map map = parseMap();
+//        ArrayList<Player> players = parsePlayers();
+//        Player user = parseUser();
+//        Trade trade = parseActiveTrade(); //null if none is ongoing
+//        TurnTracker turntracker = parseTurnTracker();
+//        Player winner = parseWinner();
 
-        Game.getInstance().initializeData(version, bank, chatlist, loglist, map, players, user, trade, turntracker, winner);
+ //       Game.getInstance().initializeData(version, bank, chatlist, loglist, map, players, user, trade, turntracker, winner);
     }
 
 
