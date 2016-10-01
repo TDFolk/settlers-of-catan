@@ -2,7 +2,10 @@ package server;
 
 import static org.junit.Assert.*;
 import java.util.concurrent.ThreadLocalRandom;
+
+import command.game.GameListObject;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -10,31 +13,40 @@ import org.junit.Test;
  */
 public class ServerProxyTest {
 
-    IServer proxy;
-    String host = "localhost";
-    String port = "8081";
-    String username;
-    String password;
-    int infoLength = 15;
+    private IServer proxy;
+    private String host = "localhost";
+    private String port = "8081";
+    private String username;
+    private String password;
+    private int infoLength = 15;
 
     @Before
-    public void initialize()
+    public void setUp()
     {
         proxy = new ServerProxy(host, port);
         createRandomUserInfo();
+
     }
 
     @Test
     public void userRegister()
-    {   System.out.println("Registering\nUsername: " + username + " Password: " + password);
+    {   //System.out.println("Registering\nUsername: " + username + " Password: " + password);
         assertTrue(proxy.userRegister(username, password));
     }
 
     @Test
     public void userLogin()
     {
-        System.out.println("Logging in\nUsername: " + username + " Password: " + password);
-        assertTrue(proxy.userLogin(username, password));
+        //System.out.println("Logging in\nUsername: " + "bob" + " Password: " + "bob");
+        assertTrue(proxy.userLogin("bob", "bob"));
+    }
+
+    @Test
+    public void gameList()
+    {
+        GameListObject list;
+        list = proxy.gameList();
+        assertNotNull(list);
     }
 
     public void createRandomUserInfo()
