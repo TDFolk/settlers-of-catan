@@ -50,7 +50,10 @@ public class ServerProxyTest {
         //ADD AI------------------------------------------------------------------------------------------
         assertTrue(proxy.gameAddAI("SOME AI!!!"));
 
-        //
+        //SEND CHAT--------------------------------------------------------------------------------------
+        String modelJSON;
+        modelJSON = proxy.sendChat(0,"Here is my message boiiiiii!");
+        assertNotNull(modelJSON);
     }
 
     @Test
