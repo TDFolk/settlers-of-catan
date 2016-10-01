@@ -5,14 +5,14 @@ import com.google.gson.Gson;
 /**
  * Created by jihoon on 9/30/2016.
  */
-public class SendChatObject {
-    private final String type = "sendChat";
+public class AcceptTradeObject {
+    private final String type = "acceptTrade";
     private int playerIndex;
-    private String content;
+    private boolean willAccept;
 
-    public SendChatObject(int playerIndex, String content){
+    public AcceptTradeObject(int playerIndex, boolean willAccept){
         this.playerIndex = playerIndex;
-        this.content = content;
+        this.willAccept = willAccept;
     }
 
     public String toJSON(){
@@ -32,11 +32,11 @@ public class SendChatObject {
         this.playerIndex = playerIndex;
     }
 
-    public String getContent() {
-        return content;
+    public boolean isWillAccept() {
+        return willAccept;
     }
 
-    public void setContent(String content) {
-        this.content = content;
+    public void setWillAccept(boolean willAccept) {
+        this.willAccept = willAccept;
     }
 }
