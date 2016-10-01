@@ -56,6 +56,9 @@ public class ServerProxyTest {
         assertNotNull(modelJSON);
 
         //ACCEPT TRADE------------------------------------------------------------------------------------
+        modelJSON = null;
+        modelJSON = proxy.acceptTrade(0, true);
+        assertNotNull(modelJSON);
 
     }
 
