@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
+import command.game.GameListObjectResult;
 import server.IServer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -84,7 +85,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public GameListObject gameList() {
+    public GameListObjectResult gameList() {
 
 //        JsonParser parser = new JsonParser();
 //
@@ -92,7 +93,7 @@ public class MockServer implements IServer {
 
         Gson gson = new Gson();
 
-        GameListObject list = gson.fromJson(gameListAIExample, GameListObject.class);
+        GameListObjectResult list = gson.fromJson(gameListAIExample, GameListObjectResult.class);
         return list;
     }
 
@@ -170,13 +171,14 @@ public class MockServer implements IServer {
      * @post if successful, server returns 200 HTTP success response
      * body contains a JSON string array enumerating the different types of AI players
      */
+
     @Override
-    public JsonArray gameListAI() {
+    public String gameListAI() {
 
         JsonParser parser = new JsonParser();
         JsonArray AIList = parser.parse(gameListAIExample).getAsJsonArray();
 
-        return AIList;
+        return gameListAIExample;
     }
 
     /**
@@ -190,7 +192,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameAddAI(java.lang.String typeAI) {
+    public String gameAddAI(java.lang.String typeAI) {
 
         return true;
     }
