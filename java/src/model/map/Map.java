@@ -92,10 +92,12 @@ public class Map {
 			}
 			//if different colored building, must have a road of same color on the opposite end
 			if (adjacentBuilding.getLocation().getNormalizedLocation().equals(edgeToLeftVertex(location).getNormalizedLocation())) { //leftside
-				EdgeLocation reflection = new EdgeLocation(location.getHexLoc().getNeighborLoc(location.getDir());
+				//find the edge's location according to the other hex is is a side of
+				EdgeLocation reflection = new EdgeLocation(location.getHexLoc().getNeighborLoc(location.getDir()), location.getDir().getOppositeDirection());
 				if (getRoadAtEdge(edgeToRightEdge(location)) != null
 						&& getRoadAtEdge(edgeToRightEdge(location)).getColor().equals(player.getColor())
-						) {
+						|| getRoadAtEdge(edgeToRightEdge(reflection)) != null
+						&& getRoadAtEdge(edgeToRightEdge(reflection)).getColor().equals(player.getColor())) {
 					
 				}
 			}
@@ -104,7 +106,7 @@ public class Map {
 			}
 		}
 		//if no settlement, must have road of same color in any direction
-
+		return false;
 	}
 
 	/**
