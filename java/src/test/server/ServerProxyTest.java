@@ -33,6 +33,7 @@ public class ServerProxyTest {
     @Test
     public void testAll()
     {
+        System.out.println("Testing Server Proxy Login and Register...\n");
         //REGISTER----------------------------------------------------------------------------------------
         assertTrue(proxy.userRegister(username, password));
 
@@ -44,6 +45,7 @@ public class ServerProxyTest {
         result = proxy.gameCreate(true, true, true, "New Game! :D");
         assertNotNull(result);
 
+        System.out.println("Testing Server Proxy Create and Join Game...\n");
         //GAME JOIN!!!!-----------------------------------------------------------------------------------
         assertTrue(proxy.gameJoin(result.getId(), "blue"));
 
@@ -65,6 +67,7 @@ public class ServerProxyTest {
     @Test
     public void gameList()
     {
+        System.out.println("Testing Server Proxy other...\n");
         GameListObject list[];
         list = proxy.gameList();
         assertNotNull(list);
