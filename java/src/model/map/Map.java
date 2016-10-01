@@ -44,7 +44,7 @@ public class Map {
 	 * @param location the vertex under scrutiny
 	 * @return the building at that vertex, null if none exists
 	 */
-	private Building getBuildingAtVertex(VertexLocation location) {
+	public Building getBuildingAtVertex(VertexLocation location) {
 		for (Building building : buildings) {
 			if (building.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())) {
 				return building;
@@ -53,7 +53,7 @@ public class Map {
 		return null;
 	}
 
-	private Road getRoadAtEdge(EdgeLocation location) {
+	public Road getRoadAtEdge(EdgeLocation location) {
 		for (Road road: roads) {
 			if (road.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())) {
 				return road;
