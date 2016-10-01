@@ -419,7 +419,7 @@ public class ServerProxy implements IServer {
     /**
      * Builds a settlement
      *
-     * @param isFree         whether or not you get this piece for free(i.e, setup)
+     * @param free         whether or not you get this piece for free(i.e, setup)
      * @param vertexLocation the location of the settlement
      * @return success of build settlement
      * @pre The settlement location is open;
@@ -430,10 +430,18 @@ public class ServerProxy implements IServer {
      * the settlement is on the map at the specified location
      */
     @Override
-    public boolean buildSettlement(boolean isFree, VertexLocation vertexLocation) {
+    public String buildSettlement(int playerIndex, VertexLocation vertexLocation, boolean free) {
         String buildSettlementCommand = "/moves/buildSettlement";
+        BuildSettlementObject buildSettlementObject = new BuildSettlementObject(playerIndex, vertexLocation, free);
+        String postData = buildSettlementObject.toJSON();
+        try{
+            return doPostCommand(buildSettlementCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
 
-        return false;
+        return null;
     }
 
     /**
@@ -448,9 +456,18 @@ public class ServerProxy implements IServer {
      * you got a settlement back
      */
     @Override
-    public boolean buildCity(VertexLocation vertexLocation) {
+    public String buildCity(int playerIndex, VertexLocation vertexLocation) {
         String buildCityCommand = "/moves/buildCity";
-        return false;
+        BuildCityObject buildCityObject = new BuildCityObject(playerIndex, vertexLocation);
+        String postData = buildCityObject.toJSON();
+
+        try{
+            return doPostCommand(buildCityCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 
     /**

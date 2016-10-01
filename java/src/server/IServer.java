@@ -195,11 +195,11 @@ public interface IServer {
      *          you have the required resources(1 wood, 1 brick, 1 wheat, 1 sheep = 1 settlement)
      * @post you lost the resources required to build a settlement;
      *          the settlement is on the map at the specified location
-     * @param isFree whether or not you get this piece for free(i.e, setup)
+     * @param free whether or not you get this piece for free(i.e, setup)
      * @param vertexLocation the location of the settlement
      * @return success of build settlement
      */
-    public boolean buildSettlement(boolean isFree, VertexLocation vertexLocation);
+    public String buildSettlement(int playerIndex, VertexLocation vertexLocation, boolean free);
 
     /**
      * Builds a city
@@ -211,7 +211,7 @@ public interface IServer {
      * @param vertexLocation the location of the city
      * @return success of build city
      */
-    public boolean buildCity(VertexLocation vertexLocation);
+    public String buildCity(int playerIndex, VertexLocation vertexLocation);
 
     /**
      * Proposes a trade
