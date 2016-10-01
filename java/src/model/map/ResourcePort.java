@@ -24,16 +24,6 @@ public class ResourcePort extends Port {
     }
 
     /**
-     * Returns the edge location where the port is located
-     *
-     * @return location
-     */
-    @Override
-    public EdgeLocation getLocation() {
-        return super.getLocation();
-    }
-
-    /**
      * This function checks if the player can trade with a specific port
      *
      * @return true if player can trade with this port

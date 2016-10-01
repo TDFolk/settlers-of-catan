@@ -41,7 +41,7 @@ public class Robber {
      * @return success if robber can take the resource
      */
     public boolean canTakeResource(Player victim) {
-        //todo figure out how to tell if a hex has settlements around it and whom they belong to
+
         return false;
     }
 
