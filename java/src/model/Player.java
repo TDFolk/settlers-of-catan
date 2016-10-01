@@ -204,7 +204,12 @@ public class Player {
      * @return true if the player owns and can play the card
      */
     public boolean canPlayDevelopmentCard(DevCardType card) {
-        return developmentCards.contains(card);
+        for (int i = 0; i < developmentCards.size(); i++) {
+            if (developmentCards.get(i).getType() == card) {
+                return true;
+            }
+        }
+        return false;
     }
     
     /**
