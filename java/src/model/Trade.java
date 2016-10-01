@@ -21,12 +21,12 @@ public class Trade {
     /**
      * The resources that the sender is offering up for trade from their resources
      */
-    private ResourceValues offer;
+    private ResourceCards offer;
     
     /**
      * The resources that the sender is asking in return from the reciever's resources
      */
-    private ResourceValues request;
+    private ResourceCards request;
 
     /**
      * Trade constructor, makes a trade offer between two players and what each one would give the other in exchange
@@ -36,7 +36,7 @@ public class Trade {
      * @param offer what the sender is offering up from their resources
      * @param request what the sender expects in return from the recipient
      */
-    public Trade(Player sender, Player receiver, ResourceValues offer, ResourceValues request) {
+    public Trade(Player sender, Player receiver, ResourceCards offer, ResourceCards request) {
         this.sender = sender;
         this.receiver = receiver;
         this.offer = offer;

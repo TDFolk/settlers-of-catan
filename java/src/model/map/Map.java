@@ -3,6 +3,7 @@ package model.map;
 import model.Player;
 import model.pieces.Building;
 import model.pieces.Road;
+import shared.definitions.CatanColor;
 import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexDirection;
@@ -90,30 +91,19 @@ public class Map {
 			if (adjacentBuilding.getColor().equals(player.getColor())) {
 				return true;
 			}
-			//find the edge's location according to the other hex is is a side of
-			EdgeLocation reflection = new EdgeLocation(location.getHexLoc().getNeighborLoc(location.getDir()), location.getDir().getOppositeDirection());
+
 			//if different colored building, must have a road of same color on the opposite end
 			if (adjacentBuilding.getLocation().getNormalizedLocation().equals(edgeToLeftVertex(location).getNormalizedLocation())) { //leftside
 				//check both edges to the right of this, if a road is on one of them and it is the same color, all is well
-				if (getRoadAtEdge(edgeToRightEdge(location)) != null
-						&& getRoadAtEdge(edgeToRightEdge(location)).getColor().equals(player.getColor())
-						|| getRoadAtEdge(edgeToRightEdge(reflection)) != null
-						&& getRoadAtEdge(edgeToRightEdge(reflection)).getColor().equals(player.getColor())) {
-					return true;
-				}
+				return roadsToTheRight(location, player.getColor());
 			}
 			else { //rightside
 				//same as for the leftside, but checking the opposite edges for friendly roads
-				if (getRoadAtEdge(edgeToLeftEdge(location)) != null
-						&& getRoadAtEdge(edgeToLeftEdge(location)).getColor().equals(player.getColor())
-						|| getRoadAtEdge(edgeToLeftEdge(reflection)) != null
-						&& getRoadAtEdge(edgeToLeftEdge(reflection)).getColor().equals(player.getColor())) {
-					return true;
-				}
+				return roadsToTheLeft(location, player.getColor());
 			}
 		}
 		//if no settlement, must have road of same color in any direction
-		//todo still this
+		return roadsToTheLeft(location, player.getColor()) || roadsToTheRight()
 		return false;
 	}
 
@@ -225,5 +215,32 @@ public class Map {
 				assert false;
 				return null;
 		}
+	}
+
+	/**
+	 * Checks if there are any roads of the same color to the right of this edge
+	 * because nothing is OK anymore
+	 * @param edge the edge you're probably trying to put a road on
+	 * @param playerColor the color of the player probably trying to place a road
+	 * @return true if there are roads of the same color to the right of this edge
+	 */
+	private boolean roadsToTheRight(EdgeLocation edge, CatanColor playerColor) {
+		//find the edge's location according to the other hex is is a side of
+		EdgeLocation reflection = new EdgeLocation(edge.getHexLoc().getNeighborLoc(edge.getDir()), edge.getDir().getOppositeDirection());
+
+		return (getRoadAtEdge(edgeToRightEdge(edge)) != null
+				&& getRoadAtEdge(edgeToRightEdge(edge)).getColor().equals(playerColor)
+				|| getRoadAtEdge(edgeToRightEdge(reflection)) != null
+				&& getRoadAtEdge(edgeToRightEdge(reflection)).getColor().equals(playerColor));
+	}
+
+	private boolean roadsToTheLeft(EdgeLocation edge, CatanColor playerColor) {
+		//find the edge's location according to the other hex is is a side of
+		EdgeLocation reflection = new EdgeLocation(edge.getHexLoc().getNeighborLoc(edge.getDir()), edge.getDir().getOppositeDirection());
+
+		return (getRoadAtEdge(edgeToLeftEdge(edge)) != null
+				&& getRoadAtEdge(edgeToLeftEdge(edge)).getColor().equals(playerColor)
+				|| getRoadAtEdge(edgeToLeftEdge(reflection)) != null
+				&& getRoadAtEdge(edgeToLeftEdge(reflection)).getColor().equals(playerColor));
 	}
 }

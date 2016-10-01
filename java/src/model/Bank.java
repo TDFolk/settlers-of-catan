@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import exception.CardException;
-import exception.ResourceException;
 import model.development_cards.DevelopmentCard;
 import model.development_cards.MonopolyCard;
 import model.development_cards.PlentyCard;
@@ -17,7 +16,7 @@ import shared.definitions.ResourceType;
  * Created by kcwillmore on 9/17/16.
  */
 public class Bank {
-	private ResourceValues resourcePool;
+	private ResourceCards resourcePool;
 	private List<DevelopmentCard> developmentCards = new ArrayList<DevelopmentCard>();
 
 	/**
@@ -26,7 +25,7 @@ public class Bank {
 	 * 		the proper development cards.
 	 */
 	public Bank () {
-		resourcePool = new ResourceValues(19,19,19,19,19);
+		resourcePool = new ResourceCards(19,19,19,19,19);
 		
 		for (int i = 0; i < 14; i++)
 			developmentCards.add(new SoldierCard());

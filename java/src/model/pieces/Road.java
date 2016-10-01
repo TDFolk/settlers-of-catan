@@ -1,7 +1,6 @@
 package model.pieces;
 
-import exception.PlacementException;
-import model.ResourceValues;
+import model.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 
@@ -9,7 +8,7 @@ import shared.locations.EdgeLocation;
  * Created by kcwillmore on 9/17/16.
  */
 public class Road {
-    private static final ResourceValues COST = new ResourceValues(1,0,0,0,1);
+    private static final ResourceCards COST = new ResourceCards(1,0,0,0,1);
     private CatanColor color;
     private EdgeLocation location;
 
