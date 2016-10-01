@@ -117,4 +117,16 @@ public class Bank {
 	public List<DevelopmentCard> getDevelopmentCards() {
 		return developmentCards;
 	}
+
+	public ResourceCards getResourcePool() {
+		return resourcePool;
+	}
+
+	public void setResourcePool(ResourceCards resourcePool) {
+		this.resourcePool = resourcePool;
+	}
+
+	public void setDevelopmentCards(List<DevelopmentCard> developmentCards) {
+		this.developmentCards = developmentCards;
+	}
 }

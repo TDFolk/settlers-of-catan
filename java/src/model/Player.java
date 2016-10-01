@@ -1,5 +1,6 @@
 package model;
 
+import model.map.Port;
 import model.pieces.City;
 import model.pieces.Road;
 import model.pieces.Settlement;
@@ -44,6 +45,8 @@ public class Player {
      * Constructs a new player for the start of a game
      */
     public Player() {
+        roads = new ArrayList<>();
+        settlements = new ArrayList<>();
     	resourceCards = new ResourceCards(0,0,0,0,0);
         developmentCards = new ArrayList<>();
         victoryPoints = 0;
@@ -229,7 +232,10 @@ public class Player {
      * @return true if a settlement can be placed at the specified location
      */
     public boolean canPlaceSettlement(VertexLocation vertex) {
-    	return true;
+    	if (settlements.size() > 0 && canBuySettlement()) {
+    	    return Game.getInstance().getMap().canPlaceSettlement(vertex, this);
+        }
+        return false;
     }
     
     /**
@@ -240,7 +246,25 @@ public class Player {
      * @return true if a settlement can be placed at the specified location
      */
     public boolean canPlaceRoad(EdgeLocation edge) {
-    	return true;
+    	if (roads.size() > 0 && canBuyRoad()) {
+    	    return Game.getInstance().getMap().canPlaceRoad(edge, this);
+        }
+        return false;
+    }
+
+    /**
+     * Determones if a player can trade with a given port EdgeLocation
+     * @param edge
+     * @return
+     */
+    public boolean canPortTrade(EdgeLocation edge) {
+        List<Port> ports = Game.getInstance().getMap().getPorts();
+        for (int i = 0; i < ports.size(); i++) {
+            if (ports.get(i).getLocation().getNormalizedLocation().equals(edge.getNormalizedLocation())) {
+                return ports.get(i).canTrade(this);
+            }
+        }
+        return false;
     }
     
     /**

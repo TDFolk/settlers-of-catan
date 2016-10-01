@@ -243,4 +243,45 @@ public class Map {
 				|| getRoadAtEdge(edgeToLeftEdge(reflection)) != null
 				&& getRoadAtEdge(edgeToLeftEdge(reflection)).getColor().equals(playerColor));
 	}
+
+
+	public List<Hex> getHexes() {
+		return hexes;
+	}
+
+	public void setHexes(List<Hex> hexes) {
+		this.hexes = hexes;
+	}
+
+	public List<Building> getBuildings() {
+		return buildings;
+	}
+
+	public void setBuildings(List<Building> buildings) {
+		this.buildings = buildings;
+	}
+
+	public List<Road> getRoads() {
+		return roads;
+	}
+
+	public void setRoads(List<Road> roads) {
+		this.roads = roads;
+	}
+
+	public List<Port> getPorts() {
+		return ports;
+	}
+
+	public void setPorts(List<Port> ports) {
+		this.ports = ports;
+	}
+
+	public int getRadius() {
+		return radius;
+	}
+
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
 }

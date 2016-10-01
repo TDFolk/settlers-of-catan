@@ -9,7 +9,8 @@ public class RunTests {
                 {
                         "server.ServerPollerTest",
                         //"server.ServerProxyTest",
-                        "model.PlayerTest"
+                        "model.PlayerTest",
+                        "model.BankTest"
                 };
         org.junit.runner.JUnitCore.main(testClasses);
     }

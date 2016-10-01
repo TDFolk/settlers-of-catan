@@ -2,9 +2,13 @@ package model;
 
 import model.development_cards.DevelopmentCard;
 import model.development_cards.RoadBuildingCard;
+import model.map.GeneralPort;
+import model.map.Port;
 import org.junit.Before;
 import org.junit.Test;
+import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
+import shared.definitions.ResourceType;
 import shared.locations.*;
 
 import java.util.ArrayList;
@@ -93,7 +97,7 @@ public class PlayerTest {
     public void canPlaceSettlement() throws Exception {
         System.out.println("Testing can place settlement\n");
 
-        HexLocation hLoc = new HexLocation(2,5);
+        HexLocation hLoc = new HexLocation(-1,2);
         VertexLocation vLoc = new VertexLocation(hLoc,VertexDirection.East);
         assertTrue(myPlayer.canPlaceSettlement(vLoc));
     }
@@ -102,7 +106,7 @@ public class PlayerTest {
     public void canPlaceRoad() throws Exception {
         System.out.println("Testing can place road\n");
 
-        HexLocation hLoc = new HexLocation(2,5);
+        HexLocation hLoc = new HexLocation(-1,2);
         EdgeLocation eLoc = new EdgeLocation(hLoc, EdgeDirection.South);
         assertTrue(myPlayer.canPlaceRoad(eLoc));
     }
@@ -114,5 +118,20 @@ public class PlayerTest {
         myPlayer.setResourceCards(new ResourceCards(2,2,0,2,2));
         assertTrue(myPlayer.canMakeTrade(new ResourceCards(1,0,0,0,0)));
         assertFalse(myPlayer.canMakeTrade(new ResourceCards(0,0,1,0,0)));
+    }
+
+    @Test
+    public void canPortTrade() throws Exception {
+        System.out.println("Testing can port trade\n");
+
+        List<Port> ports = new ArrayList<>();
+        HexLocation hLoc = new HexLocation(-1,2);
+        EdgeLocation eLoc = new EdgeLocation(hLoc, EdgeDirection.South);
+
+        Port myPort = new GeneralPort(eLoc, ResourceType.BRICK);
+        ports.add(myPort);
+        Game.getInstance().getMap().setPorts(ports);
+
+        assertTrue(myPlayer.canPortTrade(eLoc));
     }
 }
