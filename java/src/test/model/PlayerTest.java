@@ -20,13 +20,12 @@ public class PlayerTest {
 
     @Before
     public void init() {
-        System.out.println("Now testing Player class:\n");
         myPlayer = new Player();
     }
 
     @Test
     public void canBuyRoad() throws Exception {
-        System.out.println("Testing can buy road");
+        System.out.println("Testing can buy road\n");
 
         myPlayer.setResourceCards(new ResourceCards(1,0,0,0,1));
         assertTrue(myPlayer.canBuyRoad());
@@ -37,7 +36,7 @@ public class PlayerTest {
 
     @Test
     public void canBuySettlement() throws Exception {
-        System.out.println("Testing can buy settlement");
+        System.out.println("Testing can buy settlement\n");
 
         myPlayer.setResourceCards(new ResourceCards(1,0,1,1,1));
         assertTrue(myPlayer.canBuySettlement());
@@ -48,7 +47,7 @@ public class PlayerTest {
 
     @Test
     public void canBuyCity() throws Exception {
-        System.out.println("Testing can buy city");
+        System.out.println("Testing can buy city\n");
 
         myPlayer.setResourceCards(new ResourceCards(0,3,0,2,0));
         assertTrue(myPlayer.canBuyCity());
@@ -59,7 +58,7 @@ public class PlayerTest {
 
     @Test
     public void canBuyDevelopmentCard() throws Exception {
-        System.out.println("Testing can buy development card");
+        System.out.println("Testing can buy development card\n");
 
         myPlayer.setResourceCards(new ResourceCards(0,1,1,1,0));
         assertTrue(myPlayer.canBuyDevelopmentCard());
@@ -70,9 +69,9 @@ public class PlayerTest {
 
     @Test
     public void canPlayDevelopmentCard() throws Exception {
-        System.out.println("Testing can play development card");
+        System.out.println("Testing can play development card\n");
 
-        List<DevelopmentCard> devCards = new ArrayList();
+        List<DevelopmentCard> devCards = new ArrayList<DevelopmentCard>();
         DevelopmentCard singleDevCard = new DevelopmentCard(DevCardType.ROAD_BUILD);
         devCards.add(singleDevCard);
         myPlayer.setDevelopmentCards(devCards);
@@ -83,7 +82,7 @@ public class PlayerTest {
 
     @Test
     public void canDiscard() throws Exception {
-        System.out.println("Testing can discard");
+        System.out.println("Testing can discard\n");
 
         myPlayer.setResourceCards(new ResourceCards(1,2,3,2,1));
         assertTrue(myPlayer.canDiscard(new ResourceCards(1,1,1,1,1)));
@@ -92,7 +91,7 @@ public class PlayerTest {
 
     @Test
     public void canPlaceSettlement() throws Exception {
-        System.out.println("Testing can place settlement");
+        System.out.println("Testing can place settlement\n");
 
         HexLocation hLoc = new HexLocation(2,5);
         VertexLocation vLoc = new VertexLocation(hLoc,VertexDirection.East);
@@ -101,7 +100,7 @@ public class PlayerTest {
 
     @Test
     public void canPlaceRoad() throws Exception {
-        System.out.println("Testing can place road");
+        System.out.println("Testing can place road\n");
 
         HexLocation hLoc = new HexLocation(2,5);
         EdgeLocation eLoc = new EdgeLocation(hLoc, EdgeDirection.South);
@@ -110,7 +109,7 @@ public class PlayerTest {
 
     @Test
     public void canMakeTrade() throws Exception {
-        System.out.println("Testing can make trade");
+        System.out.println("Testing can make trade\n");
 
         myPlayer.setResourceCards(new ResourceCards(2,2,0,2,2));
         assertTrue(myPlayer.canMakeTrade(new ResourceCards(1,0,0,0,0)));
