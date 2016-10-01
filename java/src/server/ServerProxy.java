@@ -4,9 +4,12 @@ import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import command.game.*;
 import command.player.AcceptTradeObject;
+import command.player.DiscardCardsObject;
+import command.player.RollNumberObject;
 import command.player.SendChatObject;
 import command.user.LoginObject;
 import command.user.RegisterObject;
+import model.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -343,17 +346,20 @@ public class ServerProxy implements IServer {
      * if you're the last one to discard, the client model status changes to 'Robbing'
      */
     @Override
-    public boolean discardCards(JsonObject discardedCards) {
+    public String discardCards(int playerIndex, ResourceCards discardedCards) {
         String discardCardsCommand = "/moves/discardCards";
-
+        DiscardCardsObject discardCardsObject = new DiscardCardsObject(playerIndex, discardedCards);
+        String postData = discardCardsObject.toJSON();
 
         try{
-            doPostCommand(discardCardsCommand, "");
+            String result = doPostCommand(discardCardsCommand, postData);
+
+            return result;
         }
         catch(ConnectException e){
             e.printStackTrace();
         }
-        return false;
+        return null;
     }
 
     /**
@@ -367,10 +373,20 @@ public class ServerProxy implements IServer {
      * @post The client model's status is now in 'Discarding' or 'Robbing' or 'Playing'
      */
     @Override
-    public boolean rollNumber(int number) {
+    public String rollNumber(int playerIndex, int number) {
         String rollNumberCommand = "/moves/rollNumber";
+        RollNumberObject rollNumberObject = new RollNumberObject(playerIndex, number);
+        String postData = rollNumberObject.toJSON();
 
-        return false;
+        try{
+            String result = doPostCommand(rollNumberCommand, postData);
+            return result;
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**

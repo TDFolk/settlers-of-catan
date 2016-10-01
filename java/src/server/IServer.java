@@ -1,8 +1,10 @@
 package server;
 
 import com.google.gson.JsonObject;
+import com.sun.deploy.model.Resource;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
+import model.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -146,7 +148,7 @@ public interface IServer {
      * @param discardedCards the cards you are discarding
      * @return success of discarded cards
      */
-    public boolean discardCards(JsonObject discardedCards);
+    public String discardCards(int playerIndex, ResourceCards discardedCards);
 
     /**
      * Roll Commands
@@ -161,7 +163,7 @@ public interface IServer {
      * @param number the number you rolled
      * @return success of the roll
      */
-    public boolean rollNumber(int number);
+    public String rollNumber(int playerIndex, int number);
 
     /**
      * Playing Commands (General Preconditions)
