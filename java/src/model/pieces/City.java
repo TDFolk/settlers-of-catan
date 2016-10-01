@@ -1,7 +1,6 @@
 package model.pieces;
 
-import exception.PlacementException;
-import model.ResourceValues;
+import model.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.locations.VertexLocation;
 
@@ -9,7 +8,7 @@ import shared.locations.VertexLocation;
  * Created by kcwillmore on 9/17/16.
  */
 public class City extends Building {
-    private static final ResourceValues COST = new ResourceValues(0,3,0,2,0);
+    private static final ResourceCards COST = new ResourceCards(0,3,0,2,0);
 
     /**
      * City constructor
