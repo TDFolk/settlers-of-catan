@@ -85,7 +85,8 @@ public class Facade {
 
     public boolean canDiscard(ResourceCards cards)
     {
-        return Game.getInstance().getUser().canDiscard(cards);
+        //return Game.getInstance().getUser().canDiscard(cards);
+        return true;
     }
 
     public boolean canPlaceSettlement(VertexLocation vertex)
