@@ -10,8 +10,6 @@ public class GameCreateObjectResult {
     private int id;
     private PlayerObject[] players;
 
-
-
     public GameCreateObjectResult(){
 
     }
