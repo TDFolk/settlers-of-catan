@@ -28,10 +28,10 @@ public class PlayerTest {
     public void canBuyRoad() throws Exception {
         System.out.println("Testing can buy road");
 
-        myPlayer.setResourceCards(new ResourceValues(1,0,0,0,1));
+        myPlayer.setResourceCards(new ResourceCards(1,0,0,0,1));
         assertTrue(myPlayer.canBuyRoad());
 
-        myPlayer.setResourceCards(new ResourceValues(0,3,2,1,2));
+        myPlayer.setResourceCards(new ResourceCards(0,3,2,1,2));
         assertFalse(myPlayer.canBuyRoad());
     }
 
@@ -39,10 +39,10 @@ public class PlayerTest {
     public void canBuySettlement() throws Exception {
         System.out.println("Testing can buy settlement");
 
-        myPlayer.setResourceCards(new ResourceValues(1,0,1,1,1));
+        myPlayer.setResourceCards(new ResourceCards(1,0,1,1,1));
         assertTrue(myPlayer.canBuySettlement());
 
-        myPlayer.setResourceCards(new ResourceValues(1,0,0,0,1));
+        myPlayer.setResourceCards(new ResourceCards(1,0,0,0,1));
         assertFalse(myPlayer.canBuySettlement());
     }
 
@@ -50,10 +50,10 @@ public class PlayerTest {
     public void canBuyCity() throws Exception {
         System.out.println("Testing can buy city");
 
-        myPlayer.setResourceCards(new ResourceValues(0,3,0,2,0));
+        myPlayer.setResourceCards(new ResourceCards(0,3,0,2,0));
         assertTrue(myPlayer.canBuyCity());
 
-        myPlayer.setResourceCards(new ResourceValues(0,0,0,0,0));
+        myPlayer.setResourceCards(new ResourceCards(0,0,0,0,0));
         assertFalse(myPlayer.canBuyCity());
     }
 
@@ -61,10 +61,10 @@ public class PlayerTest {
     public void canBuyDevelopmentCard() throws Exception {
         System.out.println("Testing can buy development card");
 
-        myPlayer.setResourceCards(new ResourceValues(0,1,1,1,0));
+        myPlayer.setResourceCards(new ResourceCards(0,1,1,1,0));
         assertTrue(myPlayer.canBuyDevelopmentCard());
 
-        myPlayer.setResourceCards(new ResourceValues(3,2,3,0,2));
+        myPlayer.setResourceCards(new ResourceCards(3,2,3,0,2));
         assertFalse(myPlayer.canBuyDevelopmentCard());
     }
 
@@ -85,9 +85,9 @@ public class PlayerTest {
     public void canDiscard() throws Exception {
         System.out.println("Testing can discard");
 
-        myPlayer.setResourceCards(new ResourceValues(1,2,3,2,1));
-        assertTrue(myPlayer.canDiscard(new ResourceValues(1,1,1,1,1)));
-        assertFalse(myPlayer.canDiscard(new ResourceValues(2,1,1,1,1)));
+        myPlayer.setResourceCards(new ResourceCards(1,2,3,2,1));
+        assertTrue(myPlayer.canDiscard(new ResourceCards(1,1,1,1,1)));
+        assertFalse(myPlayer.canDiscard(new ResourceCards(2,1,1,1,1)));
     }
 
     @Test
@@ -112,8 +112,8 @@ public class PlayerTest {
     public void canMakeTrade() throws Exception {
         System.out.println("Testing can make trade");
 
-        myPlayer.setResourceCards(new ResourceValues(2,2,0,2,2));
-        assertTrue(myPlayer.canMakeTrade(new ResourceValues(1,0,0,0,0)));
-        assertFalse(myPlayer.canMakeTrade(new ResourceValues(0,0,1,0,0)));
+        myPlayer.setResourceCards(new ResourceCards(2,2,0,2,2));
+        assertTrue(myPlayer.canMakeTrade(new ResourceCards(1,0,0,0,0)));
+        assertFalse(myPlayer.canMakeTrade(new ResourceCards(0,0,1,0,0)));
     }
 }
