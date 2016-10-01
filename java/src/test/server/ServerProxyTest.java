@@ -3,6 +3,7 @@ package server;
 import static org.junit.Assert.*;
 import java.util.concurrent.ThreadLocalRandom;
 
+import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
 import org.junit.Before;
 import org.junit.BeforeClass;
@@ -37,6 +38,7 @@ public class ServerProxyTest {
     @Test
     public void userLogin()
     {
+        proxy.userRegister("bob", "bob");
         //System.out.println("Logging in\nUsername: " + "bob" + " Password: " + "bob");
         assertTrue(proxy.userLogin("bob", "bob"));
     }
@@ -47,6 +49,14 @@ public class ServerProxyTest {
         GameListObject list[];
         list = proxy.gameList();
         assertNotNull(list);
+    }
+
+    @Test
+    public void gameCreate()
+    {
+        GameCreateObjectResult result;
+        result = proxy.gameCreate(true, true, true, "New Game! :D");
+        assertNotNull(result);
     }
 
     public void createRandomUserInfo()
