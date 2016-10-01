@@ -192,7 +192,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public String gameAddAI(java.lang.String typeAI) {
+    public boolean gameAddAI(java.lang.String typeAI) {
 
         return true;
     }
