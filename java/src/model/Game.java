@@ -1,6 +1,7 @@
 package model;
 
 import model.cards_resources.Bank;
+import model.cards_resources.Trade;
 import model.map.Map;
 
 import java.util.List;
@@ -16,18 +17,14 @@ public class Game {
 
     private int versionNumber = 0;
     private Bank bank;
+    private List<Message> chat;
+    private List<Message> log;
     private Map map;
     private List<Player> players;
     private Player user;
-
-    /**
-     * the player currently in possession of the longest road, begins as null
-     */
-    private Player longestRoad = null;
-    /**
-     * the player currently in possession of the largest army, begins as null
-     */
-    private Player largestArmy = null;
+    private Trade activeTrade; //null if none is ongoing
+    private TurnTracker turntracker;
+    private Player winner;
 
     private Game() {}
 
@@ -41,8 +38,18 @@ public class Game {
     /**
      * Initialize/reinitialize all of the data in the model from the info returned by the server
      */
-    public void initializeData() {
-
+    public void initializeData(int versionNumber, Bank bank, List<Message> chat, List<Message> log, Map map,
+                               List<Player> players, Player user, Trade activeTrade, TurnTracker turnTracker, Player winner) {
+        this.versionNumber = versionNumber;
+        this.bank = bank;
+        this.chat = chat;
+        this.log = log;
+        this.map = map;
+        this.players = players;
+        this.user = user;
+        this.activeTrade = activeTrade; //null if none is ongoing
+        this.turntracker = turnTracker;
+        this.winner = winner;
     }
 
     public int getVersionNumber() {
