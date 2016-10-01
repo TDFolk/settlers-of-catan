@@ -45,10 +45,10 @@ public class ServerProxyTest {
         assertNotNull(result);
 
         //GAME JOIN!!!!-----------------------------------------------------------------------------------
-        assertTrue(proxy.gameJoin(result.getId(), CatanColor.BLUE));
+        assertTrue(proxy.gameJoin(result.getId(), "blue"));
 
         //ADD AI------------------------------------------------------------------------------------------
-        assertTrue(proxy.gameAddAI("SOME AI!!!"));
+        //assertTrue(proxy.gameAddAI("LARGEST_ARMY"));
 
         //SEND CHAT--------------------------------------------------------------------------------------
         String modelJSON;

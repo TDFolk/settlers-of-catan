@@ -8,6 +8,7 @@ import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
 import command.player.DiscardedCards;
 import command.player.RoadLocation;
+import model.cards_resources.ResourceCards;
 import server.IServer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -137,7 +138,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameJoin( int gameID, CatanColor color) {
+    public boolean gameJoin(int gameID, String color) {
 
 
         return true;
@@ -242,7 +243,7 @@ public class MockServer implements IServer {
      * if you're the last one to discard, the client model status changes to 'Robbing'
      */
     @Override
-    public String discardCards(int playerIndex, DiscardedCards discardedCards) {
+    public String discardCards(int playerIndex, ResourceCards discardedCards) {
 
 
         return jsonModelExample;
