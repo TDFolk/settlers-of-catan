@@ -1,12 +1,10 @@
 package server;
 
 import com.google.gson.JsonObject;
-import com.sun.deploy.model.Resource;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
 import command.player.DiscardedCards;
 import command.player.RoadLocation;
-import model.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -186,7 +184,7 @@ public interface IServer {
      * @param roadLocation the new road's location
      * @return success of built road
      */
-    public String buildRoad(int playerIndex, RoadLocation roadLocation, boolean free);
+    public String buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free);
 
     /**
      * Builds a settlement

@@ -1,6 +1,7 @@
 package command.player;
 
 import com.google.gson.Gson;
+import shared.locations.EdgeLocation;
 
 
 /**
@@ -9,29 +10,29 @@ import com.google.gson.Gson;
 public class BuildRoadObject {
     private final String type = "buildRoad";
     private int playerIndex;
-    private RoadLocation roadLocation;
+    private EdgeLocation roadLocation;
     private boolean free;
 
-    public BuildRoadObject(int playerIndex, RoadLocation roadLocation, boolean free){
+    public BuildRoadObject(int playerIndex, EdgeLocation roadLocation, boolean free){
         this.playerIndex = playerIndex;
         this.roadLocation = roadLocation;
         this.free = free;
     }
 
     public String toJSON(){
-        Gson gson = new Gson();
-        return gson.toJson(this);
-//        String jsonString = "{\n" +
-//                "  \"type\": \"buildRoad\",\n" +
-//                "  \"playerIndex\": \"integer\",\n" +
-//                "  \"roadLocation\": {\n" +
-//                "    \"x\": \"integer\",\n" +
-//                "    \"y\": \"integer\",\n" +
-//                "    \"direction\": \"string\"\n" +
-//                "  },\n" +
-//                "  \"free\": \"Boolean\"\n" +
-//                "}";
-//        return jsonString;
+//        Gson gson = new Gson();
+//        return gson.toJson(this);
+        String response = "{\n" +
+                "  \"type\": \"buildRoad\",\n" +
+                "  \"playerIndex\": \"integer\",\n" +
+                "  \"roadLocation\": {\n" +
+                "    \"x\": \"" + roadLocation.getHexLoc().getX() + "\",\n" +
+                "    \"y\": \"" + roadLocation.getHexLoc().getY() + "\",\n" +
+                "    \"direction\": \"" + roadLocation.getDir() + "\"\n" +
+                "  },\n" +
+                "  \"free\": \"Boolean\"\n" +
+                "}";
+        return response;
     }
 
     public int getPlayerIndex() {
@@ -42,12 +43,12 @@ public class BuildRoadObject {
         this.playerIndex = playerIndex;
     }
 
-    public RoadLocation getRoadLocation() {
-        return roadLocation;
+    public void setRoadLocation(EdgeLocation roadLocation) {
+        this.roadLocation = roadLocation;
     }
 
-    public void setRoadLocation(RoadLocation roadLocation) {
-        this.roadLocation = roadLocation;
+    public EdgeLocation getRoadLocation() {
+        return roadLocation;
     }
 
     public boolean isFree() {

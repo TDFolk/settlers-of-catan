@@ -170,7 +170,7 @@ public class ServerProxy implements IServer {
     /**
      * Adds the player to the specified game and sets their catan.game cookie
      *
-     * @param userCookie String userCookie is the response header
+     *  String userCookie is the response header
      * @param gameID     unique identifier for a particular game
      * @param color      player color
      * @return success of joining the game
@@ -402,7 +402,7 @@ public class ServerProxy implements IServer {
      * if applicable, "longest road" is awarded
      */
     @Override
-    public String buildRoad(int playerIndex, RoadLocation roadLocation, boolean free) {
+    public String buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free) {
         String buildRoadCommand = "/moves/buildRoad";
         BuildRoadObject buildRoadObject = new BuildRoadObject(playerIndex, roadLocation, free);
         String postData = buildRoadObject.toJSON();
