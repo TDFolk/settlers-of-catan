@@ -90,22 +90,30 @@ public class Map {
 			if (adjacentBuilding.getColor().equals(player.getColor())) {
 				return true;
 			}
+			//find the edge's location according to the other hex is is a side of
+			EdgeLocation reflection = new EdgeLocation(location.getHexLoc().getNeighborLoc(location.getDir()), location.getDir().getOppositeDirection());
 			//if different colored building, must have a road of same color on the opposite end
 			if (adjacentBuilding.getLocation().getNormalizedLocation().equals(edgeToLeftVertex(location).getNormalizedLocation())) { //leftside
-				//find the edge's location according to the other hex is is a side of
-				EdgeLocation reflection = new EdgeLocation(location.getHexLoc().getNeighborLoc(location.getDir()), location.getDir().getOppositeDirection());
+				//check both edges to the right of this, if a road is on one of them and it is the same color, all is well
 				if (getRoadAtEdge(edgeToRightEdge(location)) != null
 						&& getRoadAtEdge(edgeToRightEdge(location)).getColor().equals(player.getColor())
 						|| getRoadAtEdge(edgeToRightEdge(reflection)) != null
 						&& getRoadAtEdge(edgeToRightEdge(reflection)).getColor().equals(player.getColor())) {
-					
+					return true;
 				}
 			}
 			else { //rightside
-
+				//same as for the leftside, but checking the opposite edges for friendly roads
+				if (getRoadAtEdge(edgeToLeftEdge(location)) != null
+						&& getRoadAtEdge(edgeToLeftEdge(location)).getColor().equals(player.getColor())
+						|| getRoadAtEdge(edgeToLeftEdge(reflection)) != null
+						&& getRoadAtEdge(edgeToLeftEdge(reflection)).getColor().equals(player.getColor())) {
+					return true;
+				}
 			}
 		}
 		//if no settlement, must have road of same color in any direction
+		//todo still this
 		return false;
 	}
 
