@@ -1,14 +1,9 @@
 package model;
 
-<<<<<<< HEAD
-import model.development_cards.DevelopmentCard;
-import model.development_cards.RoadBuildingCard;
+import model.cards_resources.DevelopmentCard;
 import model.map.GeneralPort;
 import model.map.Port;
-=======
-import model.cards_resources.DevelopmentCard;
 import model.cards_resources.ResourceCards;
->>>>>>> origin/master
 import org.junit.Before;
 import org.junit.Test;
 import shared.definitions.CatanColor;

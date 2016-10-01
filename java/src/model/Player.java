@@ -1,11 +1,8 @@
 package model;
 
-<<<<<<< HEAD
 import model.map.Port;
-=======
 import model.cards_resources.ResourceCards;
 import model.cards_resources.Trade;
->>>>>>> origin/master
 import model.pieces.City;
 import model.pieces.Road;
 import model.pieces.Settlement;

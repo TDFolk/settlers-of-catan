@@ -1,6 +1,7 @@
 package model;
 
-import model.development_cards.DevelopmentCard;
+import model.cards_resources.DevelopmentCard;
+import model.cards_resources.ResourceCards;
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoint;
 import shared.definitions.DevCardType;
