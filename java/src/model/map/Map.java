@@ -3,7 +3,10 @@ package model.map;
 import model.Player;
 import model.pieces.Building;
 import model.pieces.Road;
+import shared.definitions.CatanColor;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 import java.util.List;
@@ -37,7 +40,7 @@ public class Map {
 	 * @param location the vertex under scrutiny
 	 * @return the building at that vertex, null if none exists
 	 */
-	public Building getBuildingAtVertex(VertexLocation location) {
+	private Building getBuildingAtVertex(VertexLocation location) {
 		for (Building building : buildings) {
 			if (building.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())) {
 				return building;
@@ -46,13 +49,27 @@ public class Map {
 		return null;
 	}
 
-	public Road getRoadAtEdge(EdgeLocation location) {
+	private Road getRoadAtEdge(EdgeLocation location) {
 		for (Road road: roads) {
 			if (road.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())) {
 				return road;
 			}
 		}
 		return null;
+	}
+
+
+	/**
+	 * Finds out if a city or settlement is built on the vertices of this edge
+	 *
+	 * @return the building adjacent to this edge, null if none is found
+	 */
+	public Building buildingByEdge(EdgeLocation location) {
+		Building building = getBuildingAtVertex(edgeToLeftVertex(location));
+		if (building == null) {
+			building = getBuildingAtVertex(edgeToRightVertex(location));
+		}
+		return building;
 	}
 
 	/**
@@ -63,6 +80,30 @@ public class Map {
 	 * @return true if a road can be placed at the specified location
 	 */
 	public boolean canPlaceRoad(EdgeLocation location, Player player) {
+		//already a road at that location, can't build
+		if (getRoadAtEdge(location) != null) {
+			return false;
+		}
+		//check for buildings adjacent to road edge
+		Building adjacentBuilding = buildingByEdge(location);
+		if (adjacentBuilding != null) {
+			//if the same colored building, all is good
+			if (adjacentBuilding.getColor().equals(player.getColor())) {
+				return true;
+			}
+
+			//if different colored building, must have a road of same color on the opposite end
+			if (adjacentBuilding.getLocation().getNormalizedLocation().equals(edgeToLeftVertex(location).getNormalizedLocation())) { //leftside
+				//check both edges to the right of this, if a road is on one of them and it is the same color, all is well
+				return roadsToTheRight(location, player.getColor());
+			}
+			else { //rightside
+				//same as for the leftside, but checking the opposite edges for friendly roads
+				return roadsToTheLeft(location, player.getColor());
+			}
+		}
+		//if no settlement, must have road of same color in any direction
+		return roadsToTheLeft(location, player.getColor()) || roadsToTheRight()
 		return false;
 	}
 
@@ -73,5 +114,133 @@ public class Map {
 	 */
 	public boolean canPlaceSettlement(VertexLocation location, Player player) {
 		return false;
+	}
+
+
+	/**
+	 * Given an edge, finds the vertex to the left of it
+	 * @param location the edge under consideration
+	 * @return the vertex to the left of this edge
+	 */
+	private VertexLocation edgeToLeftVertex(EdgeLocation location) {
+		switch (location.getDir()) {
+			case NorthWest:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.West);
+			case North:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.NorthWest);
+			case NorthEast:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.NorthEast);
+			case SouthWest:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.West);
+			case South:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.SouthWest);
+			case SouthEast:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.SouthEast);
+			default:
+				assert false;
+				return null;
+		}
+	}
+
+	/**
+	 * Given  an edge, finds the vertex to the right of it
+	 * @param location the edge under consideration
+	 * @return the vertex tot he right of this edge
+	 */
+	private VertexLocation edgeToRightVertex(EdgeLocation location) {
+		switch (location.getDir()) {
+			case NorthWest:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.NorthWest);
+			case North:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.NorthEast);
+			case NorthEast:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.East);
+			case SouthWest:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.SouthWest);
+			case South:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.SouthEast);
+			case SouthEast:
+				return new VertexLocation(location.getHexLoc(), VertexDirection.East);
+			default:
+				assert false;
+				return null;
+		}
+	}
+
+	/**
+	 * Finds the edge to the left of this edge (on this EdgeLocation's respective hex)
+	 * @param edge the edge being keyed off of
+	 * @return the edge to the left of this around the hex
+	 */
+	private EdgeLocation edgeToLeftEdge(EdgeLocation edge) {
+		switch (edge.getDir()) {
+			case NorthWest:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.SouthWest);
+			case North:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.NorthWest);
+			case NorthEast:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.North);
+			case SouthWest:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.NorthWest);
+			case South:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.SouthWest);
+			case SouthEast:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.South);
+			default:
+				assert false;
+				return null;
+		}
+	}
+
+	/**
+	 * Finds the edge to the right of this edge (on this EdgeLocation's respective hex)
+	 * @param edge the edge being keyed off of
+	 * @return the edge to the right of this around the hex
+	 */
+	private EdgeLocation edgeToRightEdge(EdgeLocation edge) {
+		switch (edge.getDir()) {
+			case NorthWest:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.North);
+			case North:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.NorthEast);
+			case NorthEast:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.SouthEast);
+			case SouthWest:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.South);
+			case South:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.SouthEast);
+			case SouthEast:
+				return new EdgeLocation(edge.getHexLoc(), EdgeDirection.NorthEast);
+			default:
+				assert false;
+				return null;
+		}
+	}
+
+	/**
+	 * Checks if there are any roads of the same color to the right of this edge
+	 * because nothing is OK anymore
+	 * @param edge the edge you're probably trying to put a road on
+	 * @param playerColor the color of the player probably trying to place a road
+	 * @return true if there are roads of the same color to the right of this edge
+	 */
+	private boolean roadsToTheRight(EdgeLocation edge, CatanColor playerColor) {
+		//find the edge's location according to the other hex is is a side of
+		EdgeLocation reflection = new EdgeLocation(edge.getHexLoc().getNeighborLoc(edge.getDir()), edge.getDir().getOppositeDirection());
+
+		return (getRoadAtEdge(edgeToRightEdge(edge)) != null
+				&& getRoadAtEdge(edgeToRightEdge(edge)).getColor().equals(playerColor)
+				|| getRoadAtEdge(edgeToRightEdge(reflection)) != null
+				&& getRoadAtEdge(edgeToRightEdge(reflection)).getColor().equals(playerColor));
+	}
+
+	private boolean roadsToTheLeft(EdgeLocation edge, CatanColor playerColor) {
+		//find the edge's location according to the other hex is is a side of
+		EdgeLocation reflection = new EdgeLocation(edge.getHexLoc().getNeighborLoc(edge.getDir()), edge.getDir().getOppositeDirection());
+
+		return (getRoadAtEdge(edgeToLeftEdge(edge)) != null
+				&& getRoadAtEdge(edgeToLeftEdge(edge)).getColor().equals(playerColor)
+				|| getRoadAtEdge(edgeToLeftEdge(reflection)) != null
+				&& getRoadAtEdge(edgeToLeftEdge(reflection)).getColor().equals(playerColor));
 	}
 }

@@ -1,6 +1,5 @@
 package model;
 
-import com.google.gson.JsonObject;
 import model.development_cards.DevelopmentCard;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -84,7 +83,7 @@ public class Facade {
         return Game.getInstance().getUser().canPlayDevelopmentCard(card);
     }
 
-    public boolean canDiscard(List<ResourceCard> cards)
+    public boolean canDiscard(ResourceCards cards)
     {
         return Game.getInstance().getUser().canDiscard(cards);
     }
@@ -99,7 +98,7 @@ public class Facade {
         return Game.getInstance().getUser().canPlaceRoad(edge);
     }
 
-    public boolean canMakeTrade(ResourceValues offer)
+    public boolean canMakeTrade(ResourceCards offer)
     {
         return Game.getInstance().getUser().canMakeTrade(offer);
     }
@@ -114,5 +113,5 @@ public class Facade {
      * Replaces the old model with the new model returned from the server
      * @param newModel the new model returned from the server
      */
-    public void replaceModel(JsonObject newModel) {}
+    public void replaceModel(String newModel) {}
 }

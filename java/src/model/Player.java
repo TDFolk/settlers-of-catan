@@ -27,7 +27,7 @@ public class Player {
     private List<Settlement> settlements;
     private List<City> cities;
     private List<Road> roads;
-    private ResourceValues resourceCards;
+    private ResourceCards resourceCards;
     private List<DevelopmentCard> developmentCards;
     private List<DevelopmentCard> newDevelopmentCards;
     private PlayerID playerID;
@@ -49,7 +49,7 @@ public class Player {
         victoryPoints = 0;
     }
 
-    public ResourceValues getResourceCards() {
+    public ResourceCards getResourceCards() {
         return resourceCards;
     }
 
@@ -246,8 +246,13 @@ public class Player {
      * @param offer the resources being offered for the trade
      * @return Returns true if the player has the resources specified in the offer, false otherwise.
      */
+<<<<<<< HEAD
     public boolean canMakeTrade(ResourceValues offer) {
     	return resourceCards.canPay(offer);
+=======
+    public boolean canMakeTrade(ResourceCards offer) {
+    	return false;
+>>>>>>> origin/master
     }
     
     

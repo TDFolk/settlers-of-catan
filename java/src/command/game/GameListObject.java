@@ -10,9 +10,13 @@ import java.util.List;
 public class GameListObject {
     private String title;
     private int id;
-    private List<PlayerObject> playerList;
+    private PlayerObject playerList[];
 
-    public GameListObject(String title, int id, List<PlayerObject> playerList) {
+    public GameListObject(){
+
+    }
+
+    public GameListObject(String title, int id, PlayerObject playerList[]) {
         this.title = title;
         this.id = id;
         this.playerList = playerList;
@@ -34,11 +38,11 @@ public class GameListObject {
         this.id = id;
     }
 
-    public List<PlayerObject> getPlayerList() {
+    public PlayerObject[] getPlayerList() {
         return playerList;
     }
 
-    public void setPlayerList(List<PlayerObject> playerList) {
+    public void setPlayerList(PlayerObject[] playerList) {
         this.playerList = playerList;
     }
 }

@@ -4,6 +4,9 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
+import command.game.GameCreateObjectResult;
+import command.game.GameListObject;
+import command.game.GameListObjectResult;
 import server.IServer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -82,13 +85,16 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonArray gameList() {
+    public GameListObjectResult gameList() {
 
-        JsonParser parser = new JsonParser();
+//        JsonParser parser = new JsonParser();
+//
+//        JsonArray gameList = parser.parse(gameListExample).getAsJsonArray();
 
-        JsonArray gameList = parser.parse(gameListExample).getAsJsonArray();
+        Gson gson = new Gson();
 
-        return gameList;
+        GameListObjectResult list = gson.fromJson(gameListAIExample, GameListObjectResult.class);
+        return list;
     }
 
     /**
@@ -102,12 +108,16 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonObject gameCreate(java.lang.String gameName) {
+    public GameCreateObjectResult gameCreate(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String gameName) {
 
-        JsonParser parser = new JsonParser();
-        JsonObject gameData = parser.parse(gameCreatedExample).getAsJsonObject();
+//      JsonParser parser = new JsonParser();
+//      JsonObject gameData = parser.parse(gameCreatedExample).getAsJsonObject();
 
-        return gameData;
+        Gson gson = new Gson();
+
+        GameCreateObjectResult result = gson.fromJson(gameCreatedExample, GameCreateObjectResult.class);
+
+        return result;
     }
 
     /**
@@ -145,12 +155,12 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public JsonObject gameModelVersion(int versionNumber) {
+    public String gameModelVersion(int versionNumber) {
 
-        JsonParser parser = new JsonParser();
-        JsonObject newModel = parser.parse(jsonModelExample).getAsJsonObject();
+//        JsonParser parser = new JsonParser();
+//        JsonObject newModel = parser.parse(jsonModelExample).getAsJsonObject();
 
-        return newModel;
+        return jsonModelExample;
     }
 
     /**
@@ -161,13 +171,14 @@ public class MockServer implements IServer {
      * @post if successful, server returns 200 HTTP success response
      * body contains a JSON string array enumerating the different types of AI players
      */
+
     @Override
-    public JsonArray gameListAI() {
+    public String gameListAI() {
 
         JsonParser parser = new JsonParser();
         JsonArray AIList = parser.parse(gameListAIExample).getAsJsonArray();
 
-        return AIList;
+        return gameListAIExample;
     }
 
     /**

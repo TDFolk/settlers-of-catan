@@ -1,7 +1,12 @@
 package server;
 
+import static org.junit.Assert.*;
 import java.util.concurrent.ThreadLocalRandom;
+
+import command.game.GameListObject;
+import command.game.GameListObjectResult;
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 /**
@@ -9,30 +14,40 @@ import org.junit.Test;
  */
 public class ServerProxyTest {
 
-    IServer proxy;
-    String host = "localhost";
-    String port = "8081";
-    String username;
-    String password;
-    int infoLength = 30;
+    private IServer proxy;
+    private String host = "localhost";
+    private String port = "8081";
+    private String username;
+    private String password;
+    private int infoLength = 15;
 
     @Before
-    public void initialize()
+    public void setUp()
     {
         proxy = new ServerProxy(host, port);
         createRandomUserInfo();
+
     }
 
     @Test
     public void userRegister()
-    {
-
+    {   //System.out.println("Registering\nUsername: " + username + " Password: " + password);
+        assertTrue(proxy.userRegister(username, password));
     }
 
     @Test
     public void userLogin()
     {
+        //System.out.println("Logging in\nUsername: " + "bob" + " Password: " + "bob");
+        assertTrue(proxy.userLogin("bob", "bob"));
+    }
 
+    @Test
+    public void gameList()
+    {
+        GameListObjectResult list;
+        list = proxy.gameList();
+        assertNotNull(list);
     }
 
     public void createRandomUserInfo()
@@ -42,7 +57,7 @@ public class ServerProxyTest {
 
         for(int i = 0; i < infoLength; i++)
         {
-            char nextLetter = (char)ThreadLocalRandom.current().nextInt(97,123+1);
+            char nextLetter = (char)ThreadLocalRandom.current().nextInt(97,122+1);
 
             newName.append(nextLetter);
         }
@@ -51,15 +66,13 @@ public class ServerProxyTest {
 
         for(int i = 0; i < infoLength; i++)
         {
-            char nextLetter = (char)ThreadLocalRandom.current().nextInt(97,123+1);
+            char nextLetter = (char)ThreadLocalRandom.current().nextInt(97,122+1);
 
             newPass.append(nextLetter);
         }
 
         this.password = newPass.toString();
 
-        System.out.println(username);
-        System.out.println(password);
     }
 
 

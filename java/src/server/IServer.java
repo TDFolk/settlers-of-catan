@@ -1,9 +1,8 @@
 package server;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import command.user.LoginObject;
-import command.user.RegisterObject;
+import command.game.GameCreateObjectResult;
+import command.game.GameListObject;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -46,7 +45,7 @@ public interface IServer {
      *          if invalid, returns a 400 HTTP response with an error message
      * @return JSONArray containing a list of objects about the server's games
      */
-    public JsonArray gameList();
+    public GameListObject[] gameList();
 
     /**
      * Creates a new game on the server
@@ -57,7 +56,7 @@ public interface IServer {
      * @param gameName String gameName of the new game
      * @return a JSON object containing properties of the newly created game
      */
-    public JsonObject gameCreate(String gameName);
+    public GameCreateObjectResult gameCreate(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String gameName);
 
     /**
      * Adds the player to the specified game and sets their catan.game cookie
@@ -86,7 +85,7 @@ public interface IServer {
      * @param versionNumber version number of the game
      * @return JSON object of the model
      */
-    public JsonObject gameModelVersion(int versionNumber);
+    public String gameModelVersion(int versionNumber);
 
     /**
      * Returns a list of supported AI player types (LARGEST_ARMY is the only supported type currently)
@@ -95,7 +94,7 @@ public interface IServer {
      *          body contains a JSON string array enumerating the different types of AI players
      * @return list of supported AI player types
      */
-    public JsonArray gameListAI();
+    public String gameListAI();
 
     /**
      * Adds an AI player to the current game
@@ -103,10 +102,10 @@ public interface IServer {
      * @post if successful, server returns 200 HTTP success response, new AI player of type has been added to the game
      *          server selected a name and color for the player
      *          if invalid, returns a 400 HTTP response with an error message
-     * @param typeAI type of the AI being added to the game from the listAI
+     * @param AIType type of the AI being added to the game from the listAI
      * @return success of adding an AI
      */
-    public boolean gameAddAI(String typeAI);
+    public boolean gameAddAI(String AIType);
 
     /**
      * Anytime Commands

@@ -8,6 +8,7 @@ public class RunTests {
         String[] testClasses = new String[]
                 {
                         "server.ServerPollerTest",
+                        "server.ServerProxyTest",
                         "model.PlayerTest"
                 };
         org.junit.runner.JUnitCore.main(testClasses);
