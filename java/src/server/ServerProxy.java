@@ -630,11 +630,12 @@ public class ServerProxy implements IServer {
                         String foo = connection.getHeaderField(i);
                         //trim the cookie where the ';' starts and initialize the cookie variable
                         cookie = foo.split(";", 2)[0];
-                        InputStream input = connection.getInputStream();
-                        return getResponseBodyData(input);
+
                     }
                     i++;
                 }
+                InputStream input = connection.getInputStream();
+                return getResponseBodyData(input);
             }
             else {
                 throw new ConnectException(String.format("doPostCommand failed... %s (http code %d)", methodName,
