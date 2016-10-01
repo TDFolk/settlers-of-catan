@@ -7,8 +7,10 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- * Created by Tanner on 9/27/2016.
+ * Created by Trent on 9/27/2016.
  *
+ * */
+
 public class ServerPollerTest {
     IServer mock;
     ServerPoller test;
@@ -35,5 +37,3 @@ public class ServerPollerTest {
     }
 
 }
-
- */

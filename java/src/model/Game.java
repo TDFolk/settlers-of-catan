@@ -71,4 +71,23 @@ public class Game {
     public Player getUser(){return user;}
 
 
+    public void setVersionNumber(int versionNumber) {
+        this.versionNumber = versionNumber;
+    }
+
+    public void setBank(Bank bank) {
+        this.bank = bank;
+    }
+
+    public void setMap(Map map) {
+        this.map = map;
+    }
+
+    public void setPlayers(List<Player> players) {
+        this.players = players;
+    }
+
+    public void setUser(Player user) {
+        this.user = user;
+    }
 }

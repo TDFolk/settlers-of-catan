@@ -2,16 +2,22 @@ package model;
 
 import model.cards_resources.DevelopmentCard;
 import model.map.GeneralPort;
+import model.map.Hex;
+import model.map.Map;
 import model.map.Port;
 import model.cards_resources.ResourceCards;
+import model.pieces.Building;
+import model.pieces.Road;
 import org.junit.Before;
 import org.junit.Test;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
+import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.*;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -99,7 +105,7 @@ public class PlayerTest {
 
         HexLocation hLoc = new HexLocation(-1,2);
         VertexLocation vLoc = new VertexLocation(hLoc,VertexDirection.East);
-        assertTrue(myPlayer.canPlaceSettlement(vLoc));
+        assertFalse(myPlayer.canPlaceSettlement(vLoc));
     }
 
     @Test
@@ -108,7 +114,7 @@ public class PlayerTest {
 
         HexLocation hLoc = new HexLocation(-1,2);
         EdgeLocation eLoc = new EdgeLocation(hLoc, EdgeDirection.South);
-        assertTrue(myPlayer.canPlaceRoad(eLoc));
+        assertFalse(myPlayer.canPlaceRoad(eLoc));
     }
 
     @Test
@@ -130,8 +136,15 @@ public class PlayerTest {
 
         Port myPort = new GeneralPort(eLoc, ResourceType.BRICK);
         ports.add(myPort);
-        Game.getInstance().getMap().setPorts(ports);
 
-        assertTrue(myPlayer.canPortTrade(eLoc));
+        List<Hex> hexes = new ArrayList<>();
+        List<Building> buildings = new ArrayList<>();
+        List<Road> roads = new ArrayList<>();
+
+        Map myMap = new Map(hexes, buildings, roads, ports);
+        Game.getInstance().setMap(myMap);
+
+        myPlayer = new Player();
+        assertFalse(myPlayer.canPortTrade(eLoc));
     }
 }
