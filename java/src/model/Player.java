@@ -149,7 +149,7 @@ public class Player {
      * @param cards the cards to discard
      * @throws CardException if the player does not own the cards specified
      */
-    public void discard(List<ResourceCard> cards) throws CardException {
+    public void discard(ResourceCards cards) throws CardException {
     	
     }
     
@@ -204,10 +204,7 @@ public class Player {
      * @return true if the player owns and can play the card
      */
     public boolean canPlayDevelopmentCard(DevCardType card) {
-        if (developmentCards.contains(card)) {
-            return true;
-        }
-    	return false;
+        return developmentCards.contains(card);
     }
     
     /**
