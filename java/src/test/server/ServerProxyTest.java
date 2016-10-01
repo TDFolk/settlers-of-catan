@@ -8,6 +8,7 @@ import command.game.GameListObject;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+import shared.definitions.CatanColor;
 
 /**
  * Created by bvanc on 9/30/2016.
@@ -44,7 +45,7 @@ public class ServerProxyTest {
         assertNotNull(result);
 
         //GAME JOIN!!!!-----------------------------------------------------------------------------------
-        //assertTrue(proxy.gameJoin(result.getId(),"red"));
+        assertTrue(proxy.gameJoin(result.getId(), CatanColor.BLUE));
 
         //ADD AI------------------------------------------------------------------------------------------
         assertTrue(proxy.gameAddAI("SOME AI!!!"));

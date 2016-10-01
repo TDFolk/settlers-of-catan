@@ -8,7 +8,6 @@ import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
 import command.player.DiscardedCards;
 import command.player.RoadLocation;
-import model.ResourceCards;
 import server.IServer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
