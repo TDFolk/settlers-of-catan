@@ -107,10 +107,10 @@ public interface IServer {
      * @post if successful, server returns 200 HTTP success response, new AI player of type has been added to the game
      *          server selected a name and color for the player
      *          if invalid, returns a 400 HTTP response with an error message
-     * @param typeAI type of the AI being added to the game from the listAI
+     * @param AIType type of the AI being added to the game from the listAI
      * @return success of adding an AI
      */
-    public String gameAddAI(String typeAI);
+    public boolean gameAddAI(String AIType);
 
     /**
      * Anytime Commands

@@ -255,7 +255,7 @@ public class ServerProxy implements IServer {
     /**
      * Adds an AI player to the current game
      *
-     * @param typeAI type of the AI being added to the game from the listAI
+     * @param AIType type of the AI being added to the game from the listAI
      * @return success of adding an AI
      * @pre valid catan.user and catan.game HTTP cookies, space in the game for another player, "AIType" is valid
      * @post if successful, server returns 200 HTTP success response, new AI player of type has been added to the game
@@ -263,18 +263,20 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public String gameAddAI(String typeAI) {
+    public boolean gameAddAI(String AIType) {
         String gameAddAICommand = "/game/addAI";
-        Gson gson = new Gson();
-        String postData = gson.toJson(typeAI);
+        GameAddAIObject gameAddAIObject = new GameAddAIObject(AIType);
+
+        String postData = gameAddAIObject.toJSON();
 
         try{
-            return doPostCommand(gameAddAICommand, postData);
+            String result = doPostCommand(gameAddAICommand, postData);
+            return true;
         }
         catch(ConnectException e) {
             e.printStackTrace();
         }
-        return null;
+        return false;
     }
 
     /**
