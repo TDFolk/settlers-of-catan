@@ -56,7 +56,7 @@ public class ServerProxyTest {
         assertNotNull(modelJSON);
 
         //ACCEPT TRADE------------------------------------------------------------------------------------
-        
+
     }
 
     @Test
