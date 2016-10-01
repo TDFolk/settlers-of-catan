@@ -1,6 +1,7 @@
 package model;
 
 import model.development_cards.DevelopmentCard;
+import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
@@ -78,7 +79,7 @@ public class Facade {
         return Game.getInstance().getUser().canBuyDevelopmentCard();
     }
 
-    public boolean canPlayDevelopmentCard(DevelopmentCard card)
+    public boolean canPlayDevelopmentCard(DevCardType card)
     {
         return Game.getInstance().getUser().canPlayDevelopmentCard(card);
     }
