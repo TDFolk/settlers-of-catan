@@ -480,9 +480,20 @@ public class ServerProxy implements IServer {
      * @post the trade is offered to the other player(stored in the server model)
      */
     @Override
-    public boolean offerTrade(JsonObject offer, int receiver) {
+    public String offerTrade(int playerIndex, ResourceCards offer, int receiver) {
         String offerTradeCommand = "/moves/offerTrade";
-        return false;
+        OfferTradeObject offerTradeObject = new OfferTradeObject(playerIndex, offer, receiver);
+        String postData = offerTradeObject.toJSON();
+
+        try{
+
+            return doPostCommand(offerTradeCommand, postData);
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**
@@ -498,9 +509,21 @@ public class ServerProxy implements IServer {
      * the offered resources are in the bank, and the requested resource has been received
      */
     @Override
-    public boolean maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource) {
+    public String maritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource) {
         String maritimeTradeCommand = "/moves/maritimeTrade";
-        return false;
+        MaritimeTradeObject maritimeTradeObject = new MaritimeTradeObject(playerIndex, ratio, inputResource, outputResource);
+        String postData = maritimeTradeObject.toJSON();
+
+        try{
+            return doPostCommand(maritimeTradeCommand, postData);
+
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+
+
+        return null;
     }
 
     /**
@@ -516,9 +539,20 @@ public class ServerProxy implements IServer {
      * the player is being robbed(if any) gave you one of his resource cards(randomly selected)
      */
     @Override
-    public boolean robPlayer(HexLocation location, int victimIndex) {
+    public String robPlayer(int playerIndex, int victimIndex, HexLocation location) {
         String robPlayerCommand = "/moves/robPlayer";
-        return false;
+        RobPlayerObject robPlayerObject = new RobPlayerObject(playerIndex, victimIndex, location);
+        String postData = robPlayerObject.toJSON();
+
+        try{
+            return doPostCommand(robPlayerCommand, postData);
+
+        }
+        catch(ConnectException e){
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
     /**

@@ -221,7 +221,7 @@ public interface IServer {
      * @param receiver the recipient of the trade offer(playerIndex)
      * @return success of offered trade; was it accepted
      */
-    public boolean offerTrade(JsonObject offer, int receiver);
+    public String offerTrade(int playerIndex, ResourceCards offer, int receiver);
 
 
     /**
@@ -235,7 +235,7 @@ public interface IServer {
      * @param outputResource what you are getting
      * @return success of a maritime trade
      */
-    public boolean maritimeTrade(int ratio, ResourceType inputResource, ResourceType outputResource);
+    public String maritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource);
 
     /**
      * Robs a player
@@ -248,7 +248,7 @@ public interface IServer {
      * @param victimIndex -1 if not robbing anyone, else, player you are robbing(playerIndex)
      * @return success of a robbed player
      */
-    public boolean robPlayer(HexLocation location, int victimIndex);
+    public String robPlayer(int playerIndex, int victimIndex, HexLocation location);
 
     /**
      * @pre None(except the preconditions for the 'Playing' section)
