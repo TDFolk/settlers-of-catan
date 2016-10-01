@@ -70,7 +70,7 @@ public class ServerProxy implements IServer {
         String postData = loginObject.toJSON();
 
         try{
-            String result = doPostCommand(loginCommand, postData);
+            doPostCommand(loginCommand, postData);
             return true;
         }
         catch(ConnectException e) {
@@ -97,7 +97,7 @@ public class ServerProxy implements IServer {
         String postData = registerObject.toJSON();
 
         try{
-            String result = doPostCommand(registerCommand, postData);
+            doPostCommand(registerCommand, postData);
             return true;
         }
         catch(ConnectException e){
@@ -242,6 +242,7 @@ public class ServerProxy implements IServer {
     @Override
     public JsonArray gameListAI() {
         String gameListAICommand = "/game/listAI";
+
         return null;
     }
 
@@ -633,7 +634,7 @@ public class ServerProxy implements IServer {
         byte[] buffer = new byte[1024];
         int length = 0;
         StringBuilder sb = new StringBuilder();
-        while((length = input.read(buffer, 0, length)) != -1) {
+        while((length = input.read(buffer)) != -1) {
             sb.append(new String(buffer, 0, length));
         }
         String responseBodyData = sb.toString();
