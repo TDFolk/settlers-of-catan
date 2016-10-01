@@ -1,6 +1,6 @@
 package command.player;
 
-import model.ResourceCards;
+import com.google.gson.Gson;
 
 /**
  * Created by jihoon on 9/30/2016.
@@ -8,9 +8,9 @@ import model.ResourceCards;
 public class DiscardCardsObject {
     private final String type = "discardCards";
     private int playerIndex;
-    private ResourceCards discardedCards;
+    private DiscardedCards discardedCards;
 
-    public DiscardCardsObject(int playerIndex, ResourceCards discardedCards){
+    public DiscardCardsObject(int playerIndex, DiscardedCards discardedCards){
         this.playerIndex = playerIndex;
         this.discardedCards = discardedCards;
     }
@@ -27,25 +27,27 @@ public class DiscardCardsObject {
         this.playerIndex = playerIndex;
     }
 
-    public ResourceCards getDiscardedCards() {
+    public DiscardedCards getDiscardedCards() {
         return discardedCards;
     }
 
-    public void setDiscardedCards(ResourceCards discardedCards) {
+    public void setDiscardedCards(DiscardedCards discardedCards) {
         this.discardedCards = discardedCards;
     }
 
     public String toJSON(){
-        return "{" +
-                "\"type\": " + "\"" + type + "\"," +
-                "\"playerIndex\": " + "\"" + playerIndex + "\"," +
-                "\"discardedCards\": {" +
-                "\"brick\": " + "\"" + discardedCards.getBrick() + "\"," +
-                "\"ore\": " + "\"" + discardedCards.getOre() + "\"," +
-                "\"sheep\": " + "\"" + discardedCards.getSheep() + "\"," +
-                "\"wheat\": " + "\"" + discardedCards.getWheat() + "\"," +
-                "\"wood\": " + "\"" + discardedCards.getWood() + "\"}" +
-                "}";
+        Gson gson = new Gson();
+        return gson.toJson(this);
+//        return "{" +
+//                "\"type\": " + "\"" + type + "\"," +
+//                "\"playerIndex\": " + "\"" + playerIndex + "\"," +
+//                "\"discardedCards\": {" +
+//                "\"brick\": " + "\"" + discardedCards.getBrick() + "\"," +
+//                "\"ore\": " + "\"" + discardedCards.getOre() + "\"," +
+//                "\"sheep\": " + "\"" + discardedCards.getSheep() + "\"," +
+//                "\"wheat\": " + "\"" + discardedCards.getWheat() + "\"," +
+//                "\"wood\": " + "\"" + discardedCards.getWood() + "\"}" +
+//                "}";
 
     }
 }
