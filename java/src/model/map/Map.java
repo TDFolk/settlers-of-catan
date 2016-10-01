@@ -112,7 +112,33 @@ public class Map {
 	 * @return true if the location is a valid vertex for placement
 	 */
 	public boolean canPlaceSettlement(VertexLocation location, Player player) {
-		
+		//get the edges surrounding the settlement, once must have a road of same color and none may have a settlement on the other end
+		//edge1 is easy to find, but may be on either the right or the left
+		EdgeLocation adjacentEdge1 = new EdgeLocation(location.getNormalizedLocation().getHexLoc(), EdgeDirection.North);
+		EdgeLocation adjacentEdge2;
+		EdgeLocation adjacentEdge3;
+		//edge1 is to the right of the settlement >-
+		if (edgeToLeftVertex(adjacentEdge1).getNormalizedLocation().equals(location.getNormalizedLocation())) {
+			adjacentEdge2 = edgeToLeftEdge(adjacentEdge1);
+			adjacentEdge3 = edgeToLeftEdge(new EdgeLocation(adjacentEdge1.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.South));
+		}
+		else {
+			//edge1 is to the left of the settlement -<
+			adjacentEdge2 = edgeToRightEdge(adjacentEdge1);
+			adjacentEdge3 = edgeToRightEdge(new EdgeLocation(adjacentEdge1.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.South));
+		}
+
+		//ensures that there is a road that belongs to you at at least one of the three directions
+		if (getRoadAtEdge(adjacentEdge1) != null && getRoadAtEdge(adjacentEdge1).getColor() == player.getColor()
+				|| getRoadAtEdge(adjacentEdge2) != null && getRoadAtEdge(adjacentEdge2).getColor() == player.getColor()
+				|| getRoadAtEdge(adjacentEdge3) != null && getRoadAtEdge(adjacentEdge3).getColor() == player.getColor()) {
+			//ensures that there are no settlements adjacent to your location
+			if (buildingByEdge(adjacentEdge1) == null &&
+					buildingByEdge(adjacentEdge2) == null &&
+					buildingByEdge(adjacentEdge3) == null) {
+				return true;
+			}
+		}
 		return false;
 	}
 
