@@ -183,7 +183,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public boolean gameJoin(int gameID, CatanColor color) {
+    public boolean gameJoin(int gameID, String color) {
         String gameJoinCommand = "/games/join";
         GameJoinObject gameJoinObject = new GameJoinObject(gameID, color);
         String postData = gameJoinObject.toJSON();
@@ -343,7 +343,7 @@ public class ServerProxy implements IServer {
      * if you're the last one to discard, the client model status changes to 'Robbing'
      */
     @Override
-    public String discardCards(int playerIndex, DiscardedCards discardedCards) {
+    public String discardCards(int playerIndex, ResourceCards discardedCards) {
         String discardCardsCommand = "/moves/discardCards";
         DiscardCardsObject discardCardsObject = new DiscardCardsObject(playerIndex, discardedCards);
         String postData = discardCardsObject.toJSON();

@@ -8,9 +8,9 @@ import shared.definitions.CatanColor;
  */
 public class GameJoinObject {
     private int id;
-    private CatanColor color;
+    private String color;
 
-    public GameJoinObject(int id, CatanColor color){
+    public GameJoinObject(int id, String color){
         this.id = id;
         this.color = color;
     }
@@ -28,11 +28,11 @@ public class GameJoinObject {
         this.id = id;
     }
 
-    public CatanColor getColor() {
+    public String getColor() {
         return color;
     }
 
-    public void setColor(CatanColor color) {
+    public void setColor(String color) {
         this.color = color;
     }
 }
