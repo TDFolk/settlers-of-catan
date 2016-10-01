@@ -6,6 +6,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
+import model.ResourceCards;
 import server.IServer;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -240,10 +241,10 @@ public class MockServer implements IServer {
      * if you're the last one to discard, the client model status changes to 'Robbing'
      */
     @Override
-    public boolean discardCards(JsonObject discardedCards) {
+    public String discardCards(int playerIndex, ResourceCards discardedCards) {
 
 
-        return true;
+        return jsonModelExample;
     }
 
     /**
@@ -257,9 +258,9 @@ public class MockServer implements IServer {
      * @post The client model's status is now in 'Discarding' or 'Robbing' or 'Playing'
      */
     @Override
-    public boolean rollNumber(int number)
+    public String rollNumber(int playerIndex, int number)
     {
-        return true;
+        return jsonModelExample;
     }
 
     /**

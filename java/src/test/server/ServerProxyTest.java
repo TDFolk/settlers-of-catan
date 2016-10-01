@@ -30,18 +30,22 @@ public class ServerProxyTest {
     }
 
     @Test
-    public void userRegister()
-    {   //System.out.println("Registering\nUsername: " + username + " Password: " + password);
+    public void testAll()
+    {
+        //REGISTER----------------------------------------------------------------------------------------
         assertTrue(proxy.userRegister(username, password));
+
+        //LOGIN-------------------------------------------------------------------------------------------
+        assertTrue(proxy.userLogin(username, password));
+
+        //GAME CREATE-------------------------------------------------------------------------------------
+        GameCreateObjectResult result;
+        result = proxy.gameCreate(true, true, true, "New Game! :D");
+        assertNotNull(result);
+
     }
 
-    @Test
-    public void userLogin()
-    {
-        proxy.userRegister("bob", "bob");
-        //System.out.println("Logging in\nUsername: " + "bob" + " Password: " + "bob");
-        assertTrue(proxy.userLogin("bob", "bob"));
-    }
+
 
     @Test
     public void gameList()
@@ -51,13 +55,7 @@ public class ServerProxyTest {
         assertNotNull(list);
     }
 
-    @Test
-    public void gameCreate()
-    {
-        GameCreateObjectResult result;
-        result = proxy.gameCreate(true, true, true, "New Game! :D");
-        assertNotNull(result);
-    }
+
 
     public void createRandomUserInfo()
     {
