@@ -1,5 +1,6 @@
 package model;
 
+import decoder.JsonModels.JsonModel;
 import model.cards_resources.Bank;
 import model.cards_resources.Trade;
 import model.map.Map;
@@ -89,5 +90,10 @@ public class Game {
 
     public void setUser(Player user) {
         this.user = user;
+    }
+
+    public void replaceModel(JsonModel model)
+    {
+
     }
 }

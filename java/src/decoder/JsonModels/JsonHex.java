@@ -1,4 +1,4 @@
-package decoder;
+package decoder.JsonModels;
 
 /**
  * Created by bvanc on 9/30/2016.

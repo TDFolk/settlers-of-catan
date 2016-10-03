@@ -1,15 +1,8 @@
 package decoder;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonObject;
-import model.Game;
-import model.Message;
-import model.Player;
-import model.TurnTracker;
-import model.cards_resources.Bank;
-import model.cards_resources.Trade;
-import model.map.Map;
-
-import java.util.ArrayList;
+import decoder.JsonModels.JsonModel;
 
 /**
  * This class parses the JSON data and also turns objects into JSON objects to send back to the server
@@ -17,30 +10,29 @@ import java.util.ArrayList;
  */
 public class Decoder {
 
-    public static final Decoder SINGLETON = new Decoder();
+    public static Decoder instance = new Decoder();
 
     private Decoder(){
 
     }
 
+    public static Decoder getInstance() {
+        if (instance == null) {
+            instance = new Decoder();
+        }
+        return instance;
+    }
+
     /**
      * This function parses the JSON sent from the server to populate the model class
-     * @param json the JSON object to be parsed in order to populate the model
+     * @param newModelJson the JSON object to be parsed in order to populate the model
      */
-    public void parseJson(String json){
+    public JsonModel parseJson(String newModelJson){
+        Gson gson = new Gson();
 
-//        int version = parseVersionNumber();
-//        Bank bank = parseBank();
-//        ArrayList<Message> chatlist= parseChat();
-//        ArrayList<Message> loglist= parseLog();
-//        Map map = parseMap();
-//        ArrayList<Player> players = parsePlayers();
-//        Player user = parseUser();
-//        Trade trade = parseActiveTrade(); //null if none is ongoing
-//        TurnTracker turntracker = parseTurnTracker();
-//        Player winner = parseWinner();
+        JsonModel newModel = gson.fromJson(newModelJson, JsonModel.class);
 
- //       Game.getInstance().initializeData(version, bank, chatlist, loglist, map, players, user, trade, turntracker, winner);
+        return newModel;
     }
 
 

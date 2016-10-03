@@ -1,4 +1,4 @@
-package decoder;
+package decoder.JsonModels;
 
 /**
  * Created by bvanc on 9/30/2016.
@@ -8,7 +8,18 @@ public class JsonPiece {
     private String resource;
     private int ratio;
     private int owner;
+    private String direction;
     private JsonLocation location;
+
+
+    public String getDirection() {
+        return direction;
+    }
+
+    public void setDirection(String direction) {
+        this.direction = direction;
+    }
+
 
     public String getResource() {
         return resource;

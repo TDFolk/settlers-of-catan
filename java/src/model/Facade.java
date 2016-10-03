@@ -1,5 +1,7 @@
 package model;
 
+import decoder.Decoder;
+import decoder.JsonModels.JsonModel;
 import model.cards_resources.ResourceCards;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
@@ -11,7 +13,7 @@ import shared.locations.VertexLocation;
  * Facade class that stands between the Game and all other components. Anything that would access or change anything
  * about the model MUST go through this class.
  *
- * Created by kcwillmore on 9/17/16.
+ * Created by Brandon on 9/17/16.
  */
 public class Facade {
     private static Facade instance = null;
@@ -111,7 +113,13 @@ public class Facade {
 
     /**
      * Replaces the old model with the new model returned from the server
-     * @param newModel the new model returned from the server
+     * @param newModelJson the new model returned from the server
      */
-    public void replaceModel(String newModel) {}
+    public void replaceModel(String newModelJson) {
+
+        JsonModel newModel= Decoder.getInstance().parseJson(newModelJson);
+
+        Game.getInstance().replaceModel(newModel);
+
+    }
 }
