@@ -1,10 +1,16 @@
 package model;
 
+import decoder.JsonModels.JsonDeck;
+import decoder.JsonModels.JsonLine;
 import decoder.JsonModels.JsonModel;
 import model.cards_resources.Bank;
+import model.cards_resources.DevelopmentCard;
+import model.cards_resources.ResourceCards;
 import model.cards_resources.Trade;
 import model.map.Map;
+import shared.definitions.DevCardType;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +32,78 @@ public class Game {
     private Trade activeTrade; //null if none is ongoing
     private TurnTracker turntracker;
     private Player winner;
+
+    public void replaceModel(JsonModel model)
+    {
+        //Version Number
+        this.versionNumber = model.getVersion();
+
+        //NEW BANK
+        ArrayList<DevelopmentCard> deck = createDeck(model);
+        ResourceCards pool = new ResourceCards(model.getBank().getBrick(),
+                                                model.getBank().getOre(),
+                                                model.getBank().getSheep(),
+                                                model.getBank().getWheat(),
+                                                model.getBank().getWood());
+        this.bank = new Bank(pool, deck);
+
+        ArrayList<Message> chat = createMessageList(model.getChat().getLines());
+        ArrayList<Message> log = createMessageList(model.getLog().getLines());
+
+        this.log = log;
+        this.chat = chat;
+
+        //TODO: Finish implementing this method to fill the map data member and below.
+
+    }
+
+    public ArrayList<Message> createMessageList(JsonLine[] lines)
+    {
+
+        ArrayList<Message> messageList = new ArrayList<>();
+
+        for(int i = 0; i < lines.length; i++)
+        {
+            messageList.add(new Message(lines[i].getMessage(), lines[i].getSource()));
+        }
+
+        return messageList;
+
+    }
+
+    public ArrayList<DevelopmentCard> createDeck(JsonModel model)
+    {
+        JsonDeck newDeck = model.getDeck();
+
+        ArrayList<DevelopmentCard> deck = new ArrayList<>();
+
+        for(int i = 0; i < newDeck.getMonopoly(); i++)
+        {
+            deck.add(new DevelopmentCard(DevCardType.MONOPOLY));
+        }
+
+        for(int i = 0; i < newDeck.getMonument(); i++)
+        {
+            deck.add(new DevelopmentCard(DevCardType.MONUMENT));
+        }
+
+        for(int i = 0; i < newDeck.getRoadBuilding(); i++)
+        {
+            deck.add(new DevelopmentCard(DevCardType.ROAD_BUILD));
+        }
+
+        for(int i = 0; i < newDeck.getSoldier(); i++)
+        {
+            deck.add(new DevelopmentCard(DevCardType.SOLDIER));
+        }
+
+        for (int i = 0; i < newDeck.getYearOfPlenty(); i++)
+        {
+            deck.add(new DevelopmentCard(DevCardType.YEAR_OF_PLENTY));
+        }
+
+        return deck;
+    }
 
     private Game() {}
 
@@ -92,8 +170,5 @@ public class Game {
         this.user = user;
     }
 
-    public void replaceModel(JsonModel model)
-    {
 
-    }
 }

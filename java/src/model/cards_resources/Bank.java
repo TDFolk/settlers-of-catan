@@ -38,6 +38,13 @@ public class Bank {
 		}
 	}
 
+	public Bank(ResourceCards resourcePool, List<DevelopmentCard> devCards){
+
+		this.resourcePool = resourcePool;
+		this.developmentCards = devCards;
+
+	}
+
 	/**
 	 * Allows a player to draw a resource card from the bank
 	 * @pre card exist

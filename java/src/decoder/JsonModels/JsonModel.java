@@ -18,7 +18,7 @@ public class JsonModel {
     private JsonRobber robber;
     private JsonPlayer players[];
     private JsonLog log;
-    private JsonChat chat;
+    private JsonLog chat;
     private JsonBank bank;
     private JsonTurnTracker turnTracker;
     private int winner;
@@ -104,11 +104,11 @@ public class JsonModel {
         this.log = log;
     }
 
-    public JsonChat getChat() {
+    public JsonLog getChat() {
         return chat;
     }
 
-    public void setChat(JsonChat chat) {
+    public void setChat(JsonLog chat) {
         this.chat = chat;
     }
 
