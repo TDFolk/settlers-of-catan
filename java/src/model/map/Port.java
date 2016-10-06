@@ -13,7 +13,7 @@ import shared.locations.VertexLocation;
  * Created by jihoon on 9/17/16.
  */
 public class Port {
-    protected EdgeLocation location;
+    private EdgeLocation location;
 
     /**
      * Constructor for port
