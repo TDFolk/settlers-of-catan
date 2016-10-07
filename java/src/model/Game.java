@@ -1,5 +1,6 @@
 package model;
 
+import client.states.IGameState;
 import decoder.JsonModels.JsonDeck;
 import decoder.JsonModels.JsonLine;
 import decoder.JsonModels.JsonModel;
@@ -34,6 +35,8 @@ public class Game extends Observable {
     private Trade activeTrade; //null if none is ongoing
     private TurnTracker turntracker;
     private Player winner;
+
+    private IGameState state;
 
     public void replaceModel(JsonModel model)
     {
