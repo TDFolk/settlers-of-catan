@@ -1,14 +1,18 @@
 package client.discard;
 
+import model.Game;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
+
+import java.util.Observable;
+import java.util.Observer;
 
 
 /**
  * Discard controller implementation
  */
-public class DiscardController extends Controller implements IDiscardController {
+public class DiscardController extends Controller implements IDiscardController, Observer {
 
 	private IWaitView waitView;
 	
@@ -23,6 +27,9 @@ public class DiscardController extends Controller implements IDiscardController 
 		super(view);
 		
 		this.waitView = waitView;
+
+		// This Controller will now be notified to any changes in the Game Object
+		Game.getInstance().addObserver(this);
 	}
 
 	public IDiscardView getDiscardView() {
@@ -49,5 +56,15 @@ public class DiscardController extends Controller implements IDiscardController 
 		getDiscardView().closeModal();
 	}
 
+	/**
+	 * This method is called whenever the observed object is changed. An application calls an
+	 * Observable object's notifyObservers method to have all the object's observers notified of the change.
+	 * @param o
+	 * @param arg
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+
+	}
 }
 

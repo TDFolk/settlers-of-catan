@@ -2,6 +2,7 @@ package client.map;
 
 import java.util.*;
 
+import model.Game;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
@@ -11,7 +12,7 @@ import client.data.*;
 /**
  * Implementation for the map controller
  */
-public class MapController extends Controller implements IMapController {
+public class MapController extends Controller implements IMapController, Observer {
 	
 	private IRobView robView;
 	
@@ -22,6 +23,9 @@ public class MapController extends Controller implements IMapController {
 		setRobView(robView);
 		
 		initFromModel();
+
+		// This Controller will now be notified to any changes in the Game Object
+		Game.getInstance().addObserver(this);
 	}
 	
 	public IMapView getView() {
@@ -165,6 +169,17 @@ public class MapController extends Controller implements IMapController {
 	public void robPlayer(RobPlayerInfo victim) {	
 		
 	}
-	
+
+	/**
+	 * This method is called whenever the observed object is changed. An application calls an
+	 * Observable object's notifyObservers method to have all the object's observers notified of the change.
+	 * @param o
+	 * @param arg
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+
+	}
+
 }
 

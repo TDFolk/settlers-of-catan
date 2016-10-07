@@ -9,12 +9,13 @@ import java.util.*;
 import java.lang.reflect.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
+import model.Game;
 
 
 /**
  * Implementation for the login controller
  */
-public class LoginController extends Controller implements ILoginController {
+public class LoginController extends Controller implements ILoginController, Observer {
 
 	private IMessageView messageView;
 	private IAction loginAction;
@@ -30,6 +31,9 @@ public class LoginController extends Controller implements ILoginController {
 		super(view);
 		
 		this.messageView = messageView;
+
+		// This Controller will now be notified to any changes in the Game Object
+		Game.getInstance().addObserver(this);
 	}
 	
 	public ILoginView getLoginView() {
@@ -87,6 +91,17 @@ public class LoginController extends Controller implements ILoginController {
 		// If register succeeded
 		getLoginView().closeModal();
 		loginAction.execute();
+	}
+
+	/**
+	 * This method is called whenever the observed object is changed. An application calls an
+	 * Observable object's notifyObservers method to have all the object's observers notified of the change.
+	 * @param o
+	 * @param arg
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+
 	}
 
 }

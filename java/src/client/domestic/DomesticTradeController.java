@@ -1,14 +1,18 @@
 package client.domestic;
 
+import model.Game;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
+
+import java.util.Observable;
+import java.util.Observer;
 
 
 /**
  * Domestic trade controller implementation
  */
-public class DomesticTradeController extends Controller implements IDomesticTradeController {
+public class DomesticTradeController extends Controller implements IDomesticTradeController, Observer {
 
 	private IDomesticTradeOverlay tradeOverlay;
 	private IWaitView waitOverlay;
@@ -30,6 +34,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
+
+		// This Controller will now be notified to any changes in the Game Object
+		Game.getInstance().addObserver(this);
 	}
 	
 	public IDomesticTradeView getTradeView() {
@@ -116,5 +123,15 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		getAcceptOverlay().closeModal();
 	}
 
+	/**
+	 * This method is called whenever the observed object is changed. An application calls an
+	 * Observable object's notifyObservers method to have all the object's observers notified of the change.
+	 * @param o
+	 * @param arg
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+
+	}
 }
 

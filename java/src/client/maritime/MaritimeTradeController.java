@@ -1,13 +1,17 @@
 package client.maritime;
 
+import model.Game;
 import shared.definitions.*;
 import client.base.*;
+
+import java.util.Observable;
+import java.util.Observer;
 
 
 /**
  * Implementation for the maritime trade controller
  */
-public class MaritimeTradeController extends Controller implements IMaritimeTradeController {
+public class MaritimeTradeController extends Controller implements IMaritimeTradeController, Observer {
 
 	private IMaritimeTradeOverlay tradeOverlay;
 	
@@ -16,6 +20,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		super(tradeView);
 
 		setTradeOverlay(tradeOverlay);
+
+		// This Controller will now be notified to any changes in the Game Object
+		Game.getInstance().addObserver(this);
 	}
 	
 	public IMaritimeTradeView getTradeView() {
@@ -66,6 +73,17 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void unsetGiveValue() {
+
+	}
+
+	/**
+	 * This method is called whenever the observed object is changed. An application calls an
+	 * Observable object's notifyObservers method to have all the object's observers notified of the change.
+	 * @param o
+	 * @param arg
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
 
 	}
 

@@ -12,14 +12,16 @@ import shared.definitions.DevCardType;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
 
 /**
  * Game class, contains collections of all model objects within the game
  * Singleton because there can Only Be One
+ * Extends Observable to notify Controllers(Observers) when there has been a change to the model
  *
  * Created by kcwillmore on 9/17/16.
  */
-public class Game {
+public class Game extends Observable {
     private static Game instance = null;
 
     private int versionNumber = 0;
@@ -54,6 +56,14 @@ public class Game {
         this.chat = chat;
 
         //TODO: Finish implementing this method to fill the map data member and below.
+
+
+
+        // Marks this Observable object as having been changed; the hasChanged method will now return true.
+        this.setChanged();
+        // If this object has changed, as indicated by the hasChanged method, then notify all of
+        // its observers and then call the clearChanged method to indicate that this object has no longer changed.
+        this.notifyObservers();
 
     }
 

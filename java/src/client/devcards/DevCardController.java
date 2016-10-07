@@ -1,13 +1,17 @@
 package client.devcards;
 
+import model.Game;
 import shared.definitions.ResourceType;
 import client.base.*;
+
+import java.util.Observable;
+import java.util.Observer;
 
 
 /**
  * "Dev card" controller implementation
  */
-public class DevCardController extends Controller implements IDevCardController {
+public class DevCardController extends Controller implements IDevCardController, Observer {
 
 	private IBuyDevCardView buyCardView;
 	private IAction soldierAction;
@@ -29,6 +33,9 @@ public class DevCardController extends Controller implements IDevCardController 
 		this.buyCardView = buyCardView;
 		this.soldierAction = soldierAction;
 		this.roadAction = roadAction;
+
+		// This Controller will now be notified to any changes in the Game Object
+		Game.getInstance().addObserver(this);
 	}
 
 	public IPlayDevCardView getPlayCardView() {
@@ -96,5 +103,15 @@ public class DevCardController extends Controller implements IDevCardController 
 		
 	}
 
+	/**
+	 * This method is called whenever the observed object is changed. An application calls an
+	 * Observable object's notifyObservers method to have all the object's observers notified of the change.
+	 * @param o
+	 * @param arg
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+
+	}
 }
 

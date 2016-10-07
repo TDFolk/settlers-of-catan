@@ -8,6 +8,8 @@ import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
+import java.util.Observable;
+
 
 /**
  * Facade class that stands between the Game and all other components. Anything that would access or change anything
@@ -117,9 +119,10 @@ public class Facade {
      */
     public void replaceModel(String newModelJson) {
 
-        JsonModel newModel= Decoder.getInstance().parseJson(newModelJson);
+        JsonModel newModel = Decoder.getInstance().parseJson(newModelJson);
 
         Game.getInstance().replaceModel(newModel);
+
 
     }
 }
