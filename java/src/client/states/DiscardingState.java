@@ -1,5 +1,6 @@
 package client.states;
 
+import model.Game;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
@@ -9,6 +10,13 @@ import shared.locations.VertexLocation;
  * Created by jihoon on 10/7/2016.
  */
 public class DiscardingState implements IGameState{
+
+//    private Game game;
+//
+//    public DiscardingState(Game game){
+//        this.game = game;
+//    }
+
     /**
      * This function checks whether or not in the current state, the player can build a road at a specific edge location.
      *
