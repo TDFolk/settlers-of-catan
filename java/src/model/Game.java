@@ -36,14 +36,6 @@ public class Game extends Observable {
     private TurnTracker turntracker;
     private Player winner;
 
-    /**
-     * to initialize a new state
-     *      eg: state = new PlayingState();
-     * call a function on the state
-     *      eg: state.canBuildRoad(edgeLocation);
-     * depending on the state, each function will return something different
-     */
-    private IGameState state;
 
     public void replaceModel(JsonModel model)
     {

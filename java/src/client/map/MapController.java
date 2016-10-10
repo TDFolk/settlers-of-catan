@@ -2,6 +2,7 @@ package client.map;
 
 import java.util.*;
 
+import client.states.IGameState;
 import model.Game;
 import shared.definitions.*;
 import shared.locations.*;
@@ -15,6 +16,16 @@ import client.data.*;
 public class MapController extends Controller implements IMapController, Observer {
 	
 	private IRobView robView;
+
+
+	/**
+	 * to initialize a new state
+	 *      eg: state = new PlayingState();
+	 * call a function on the state
+	 *      eg: state.canBuildRoad(edgeLocation);
+	 * depending on the state, each function will return something different
+	 */
+	private IGameState state;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
