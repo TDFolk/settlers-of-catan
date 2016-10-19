@@ -74,23 +74,57 @@ public class LoginController extends Controller implements ILoginController, Obs
 
 	@Override
 	public void signIn() {
-		
-		// TODO: log in user
+
+		//grab the username and password information
+		String username = getLoginView().getLoginUsername().trim();
+		String password = getLoginView().getLoginPassword().trim();
+
+		if(canLogin(username, password)){
+			//LOGIN HERE
+
+
+
+
+
+			// If log in succeeded
+			getLoginView().closeModal();
+			loginAction.execute();
+		}
+		else {
+
+		}
+
+		//if false
+
+
+
 		
 
-		// If log in succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+
 	}
 
 	@Override
 	public void register() {
-		
-		// TODO: register new user (which, if successful, also logs them in)
-		
-		// If register succeeded
-		getLoginView().closeModal();
-		loginAction.execute();
+
+		String username = getLoginView().getLoginUsername().trim();
+		String password = getLoginView().getLoginPassword().trim();
+		String passwordConfirm = getLoginView().getLoginPassword().trim();
+
+		if(canRegister(username, password, passwordConfirm)){
+			//REGISTER HERE
+
+
+			// If register succeeded
+			getLoginView().closeModal();
+			loginAction.execute();
+		}
+		else {
+
+		}
+
+
+		//if false
+
 	}
 
 	/**
@@ -102,6 +136,41 @@ public class LoginController extends Controller implements ILoginController, Obs
 	@Override
 	public void update(Observable o, Object arg) {
 
+	}
+
+	private boolean canRegister(String username, String password, String passwordConfirm){
+
+		//check if username and password are null
+		if(username == null || password == null){
+			messageView.setTitle("Registration Error");
+			messageView.setMessage("Enter a valid username and password");
+			messageView.setController(this);
+			messageView.showModal();
+			return false;
+		}
+
+		//check if the passwords are the same
+		if(!password.equals(passwordConfirm)){
+			messageView.setTitle("Registration Error");
+			messageView.setMessage("Please enter the same password.");
+			messageView.setController(this);
+			messageView.showModal();
+			return false;
+		}
+		return true;
+	}
+
+	private boolean canLogin(String username, String password){
+
+		//maybe check for empty string using string.isEmpty()
+		if(username == null || password == null){
+			messageView.setTitle("Login Error");
+			messageView.setMessage("Please enter a valid username and password.");
+			messageView.setController(this);
+			messageView.showModal();
+			return false;
+		}
+		return true;
 	}
 
 }
