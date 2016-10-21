@@ -35,6 +35,31 @@ public class Facade {
     }
 
     /**
+     * Logs the user into the game server
+     *
+     * @param username user's already registered name
+     * @param password user's already registered password
+     * @return the success or failure of the login
+     */
+    public boolean userLogin(String username, String password)
+    {
+        return Game.getServer().userLogin(username, password);
+    }
+
+    /**
+     * Registers a user to the game server, must be completed before the user can log in
+     *
+     * @param username user's chosen name
+     * @param password user's chosen password
+     * @return success or failure of the register
+     */
+    public boolean userRegister(String username, String password)
+    {
+        return Game.getServer().userRegister(username, password);
+    }
+
+
+    /**
      *
      * @return the current client version number
      */

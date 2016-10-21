@@ -9,6 +9,7 @@ import model.cards_resources.DevelopmentCard;
 import model.cards_resources.ResourceCards;
 import model.cards_resources.Trade;
 import model.map.Map;
+import server.ServerProxy;
 import shared.definitions.DevCardType;
 
 import java.util.ArrayList;
@@ -24,6 +25,8 @@ import java.util.Observable;
  */
 public class Game extends Observable {
     private static Game instance = null;
+
+    private static ServerProxy server = null;
 
     private int versionNumber = 0;
     private Bank bank;
@@ -122,8 +125,17 @@ public class Game extends Observable {
     public static Game getInstance() {
         if(instance == null) {
             instance = new Game();
+            server = new ServerProxy();
         }
         return instance;
+    }
+
+    public static ServerProxy getServer()
+    {
+        if(instance == null) {
+            server = new ServerProxy();
+        }
+        return server;
     }
 
     /**
