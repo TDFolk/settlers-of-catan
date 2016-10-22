@@ -76,31 +76,25 @@ public class LoginController extends Controller implements ILoginController, Obs
 	public void signIn() {
 
 		//grab the username and password information
-		String username = getLoginView().getLoginUsername().trim();
-		String password = getLoginView().getLoginPassword().trim();
+		//consider .trim(); for both username and password here.
+		String username = getLoginView().getLoginUsername();
+		String password = getLoginView().getLoginPassword();
 
 		if(canLogin(username, password)){
 			//LOGIN HERE
-
-
-
-
+			Game.getInstance().getServer().userLogin(username, password);
 
 			// If log in succeeded
 			getLoginView().closeModal();
 			loginAction.execute();
 		}
+		//cannot login... something is wrong
 		else {
-
+			messageView.setTitle("Sign In Failed");
+			messageView.setMessage("Error signing in.  Try again.");
+			messageView.setController(this);
+			messageView.showModal();
 		}
-
-		//if false
-
-
-
-		
-
-
 	}
 
 	@Override
@@ -112,18 +106,20 @@ public class LoginController extends Controller implements ILoginController, Obs
 
 		if(canRegister(username, password, passwordConfirm)){
 			//REGISTER HERE
-
+			Game.getInstance().getServer().userRegister(username, password);
 
 			// If register succeeded
 			getLoginView().closeModal();
 			loginAction.execute();
 		}
+		//if false
 		else {
+			messageView.setTitle("Registration Failed");
+			messageView.setMessage("Error in registration.  Try again.");
+			messageView.setController(this);
+			messageView.showModal();
 
 		}
-
-
-		//if false
 
 	}
 
@@ -170,7 +166,9 @@ public class LoginController extends Controller implements ILoginController, Obs
 			messageView.showModal();
 			return false;
 		}
-		return true;
+		else{
+			return true;
+		}
 	}
 
 }
