@@ -88,27 +88,27 @@ public class Facade {
 
     public boolean canBuyRoad()
     {
-        return Game.getInstance().getUser().canBuyRoad();
+        return Game.getInstance().getPlayer().canBuyRoad();
     }
 
     public boolean canBuySettlement()
     {
-        return Game.getInstance().getUser().canBuySettlement();
+        return Game.getInstance().getPlayer().canBuySettlement();
     }
 
     public boolean canBuyCity()
     {
-        return Game.getInstance().getUser().canBuyCity();
+        return Game.getInstance().getPlayer().canBuyCity();
     }
 
     public boolean canBuyDevelopmentCard()
     {
-        return Game.getInstance().getUser().canBuyDevelopmentCard();
+        return Game.getInstance().getPlayer().canBuyDevelopmentCard();
     }
 
     public boolean canPlayDevelopmentCard(DevCardType card)
     {
-        return Game.getInstance().getUser().canPlayDevelopmentCard(card);
+        return Game.getInstance().getPlayer().canPlayDevelopmentCard(card);
     }
 
     public boolean canDiscard(ResourceCards cards)
@@ -119,17 +119,17 @@ public class Facade {
 
     public boolean canPlaceSettlement(VertexLocation vertex)
     {
-        return Game.getInstance().getUser().canPlaceSettlement(vertex);
+        return Game.getInstance().getPlayer().canPlaceSettlement(vertex);
     }
 
     public boolean canPlaceRoad(EdgeLocation edge)
     {
-        return Game.getInstance().getUser().canPlaceRoad(edge);
+        return Game.getInstance().getPlayer().canPlaceRoad(edge);
     }
 
     public boolean canMakeTrade(ResourceCards offer)
     {
-        return Game.getInstance().getUser().canMakeTrade(offer);
+        return Game.getInstance().getPlayer().canMakeTrade(offer);
     }
 
     public boolean canTrade()

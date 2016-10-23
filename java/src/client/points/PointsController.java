@@ -66,9 +66,12 @@ public class PointsController extends Controller implements IPointsController, O
 			return;
 		}
 
-		Game.getInstance().getUser().getPlayerIndex();
-		//int index = Game.getInstance().getPlayerIndex();
-		//int comparePoints = Game.getInstance().getPoints(index);
+		int index = Game.getInstance().getPlayer().getPlayerIndex();
+		int comparePoints = Game.getInstance().getPlayer().getVictoryPoints();
+
+		if(comparePoints != this.currentPoints){
+			
+		}
 
 
 	}
