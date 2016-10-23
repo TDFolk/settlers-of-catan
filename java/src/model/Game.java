@@ -33,8 +33,8 @@ public class Game extends Observable {
     private List<Message> chat;
     private List<Message> log;
     private Map map;
-    private List<Player> players;
-    private Player user;
+    private List<Player> playersList;
+    private Player player;
     private Trade activeTrade; //null if none is ongoing
     private TurnTracker turntracker;
     private Player winner;
@@ -142,14 +142,14 @@ public class Game extends Observable {
      * Initialize/reinitialize all of the data in the model from the info returned by the server
      */
     public void initializeData(int versionNumber, Bank bank, List<Message> chat, List<Message> log, Map map,
-                               List<Player> players, Player user, Trade activeTrade, TurnTracker turnTracker, Player winner) {
+                               List<Player> playersList, Player player, Trade activeTrade, TurnTracker turnTracker, Player winner) {
         this.versionNumber = versionNumber;
         this.bank = bank;
         this.chat = chat;
         this.log = log;
         this.map = map;
-        this.players = players;
-        this.user = user;
+        this.playersList = playersList;
+        this.player = player;
         this.activeTrade = activeTrade; //null if none is ongoing
         this.turntracker = turnTracker;
         this.winner = winner;
@@ -169,9 +169,9 @@ public class Game extends Observable {
 
     public Bank getBank(){return bank; }
 
-    public List<Player> getPlayers(){return players; }
+    public List<Player> getPlayersList(){return playersList; }
 
-    public Player getUser(){return user;}
+    public Player getPlayer(){return player;}
 
 
     public void setVersionNumber(int versionNumber) {
@@ -186,12 +186,12 @@ public class Game extends Observable {
         this.map = map;
     }
 
-    public void setPlayers(List<Player> players) {
-        this.players = players;
+    public void setPlayersList(List<Player> playersList) {
+        this.playersList = playersList;
     }
 
-    public void setUser(Player user) {
-        this.user = user;
+    public void setUser(Player player) {
+        this.player = player;
     }
 
 

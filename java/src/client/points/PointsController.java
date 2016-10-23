@@ -13,6 +13,7 @@ import java.util.Observer;
 public class PointsController extends Controller implements IPointsController, Observer {
 
 	private IGameFinishedView finishedView;
+	private int currentPoints;
 	
 	/**
 	 * PointsController constructor
@@ -25,7 +26,7 @@ public class PointsController extends Controller implements IPointsController, O
 		super(view);
 		
 		setFinishedView(finishedView);
-		
+		this.currentPoints = 0;
 		initFromModel();
 
 		// This Controller will now be notified to any changes in the Game Object
@@ -36,6 +37,7 @@ public class PointsController extends Controller implements IPointsController, O
 		
 		return (IPointsView)super.getView();
 	}
+
 	
 	public IGameFinishedView getFinishedView() {
 		return finishedView;
@@ -45,9 +47,9 @@ public class PointsController extends Controller implements IPointsController, O
 	}
 
 	private void initFromModel() {
-		//<temp>		
-		getPointsView().setPoints(5);
-		//</temp>
+		//every player starts with 0 points
+		this.currentPoints = 0;
+		getPointsView().setPoints(currentPoints);
 	}
 
 	/**
@@ -58,6 +60,16 @@ public class PointsController extends Controller implements IPointsController, O
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+		if(arg.equals("reset")){
+			this.currentPoints = 0;
+			getPointsView().setPoints(currentPoints);
+			return;
+		}
+
+		Game.getInstance().getUser().getPlayerIndex();
+		//int index = Game.getInstance().getPlayerIndex();
+		//int comparePoints = Game.getInstance().getPoints(index);
+
 
 	}
 	
