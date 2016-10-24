@@ -118,6 +118,7 @@ public class LoginController extends Controller implements ILoginController, Obs
 			//REGISTER HERE
 			if(Game.getInstance().getServer().userRegister(username, password)){
 
+				System.out.println("IM HERE");
 				// If register succeeded
 				getLoginView().closeModal();
 				loginAction.execute();
@@ -137,10 +138,7 @@ public class LoginController extends Controller implements ILoginController, Obs
 			messageView.setMessage("Invalid credentials!");
 			messageView.setController(this);
 			messageView.showModal();
-
 		}
-
-
 	}
 
 	/**
@@ -174,11 +172,19 @@ public class LoginController extends Controller implements ILoginController, Obs
 
 		//check if username is 3 to 7 characters
 		if(username.length() < 3 || username.length() > 7){
+			messageView.setTitle("Registration Error");
+			messageView.setMessage("Username must be 3 to 7 characters!");
+			messageView.setController(this);
+			messageView.showModal();
 			return false;
 		}
 
 		//check if password is 5 or more characters
 		if(password.length() < 5){
+			messageView.setTitle("Registration Error");
+			messageView.setMessage("Password must be 5 or more characters!");
+			messageView.setController(this);
+			messageView.showModal();
 			return false;
 		}
 
@@ -193,6 +199,10 @@ public class LoginController extends Controller implements ILoginController, Obs
 
 		//make sure all fields have only letters, numbers, underscores, dashes
 		if(!username.matches("^[a-zA-Z0-9_-]*$") && !password.matches("^[a-zA-Z0-9_-]*$")){
+			messageView.setTitle("Registration Error");
+			messageView.setMessage("Cannot have invalid symbols!");
+			messageView.setController(this);
+			messageView.showModal();
 			return false;
 		}
 		return true;
@@ -215,9 +225,8 @@ public class LoginController extends Controller implements ILoginController, Obs
 			messageView.showModal();
 			return false;
 		}
-		else{
-			return true;
-		}
+		return true;
+
 	}
 
 }
