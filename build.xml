@@ -150,6 +150,8 @@
 			<assertions>
 				<enable/>
 			</assertions>
+      <arg value="${host}"/>
+      <arg value="${port}"/>
 		</java>
 	</target>
  	
