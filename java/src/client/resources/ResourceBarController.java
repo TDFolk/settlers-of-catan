@@ -3,7 +3,11 @@ package client.resources;
 import java.util.*;
 
 import client.base.*;
+import client.states.IGameState;
+import client.states.PlayingState;
+import model.Facade;
 import model.Game;
+import shared.definitions.ResourceType;
 
 
 /**
@@ -81,7 +85,22 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+		getView().setElementAmount(ResourceBarElement.BRICK, Facade.getInstance().getPlayerResource(ResourceType.BRICK));
+		getView().setElementAmount(ResourceBarElement.ORE, Facade.getInstance().getPlayerResource(ResourceType.ORE));
+		getView().setElementAmount(ResourceBarElement.SHEEP, Facade.getInstance().getPlayerResource(ResourceType.SHEEP));
+		getView().setElementAmount(ResourceBarElement.WHEAT, Facade.getInstance().getPlayerResource(ResourceType.WHEAT));
+		getView().setElementAmount(ResourceBarElement.WOOD, Facade.getInstance().getPlayerResource(ResourceType.WOOD));
 
+		getView().setElementAmount(ResourceBarElement.CITY, Facade.getInstance().getPlayerCities());
+		getView().setElementAmount(ResourceBarElement.SETTLEMENT, Facade.getInstance().getPlayerSettlements());
+		getView().setElementAmount(ResourceBarElement.ROAD, Facade.getInstance().getPlayerRoads());
+
+		getView().setElementAmount(ResourceBarElement.SOLDIERS, Facade.getInstance().getPlayerRoads());
+
+		getView().setElementEnabled(ResourceBarElement.BUY_CARD, (arg instanceof PlayingState) && Facade.getInstance().canBuyDevelopmentCard());
+		getView().setElementEnabled(ResourceBarElement.CITY, (arg instanceof PlayingState) && Facade.getInstance().canBuyCity());
+		getView().setElementEnabled(ResourceBarElement.SETTLEMENT, (arg instanceof PlayingState) && Facade.getInstance().canBuySettlement());
+		getView().setElementEnabled(ResourceBarElement.ROAD, (arg instanceof PlayingState) && Facade.getInstance().canBuyRoad());
 	}
 }
 
