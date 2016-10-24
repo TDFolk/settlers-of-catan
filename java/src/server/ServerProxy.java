@@ -68,11 +68,15 @@ public class ServerProxy implements IServer {
         String postData = loginObject.toJSON();
 
         try{
-            doPostCommand(loginCommand, postData);
+            if(doPostCommand(loginCommand, postData) == null){
+                return false;
+            }
             return true;
+
         }
         catch(ConnectException e) {
             e.printStackTrace();
+
         }
         return false;
     }
@@ -95,7 +99,9 @@ public class ServerProxy implements IServer {
         String postData = registerObject.toJSON();
 
         try{
-            doPostCommand(registerCommand, postData);
+            if(doPostCommand(registerCommand, postData) == null){
+                return false;
+            }
             return true;
         }
         catch(ConnectException e){

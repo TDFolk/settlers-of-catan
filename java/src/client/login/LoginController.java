@@ -82,19 +82,29 @@ public class LoginController extends Controller implements ILoginController, Obs
 
 		if(canLogin(username, password)){
 			//LOGIN HERE
-			Game.getInstance().getServer().userLogin(username, password);
 
-			// If log in succeeded
-			getLoginView().closeModal();
-			loginAction.execute();
+			if(Game.getInstance().getServer().userLogin(username, password)){
+				// If log in succeeded
+				getLoginView().closeModal();
+				loginAction.execute();
+			}
+			//cannot login... something is wrong
+			else {
+				messageView.setTitle("Sign In Failed");
+				messageView.setMessage("Error signing in.  Try again.");
+				messageView.setController(this);
+				messageView.showModal();
+			}
+
+
 		}
-		//cannot login... something is wrong
 		else {
 			messageView.setTitle("Sign In Failed");
-			messageView.setMessage("Error signing in.  Try again.");
+			messageView.setMessage("Invalid credentials!");
 			messageView.setController(this);
 			messageView.showModal();
 		}
+
 	}
 
 	@Override
@@ -106,20 +116,30 @@ public class LoginController extends Controller implements ILoginController, Obs
 
 		if(canRegister(username, password, passwordConfirm)){
 			//REGISTER HERE
-			Game.getInstance().getServer().userRegister(username, password);
+			if(Game.getInstance().getServer().userRegister(username, password)){
 
-			// If register succeeded
-			getLoginView().closeModal();
-			loginAction.execute();
+				// If register succeeded
+				getLoginView().closeModal();
+				loginAction.execute();
+			}
+			//if false
+			else {
+				messageView.setTitle("Registration Failed");
+				messageView.setMessage("Error in registration.  Try again.");
+				messageView.setController(this);
+				messageView.showModal();
+
+			}
+
 		}
-		//if false
 		else {
 			messageView.setTitle("Registration Failed");
-			messageView.setMessage("Error in registration.  Try again.");
+			messageView.setMessage("Invalid credentials!");
 			messageView.setController(this);
 			messageView.showModal();
 
 		}
+
 
 	}
 
@@ -135,6 +155,13 @@ public class LoginController extends Controller implements ILoginController, Obs
 	}
 
 	private boolean canRegister(String username, String password, String passwordConfirm){
+		if(username.isEmpty() || password.isEmpty()){
+			messageView.setTitle("Registration Error");
+			messageView.setMessage("Enter a valid username and password");
+			messageView.setController(this);
+			messageView.showModal();
+			return false;
+		}
 
 		//check if username and password are null
 		if(username == null || password == null){
@@ -142,6 +169,16 @@ public class LoginController extends Controller implements ILoginController, Obs
 			messageView.setMessage("Enter a valid username and password");
 			messageView.setController(this);
 			messageView.showModal();
+			return false;
+		}
+
+		//check if username is 3 to 7 characters
+		if(username.length() < 3 || username.length() > 7){
+			return false;
+		}
+
+		//check if password is 5 or more characters
+		if(password.length() < 5){
 			return false;
 		}
 
@@ -153,10 +190,22 @@ public class LoginController extends Controller implements ILoginController, Obs
 			messageView.showModal();
 			return false;
 		}
+
+		//make sure all fields have only letters, numbers, underscores, dashes
+		if(!username.matches("^[a-zA-Z0-9_-]*$") && !password.matches("^[a-zA-Z0-9_-]*$")){
+			return false;
+		}
 		return true;
 	}
 
 	private boolean canLogin(String username, String password){
+		if(username.isEmpty() || password.isEmpty()){
+			messageView.setTitle("Login Error");
+			messageView.setMessage("Please enter a valid username and password.");
+			messageView.setController(this);
+			messageView.showModal();
+			return false;
+		}
 
 		//maybe check for empty string using string.isEmpty()
 		if(username == null || password == null){
