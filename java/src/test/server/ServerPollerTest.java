@@ -1,9 +1,13 @@
-package server;
+package test.server;
 
 import model.Facade;
+
 import org.junit.Before;
 import org.junit.Test;
 
+import server.IServer;
+import server.MockServer;
+import server.ServerPoller;
 import static org.junit.Assert.*;
 
 /**

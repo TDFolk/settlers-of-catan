@@ -1,10 +1,13 @@
-package model;
+package test.model;
 
+import model.Game;
 import model.cards_resources.Bank;
 import model.cards_resources.DevelopmentCard;
 import model.cards_resources.ResourceCards;
+
 import org.junit.Test;
 import org.junit.experimental.theories.DataPoint;
+
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 

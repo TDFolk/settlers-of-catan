@@ -1,4 +1,4 @@
-package report;
+package test.report;
 
 /**
  * Created by Trent on 9/29/2016.

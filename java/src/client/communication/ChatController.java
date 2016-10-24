@@ -47,7 +47,7 @@ public class ChatController extends Controller implements IChatController, Obser
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-
+		
 	}
 }
 

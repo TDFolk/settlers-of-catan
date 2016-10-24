@@ -1,13 +1,18 @@
-package server;
+package test.server;
 
 import static org.junit.Assert.*;
+
 import java.util.concurrent.ThreadLocalRandom;
 
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
+import server.IServer;
+import server.ServerProxy;
 import shared.definitions.CatanColor;
 
 /**

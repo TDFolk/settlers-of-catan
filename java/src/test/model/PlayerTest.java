@@ -1,5 +1,7 @@
-package model;
+package test.model;
 
+import model.Game;
+import model.Player;
 import model.cards_resources.DevelopmentCard;
 import model.map.GeneralPort;
 import model.map.Hex;
@@ -8,8 +10,10 @@ import model.map.Port;
 import model.cards_resources.ResourceCards;
 import model.pieces.Building;
 import model.pieces.Road;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;

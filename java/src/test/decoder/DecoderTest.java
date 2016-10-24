@@ -1,4 +1,4 @@
-package decoder;
+package test.decoder;
 
 import model.Facade;
 import org.junit.Before;
