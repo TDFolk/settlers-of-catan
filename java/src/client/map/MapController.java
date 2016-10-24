@@ -43,8 +43,6 @@ public class MapController extends Controller implements IMapController, Observe
 		super(view);
 		
 		setRobView(robView);
-		water();
-		
 		initFromModel();
 
 		// This Controller will now be notified to any changes in the Game Object
@@ -65,29 +63,27 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	protected void initFromModel() {
-		
-		//<temp>
-		
+
 		Random rand = new Random();
 
 		for (int x = 0; x <= 3; ++x) {
-			
-			int maxY = 3 - x;			
-			for (int y = -3; y <= maxY; ++y) {				
+
+			int maxY = 3 - x;
+			for (int y = -3; y <= maxY; ++y) {
 				int r = rand.nextInt(HexType.values().length);
 				HexType hexType = HexType.values()[r];
 				HexLocation hexLoc = new HexLocation(x, y);
 				getView().addHex(hexLoc, hexType);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-						CatanColor.RED);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-						CatanColor.BLUE);
-				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-						CatanColor.ORANGE);
-				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+//				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+//						CatanColor.RED);
+//				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+//						CatanColor.BLUE);
+//				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+//						CatanColor.ORANGE);
+//				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
+//				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 			}
-			
+
 			if (x != 0) {
 				int minY = x - 3;
 				for (int y = minY; y <= 3; ++y) {
@@ -95,18 +91,19 @@ public class MapController extends Controller implements IMapController, Observe
 					HexType hexType = HexType.values()[r];
 					HexLocation hexLoc = new HexLocation(-x, y);
 					getView().addHex(hexLoc, hexType);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-							CatanColor.RED);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-							CatanColor.BLUE);
-					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-							CatanColor.ORANGE);
-					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+//							CatanColor.RED);
+//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+//							CatanColor.BLUE);
+//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+//							CatanColor.ORANGE);
+//					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
+//					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
 				}
 			}
 		}
-		
+
+
 		PortType portType = PortType.BRICK;
 		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
 		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
@@ -114,21 +111,23 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
 		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
 		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-		
+
+		//place the robber
 		getView().placeRobber(new HexLocation(0, 0));
-		
-		getView().addNumber(new HexLocation(-2, 0), 2);
-		getView().addNumber(new HexLocation(-2, 1), 3);
-		getView().addNumber(new HexLocation(-2, 2), 4);
-		getView().addNumber(new HexLocation(-1, 0), 5);
-		getView().addNumber(new HexLocation(-1, 1), 6);
-		getView().addNumber(new HexLocation(1, -1), 8);
-		getView().addNumber(new HexLocation(1, 0), 9);
-		getView().addNumber(new HexLocation(2, -2), 10);
-		getView().addNumber(new HexLocation(2, -1), 11);
-		getView().addNumber(new HexLocation(2, 0), 12);
-		
-		//</temp>
+
+//		getView().addNumber(new HexLocation(-2, 0), 2);
+//		getView().addNumber(new HexLocation(-2, 1), 3);
+//		getView().addNumber(new HexLocation(-2, 2), 4);
+//		getView().addNumber(new HexLocation(-1, 0), 5);
+//		getView().addNumber(new HexLocation(-1, 1), 6);
+//		getView().addNumber(new HexLocation(1, -1), 8);
+//		getView().addNumber(new HexLocation(1, 0), 9);
+//		getView().addNumber(new HexLocation(2, -2), 10);
+//		getView().addNumber(new HexLocation(2, -1), 11);
+//		getView().addNumber(new HexLocation(2, 0), 12);
+
+		//this adds the water to the border
+		water();
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -218,37 +217,43 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 
-	//this method puts water hexes to the map view
+	//this method puts water hexes to the map view on the borders of the catan map
 	private void water(){
+		//top to top-right corner
+		getView().addHex(new HexLocation(0, -3), HexType.WATER);
+		getView().addHex(new HexLocation(1, -3), HexType.WATER);
+		getView().addHex(new HexLocation(2, -3), HexType.WATER);
 
-		//iterate through the x values
-		for(int i = 0; i <= 3; ++i){
-			int yMax = 3 - i;
-			//iterate through the y values
-			for(int j = -3; j <= yMax; ++j){
-				HexLocation hexLocation = new HexLocation(-i, j);
-				getView().addHex(hexLocation, HexType.WATER);
-			}
+		//top-right corner to bottom-right corner
+		getView().addHex(new HexLocation(3, -3), HexType.WATER);
+		getView().addHex(new HexLocation(3, -2), HexType.WATER);
+		getView().addHex(new HexLocation(3, -1), HexType.WATER);
 
-			if(i != 0){
+		//bottom-right corner to bottom
+		getView().addHex(new HexLocation(3, 0), HexType.WATER);
+		getView().addHex(new HexLocation(2, 1), HexType.WATER);
+		getView().addHex(new HexLocation(1, 2), HexType.WATER);
 
-				int yMin = i - 3;
-				for (int j = yMin; j <= 3; ++j) {
-					HexLocation hexLocation = new HexLocation(-i, j);
-					getView().addHex(hexLocation, HexType.WATER);
-				}
-			}
-		}
+		//bottom to bottom-left corner
+		getView().addHex(new HexLocation(0, 3), HexType.WATER);
+		getView().addHex(new HexLocation(-1, 3), HexType.WATER);
+		getView().addHex(new HexLocation(-2, 3), HexType.WATER);
+
+		//bottom-left to top-left corner
+		getView().addHex(new HexLocation(-3, 3), HexType.WATER);
+		getView().addHex(new HexLocation(-3, 2), HexType.WATER);
+		getView().addHex(new HexLocation(-3, 1), HexType.WATER);
+
+		//top-left corner to top
+		getView().addHex(new HexLocation(-3, 0), HexType.WATER);
+		getView().addHex(new HexLocation(-2, -1), HexType.WATER);
+		getView().addHex(new HexLocation(-1, -2), HexType.WATER);
 	}
 
 	private void resetView(){
 		getView().reset();
-		water();
 		state = new NotMyTurnState();
 	}
 
-	private void setState(){
-
-	}
 }
 
