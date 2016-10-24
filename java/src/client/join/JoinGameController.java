@@ -99,12 +99,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
-
-		
-
-
-
-
 		getJoinGameView().showModal();
 	}
 
@@ -140,11 +134,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void joinGame(CatanColor color) {
-		
+
+		//Game.getServer().gameJoin(,color);
+
 		// If join succeeded
 		getSelectColorView().closeModal();
 		getJoinGameView().closeModal();
 		joinAction.execute();
+
+
 	}
 
 	/**

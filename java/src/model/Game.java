@@ -38,6 +38,7 @@ public class Game extends Observable {
     private Trade activeTrade; //null if none is ongoing
     private TurnTracker turntracker;
     private Player winner;
+    private IGameState gameState;
 
 
     public void replaceModel(JsonModel model)
@@ -68,7 +69,7 @@ public class Game extends Observable {
         this.setChanged();
         // If this object has changed, as indicated by the hasChanged method, then notify all of
         // its observers and then call the clearChanged method to indicate that this object has no longer changed.
-        this.notifyObservers();
+        this.notifyObservers(gameState);
 
     }
 
