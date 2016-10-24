@@ -5,6 +5,7 @@ import model.Game;
 
 import java.util.Observable;
 import java.util.Observer;
+import java.util.Random;
 
 
 /**
@@ -13,6 +14,7 @@ import java.util.Observer;
 public class RollController extends Controller implements IRollController, Observer {
 
 	private IRollResultView resultView;
+	private Random rng;
 
 	/**
 	 * RollController constructor
@@ -28,6 +30,8 @@ public class RollController extends Controller implements IRollController, Obser
 
 		// This Controller will now be notified to any changes in the Game Object
 		Game.getInstance().addObserver(this);
+
+		rng = new Random();
 	}
 	
 	public IRollResultView getResultView() {
@@ -43,8 +47,13 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
+		//generate two dice rolls between 1 and 6
+		int dice1 = rng.nextInt(6) + 1;
+		int dice2 = rng.nextInt(6) + 1;
 
 		getResultView().showModal();
+		resultView.setRollValue(dice1 + dice2);
+		getRollView().closeModal();
 	}
 
 	/**
