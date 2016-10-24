@@ -1,20 +1,28 @@
 package client.join;
 
+import model.Game;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
 import client.misc.*;
 
+import java.util.Observable;
+import java.util.Observer;
+import java.util.Timer;
+
 
 /**
  * Implementation for the join game controller
  */
-public class JoinGameController extends Controller implements IJoinGameController {
+public class JoinGameController extends Controller implements IJoinGameController, Observer {
 
 	private INewGameView newGameView;
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+
+	private GameInfo gameInfo;
+	private Timer gameTimer = new Timer(false);
 	
 	/**
 	 * JoinGameController constructor
@@ -32,6 +40,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
+
+		Game.getInstance().addObserver(this);
 	}
 	
 	public IJoinGameView getJoinGameView() {
@@ -89,7 +99,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	@Override
 	public void start() {
+
 		
+
+
+
+
 		getJoinGameView().showModal();
 	}
 
@@ -132,5 +147,18 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		joinAction.execute();
 	}
 
+	/**
+	 * This method is called whenever the observed object is changed. An
+	 * application calls an <tt>Observable</tt> object's
+	 * <code>notifyObservers</code> method to have all the object's
+	 * observers notified of the change.
+	 *
+	 * @param o   the observable object.
+	 * @param arg an argument passed to the <code>notifyObservers</code>
+	 */
+	@Override
+	public void update(Observable o, Object arg) {
+
+	}
 }
 
