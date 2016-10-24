@@ -211,19 +211,19 @@ public class LoginController extends Controller implements ILoginController, Obs
 
 	private boolean canLogin(String username, String password){
 		if(username.isEmpty() || password.isEmpty()){
-			messageView.setTitle("Login Error");
-			messageView.setMessage("Please enter a valid username and password.");
-			messageView.setController(this);
-			messageView.showModal();
+//			messageView.setTitle("Login Error");
+//			messageView.setMessage("Please enter a valid username and password.");
+//			messageView.setController(this);
+//			messageView.showModal();
 			return false;
 		}
 
 		//maybe check for empty string using string.isEmpty()
 		if(username == null || password == null){
-			messageView.setTitle("Login Error");
-			messageView.setMessage("Please enter a valid username and password.");
-			messageView.setController(this);
-			messageView.showModal();
+//			messageView.setTitle("Login Error");
+//			messageView.setMessage("Please enter a valid username and password.");
+//			messageView.setController(this);
+//			messageView.showModal();
 			return false;
 		}
 		return true;
