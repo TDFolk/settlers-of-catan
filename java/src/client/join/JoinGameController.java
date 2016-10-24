@@ -123,6 +123,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) {
 
+		//getSelectColorView().
+
 		getSelectColorView().showModal();
 	}
 

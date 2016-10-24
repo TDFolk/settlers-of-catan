@@ -30,7 +30,6 @@ public interface IJoinGameController extends IController
 	 * Called by the new game view when the user clicks the "Create Game" button
 	 */
 	void createNewGame();
-	
 	/**
 	 * Called by the join game view when the user clicks a "Join" or "Re-join"
 	 * button. Displays the select color view.
@@ -38,6 +37,7 @@ public interface IJoinGameController extends IController
 	 * @param game
 	 *            The game that the user is joining
 	 */
+
 	void startJoinGame(GameInfo game);
 	
 	/**
