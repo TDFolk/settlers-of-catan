@@ -154,4 +154,20 @@ public class Facade {
     public int getPlayerResource(ResourceType resource){
         return Game.getInstance().getPlayer().getResourceCards().getResource(resource);
     }
+
+    public int getPlayerRoads() {
+        return Game.getInstance().getPlayer().getRoads();
+    }
+
+    public int getPlayerCities() {
+        return Game.getInstance().getPlayer().getCities();
+    }
+
+    public int getPlayerSettlements() {
+        return Game.getInstance().getPlayer().getSettlements();
+    }
+
+    public int getPlayerSoldiers() {
+        return Game.getInstance().getPlayer().getSoldiers();
+    }
 }
