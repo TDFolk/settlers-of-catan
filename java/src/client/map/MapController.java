@@ -3,6 +3,7 @@ package client.map;
 import java.util.*;
 
 import client.states.IGameState;
+import client.states.NotMyTurnState;
 import model.Game;
 import shared.definitions.*;
 import shared.locations.*;
@@ -26,17 +27,29 @@ public class MapController extends Controller implements IMapController, Observe
 	 * depending on the state, each function will return something different
 	 */
 	private IGameState state;
+	private EdgeLocation firstRoad;
+	HexLocation robberLocation;
+
+	private boolean init = false;
+
+
+
+
+	//????
+	RobPlayerInfo[] empty = {};
 	
 	public MapController(IMapView view, IRobView robView) {
 		
 		super(view);
 		
 		setRobView(robView);
+		water();
 		
 		initFromModel();
 
 		// This Controller will now be notified to any changes in the Game Object
 		Game.getInstance().addObserver(this);
+		state = new NotMyTurnState();
 	}
 	
 	public IMapView getView() {
@@ -189,8 +202,53 @@ public class MapController extends Controller implements IMapController, Observe
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+		if(arg.equals("reset")){
+			resetView();
+			init = false;
+			return;
+		}
+		if(!init){
+			resetView();
+			init = true;
+			initFromModel();
+		}
+		if(arg.equals(true)){
 
+		}
 	}
 
+
+	//this method puts water hexes to the map view
+	private void water(){
+
+		//iterate through the x values
+		for(int i = 0; i <= 3; ++i){
+			int yMax = 3 - i;
+			//iterate through the y values
+			for(int j = -3; j <= yMax; ++j){
+				HexLocation hexLocation = new HexLocation(-i, j);
+				getView().addHex(hexLocation, HexType.WATER);
+			}
+
+			if(i != 0){
+
+				int yMin = i - 3;
+				for (int j = yMin; j <= 3; ++j) {
+					HexLocation hexLocation = new HexLocation(-i, j);
+					getView().addHex(hexLocation, HexType.WATER);
+				}
+			}
+		}
+	}
+
+	private void resetView(){
+		getView().reset();
+		water();
+		state = new NotMyTurnState();
+	}
+
+	private void setState(){
+
+	}
 }
 

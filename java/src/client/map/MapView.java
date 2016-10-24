@@ -28,7 +28,7 @@ public class MapView extends PanelView implements IMapView
 		
 		this.add(map, BorderLayout.CENTER);
 	}
-	
+
 	@Override
 	public IMapController getController()
 	{
@@ -96,6 +96,8 @@ public class MapView extends PanelView implements IMapView
 		overlay.startDrop(pieceType, pieceColor, isCancelAllowed);
 		overlay.showModal();
 	}
+
+
 	
 	private IMapController overlayController = new IMapController() {
 		
@@ -306,6 +308,20 @@ public class MapView extends PanelView implements IMapView
 					return "";
 			}
 		}
+
+	}
+
+	public void reset(){
+		//create new layout
+		this.setLayout(new BorderLayout());
+		//remove the map to make a new one
+		this.remove(map);
+		//make new map
+		map = new MapComponent();
+		//just like the constructor....
+		this.add(map, BorderLayout.CENTER);
+		//finish
+		this.repaint();
 	}
 	
 }

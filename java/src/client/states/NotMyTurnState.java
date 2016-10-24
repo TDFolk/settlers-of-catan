@@ -60,6 +60,6 @@ public class NotMyTurnState implements IGameState{
      */
     @Override
     public String getState() {
-        return null;
+        return "NotMyTurn";
     }
 }

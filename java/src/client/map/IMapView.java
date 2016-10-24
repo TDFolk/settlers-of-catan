@@ -92,5 +92,10 @@ public interface IMapView extends IView
 	 */
 	void startDrop(PieceType pieceType, CatanColor pieceColor,
 				   boolean isCancelAllowed);
+
+	/**
+	 * this method will reset the map whenever we need to reset the map
+	 */
+	void reset();
 }
 
