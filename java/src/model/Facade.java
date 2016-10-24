@@ -150,4 +150,8 @@ public class Facade {
 
 
     }
+
+    public int getPlayerResource(ResourceType resource){
+        return Game.getInstance().getPlayer().getResourceCards().getResource(resource);
+    }
 }

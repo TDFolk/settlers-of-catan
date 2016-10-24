@@ -26,9 +26,9 @@ import model.cards_resources.DevelopmentCard;
 public class Player {
 	private String name;
     private CatanColor color;
-    private List<Settlement> settlements;
-    private List<City> cities;
-    private List<Road> roads;
+    private int settlements;
+    private int cities;
+    private int roads;
     private ResourceCards resourceCards;
     private List<DevelopmentCard> developmentCards;
     private List<DevelopmentCard> newDevelopmentCards;
@@ -46,14 +46,15 @@ public class Player {
      * Constructs a new player for the start of a game
      */
     public Player() {
-        roads = new ArrayList<>();
-        settlements = new ArrayList<>();
+        roads = 15;
+        settlements = 5;
+        cities = 4;
     	resourceCards = new ResourceCards(0,0,0,0,0);
         developmentCards = new ArrayList<>();
         victoryPoints = 0;
     }
 
-    public Player(String name, CatanColor color, List<Settlement> settlements, List<City> cities, List<Road> roads,
+    public Player(String name, CatanColor color, int settlements, int cities, int roads,
                   ResourceCards resourceCards, List<DevelopmentCard> developmentCards,
                   List<DevelopmentCard> newDevelopmentCards, PlayerID playerID, int playerIndex, boolean discarded,
                   boolean playedDevCard, int monuments, int soldiers, int victoryPoints) {
@@ -258,7 +259,7 @@ public class Player {
      * @return true if a settlement can be placed at the specified location
      */
     public boolean canPlaceSettlement(VertexLocation vertex) {
-    	if (settlements.size() > 0 && canBuySettlement()) {
+    	if (settlements > 0 && canBuySettlement()) {
     	    return Game.getInstance().getMap().canPlaceSettlement(vertex, this);
         }
         return false;
@@ -272,7 +273,7 @@ public class Player {
      * @return true if a settlement can be placed at the specified location
      */
     public boolean canPlaceRoad(EdgeLocation edge) {
-    	if (roads.size() > 0 && canBuyRoad()) {
+    	if (roads > 0 && canBuyRoad()) {
     	    return Game.getInstance().getMap().canPlaceRoad(edge, this);
         }
         return false;
@@ -332,27 +333,27 @@ public class Player {
         this.color = color;
     }
 
-    public List<Settlement> getSettlements() {
+    public int getSettlements() {
         return settlements;
     }
 
-    public void setSettlements(List<Settlement> settlements) {
+    public void setSettlements(int settlements) {
         this.settlements = settlements;
     }
 
-    public List<City> getCities() {
+    public int getCities() {
         return cities;
     }
 
-    public void setCities(List<City> cities) {
+    public void setCities(int cities) {
         this.cities = cities;
     }
 
-    public List<Road> getRoads() {
+    public int getRoads() {
         return roads;
     }
 
-    public void setRoads(List<Road> roads) {
+    public void setRoads(int roads) {
         this.roads = roads;
     }
 
