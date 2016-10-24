@@ -1,6 +1,8 @@
 package client.roll;
 
 import client.base.*;
+import client.states.IGameState;
+import client.states.RollingState;
 import model.Game;
 
 import java.util.Observable;
@@ -51,9 +53,9 @@ public class RollController extends Controller implements IRollController, Obser
 		int dice1 = rng.nextInt(6) + 1;
 		int dice2 = rng.nextInt(6) + 1;
 
-		getResultView().showModal();
 		resultView.setRollValue(dice1 + dice2);
 		getRollView().closeModal();
+		getResultView().showModal();
 	}
 
 	/**
@@ -64,7 +66,9 @@ public class RollController extends Controller implements IRollController, Obser
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-
+		if (arg instanceof RollingState && !getRollView().isModalShowing()) {
+			getRollView().showModal();
+		}
 	}
 
 }
