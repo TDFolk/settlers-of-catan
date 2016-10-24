@@ -74,6 +74,10 @@ public class Player {
         this.victoryPoints = victoryPoints;
     }
 
+    public boolean overResourceLimit() {
+        return resourceCards.size() > 7;
+    }
+
     public ResourceCards getResourceCards() {
         return resourceCards;
     }
