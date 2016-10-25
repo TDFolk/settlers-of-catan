@@ -1,9 +1,12 @@
 package client.join;
 
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import command.game.GameCreateObject;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
 import model.Game;
+import server.ServerProxy;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
@@ -104,7 +107,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
-		GameInfo[] gameInfos = Game.getInstance().getServer().gameList().getGameInfos();
+		GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
 
 		if(gameInfos != null){
 			getJoinGameView().setGames(gameInfos, Game.getInstance().getPlayer().getPlayerInfo());
@@ -156,10 +159,20 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 
 		GameCreateObjectResult myNewGame = Game.getServer().gameCreate(randomHexes, randomNumbers, randomPorts, title);
-
-
-
-		getNewGameView().closeModal();
+		if(myNewGame != null){
+//			Gson gson = new Gson();
+//			JsonElement gameID = gson.fromJson()
+			getNewGameView().closeModal();
+			//CHANGE RED LATER
+			ServerProxy.getServer().gameJoin(myNewGame.getId(), "red");
+			this.start();
+		}
+		else {
+			getMessageView().setTitle("Create New Game Error");
+			getMessageView().setMessage("Unable to create new game.");
+			getMessageView().showModal();
+		}
+//		getNewGameView().closeModal();
 	}
 
 
@@ -174,6 +187,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameInfo game) {
 
 		//getSelectColorView().
+		
 
 		getSelectColorView().showModal();
 	}

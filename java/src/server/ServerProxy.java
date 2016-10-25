@@ -171,13 +171,19 @@ public class ServerProxy implements IServer {
         try{
             //fetch the response body from the server
             String result = doPostCommand(gameCreateCommand, postData);
-            //GameCreateObjectResult response = new GameCreateObjectResult();
+            if(result == null){
+                return null;
+            }
+            else{
+                //GameCreateObjectResult response = new GameCreateObjectResult();
 
-            //create the object that will hold the response body from server...
-            //use gson to create a new object and return it
-            Gson gson = new Gson();
-            GameCreateObjectResult response = gson.fromJson(result, GameCreateObjectResult.class);
-            return response;
+                //create the object that will hold the response body from server...
+                //use gson to create a new object and return it
+                Gson gson = new Gson();
+                GameCreateObjectResult response = gson.fromJson(result, GameCreateObjectResult.class);
+                return response;
+            }
+
         }
         catch(ConnectException e){
             e.printStackTrace();
