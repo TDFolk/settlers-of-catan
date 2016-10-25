@@ -11,11 +11,12 @@ import model.map.Hex;
 import model.map.Map;
 import model.map.Port;
 import model.pieces.Building;
+import model.pieces.City;
+import model.pieces.Road;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
-import shared.locations.HexLocation;
-import shared.locations.VertexDirection;
+import shared.locations.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,19 +66,19 @@ public class Game extends Observable {
         this.log = log;
         this.chat = chat;
 
-        //TODO: Finish implementing this method to fill the map data member and below.
-
         //replace map
         ArrayList<Hex> hexes = createHexList(model.getMap().getHexes());
         ArrayList<Building> buildings = createBuildingList(model.getCities(), model.getSettlements(), model.getPlayers());
-        //ArrayList<Road> roads = createRoadList(model.getRoads());
-        //ArrayList<Port> ports = createPortList(model.getPorts());
+        ArrayList<Road> roads = createRoadList(model.getRoads(), model.getPlayers());
+        ArrayList<Port> ports = createPortList(model.getPorts());
 
-        //this.map = new Map(hexes, buildings,roads, ports);
+        this.map = new Map(hexes, buildings,roads, ports);
 
-        //replace Lsit<Players> players
+        //TODO: Finish implementing this method to fill the map data member and below.
 
+        //replace List<Players> players
 
+        playersList = createPlayersList(model.getPlayers());
 
         //replace Player
 
@@ -87,14 +88,167 @@ public class Game extends Observable {
 
         //replace winner
 
-        //update gameState?
-
 
         // Marks this Observable object as having been changed; the hasChanged method will now return true.
         this.setChanged();
         // If this object has changed, as indicated by the hasChanged method, then notify all of
         // its observers and then call the clearChanged method to indicate that this object has no longer changed.
         this.notifyObservers();
+
+    }
+
+    /*
+      public Player(String name, CatanColor color, int settlements, int cities, int roads,
+                  ResourceCards resourceCards, List<DevelopmentCard> developmentCards,
+                  List<DevelopmentCard> newDevelopmentCards, PlayerID playerID, int playerIndex, boolean discarded,
+                  boolean playedDevCard, int monuments, int soldiers, int victoryPoints) {
+     */
+
+    public ArrayList<Player> createPlayersList(JsonPlayer[] players)
+    {
+        ArrayList<Player> playersList
+
+        for(int i = 0; i < players.length; i++)
+        {
+
+        }
+    }
+
+    public ArrayList<Road> createRoadList(JsonPiece[] roads, JsonPlayer[] players)
+    {
+        ArrayList<Road> roadList = new ArrayList<>();
+
+        for(int i = 0; i < roads.length; i++)
+        {
+            CatanColor color = null;
+
+            if(players[i].getPlayerIndex() == roads[i].getOwner())
+            {
+                switch (players[i].getColor())
+                {
+                    //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+
+                    case "red":
+                        color = CatanColor.RED;
+                        break;
+                    case "orange":
+                        color = CatanColor.ORANGE;
+                        break;
+                    case "yellow":
+                        color = CatanColor.YELLOW;
+                        break;
+                    case "blue":
+                        color = CatanColor.BLUE;
+                        break;
+                    case "green":
+                        color = CatanColor.GREEN;
+                        break;
+                    case "purple":
+                        color = CatanColor.PURPLE;
+                        break;
+                    case "puce":
+                        color = CatanColor.PUCE;
+                        break;
+                    case "white":
+                        color = CatanColor.WHITE;
+                        break;
+                    case "brown":
+                        color = CatanColor.BROWN;
+                        break;
+                    default:
+                        color = CatanColor.BLUE;
+
+                }
+            }
+
+            HexLocation hexLocation = new HexLocation(roads[i].getLocation().getX(), roads[i].getLocation().getY());
+
+            EdgeDirection dir;
+
+            //NorthWest, North, NorthEast, SouthEast, South, SouthWest;
+
+            switch(roads[i].getLocation().getDirection())
+            {
+                case "N":
+                    dir = EdgeDirection.North;
+                    break;
+                case "NW":
+                    dir = EdgeDirection.NorthWest;
+                    break;
+                case "NE":
+                    dir = EdgeDirection.NorthEast;
+                    break;
+                case "S":
+                    dir = EdgeDirection.South;
+                    break;
+                case "SE":
+                    dir = EdgeDirection.SouthEast;
+                    break;
+                case "SW":
+                    dir = EdgeDirection.SouthWest;
+                    break;
+                default:
+                    dir = EdgeDirection.NorthEast;
+
+            }
+
+            EdgeLocation loc = new EdgeLocation(hexLocation, dir);
+
+
+            Road newRoad = new Road(color, loc);
+
+            roadList.add(newRoad);
+        }
+
+        return roadList;
+    }
+
+    public ArrayList<Port> createPortList(JsonPiece[] ports)
+    {
+        ArrayList<Port> portList = new ArrayList<>();
+
+        for(int i = 0; i < ports.length; i++)
+        {
+            HexLocation hexLocation = new HexLocation(ports[i].getLocation().getX(), ports[i].getLocation().getY());
+
+            EdgeDirection dir;
+
+            //NorthWest, North, NorthEast, SouthEast, South, SouthWest;
+
+            switch(ports[i].getLocation().getDirection())
+            {
+                case "N":
+                    dir = EdgeDirection.North;
+                    break;
+                case "NW":
+                    dir = EdgeDirection.NorthWest;
+                    break;
+                case "NE":
+                    dir = EdgeDirection.NorthEast;
+                    break;
+                case "S":
+                    dir = EdgeDirection.South;
+                    break;
+                case "SE":
+                    dir = EdgeDirection.SouthEast;
+                    break;
+                case "SW":
+                    dir = EdgeDirection.SouthWest;
+                    break;
+                default:
+                    dir = EdgeDirection.NorthEast;
+
+            }
+
+            EdgeLocation loc = new EdgeLocation(hexLocation, dir);
+
+
+            Port newPort = new Port(loc);
+
+            portList.add(newPort);
+        }
+
+        return portList;
 
     }
 
@@ -157,7 +311,34 @@ public class Game extends Observable {
         {
             HexLocation hexLocation = new HexLocation(cities[i].getLocation().getX(), cities[i].getLocation().getY());
 
-            CatanColor color;
+            VertexDirection dir;
+
+            switch(cities[i].getLocation().getDirection())
+            {
+                case "W":
+                    dir = VertexDirection.West;
+                    break;
+                case "NW":
+                    dir = VertexDirection.NorthWest;
+                    break;
+                case "NE":
+                    dir = VertexDirection.NorthEast;
+                    break;
+                case "E":
+                    dir = VertexDirection.East;
+                    break;
+                case "SE":
+                    dir = VertexDirection.SouthEast;
+                    break;
+                case "SW":
+                    dir = VertexDirection.SouthWest;
+                    break;
+                default:
+                    dir = VertexDirection.NorthEast;
+
+            }
+
+            CatanColor color = null;
 
             for(int j = 0; i < players.length; i++)
             {
@@ -199,37 +380,15 @@ public class Game extends Observable {
 
                     }
                 }
-            }
-
-            VertexDirection dir;
-
-            switch(cities[i].getLocation().getDirection())
-            {
-                case "W":
-                    dir = VertexDirection.West;
-                    break;
-                case "NW":
-                    dir = VertexDirection.NorthWest;
-                    break;
-                case "NE":
-                    dir = VertexDirection.NorthEast;
-                    break;
-                case "E":
-                    dir = VertexDirection.East;
-                    break;
-                case "SE":
-                    dir = VertexDirection.SouthEast;
-                    break;
-                case "SW":
-                    dir = VertexDirection.SouthWest;
-                    break;
-                default:
-                    dir = VertexDirection.NorthEast;
 
             }
 
-            //Building newBuilding = new City(color, dir);
-            //buildings.add();
+
+
+            VertexLocation loc = new VertexLocation(hexLocation, dir);
+
+            Building newBuilding = new City(color, loc);
+            buildings.add(newBuilding);
         }
         return buildings;
 
@@ -296,7 +455,7 @@ public class Game extends Observable {
      * Initialize/reinitialize all of the data in the model from the info returned by the server
      */
     public void initializeData(int versionNumber, Bank bank, List<Message> chat, List<Message> log, Map map,
-                               List<Player> playersList, Player player, Trade activeTrade, TurnTracker turnTracker, Player winner) {
+                                                        List<Player> playersList, Player player, Trade activeTrade, TurnTracker turnTracker, Player winner) {
         this.versionNumber = versionNumber;
         this.bank = bank;
         this.chat = chat;
