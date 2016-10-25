@@ -41,8 +41,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	}
 	
 	private void initFromModel() {
-		CatanColor playerColor = Game.getInstance().getPlayer().getPlayerInfo().getColor();
-
+		//CatanColor playerColor = Game.getInstance().getPlayer().getPlayerInfo().getColor();
+		CatanColor playerColor = CatanColor.BLUE;
+		
 		getView().setLocalPlayerColor(playerColor);
 
 		PlayerInfo[] playersInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
