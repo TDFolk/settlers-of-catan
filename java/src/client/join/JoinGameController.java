@@ -204,7 +204,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			}
 			else {
 				//disable the colors that are chosen
-				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
+//				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
 			}
 
 			
