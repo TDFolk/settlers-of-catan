@@ -151,9 +151,9 @@ public class Game extends Observable {
             ResourceCards resourceCards = new ResourceCards(r.getBrick(), r.getOre(),
                     r.getSheep(), r.getWheat(), r.getWood());
 
-
-
             ArrayList<DevelopmentCard> devCards = new ArrayList<>();
+
+           // for(players[i].)
 
             /*
         public Player(String name, CatanColor color, int settlements, int cities, int roads,
@@ -179,6 +179,8 @@ public class Game extends Observable {
 
         return playersList;
     }
+
+    //public ArrayList<>
 
     public ArrayList<Road> createRoadList(JsonPiece[] roads, JsonPlayer[] players)
     {
@@ -568,7 +570,6 @@ public class Game extends Observable {
 
     public Player getPlayer(){return player;}
 
-
     public void setVersionNumber(int versionNumber) {
         this.versionNumber = versionNumber;
     }
@@ -600,6 +601,11 @@ public class Game extends Observable {
     public void setGameInfo(GameInfo gameInfo) {
         this.gameInfo = gameInfo;
     }
+
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+
 
 
 }

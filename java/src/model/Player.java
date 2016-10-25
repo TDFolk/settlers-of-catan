@@ -50,10 +50,12 @@ public class Player {
         roads = 15;
         settlements = 5;
         cities = 4;
-    	resourceCards = new ResourceCards(0,0,0,0,0);
+        resourceCards = new ResourceCards(0,0,0,0,0);
         developmentCards = new ArrayList<>();
         victoryPoints = 0;
+
     }
+
 
     public Player(String name, CatanColor color, int settlements, int cities, int roads,
                   ResourceCards resourceCards, List<DevelopmentCard> developmentCards,
