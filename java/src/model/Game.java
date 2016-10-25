@@ -1,16 +1,23 @@
 package model;
 
-import client.states.IGameState;
-import decoder.JsonModels.JsonDeck;
-import decoder.JsonModels.JsonLine;
-import decoder.JsonModels.JsonModel;
+import client.data.PlayerInfo;
+import decoder.JsonModels.*;
 import model.cards_resources.Bank;
 import model.cards_resources.DevelopmentCard;
 import model.cards_resources.ResourceCards;
 import model.cards_resources.Trade;
+import model.map.Hex;
 import model.map.Map;
+import model.map.Port;
+import model.pieces.Building;
+import model.pieces.City;
+import model.pieces.Road;
 import server.ServerProxy;
+import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
+import shared.definitions.HexType;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,7 +45,6 @@ public class Game extends Observable {
     private Trade activeTrade; //null if none is ongoing
     private TurnTracker turntracker;
     private Player winner;
-    private IGameState gameState;
 
 
     public void replaceModel(JsonModel model)
@@ -63,13 +69,171 @@ public class Game extends Observable {
 
         //TODO: Finish implementing this method to fill the map data member and below.
 
+        //replace map
+        ArrayList<Hex> hexes = createHexList(model.getMap().getHexes());
+        ArrayList<Building> buildings = createBuildingList(model.getCities(), model.getSettlements(), model.getPlayers());
+        ArrayList<Road> roads = createRoadList(model.getRoads());
+        ArrayList<Port> ports = createPortList(model.getPorts());
+
+        this.map = new Map(hexes, buildings,roads, ports);
+
+        //replace Lsit<Players> players
+
+
+
+        //replace Player
+
+        //replace activeTrade
+
+        //replace turnTracker
+
+        //replace winner
+
+        //update gameState?
 
 
         // Marks this Observable object as having been changed; the hasChanged method will now return true.
         this.setChanged();
         // If this object has changed, as indicated by the hasChanged method, then notify all of
         // its observers and then call the clearChanged method to indicate that this object has no longer changed.
-        this.notifyObservers(gameState);
+        this.notifyObservers();
+
+    }
+
+    public ArrayList<Hex> createHexList(JsonHex[] hexes)
+    {
+        ArrayList<Hex> hexList = new ArrayList<>();
+
+        for(int i = 0; i < hexes.length; i++)
+        {
+
+            HexType type;
+
+            switch(hexes[i].getResource())
+            {
+                case "wood":
+                    type = HexType.WOOD;
+                    break;
+                case "sheep":
+                    type = HexType.SHEEP;
+                    break;
+                case "wheat":
+                    type = HexType.WHEAT;
+                    break;
+                case "brick":
+                    type = HexType.BRICK;
+                    break;
+                case "ore":
+                    type = HexType.ORE;
+                    break;
+                case "desert":
+                    type = HexType.DESERT;
+                    break;
+                case "water":
+                    type = HexType.WATER;
+                    break;
+                default:
+                    type = HexType.WATER;
+                    break;
+            }
+
+            //location
+            HexLocation hexLocation = new HexLocation(hexes[i].getLocation().getX(), hexes[i].getLocation().getY());
+
+            //number
+            int hexNumber = hexes[i].getNumber();
+
+            Hex newHex = new Hex(type, hexLocation, hexNumber);
+            hexList.add(newHex);
+        }
+
+        return hexList;
+
+    }
+
+    public ArrayList<Building> createBuildingList(JsonPiece[] cities, JsonPiece[] settlements, JsonPlayer[] players)
+    {
+        ArrayList<Building> buildings = new ArrayList<>();
+
+        for(int i = 0; i < cities.length; i++)
+        {
+            HexLocation hexLocation = new HexLocation(cities[i].getLocation().getX(), cities[i].getLocation().getY());
+
+            CatanColor color;
+
+            for(int j = 0; i < players.length; i++)
+            {
+                if(players[i].getPlayerIndex() == cities[i].getOwner())
+                {
+                    switch (players[i].getColor())
+                    {
+                        //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+
+                        case "red":
+                            color = CatanColor.RED;
+                            break;
+                        case "orange":
+                            color = CatanColor.ORANGE;
+                            break;
+                        case "yellow":
+                            color = CatanColor.YELLOW;
+                            break;
+                        case "blue":
+                            color = CatanColor.BLUE;
+                            break;
+                        case "green":
+                            color = CatanColor.GREEN;
+                            break;
+                        case "purple":
+                            color = CatanColor.PURPLE;
+                            break;
+                        case "puce":
+                            color = CatanColor.PUCE;
+                            break;
+                        case "white":
+                            color = CatanColor.WHITE;
+                            break;
+                        case "brown":
+                            color = CatanColor.BROWN;
+                            break;
+                        default:
+                            color = CatanColor.BLUE;
+
+                    }
+                }
+            }
+
+            VertexDirection dir;
+
+            switch(cities[i].getLocation().getDirection())
+            {
+                case "W":
+                    dir = VertexDirection.West;
+                    break;
+                case "NW":
+                    dir = VertexDirection.NorthWest;
+                    break;
+                case "NE":
+                    dir = VertexDirection.NorthEast;
+                    break;
+                case "E":
+                    dir = VertexDirection.East;
+                    break;
+                case "SE":
+                    dir = VertexDirection.SouthEast;
+                    break;
+                case "SW":
+                    dir = VertexDirection.SouthWest;
+                    break;
+                default:
+                    dir = VertexDirection.NorthEast;
+
+            }
+
+            Building newBuilding = new City(color, dir);
+            buildings.add();
+        }
+
 
     }
 
@@ -194,6 +358,7 @@ public class Game extends Observable {
     public void setUser(Player player) {
         this.player = player;
     }
+
 
 
 }
