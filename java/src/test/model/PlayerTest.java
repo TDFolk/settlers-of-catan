@@ -14,14 +14,11 @@ import model.pieces.Road;
 import org.junit.Before;
 import org.junit.Test;
 
-import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
-import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.*;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -149,6 +146,6 @@ public class PlayerTest {
         Game.getInstance().setMap(myMap);
 
         myPlayer = new Player();
-        assertFalse(myPlayer.canPortTrade(eLoc));
+        assertFalse(myPlayer.canTradeWithPort(eLoc));
     }
 }

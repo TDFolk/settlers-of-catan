@@ -282,7 +282,7 @@ public class Player {
      * @param edge
      * @return
      */
-    public boolean canPortTrade(EdgeLocation edge) {
+    public boolean canTradeWithPort(EdgeLocation edge) {
         List<Port> ports = Game.getInstance().getMap().getPorts();
         for (int i = 0; i < ports.size(); i++) {
             if (ports.get(i).getLocation().getNormalizedLocation().equals(edge.getNormalizedLocation())) {
