@@ -57,7 +57,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		CatanColor color = Game.getInstance().getPlayer().getColor();
+		CatanColor color = Game.getInstance().getPlayer().getPlayerInfo().getColor();
 		entries.add(new LogEntry(color, "Object has been changed: " + arg));
 	}
 	

@@ -4,6 +4,7 @@ import command.game.GameCreateObject;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
 import model.Game;
+import server.ServerProxy;
 import shared.definitions.CatanColor;
 import client.base.*;
 import client.data.*;
@@ -104,7 +105,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
-		GameInfo[] gameInfos = Game.getInstance().getServer().gameList().getGameInfos();
+		GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
 
 		if(gameInfos != null){
 			getJoinGameView().setGames(gameInfos, Game.getInstance().getPlayer().getPlayerInfo());
@@ -155,7 +156,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		boolean randomPorts = getNewGameView().getUseRandomPorts();
 
 
-		GameCreateObjectResult myNewGame = Game.getServer().gameCreate(randomHexes, randomNumbers, randomPorts, title);
+		GameCreateObjectResult myNewGame = ServerProxy.getServer().gameCreate(randomHexes, randomNumbers, randomPorts, title);
 
 
 
