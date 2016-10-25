@@ -10,6 +10,7 @@ import java.lang.reflect.*;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import model.Game;
+import server.ServerProxy;
 
 
 /**
@@ -83,7 +84,7 @@ public class LoginController extends Controller implements ILoginController, Obs
 		if(canLogin(username, password)){
 			//LOGIN HERE
 
-			if(Game.getInstance().getServer().userLogin(username, password)){
+			if(ServerProxy.getServer().userLogin(username, password)){
 				// If log in succeeded
 				getLoginView().closeModal();
 				loginAction.execute();
@@ -116,7 +117,7 @@ public class LoginController extends Controller implements ILoginController, Obs
 
 		if(canRegister(username, password, passwordConfirm)){
 			//REGISTER HERE
-			if(Game.getInstance().getServer().userRegister(username, password)){
+			if(ServerProxy.getServer().userRegister(username, password)){
 
 
 				// If register succeeded

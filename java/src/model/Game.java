@@ -33,8 +33,6 @@ import java.util.Observable;
 public class Game extends Observable {
     private static Game instance = null;
 
-    private static ServerProxy server = null;
-
     private int versionNumber = 0;
     private Bank bank;
     private List<Message> chat;
@@ -290,17 +288,8 @@ public class Game extends Observable {
     public static Game getInstance() {
         if(instance == null) {
             instance = new Game();
-            server = new ServerProxy();
         }
         return instance;
-    }
-
-    public static ServerProxy getServer()
-    {
-        if(instance == null) {
-            server = new ServerProxy();
-        }
-        return server;
     }
 
     /**
