@@ -187,9 +187,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void startJoinGame(GameInfo game) {
 
 		//getSelectColorView().
+		Game.getInstance().setGameInfo(game);
+		getSelectColorView().
 		
 
-		getSelectColorView().showModal();
 	}
 
 
