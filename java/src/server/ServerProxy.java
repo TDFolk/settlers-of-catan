@@ -138,8 +138,12 @@ public class ServerProxy implements IServer {
             }
             else {
                 GameInfo[] gameInfos = gson.fromJson(result, GameInfo[].class);
-                //GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
+
+                GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
+
+
                 GameListHolder holder = new GameListHolder();
+
                 holder.setGameInfos(gameInfos);
                 holder.setResponse(result);
                 return holder;

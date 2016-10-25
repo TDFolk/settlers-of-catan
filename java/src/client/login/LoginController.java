@@ -111,9 +111,9 @@ public class LoginController extends Controller implements ILoginController, Obs
 	@Override
 	public void register() {
 
-		String username = getLoginView().getLoginUsername().trim();
-		String password = getLoginView().getLoginPassword().trim();
-		String passwordConfirm = getLoginView().getLoginPassword().trim();
+		String username = getLoginView().getRegisterUsername();
+		String password = getLoginView().getRegisterPassword();
+		String passwordConfirm = getLoginView().getRegisterPasswordRepeat();
 
 		if(canRegister(username, password, passwordConfirm)){
 			//REGISTER HERE
@@ -155,56 +155,36 @@ public class LoginController extends Controller implements ILoginController, Obs
 	}
 
 	private boolean canRegister(String username, String password, String passwordConfirm){
-		if(username.isEmpty() || password.isEmpty()){
-//			messageView.setTitle("Registration Error");
-//			messageView.setMessage("Enter a valid username and password");
-//			messageView.setController(this);
-//			messageView.showModal();
-			return false;
-		}
+//		if(username.isEmpty() || password.isEmpty()){
+////			messageView.setTitle("Registration Error");
+////			messageView.setMessage("Enter a valid username and password");
+////			messageView.setController(this);
+////			messageView.showModal();
+//			return false;
+//		}
 
 		//check if username and password are null
 		if(username == null || password == null){
-//			messageView.setTitle("Registration Error");
-//			messageView.setMessage("Enter a valid username and password");
-//			messageView.setController(this);
-//			messageView.showModal();
 			return false;
 		}
 
 		//check if username is 3 to 7 characters
 		if(username.length() < 3 || username.length() > 7){
-//			messageView.setTitle("Registration Error");
-//			messageView.setMessage("Username must be 3 to 7 characters!");
-//			messageView.setController(this);
-//			messageView.showModal();
 			return false;
 		}
 
 		//check if password is 5 or more characters
 		if(password.length() < 5){
-//			messageView.setTitle("Registration Error");
-//			messageView.setMessage("Password must be 5 or more characters!");
-//			messageView.setController(this);
-//			messageView.showModal();
 			return false;
 		}
 
 		//check if the passwords are the same
 		if(!password.equals(passwordConfirm)){
-//			messageView.setTitle("Registration Error");
-//			messageView.setMessage("Please enter the same password.");
-//			messageView.setController(this);
-//			messageView.showModal();
 			return false;
 		}
 
 		//make sure all fields have only letters, numbers, underscores, dashes
 		if(!username.matches("^[a-zA-Z0-9_-]*$") || !password.matches("^[a-zA-Z0-9_-]*$")){
-//			messageView.setTitle("Registration Error");
-//			messageView.setMessage("Cannot have invalid symbols!");
-//			messageView.setController(this);
-//			messageView.showModal();
 			return false;
 		}
 		return true;

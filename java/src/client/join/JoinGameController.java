@@ -107,10 +107,12 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
+		getJoinGameView().showModal();
 		GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
 
 		if(gameInfos != null){
-			getJoinGameView().setGames(gameInfos, Game.getInstance().getPlayer().getPlayerInfo());
+			getJoinGameView().setGames(gameInfos, gameInfos[0].getPlayers().get(0));
+			//getJoinGameView().showModal();
 		}
 
 
@@ -188,7 +190,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		//getSelectColorView().
 		Game.getInstance().setGameInfo(game);
-		getSelectColorView().
+
 		
 
 	}
