@@ -52,5 +52,13 @@ public class Trade {
     public boolean canTrade() {
         return sender.getResourceCards().canPay(offer) && receiver.getResourceCards().canPay(request);
     }
+    
+    public void executeTrade() {
+    	sender.forfeitCards(offer);
+    	receiver.forfeitCards(request);
+    	
+    	sender.acceptCards(request);
+    	receiver.acceptCards(offer);
+    }
 
 }

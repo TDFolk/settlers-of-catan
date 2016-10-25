@@ -330,6 +330,14 @@ public class Player {
     public void setResourceCards(ResourceCards resourceCards) {
         this.resourceCards = resourceCards;
     }
+    
+    public void acceptCards(ResourceCards cards) {
+    	this.resourceCards.increaseResources(cards);
+    }
+    
+    public void forfeitCards(ResourceCards cards) {
+    	this.resourceCards.reduceResources(cards);
+    }
 
     public List<DevelopmentCard> getDevelopmentCards() {
         return developmentCards;
@@ -369,6 +377,10 @@ public class Player {
 
     public void setMonuments(int monuments) {
         this.monuments = monuments;
+    }
+    
+    public void addMonument() {
+    	this.monuments++;
     }
 
     public int getSoldiers() {

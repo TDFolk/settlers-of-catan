@@ -1,11 +1,17 @@
 package client.devcards;
 
 import model.Game;
+import model.Player;
+import model.cards_resources.ResourceCards;
+import model.cards_resources.Trade;
 import shared.definitions.ResourceType;
 import client.base.*;
 
 import java.util.Observable;
 import java.util.Observer;
+
+import exception.CardException;
+import exception.ResourceException;
 
 
 /**
@@ -78,29 +84,78 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
+		Player player = Game.getInstance().getPlayer();
+		player.setPlayedDevCard(true);
 		
+		ResourceCards steal;
+		switch (resource) {
+		case BRICK: steal = new ResourceCards(1, 0, 0, 0, 0); break;
+		case ORE: steal = new ResourceCards(0, 1, 0, 0, 0); break;
+		case SHEEP: steal = new ResourceCards(0, 0, 1, 0, 0); break;
+		case WHEAT: steal = new ResourceCards(0, 0, 0, 1, 0); break;
+		case WOOD: steal = new ResourceCards(0, 0, 0, 0, 1); break;
+		default: steal = new ResourceCards(1, 0, 0, 0, 0);
+		}
+		
+		for (Player p : Game.getInstance().getPlayersList()) {
+			if (p.getPlayerIndex() != player.getPlayerIndex()) {
+				Trade trade = new Trade(player, p, new ResourceCards(0,0,0,0,0), steal);
+				while (trade.canTrade()) {
+					trade.executeTrade();
+				}
+			}
+		}
 	}
 
 	@Override
 	public void playMonumentCard() {
+		Player player = Game.getInstance().getPlayer();
+		player.setPlayedDevCard(true);
 		
+		player.addMonument();
 	}
 
 	@Override
 	public void playRoadBuildCard() {
+		Player player = Game.getInstance().getPlayer();
+		player.setPlayedDevCard(true);
+		
+		/*
+		 * 
+		 * do ROAD BUiLD
+		 * 
+		 */
 		
 		roadAction.execute();
 	}
 
 	@Override
 	public void playSoldierCard() {
+		Player player = Game.getInstance().getPlayer();
+		player.setPlayedDevCard(true);
+		
+		/*
+		 * 
+		 * do SoLDiER
+		 * 
+		 */
 		
 		soldierAction.execute();
 	}
 
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
+		Player player = Game.getInstance().getPlayer();
+		player.setPlayedDevCard(true);
 		
+		try {
+			if (Game.getInstance().getBank().canDrawResourceCard(resource1))
+				player.drawResourceCard(resource1);
+		} catch (CardException e) {}
+		try {
+			if (Game.getInstance().getBank().canDrawResourceCard(resource2))
+				player.drawResourceCard(resource2);
+		} catch (CardException e) {}
 	}
 
 	/**
