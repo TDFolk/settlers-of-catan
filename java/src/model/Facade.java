@@ -4,6 +4,7 @@ import decoder.Decoder;
 import decoder.JsonModels.JsonModel;
 import model.cards_resources.ResourceCards;
 import model.map.Hex;
+import model.map.Port;
 import server.ServerProxy;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
@@ -135,11 +136,30 @@ public class Facade {
         return Game.getInstance().getPlayer().canMakeTrade(offer);
     }
 
-    public boolean canTrade()
+    /**
+     * Determines if the player has access to and sufficient resources for a maritime trade of the specified port type.
+     *
+     * @param resource Resource for 2:1 trades, set resource to null for 3:1 trading
+     * @return true if the player may make a maritime trade of that type
+     */
+    public boolean canPortTrade(ResourceType resource)
     {
-        //Where does the "trade" object get called from? Looks like we will have to add it to the Game Class..
+        return Game.getInstance().getPlayer().canPortTrade(resource);
+    }
+
+    /**
+     * Determines if the player has access to any ports at all
+     * @return true if the player has access to a port
+     */
+    public boolean canPortTrade() {
+        for (Port port : Game.getInstance().getMap().getPorts()) {
+            if (port.canTrade(Game.getInstance().getPlayer())){
+                return true;
+            }
+        }
         return false;
     }
+
 
     /**
      * Replaces the old model with the new model returned from the server

@@ -86,6 +86,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+		getTradeView().enableMaritimeTrade(Facade.getInstance().canPortTrade());
 	}
 
 }

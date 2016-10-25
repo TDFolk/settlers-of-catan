@@ -1,9 +1,11 @@
 package model;
 
 import client.data.PlayerInfo;
+import model.map.GeneralPort;
 import model.map.Port;
 import model.cards_resources.ResourceCards;
 import model.cards_resources.Trade;
+import model.map.ResourcePort;
 import model.pieces.City;
 import model.pieces.Road;
 import model.pieces.Settlement;
@@ -278,15 +280,23 @@ public class Player {
     }
 
     /**
-     * Determones if a player can trade with a given port EdgeLocation
-     * @param edge
+     * Determines if a player can maritime trade with port of the given resource.
+     * NULL resource means try with a 3:1 port
+     * @param resource
      * @return
      */
-    public boolean canTradeWithPort(EdgeLocation edge) {
-        List<Port> ports = Game.getInstance().getMap().getPorts();
-        for (int i = 0; i < ports.size(); i++) {
-            if (ports.get(i).getLocation().getNormalizedLocation().equals(edge.getNormalizedLocation())) {
-                return ports.get(i).canTrade(this);
+    public boolean canPortTrade(ResourceType resource) {
+        if (resource == null) {
+            for (Port port : Game.getInstance().getMap().getPorts()) {
+                if (port instanceof GeneralPort && port.canTrade(this)) {
+                    return true;
+                }
+            }
+        } else {
+            for (Port port : Game.getInstance().getMap().getPorts()) {
+                if (port instanceof ResourcePort && ((ResourcePort) port).getPortType() == resource && port.canTrade(this)) {
+                    return true;
+                }
             }
         }
         return false;
