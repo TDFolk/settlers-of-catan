@@ -1,5 +1,6 @@
 package client.discard;
 
+import client.map.MapController;
 import decoder.JsonModels.JsonTurnTracker;
 import model.Facade;
 import model.Game;
@@ -115,12 +116,13 @@ public class DiscardController extends Controller implements IDiscardController,
 		// The Game class has a list of Players and also a single Player?
 		// How do controllers know who's turn it is?
 		int currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
+		String gameState = MapController.getState().toString();
 
 		if (arg.equals("reset")) {
 			return;
 		}
 		// DiscardCardsObject (Json)
-		if (turnTracker.getStatus() == "discardCards") {
+		if (gameState.equals("DiscardingState")) {
 			// Player has over 7 cards
 			if (Game.getInstance().getPlayer().overResourceLimit()) {
 				// The DiscardView UI is not showing

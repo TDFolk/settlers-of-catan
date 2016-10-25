@@ -134,4 +134,78 @@ public class ResourceCards {
         wheat += cost.wheat;
         wood += cost.wheat;
     }
+
+    public void resetOneResource(ResourceType resource) {
+        if (resource.equals(ResourceType.BRICK)) {
+            this.brick = 0;
+        }
+        else if (resource.equals(ResourceType.ORE)) {
+            this.ore = 0;
+        }
+        else if (resource.equals(ResourceType.SHEEP)) {
+            this.sheep = 0;
+        }
+        else if (resource.equals(ResourceType.WHEAT)) {
+            this.wheat = 0;
+        }
+        else {
+            this.wood = 0;
+        }
+    }
+
+    public void subtractOneResource (ResourceType resource) {
+        if (resource.equals(ResourceType.BRICK)) {
+            if (this.brick > 0) {
+                this.brick--;
+            }
+        }
+        else if (resource.equals(ResourceType.ORE)) {
+            if (this.ore > 0) {
+                this.ore--;
+            }
+        }
+        else if (resource.equals(ResourceType.SHEEP)) {
+            if (this.sheep > 0) {
+                this.sheep--;
+            }
+        }
+        else if (resource.equals(ResourceType.WHEAT)) {
+            if (this.wheat > 0) {
+                this.wheat--;
+            }
+        }
+        else {
+            if (this.wood > 0) {
+                this.wood--;
+            }
+        }
+    }
+
+    public void addOneResource (ResourceType resource, int max) {
+        if (resource.equals(ResourceType.BRICK)) {
+            if (this.brick < max) {
+                this.brick++;
+            }
+        }
+        else if (resource.equals(ResourceType.ORE)) {
+            if (this.ore < max) {
+                this.ore++;
+            }
+        }
+        else if (resource.equals(ResourceType.SHEEP)) {
+            if (this.sheep < max) {
+                this.sheep++;
+            }
+        }
+        else if (resource.equals(ResourceType.WHEAT)) {
+            if (this.wheat < max) {
+                this.wheat++;
+            }
+        }
+        else {
+            if (this.wood < max) {
+                this.wood++;
+            }
+        }
+    }
 }
