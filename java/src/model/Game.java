@@ -231,7 +231,7 @@ public class Game extends Observable {
             //Building newBuilding = new City(color, dir);
             //buildings.add();
         }
-
+        return buildings;
 
     }
 
