@@ -190,8 +190,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void startJoinGame(GameInfo game) {
 
-		//getSelectColorView().
+		//set the game instance to the game chosen
 		Game.getInstance().setGameInfo(game);
+		this.game = game;
 
 		if(!getSelectColorView().isModalShowing()){
 			getSelectColorView().showModal();
@@ -200,12 +201,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			if(playerInfo == null){
 				continue;
 			}
-			getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
+			//disable the colors that are chosen
+//			getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
 //			if(playerInfo.getId() != Integer.parseInt(ServerProxy.getServer().getCatanPlayerID())){
 //				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
 //			}
 		}
-		this.game = game;
+
 		if(!getSelectColorView().isModalShowing()){
 			getSelectColorView().showModal();
 		}
@@ -241,7 +243,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			return;
 		}
 
-		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString())){
+		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString().toLowerCase())){
 			Game.getInstance().getPlayer().getPlayerInfo().setColor(color);
 			Game.getInstance().setGameInfo(this.game);
 
