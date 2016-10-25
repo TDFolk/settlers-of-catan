@@ -260,10 +260,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public static IGameState getState() {
 		return state;
 	}
-
-	public static void setState(IGameState state) {
-		MapController.state = state;
-	}
+	
 
 
 }
