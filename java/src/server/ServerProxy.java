@@ -812,10 +812,10 @@ public class ServerProxy implements IServer {
                         String foo = connection.getHeaderField(i);
                         //trim the cookie where the ';' starts and initialize the cookie variable
                         cookie = foo.split(";", 2)[0];
-                        String fooPlayerID = cookie.split("playerID%")[1];
-                        catanPlayerID = fooPlayerID.split("%", 2)[0];
-
-
+                        if(catanUsername == null){
+                            String fooPlayerID = cookie.split("playerID%")[1];
+                            catanPlayerID = fooPlayerID.split("%", 2)[0];
+                        }
                     }
                     i++;
                 }

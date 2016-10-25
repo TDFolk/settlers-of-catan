@@ -30,6 +30,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IAction joinAction;
 
 	private GameInfo game;
+	private PlayerInfo playerInfo;
 
 
 	/**
@@ -44,7 +45,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 								ISelectColorView selectColorView, IMessageView messageView) {
 
 		super(view);
-
+		playerInfo = new PlayerInfo();
 		setNewGameView(newGameView);
 		setSelectColorView(selectColorView);
 		setMessageView(messageView);
@@ -111,7 +112,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void start() {
 		getJoinGameView().showModal();
 		GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
-		PlayerInfo playerInfo = new PlayerInfo();
+
 		playerInfo.setName(ServerProxy.getServer().getCatanUsername());
 		playerInfo.setId(Integer.parseInt(ServerProxy.getServer().getCatanPlayerID()));
 
@@ -246,13 +247,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		}
 
 		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString().toLowerCase())){
-			Game.getInstance().getPlayer().getPlayerInfo().setColor(color);
+			playerInfo.setColor(color);
+			
 			Game.getInstance().setGameInfo(this.game);
 
 			// If join succeeded
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
-			ServerPoller.getPoller().startPoller();
+
+			//FIX THISSSSSSSSSS
+			//ServerPoller.getPoller().startPoller();
+
 			joinAction.execute();
 
 		}
@@ -275,6 +280,22 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void update(Observable o, Object arg) {
 
+	}
+
+	public GameInfo getGame() {
+		return game;
+	}
+
+	public void setGame(GameInfo game) {
+		this.game = game;
+	}
+
+	public PlayerInfo getPlayerInfo() {
+		return playerInfo;
+	}
+
+	public void setPlayerInfo(PlayerInfo playerInfo) {
+		this.playerInfo = playerInfo;
 	}
 }
 
