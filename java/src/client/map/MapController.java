@@ -27,6 +27,8 @@ public class MapController extends Controller implements IMapController, Observe
 	 * depending on the state, each function will return something different
 	 */
 	private static IGameState state;
+
+
 	private EdgeLocation firstRoad;
 	HexLocation robberLocation;
 
@@ -254,6 +256,15 @@ public class MapController extends Controller implements IMapController, Observe
 //		getView().reset();
 		state = new NotMyTurnState();
 	}
+
+	public static IGameState getState() {
+		return state;
+	}
+
+	public static void setState(IGameState state) {
+		MapController.state = state;
+	}
+
 
 }
 
