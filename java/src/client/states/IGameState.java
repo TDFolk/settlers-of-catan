@@ -40,5 +40,5 @@ public interface IGameState {
      * This function will return the current state name.
      * @return the state the game is on.
      */
-    public String getState();
+    public String toString();
 }

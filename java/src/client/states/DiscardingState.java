@@ -56,8 +56,8 @@ public class DiscardingState implements IGameState{
      * @return the state the game is on.
      */
     @Override
-    public String getState() {
-        return null;
+    public String toString() {
+        return "DiscardingState";
     }
 
     /**

@@ -47,8 +47,8 @@ public class NotMyTurnState implements IGameState{
      * @return the state the game is on.
      */
     @Override
-    public String getState() {
-        return "NotMyTurn";
+    public String toString() {
+        return "NotMyTurnState";
     }
 
     /**

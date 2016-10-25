@@ -1,9 +1,15 @@
 package client.turntracker;
 
+import client.data.PlayerInfo;
+import client.map.MapController;
+import client.states.DiscardingState;
+import model.Facade;
 import model.Game;
+import server.ServerProxy;
 import shared.definitions.CatanColor;
 import client.base.*;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -31,13 +37,51 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-
+		ServerProxy.getServer().finishTurn(Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex());
 	}
 	
 	private void initFromModel() {
-		//<temp>
-		getView().setLocalPlayerColor(CatanColor.RED);
-		//</temp>
+		CatanColor playerColor = Game.getInstance().getPlayer().getPlayerInfo().getColor();
+
+		getView().setLocalPlayerColor(playerColor);
+
+		PlayerInfo[] playersInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
+		for (int i = 0; i < playersInfo.length; i++) {
+			playersInfo[i] = Game.getInstance().getPlayersList().get(i).getPlayerInfo();
+		}
+
+		if (playersInfo.length == 4) {
+			for (int i = 0; i < playersInfo.length; i++) {
+				getView().initializePlayer(playersInfo[i].getPlayerIndex(), playersInfo[i].getName(),
+						playersInfo[i].getColor());
+			}
+		}
+
+		String gameState = MapController.getState().toString();
+
+		switch (gameState) {
+			case "FirstRoundState":
+				getView().updateGameState("First Round Phase", false);
+				break;
+			case "SecondRoundState":
+				getView().updateGameState("Second Round State", false);
+				break;
+			case "RollingState":
+				getView().updateGameState("Rolling", false);
+				break;
+			case "RobbingState":
+				getView().updateGameState("Robbing", false);
+				break;
+			case "PlayingState":
+				getView().updateGameState("End Turn", true);
+				break;
+			case "NotMyTurnState":
+				getView().updateGameState("Relax and Take Notes", false);
+				break;
+			case "DiscardingState":
+				getView().updateGameState("Discarding", false);
+		}
+
 	}
 
 	/**
@@ -48,7 +92,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-
+		initFromModel();
 	}
 }
 
