@@ -162,7 +162,7 @@ public class Player {
     	if (canBuyDevelopmentCard()) {
     	    resourceCards.reduceResources(DevelopmentCard.COST);
             Game.getInstance().getBank().purchaseDevCard();
-            developmentCards.add(Game.getInstance().getBank().drawDevelopmentCard());
+            newDevelopmentCards.add(Game.getInstance().getBank().drawDevelopmentCard());
         }
     }
     
@@ -173,8 +173,13 @@ public class Player {
      * @param card the card to play
      * @throws CardException if the player does not own the card
      */
-    public void playDevelopmentCard(DevelopmentCard card) throws CardException {
-
+    public void playDevelopmentCard(DevCardType card) throws CardException {
+    	for (DevelopmentCard devCard : developmentCards) {
+    		if (devCard.getType() == card) {
+    			developmentCards.remove(devCard);
+    			break;
+    		}
+    	}
     }
     
     /**
