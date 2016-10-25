@@ -80,7 +80,7 @@ public class PointsController extends Controller implements IPointsController, O
 		//did anyone win?
 
 		//index of this client's player
-		int currentIndex = Game.getInstance().getPlayer().getPlayerIndex();
+		int currentIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 
 		//made a list to make for loop easier to read
 		List<Player> playersList = Game.getInstance().getPlayersList();
@@ -91,7 +91,7 @@ public class PointsController extends Controller implements IPointsController, O
 			Player currentPlayer = playersList.get(i);
 			if(Game.getInstance().getPlayersList().get(i).getVictoryPoints() >= 10){
 				//END THE GAME, SOMEONE HAS REACHED 10 OR MORE POINTS
-				getFinishedView().setWinner(currentPlayer.getName(), currentPlayer.getPlayerIndex() == currentIndex);
+				getFinishedView().setWinner(currentPlayer.getPlayerInfo().getName(), currentPlayer.getPlayerInfo().getPlayerIndex() == currentIndex);
 				getFinishedView().showModal();
 			}
 

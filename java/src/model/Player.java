@@ -1,5 +1,6 @@
 package model;
 
+import client.data.PlayerInfo;
 import model.map.Port;
 import model.cards_resources.ResourceCards;
 import model.cards_resources.Trade;
@@ -24,21 +25,19 @@ import model.cards_resources.DevelopmentCard;
  * Created by kcwillmore on 9/17/16.
  */
 public class Player {
-	private String name;
-    private CatanColor color;
+
     private int settlements;
     private int cities;
     private int roads;
     private ResourceCards resourceCards;
     private List<DevelopmentCard> developmentCards;
     private List<DevelopmentCard> newDevelopmentCards;
-    private PlayerID playerID;
-    private int playerIndex;
     private boolean discarded;
     private boolean playedDevCard;
     private int monuments;
     private int soldiers;
     private int victoryPoints;
+    private PlayerInfo playerInfo;
     
     
     
@@ -58,21 +57,25 @@ public class Player {
                   ResourceCards resourceCards, List<DevelopmentCard> developmentCards,
                   List<DevelopmentCard> newDevelopmentCards, PlayerID playerID, int playerIndex, boolean discarded,
                   boolean playedDevCard, int monuments, int soldiers, int victoryPoints) {
-        this.name = name;
-        this.color = color;
+
         this.settlements = settlements;
         this.cities = cities;
         this.roads = roads;
         this.resourceCards = resourceCards;
         this.developmentCards = developmentCards;
         this.newDevelopmentCards = newDevelopmentCards;
-        this.playerID = playerID;
-        this.playerIndex = playerIndex;
         this.discarded = discarded;
         this.playedDevCard = playedDevCard;
         this.monuments = monuments;
         this.soldiers = soldiers;
         this.victoryPoints = victoryPoints;
+
+        this.playerInfo = new PlayerInfo();
+        this.playerInfo.setName(name);
+        this.playerInfo.setColor(color);
+        this.playerInfo.setId(playerID.getID());
+        this.playerInfo.setPlayerIndex(playerIndex);
+
     }
 
     public boolean overResourceLimit() {
@@ -298,35 +301,7 @@ public class Player {
     public boolean canMakeTrade(ResourceCards offer) {
     	return resourceCards.canPay(offer);
     }
-    
-    
-    public int getPlayerID() {
-    	return playerID.getID();
-    }
-    
-    public void setPlayerIndex(int index) {
-    	playerIndex = index;
-    }
-    
-    public int getPlayerIndex() {
-    	return playerIndex;
-    }
 
-    public CatanColor getColor() {
-        return color;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setColor(CatanColor color) {
-        this.color = color;
-    }
 
     public int getSettlements() {
         return settlements;
@@ -372,10 +347,6 @@ public class Player {
         this.newDevelopmentCards = newDevelopmentCards;
     }
 
-    public void setPlayerID(PlayerID playerID) {
-        this.playerID = playerID;
-    }
-
     public boolean isDiscarded() {
         return discarded;
     }
@@ -414,5 +385,14 @@ public class Player {
 
     public void setVictoryPoints(int victoryPoints) {
         this.victoryPoints = victoryPoints;
+    }
+
+
+    public PlayerInfo getPlayerInfo() {
+        return playerInfo;
+    }
+
+    public void setPlayerInfo(PlayerInfo playerInfo) {
+        this.playerInfo = playerInfo;
     }
 }
