@@ -14,6 +14,13 @@ import java.util.TimerTask;
  */
 public class ServerPoller {
 
+    private static ServerPoller poller = new ServerPoller(ServerProxy.getServer());
+
+    public ServerPoller getPoller()
+    {
+        return poller;
+    }
+
     /**
      * @proxy reference to the server proxy that the poller will use to poll the server
      * @TIME_INTERVAL time interval that will be used to poll the server

@@ -116,7 +116,15 @@ public class Game extends Observable {
 
         for(int i = 0; i < players.length; i++)
         {
-
+//            Player newPlayer = new Player(players[i].getName(),
+//                    players[i].getColor(),
+//                    players[i].getSettlements(),
+//                    players[i].getRoads(),
+//                    players[i].getResources(),
+//                    players[i].getOldDevCards(),
+//                    players[i].getNewDevCards(),
+//                    players[i].getPlayerID(),
+//                    players[i].get)
         }
 
         return playersList;
