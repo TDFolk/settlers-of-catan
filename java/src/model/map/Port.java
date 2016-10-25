@@ -38,7 +38,7 @@ public class Port {
     public boolean canTrade(Player player) {
         //checks that this player actually has access to this port
         return Game.getInstance().getMap().buildingByEdge(location) != null &&
-                Game.getInstance().getMap().buildingByEdge(location).getColor().equals(player.getColor());
+                Game.getInstance().getMap().buildingByEdge(location).getColor().equals(player.getPlayerInfo().getColor());
     }
 
 }

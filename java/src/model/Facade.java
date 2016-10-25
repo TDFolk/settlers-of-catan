@@ -4,6 +4,7 @@ import decoder.Decoder;
 import decoder.JsonModels.JsonModel;
 import model.cards_resources.ResourceCards;
 import model.map.Hex;
+import server.ServerProxy;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -45,7 +46,7 @@ public class Facade {
      */
     public boolean userLogin(String username, String password)
     {
-        return Game.getServer().userLogin(username, password);
+        return ServerProxy.getServer().userLogin(username, password);
     }
 
     /**
@@ -57,7 +58,7 @@ public class Facade {
      */
     public boolean userRegister(String username, String password)
     {
-        return Game.getServer().userRegister(username, password);
+        return ServerProxy.getServer().userRegister(username, password);
     }
 
 

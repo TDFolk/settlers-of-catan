@@ -1,5 +1,7 @@
 package client.maritime;
 
+import client.map.MapController;
+import model.Facade;
 import model.Game;
 import shared.definitions.*;
 import client.base.*;
@@ -84,7 +86,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-
 	}
 
 }

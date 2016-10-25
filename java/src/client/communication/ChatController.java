@@ -2,6 +2,7 @@ package client.communication;
 
 import client.base.*;
 import model.Game;
+import model.Player;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +34,9 @@ public class ChatController extends Controller implements IChatController, Obser
 
 	@Override
 	public void sendMessage(String message) {
-		CatanColor color = Game.getInstance().getPlayer().getColor();
+		Game game = Game.getInstance();
+		Player player = game.getPlayer();
+		CatanColor color = player.getPlayerInfo().getColor();
 		entries.add(new LogEntry(color, message));
 		getView().setEntries(entries);
 		

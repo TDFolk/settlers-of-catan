@@ -1,5 +1,6 @@
 package model;
 
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 import decoder.JsonModels.*;
 import model.cards_resources.Bank;
@@ -10,9 +11,6 @@ import model.map.Hex;
 import model.map.Map;
 import model.map.Port;
 import model.pieces.Building;
-import model.pieces.City;
-import model.pieces.Road;
-import server.ServerProxy;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
@@ -31,9 +29,8 @@ import java.util.Observable;
  *
  */
 public class Game extends Observable {
-    private static Game instance = null;
 
-    private static ServerProxy server = null;
+    private static Game instance = null;
 
     private int versionNumber = 0;
     private Bank bank;
@@ -45,6 +42,7 @@ public class Game extends Observable {
     private Trade activeTrade; //null if none is ongoing
     private TurnTracker turntracker;
     private Player winner;
+    private GameInfo gameInfo;
 
 
     public void replaceModel(JsonModel model)
@@ -72,10 +70,10 @@ public class Game extends Observable {
         //replace map
         ArrayList<Hex> hexes = createHexList(model.getMap().getHexes());
         ArrayList<Building> buildings = createBuildingList(model.getCities(), model.getSettlements(), model.getPlayers());
-        ArrayList<Road> roads = createRoadList(model.getRoads());
-        ArrayList<Port> ports = createPortList(model.getPorts());
+        //ArrayList<Road> roads = createRoadList(model.getRoads());
+        //ArrayList<Port> ports = createPortList(model.getPorts());
 
-        this.map = new Map(hexes, buildings,roads, ports);
+        //this.map = new Map(hexes, buildings,roads, ports);
 
         //replace Lsit<Players> players
 
@@ -230,10 +228,10 @@ public class Game extends Observable {
 
             }
 
-            Building newBuilding = new City(color, dir);
-            buildings.add();
+            //Building newBuilding = new City(color, dir);
+            //buildings.add();
         }
-
+        return buildings;
 
     }
 
@@ -290,17 +288,8 @@ public class Game extends Observable {
     public static Game getInstance() {
         if(instance == null) {
             instance = new Game();
-            server = new ServerProxy();
         }
         return instance;
-    }
-
-    public static ServerProxy getServer()
-    {
-        if(instance == null) {
-            server = new ServerProxy();
-        }
-        return server;
     }
 
     /**
@@ -359,6 +348,17 @@ public class Game extends Observable {
         this.player = player;
     }
 
+    public Player getPlayerTurn() {
+        return this.turntracker.getPlayerTurn();
+    }
+
+    public GameInfo getGameInfo() {
+        return gameInfo;
+    }
+
+    public void setGameInfo(GameInfo gameInfo) {
+        this.gameInfo = gameInfo;
+    }
 
 
 }

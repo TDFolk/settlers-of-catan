@@ -1,6 +1,7 @@
 package client.roll;
 
 import client.base.*;
+import client.map.MapController;
 import client.states.IGameState;
 import client.states.RollingState;
 import model.Game;
@@ -66,7 +67,7 @@ public class RollController extends Controller implements IRollController, Obser
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		if (arg instanceof RollingState && !getRollView().isModalShowing()) {
+		if (MapController.getState() instanceof RollingState && !getRollView().isModalShowing()) {
 			getRollView().showModal();
 		}
 	}

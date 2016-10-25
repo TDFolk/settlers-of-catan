@@ -50,4 +50,7 @@ public class SecondRoundState implements IGameState{
     public String getState() {
         return null;
     }
+
+
+
 }
