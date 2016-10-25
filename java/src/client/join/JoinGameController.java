@@ -107,7 +107,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		GameInfo[] gameInfos = Game.getInstance().getServer().gameList().getGameInfos();
 
 		if(gameInfos != null){
-			getJoinGameView().setGames(gameInfos, Game.getInstance(), );
+			getJoinGameView().setGames(gameInfos, Game.getInstance().getPlayer().getPlayerInfo());
 		}
 
 
@@ -124,8 +124,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void startCreateNewGame() {
-
-
 		getNewGameView().showModal();
 	}
 
@@ -155,6 +153,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		boolean randomHexes = getNewGameView().getRandomlyPlaceHexes();
 		boolean randomNumbers = getNewGameView().getRandomlyPlaceNumbers();
 		boolean randomPorts = getNewGameView().getUseRandomPorts();
+
 
 		GameCreateObjectResult myNewGame = Game.getServer().gameCreate(randomHexes, randomNumbers, randomPorts, title);
 
