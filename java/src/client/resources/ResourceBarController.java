@@ -3,6 +3,7 @@ package client.resources;
 import java.util.*;
 
 import client.base.*;
+import client.map.MapController;
 import client.states.IGameState;
 import client.states.PlayingState;
 import model.Facade;
@@ -71,7 +72,8 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	private void executeElementAction(ResourceBarElement element) {
 		
 		if (elementActions.containsKey(element)) {
-			
+
+
 			IAction action = elementActions.get(element);
 			action.execute();
 		}
@@ -98,13 +100,12 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 		getView().setElementAmount(ResourceBarElement.ROAD, Facade.getInstance().getPlayerRoads());
 		getView().setElementAmount(ResourceBarElement.SOLDIERS, Facade.getInstance().getPlayerSoldiers());
 
-		IGameState state = (IGameState) arg;
 		//enable purchasing of buildings and purchasing/playing development cards, if conditions are correct
-		getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canMakePurchases() && Facade.getInstance().canBuyDevelopmentCard());
-		getView().setElementEnabled(ResourceBarElement.CITY, state.canMakePurchases() && Facade.getInstance().canBuyCity());
-		getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canMakePurchases() && Facade.getInstance().canBuySettlement());
-		getView().setElementEnabled(ResourceBarElement.ROAD, state.canMakePurchases() && Facade.getInstance().canBuyRoad());
-		getView().setElementEnabled(ResourceBarElement.PLAY_CARD, state.canPlayDevCards() && Facade.getInstance().canPlayDevelopmentCards());
+		getView().setElementEnabled(ResourceBarElement.BUY_CARD, MapController.getState().canMakePurchases() && Facade.getInstance().canBuyDevelopmentCard());
+		getView().setElementEnabled(ResourceBarElement.CITY, MapController.getState().canMakePurchases() && Facade.getInstance().canBuyCity());
+		getView().setElementEnabled(ResourceBarElement.SETTLEMENT, MapController.getState().canMakePurchases() && Facade.getInstance().canBuySettlement());
+		getView().setElementEnabled(ResourceBarElement.ROAD, MapController.getState().canMakePurchases() && Facade.getInstance().canBuyRoad());
+		getView().setElementEnabled(ResourceBarElement.PLAY_CARD, MapController.getState().canPlayDevCards() && Facade.getInstance().canPlayDevelopmentCards());
 	}
 }
 

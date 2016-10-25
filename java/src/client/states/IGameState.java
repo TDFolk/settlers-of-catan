@@ -23,27 +23,11 @@ public interface IGameState {
      */
     public boolean canPlayDevCards();
 
-    //todo: may I delete these? ~KC
-//    /**
-//     * This function checks whether or not in the current state, the player can build a road at a specific edge location.
-//     * @param edgeLocation The edge location the player wants to place their road on.
-//     * @return true if the player CAN place the road.
-//     */
-//    public boolean canBuildRoad(EdgeLocation edgeLocation);
-//
-//    /**
-//     * This function checks whether or not in the current state, the player can build a settlement at the specified vertex location.
-//     * @param vertexLocation The vertex location where the player wants to place their settlement on.
-//     * @return true if the player CAN place the settlement.
-//     */
-//    public boolean canBuildSettlement(VertexLocation vertexLocation);
-//
-//    /**
-//     * This function checks whether or not in the current state, the player can build a city on top of their settlement at a specified vertex location.
-//     * @param vertexLocation The vertex location where the player wants their city on.
-//     * @return true if the player CAN build the city.
-//     */
-//    public boolean canBuildCity(VertexLocation vertexLocation);
+    /**
+     * This function checks whether, in this state, the player has permission to initiate trading.
+     * @return true if the player may initiate trades
+     */
+    public boolean canMakeTrades();
 
     /**
      * This function will check if the robber can be placed in the selected hex location.
