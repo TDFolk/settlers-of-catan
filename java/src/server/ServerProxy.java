@@ -26,6 +26,13 @@ import java.net.URL;
  */
 public class ServerProxy implements IServer {
 
+    private static ServerProxy server = new ServerProxy();
+
+    public static ServerProxy getServer()
+    {
+        return server;
+    }
+
     /**
      * @param port port id used to connect to the server
      * @param host host id used to connect to the server

@@ -26,7 +26,7 @@ public class MapController extends Controller implements IMapController, Observe
 	 *      eg: state.canBuildRoad(edgeLocation);
 	 * depending on the state, each function will return something different
 	 */
-	private IGameState state;
+	private static IGameState state;
 	private EdgeLocation firstRoad;
 	HexLocation robberLocation;
 
