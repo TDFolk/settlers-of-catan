@@ -531,6 +531,9 @@ public class Game extends Observable {
     public static Game getInstance() {
         if(instance == null) {
             instance = new Game();
+
+            instance.player = new Player();
+
         }
         return instance;
     }
