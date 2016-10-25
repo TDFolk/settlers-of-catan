@@ -1,10 +1,11 @@
 package client.communication;
 
 import java.util.*;
-import java.util.List;
 
 import client.base.*;
+import client.data.PlayerInfo;
 import model.Game;
+import model.Player;
 import shared.definitions.*;
 
 
@@ -57,8 +58,12 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		CatanColor color = Game.getInstance().getPlayer().getPlayerInfo().getColor();
-		entries.add(new LogEntry(color, "Object has been changed: " + arg));
+		Player player = Game.getInstance().getPlayerTurn();
+		PlayerInfo info = player.getPlayerInfo();
+		String playerName = info.getName();
+		CatanColor color = player.getPlayerInfo().getColor();
+		
+		entries.add(new LogEntry(color, playerName + " has changed this object: " + arg));
 	}
 	
 }
