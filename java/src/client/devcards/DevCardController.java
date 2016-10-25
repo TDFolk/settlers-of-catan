@@ -13,7 +13,6 @@ import java.util.Observable;
 import java.util.Observer;
 
 import exception.CardException;
-import exception.ResourceException;
 
 
 /**

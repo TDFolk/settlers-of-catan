@@ -4,8 +4,6 @@ import client.base.*;
 import model.Game;
 import model.Player;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -33,8 +31,9 @@ public class ChatController extends Controller implements IChatController, Obser
 	@Override
 	public void sendMessage(String message) {
 		Game game = Game.getInstance();
-		Player player = game.getPlayer();
-		CatanColor color = player.getPlayerInfo().getColor();
+		//Player player = game.getPlayer();
+		//CatanColor color = player.getPlayerInfo().getColor();
+		CatanColor color = CatanColor.RED;
 		game.addChatMessage(new LogEntry(color, message));
 		
 		getView().setEntries(Game.getInstance().getChatLog());

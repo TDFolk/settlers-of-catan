@@ -43,8 +43,8 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
 		receive = false;
-		originalPlayersCards = Game.getInstance().getPlayer().getResourceCards();
-		playersCardsTemp = Game.getInstance().getPlayer().getResourceCards();
+		//TODO originalPlayersCards = Game.getInstance().getPlayer().getResourceCards();
+		//TODO playersCardsTemp = Game.getInstance().getPlayer().getResourceCards();
 
 		// This Controller will now be notified to any changes in the Game Object
 		Game.getInstance().addObserver(this);
