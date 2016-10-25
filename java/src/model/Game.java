@@ -1,5 +1,6 @@
 package model;
 
+import client.communication.LogEntry;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import decoder.JsonModels.*;
@@ -37,6 +38,8 @@ public class Game extends Observable {
     private Bank bank;
     private List<Message> chat;
     private List<Message> log;
+    private List<LogEntry> chatLog = new ArrayList<LogEntry>();
+    private List<LogEntry> historyLog = new ArrayList<LogEntry>();
     private Map map;
     private List<Player> playersList;
     private Player player;
@@ -65,6 +68,9 @@ public class Game extends Observable {
 
         this.log = log;
         this.chat = chat;
+        
+        
+        
 
         //replace map
         ArrayList<Hex> hexes = createHexList(model.getMap().getHexes());
@@ -114,7 +120,6 @@ public class Game extends Observable {
         }
 
         return playersList;
-
     }
 
     public ArrayList<Road> createRoadList(JsonPiece[] roads, JsonPlayer[] players)
@@ -409,6 +414,22 @@ public class Game extends Observable {
 
         return messageList;
 
+    }
+    
+    public void addChatMessage(LogEntry entry) {
+    	chatLog.add(entry);
+    }
+    
+    public void addHistoryEntry(LogEntry entry) {
+    	historyLog.add(entry);
+    }
+    
+    public List<LogEntry> getChatLog() {
+    	return chatLog;
+    }
+    
+    public List<LogEntry> getHistory() {
+    	return historyLog;
     }
 
     public ArrayList<DevelopmentCard> createDeck(JsonModel model)

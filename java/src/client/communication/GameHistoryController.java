@@ -13,13 +13,11 @@ import shared.definitions.*;
  * Game history controller implementation
  */
 public class GameHistoryController extends Controller implements IGameHistoryController, Observer {
-	private List<LogEntry> entries;
 
 	public GameHistoryController(IGameHistoryView view) {
 		
 		super(view);
 		
-		entries = new ArrayList<LogEntry>();
 		initFromModel();
 
 		// This Controller will now be notified of any changes in the Game Object
@@ -58,12 +56,20 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+		System.out.println(arg);
 		Player player = Game.getInstance().getPlayerTurn();
 		PlayerInfo info = player.getPlayerInfo();
 		String playerName = info.getName();
 		CatanColor color = player.getPlayerInfo().getColor();
 		
-		entries.add(new LogEntry(color, playerName + " has changed this object: " + arg));
+		String message = playerName + " has changed the value of Object: " + arg;
+		Game.getInstance().addHistoryEntry(new LogEntry(color, message));
+		
+		
+		
+		
+		
+		getView().setEntries(Game.getInstance().getChatLog());
 	}
 	
 }

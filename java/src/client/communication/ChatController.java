@@ -16,13 +16,11 @@ import shared.definitions.CatanColor;
  * Chat controller implementation
  */
 public class ChatController extends Controller implements IChatController, Observer {
-	private List<LogEntry> entries;
 
 	public ChatController(IChatView view) {
 		
 		super(view);
 		
-		entries = new ArrayList<LogEntry>();
 		// This Controller will now be notified of any changes in the Game Object
 		Game.getInstance().addObserver(this);
 	}
@@ -35,11 +33,12 @@ public class ChatController extends Controller implements IChatController, Obser
 	@Override
 	public void sendMessage(String message) {
 		Game game = Game.getInstance();
-		Player player = game.getPlayer();
-		CatanColor color = player.getPlayerInfo().getColor();
-		entries.add(new LogEntry(color, message));
-		getView().setEntries(entries);
+		//Player player = game.getPlayer();
+		//CatanColor color = player.getPlayerInfo().getColor();
+		CatanColor color = CatanColor.RED; // FIX THIS SOON
+		game.addChatMessage(new LogEntry(color, message));
 		
+		getView().setEntries(Game.getInstance().getChatLog());
 	}
 
 	/**
@@ -50,7 +49,7 @@ public class ChatController extends Controller implements IChatController, Obser
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		
+		getView().setEntries(Game.getInstance().getChatLog());
 	}
 }
 
