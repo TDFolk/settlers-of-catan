@@ -5,6 +5,7 @@ import decoder.JsonModels.JsonModel;
 import model.cards_resources.ResourceCards;
 import model.map.Hex;
 import model.map.Port;
+import model.map.ResourcePort;
 import server.ServerProxy;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
@@ -160,7 +161,6 @@ public class Facade {
         return false;
     }
 
-
     /**
      * Replaces the old model with the new model returned from the server
      * @param newModelJson the new model returned from the server
@@ -197,5 +197,9 @@ public class Facade {
     public List<Hex> getHexes()
     {
         return Game.getInstance().getMap().getHexes();
+    }
+
+    public int getPlayerIndex() {
+        return Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
     }
 }
