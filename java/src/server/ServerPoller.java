@@ -16,7 +16,7 @@ public class ServerPoller {
 
     private static ServerPoller poller = new ServerPoller(ServerProxy.getServer());
 
-    public ServerPoller getPoller()
+    public static ServerPoller getPoller()
     {
         return poller;
     }
