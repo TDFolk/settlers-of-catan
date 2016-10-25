@@ -103,12 +103,6 @@ public class Game extends Observable {
 
     }
 
-    /*
-      public Player(String name, CatanColor color, int settlements, int cities, int roads,
-                  ResourceCards resourceCards, List<DevelopmentCard> developmentCards,
-                  List<DevelopmentCard> newDevelopmentCards, PlayerID playerID, int playerIndex, boolean discarded,
-                  boolean playedDevCard, int monuments, int soldiers, int victoryPoints) {
-     */
 
     public ArrayList<Player> createPlayersList(JsonPlayer[] players)
     {
@@ -116,15 +110,71 @@ public class Game extends Observable {
 
         for(int i = 0; i < players.length; i++)
         {
+            CatanColor color = null;
+            switch (players[i].getColor())
+            {
+                //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+
+                case "red":
+                    color = CatanColor.RED;
+                    break;
+                case "orange":
+                    color = CatanColor.ORANGE;
+                    break;
+                case "yellow":
+                    color = CatanColor.YELLOW;
+                    break;
+                case "blue":
+                    color = CatanColor.BLUE;
+                    break;
+                case "green":
+                    color = CatanColor.GREEN;
+                    break;
+                case "purple":
+                    color = CatanColor.PURPLE;
+                    break;
+                case "puce":
+                    color = CatanColor.PUCE;
+                    break;
+                case "white":
+                    color = CatanColor.WHITE;
+                    break;
+                case "brown":
+                    color = CatanColor.BROWN;
+                    break;
+                default:
+                    color = CatanColor.BLUE;
+
+            }
+
+            JsonResource r = players[i].getResources();
+            ResourceCards resourceCards = new ResourceCards(r.getBrick(), r.getOre(),
+                    r.getSheep(), r.getWheat(), r.getWood());
+
+
+
+            ArrayList<DevelopmentCard> devCards = new ArrayList<>();
+
+            /*
+        public Player(String name, CatanColor color, int settlements, int cities, int roads,
+                  ResourceCards resourceCards, List<DevelopmentCard> developmentCards,
+                  List<DevelopmentCard> newDevelopmentCards, PlayerID playerID, int playerIndex, boolean discarded,
+                  boolean playedDevCard, int monuments, int soldiers, int victoryPoints) {
+     */
+
 //            Player newPlayer = new Player(players[i].getName(),
-//                    players[i].getColor(),
+//                    color,
 //                    players[i].getSettlements(),
 //                    players[i].getRoads(),
-//                    players[i].getResources(),
+//                    resourceCards,
 //                    players[i].getOldDevCards(),
 //                    players[i].getNewDevCards(),
 //                    players[i].getPlayerID(),
-//                    players[i].get)
+//                    players[i].isDiscarded(),
+//                    players[i].isPlayedDevCard(),
+//                    players[i].getMonuments(),
+//                    players[i].getSoldiers(),
+//                    players[i].getVictoryPoints());
         }
 
         return playersList;
