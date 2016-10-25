@@ -80,13 +80,15 @@ public class Game extends Observable {
 
         this.map = new Map(hexes, buildings,roads, ports);
 
-        //TODO: Finish implementing this method to fill the map data member and below.
-
         //replace List<Players> players
-
         playersList = createPlayersList(model.getPlayers());
 
+        //TODO: Finish implementing this method to fill the map data member and below.
         //replace Player
+//        for(int i = 0; i < playersList.size(); i++)
+//        {
+//            if(playersList.get(i).getPlayerInfo().getId())
+//        }
 
         //replace activeTrade
 
@@ -106,81 +108,123 @@ public class Game extends Observable {
 
     public ArrayList<Player> createPlayersList(JsonPlayer[] players)
     {
-        ArrayList<Player> playersList = new ArrayList<>();
+        try {
+            ArrayList<Player> playersList = new ArrayList<>();
 
-        for(int i = 0; i < players.length; i++)
-        {
-            CatanColor color = null;
-            switch (players[i].getColor())
+            for(int i = 0; i < players.length; i++)
             {
-                //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+                CatanColor color = null;
+                switch (players[i].getColor())
+                {
+                    //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
 
-                case "red":
-                    color = CatanColor.RED;
-                    break;
-                case "orange":
-                    color = CatanColor.ORANGE;
-                    break;
-                case "yellow":
-                    color = CatanColor.YELLOW;
-                    break;
-                case "blue":
-                    color = CatanColor.BLUE;
-                    break;
-                case "green":
-                    color = CatanColor.GREEN;
-                    break;
-                case "purple":
-                    color = CatanColor.PURPLE;
-                    break;
-                case "puce":
-                    color = CatanColor.PUCE;
-                    break;
-                case "white":
-                    color = CatanColor.WHITE;
-                    break;
-                case "brown":
-                    color = CatanColor.BROWN;
-                    break;
-                default:
-                    color = CatanColor.BLUE;
+                    case "red":
+                        color = CatanColor.RED;
+                        break;
+                    case "orange":
+                        color = CatanColor.ORANGE;
+                        break;
+                    case "yellow":
+                        color = CatanColor.YELLOW;
+                        break;
+                    case "blue":
+                        color = CatanColor.BLUE;
+                        break;
+                    case "green":
+                        color = CatanColor.GREEN;
+                        break;
+                    case "purple":
+                        color = CatanColor.PURPLE;
+                        break;
+                    case "puce":
+                        color = CatanColor.PUCE;
+                        break;
+                    case "white":
+                        color = CatanColor.WHITE;
+                        break;
+                    case "brown":
+                        color = CatanColor.BROWN;
+                        break;
+                    default:
+                        color = CatanColor.BLUE;
 
+                }
+
+                JsonResource r = players[i].getResources();
+                ResourceCards resourceCards = new ResourceCards(r.getBrick(), r.getOre(),
+                        r.getSheep(), r.getWheat(), r.getWood());
+
+                ArrayList<DevelopmentCard> newDevCards = createDevCardList(players[i].getNewDevCards());
+                ArrayList<DevelopmentCard> oldDevCards = createDevCardList(players[i].getOldDevCards());
+
+
+                PlayerID id = new PlayerID(players[i].getPlayerID());
+
+                Player newPlayer = new Player(players[i].getName(),
+                        color,
+                        players[i].getSettlements(),
+                        players[i].getCities(),
+                        players[i].getRoads(),
+                        resourceCards,
+                        oldDevCards,
+                        newDevCards,
+                        id,
+                        players[i].getPlayerIndex(),
+                        players[i].isDiscarded(),
+                        players[i].isPlayedDevCard(),
+                        players[i].getMonuments(),
+                        players[i].getSoldiers(),
+                        players[i].getVictoryPoints());
+
+                playersList.add(newPlayer);
             }
 
-            JsonResource r = players[i].getResources();
-            ResourceCards resourceCards = new ResourceCards(r.getBrick(), r.getOre(),
-                    r.getSheep(), r.getWheat(), r.getWood());
+            return playersList;
 
-            ArrayList<DevelopmentCard> devCards = new ArrayList<>();
-
-           // for(players[i].)
-
-            /*
-        public Player(String name, CatanColor color, int settlements, int cities, int roads,
-                  ResourceCards resourceCards, List<DevelopmentCard> developmentCards,
-                  List<DevelopmentCard> newDevelopmentCards, PlayerID playerID, int playerIndex, boolean discarded,
-                  boolean playedDevCard, int monuments, int soldiers, int victoryPoints) {
-     */
-
-//            Player newPlayer = new Player(players[i].getName(),
-//                    color,
-//                    players[i].getSettlements(),
-//                    players[i].getRoads(),
-//                    resourceCards,
-//                    players[i].getOldDevCards(),
-//                    players[i].getNewDevCards(),
-//                    players[i].getPlayerID(),
-//                    players[i].isDiscarded(),
-//                    players[i].isPlayedDevCard(),
-//                    players[i].getMonuments(),
-//                    players[i].getSoldiers(),
-//                    players[i].getVictoryPoints());
         }
-
-        return playersList;
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        return null;
     }
 
-    //public ArrayList<>
+    public ArrayList<DevelopmentCard> createDevCardList(JsonDevCard devCards)
+    {
+        ArrayList<DevelopmentCard> newDevCardList = new ArrayList<>();
+
+        for(int i = 0; i < devCards.getSoldier(); i++)
+        {
+            DevelopmentCard newCard = new DevelopmentCard(DevCardType.SOLDIER);
+            newDevCardList.add(newCard);
+        }
+
+        for(int i = 0; i < devCards.getYearOfPlenty(); i++)
+        {
+            DevelopmentCard newCard = new DevelopmentCard(DevCardType.YEAR_OF_PLENTY);
+            newDevCardList.add(newCard);
+        }
+
+        for(int i = 0; i < devCards.getRoadBuilding(); i++)
+        {
+            DevelopmentCard newCard = new DevelopmentCard(DevCardType.ROAD_BUILD);
+            newDevCardList.add(newCard);
+        }
+
+        for(int i = 0; i < devCards.getMonopoly(); i++)
+        {
+            DevelopmentCard newCard = new DevelopmentCard(DevCardType.MONOPOLY);
+            newDevCardList.add(newCard);
+        }
+
+        for(int i = 0; i < devCards.getMonument(); i++)
+        {
+            DevelopmentCard newCard = new DevelopmentCard(DevCardType.MONUMENT);
+            newDevCardList.add(newCard);
+        }
+
+        return newDevCardList;
+    }
 
     public ArrayList<Road> createRoadList(JsonPiece[] roads, JsonPlayer[] players)
     {
