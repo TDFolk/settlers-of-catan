@@ -1,5 +1,6 @@
 package model;
 
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 import decoder.JsonModels.*;
 import model.cards_resources.Bank;
@@ -10,9 +11,6 @@ import model.map.Hex;
 import model.map.Map;
 import model.map.Port;
 import model.pieces.Building;
-import model.pieces.City;
-import model.pieces.Road;
-import server.ServerProxy;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
@@ -31,6 +29,7 @@ import java.util.Observable;
  *
  */
 public class Game extends Observable {
+
     private static Game instance = null;
 
     private int versionNumber = 0;
@@ -43,6 +42,7 @@ public class Game extends Observable {
     private Trade activeTrade; //null if none is ongoing
     private TurnTracker turntracker;
     private Player winner;
+    private GameInfo gameInfo;
 
 
     public void replaceModel(JsonModel model)
@@ -348,6 +348,17 @@ public class Game extends Observable {
         this.player = player;
     }
 
+    public Player getPlayerTurn() {
+        return this.turntracker.getPlayerTurn();
+    }
+
+    public GameInfo getGameInfo() {
+        return gameInfo;
+    }
+
+    public void setGameInfo(GameInfo gameInfo) {
+        this.gameInfo = gameInfo;
+    }
 
 
 }
