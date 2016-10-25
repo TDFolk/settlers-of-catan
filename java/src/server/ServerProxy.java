@@ -1,6 +1,7 @@
 package server;
 
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import command.game.*;
@@ -18,6 +19,9 @@ import java.io.*;
 import java.net.ConnectException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * The ServerProxy acts as the 'in between' for the client and the server. Sends requests to and receives data from
@@ -143,7 +147,23 @@ public class ServerProxy implements IServer {
             else {
                 GameInfo[] gameInfos = gson.fromJson(result, GameInfo[].class);
 
-                GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
+                //GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
+
+
+                for(int i = 0; i < gameInfos.length; i++)
+                {
+                    ArrayList<PlayerInfo> players = new ArrayList<>();
+                    for (PlayerInfo p : gameInfos[i].getPlayers())
+                    {
+                        if(p.getId() != -1)
+                        {
+                            players.add(p);
+                        }
+                    }
+
+                    gameInfos[i].setPlayers(players);
+
+                }
 
 
                 GameListHolder holder = new GameListHolder();

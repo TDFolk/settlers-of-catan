@@ -55,5 +55,11 @@ public class GameInfo
 	{
 		return Collections.unmodifiableList(players);
 	}
+
+	//ADDED BY BRANDON!
+	public void setPlayers(ArrayList<PlayerInfo> players)
+	{
+		this.players = players;
+	}
 }
 

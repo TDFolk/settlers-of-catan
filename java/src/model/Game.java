@@ -106,12 +106,15 @@ public class Game extends Observable {
 
     public ArrayList<Player> createPlayersList(JsonPlayer[] players)
     {
-        ArrayList<Player> playersList
+        ArrayList<Player> playersList = new ArrayList<>();
 
         for(int i = 0; i < players.length; i++)
         {
 
         }
+
+        return playersList;
+
     }
 
     public ArrayList<Road> createRoadList(JsonPiece[] roads, JsonPlayer[] players)
