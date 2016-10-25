@@ -206,6 +206,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				//disable the colors that are chosen
 				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
 			}
+
+			
 //			if(playerInfo.getId() != Integer.parseInt(ServerProxy.getServer().getCatanPlayerID())){
 //				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
 //			}
@@ -248,14 +250,14 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString().toLowerCase())){
 			playerInfo.setColor(color);
-			
+
 			Game.getInstance().setGameInfo(this.game);
 
 			// If join succeeded
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
 
-			//FIX THISSSSSSSSSS
+			//TODO: FIX THIS
 			//ServerPoller.getPoller().startPoller();
 
 			joinAction.execute();
