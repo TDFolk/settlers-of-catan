@@ -104,8 +104,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
+		GameInfo[] gameInfos = Game.getInstance().getServer().gameList().getGameInfos();
 
-		getJoinGameView().showModal();
+		if(gameInfos != null){
+			getJoinGameView().setGames(gameInfos, );
+		}
+
+
+		if(!getJoinGameView().isModalShowing()) {
+			getJoinGameView().showModal();
+		}
+		//startTimer(); ??
 	}
 
 

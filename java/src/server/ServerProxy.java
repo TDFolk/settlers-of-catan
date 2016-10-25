@@ -1,5 +1,6 @@
 package server;
 
+import client.data.GameInfo;
 import com.google.gson.Gson;
 import com.google.gson.JsonObject;
 import command.game.*;
@@ -119,7 +120,7 @@ public class ServerProxy implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public GameListObject[] gameList() {
+    public GameListHolder gameList() {
         String gameListCommand = "/games/list";
         Gson gson = new Gson();
 
@@ -129,9 +130,12 @@ public class ServerProxy implements IServer {
                 return null;
             }
             else {
-
-                GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
-                return gameList;
+                GameInfo[] gameInfos = gson.fromJson(result, GameInfo[].class);
+                //GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
+                GameListHolder holder = new GameListHolder();
+                holder.setGameInfos(gameInfos);
+                holder.setResponse(result);
+                return holder;
             }
 
         }

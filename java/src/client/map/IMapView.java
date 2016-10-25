@@ -96,6 +96,6 @@ public interface IMapView extends IView
 	/**
 	 * this method will reset the map whenever we need to reset the map
 	 */
-	void reset();
+	//void reset();
 }
 

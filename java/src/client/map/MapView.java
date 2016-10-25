@@ -311,18 +311,18 @@ public class MapView extends PanelView implements IMapView
 
 	}
 
-	public void reset(){
-		//create new layout
-		this.setLayout(new BorderLayout());
-		//remove the map to make a new one
-		this.remove(map);
-		//make new map
-		map = new MapComponent();
-		//just like the constructor....
-		this.add(map, BorderLayout.CENTER);
-		//finish
-		this.repaint();
-	}
-	
+//	public void reset(){
+//		//create new layout
+//		this.setLayout(new BorderLayout());
+//		//remove the map to make a new one
+//		this.remove(map);
+//		//make new map
+//		map = new MapComponent();
+//		//just like the constructor....
+//		this.add(map, BorderLayout.CENTER);
+//		//finish
+//		this.repaint();
+//	}
+//
 }
 

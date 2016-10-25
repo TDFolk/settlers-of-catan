@@ -251,7 +251,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	private void resetView(){
-		getView().reset();
+//		getView().reset();
 		state = new NotMyTurnState();
 	}
 

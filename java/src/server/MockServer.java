@@ -5,6 +5,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import command.game.GameCreateObjectResult;
+import command.game.GameListHolder;
 import command.game.GameListObject;
 import command.player.DiscardedCards;
 import command.player.RoadLocation;
@@ -87,7 +88,7 @@ public class MockServer implements IServer {
      * if invalid, returns a 400 HTTP response with an error message
      */
     @Override
-    public GameListObject[] gameList() {
+    public GameListHolder gameList() {
 
 //        JsonParser parser = new JsonParser();
 //
@@ -95,8 +96,8 @@ public class MockServer implements IServer {
 
         Gson gson = new Gson();
 
-        GameListObject list[] = gson.fromJson(gameListExample, GameListObject[].class);
-        return list;
+        //GameListObject list[] = gson.fromJson(gameListExample, GameListObject[].class);
+        return null;
     }
 
     /**

@@ -1,5 +1,6 @@
 package command.game;
 
+import client.data.GameInfo;
 import command.player.PlayerObject;
 
 import java.util.List;
@@ -45,4 +46,5 @@ public class GameListObject {
     public void setPlayers(PlayerObject[] players) {
         this.players = players;
     }
+
 }

@@ -2,6 +2,7 @@ package server;
 
 import com.google.gson.JsonObject;
 import command.game.GameCreateObjectResult;
+import command.game.GameListHolder;
 import command.game.GameListObject;
 import command.player.DiscardedCards;
 import command.player.RoadLocation;
@@ -48,7 +49,7 @@ public interface IServer {
      *          if invalid, returns a 400 HTTP response with an error message
      * @return JSONArray containing a list of objects about the server's games
      */
-    public GameListObject[] gameList();
+    public GameListHolder gameList();
 
     /**
      * Creates a new game on the server
