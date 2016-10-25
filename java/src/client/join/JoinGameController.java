@@ -1,5 +1,8 @@
 package client.join;
 
+import command.game.GameCreateObject;
+import command.game.GameCreateObjectResult;
+import command.game.GameListObject;
 import model.Game;
 import shared.definitions.CatanColor;
 import client.base.*;
@@ -21,9 +24,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private IMessageView messageView;
 	private IAction joinAction;
 
-	private GameInfo gameInfo;
-	private Timer gameTimer = new Timer(false);
-	
+	private GameInfo game;
+
+
 	/**
 	 * JoinGameController constructor
 	 * 
@@ -64,23 +67,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 * 
 	 * @param value The action to be executed when the user joins a game
 	 */
-	public void setJoinAction(IAction value) {	
-		
+	public void setJoinAction(IAction value) {
 		joinAction = value;
 	}
 	
 	public INewGameView getNewGameView() {
-		
 		return newGameView;
 	}
 
 	public void setNewGameView(INewGameView newGameView) {
-		
 		this.newGameView = newGameView;
 	}
 	
 	public ISelectColorView getSelectColorView() {
-		
 		return selectColorView;
 	}
 	public void setSelectColorView(ISelectColorView selectColorView) {
@@ -97,29 +96,72 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		this.messageView = messageView;
 	}
 
+
+
+
+	/**
+	 * Displays the join game view
+	 */
 	@Override
 	public void start() {
+
 		getJoinGameView().showModal();
 	}
 
+
+	/**
+	 * Called by the join game view when the user clicks "Create new game"
+	 * button. Displays the new game view.
+	 */
 	@Override
 	public void startCreateNewGame() {
-		
+
+
 		getNewGameView().showModal();
 	}
 
+
+	/**
+	 * Called by the new game view when the user clicks the "Cancel" button
+	 */
 	@Override
 	public void cancelCreateNewGame() {
-		
 		getNewGameView().closeModal();
 	}
 
+
+	/**
+	 * Called by the new game view when the user clicks the "Create Game" button
+	 */
 	@Override
 	public void createNewGame() {
-		
+		String title = getNewGameView().getTitle();
+
+		if (title.equals("")) {
+			getMessageView().setTitle("Title Error");
+			getMessageView().setMessage("Your game needs a title");
+			getMessageView().showModal();
+			return;
+		}
+		boolean randomHexes = getNewGameView().getRandomlyPlaceHexes();
+		boolean randomNumbers = getNewGameView().getRandomlyPlaceNumbers();
+		boolean randomPorts = getNewGameView().getUseRandomPorts();
+
+		GameCreateObjectResult myNewGame = Game.getServer().gameCreate(randomHexes, randomNumbers, randomPorts, title);
+
+
+
 		getNewGameView().closeModal();
 	}
 
+
+	/**
+	 * Called by the join game view when the user clicks a "Join" or "Re-join"
+	 * button. Displays the select color view.
+	 *
+	 * @param game
+	 *            The game that the user is joining
+	 */
 	@Override
 	public void startJoinGame(GameInfo game) {
 
@@ -128,12 +170,25 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		getSelectColorView().showModal();
 	}
 
+
+
+	/**
+	 * Called by the select color view when the user clicks the "Cancel" button
+	 */
 	@Override
 	public void cancelJoinGame() {
 	
 		getJoinGameView().closeModal();
 	}
 
+
+	/**
+	 * Called by the select color view when the user clicks the "Join Game"
+	 * button
+	 *
+	 * @param color
+	 *            The color selected by the user
+	 */
 	@Override
 	public void joinGame(CatanColor color) {
 
