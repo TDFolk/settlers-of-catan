@@ -114,7 +114,7 @@ public class DiscardController extends Controller implements IDiscardController,
 	public void update(Observable o, Object arg) {
 		// The Game class has a list of Players and also a single Player?
 		// How do controllers know who's turn it is?
-		int currentPlayerIndex = Game.getInstance().getPlayer().getPlayerIndex();
+		int currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 
 		if (arg.equals("reset")) {
 			return;

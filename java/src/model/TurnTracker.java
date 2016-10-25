@@ -34,7 +34,7 @@ public class TurnTracker {
 	 * @param player the player to add
 	 */
 	public void addPlayer(Player player) {
-		player.setPlayerIndex(playerOrder.size());
+		player.getPlayerInfo().setPlayerIndex(playerOrder.size());
 		playerOrder.add(player);
 	}
 	
@@ -44,7 +44,7 @@ public class TurnTracker {
 	 */
 	public void removePlayer(Player player) {
 		playerOrder.remove(player);
-		player.setPlayerIndex(-1);
+		player.getPlayerInfo().setPlayerIndex(-1);
 	}
 	
 	/**

@@ -3,6 +3,7 @@ package client.join;
 import client.base.*;
 import client.data.PlayerInfo;
 import model.Game;
+import server.ServerProxy;
 
 import java.util.Observable;
 import java.util.Observer;
@@ -36,10 +37,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		PlayerInfo[] gamePlayerInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
 
 		for (int i = 0; i < gamePlayerInfo.length; i++) {
-			gamePlayerInfo[i].setColor(Game.getInstance().getPlayersList().get(i).getColor());
-			gamePlayerInfo[i].setId(Game.getInstance().getPlayersList().get(i).getPlayerID());
-			gamePlayerInfo[i].setName(Game.getInstance().getPlayersList().get(i).getName());
-			gamePlayerInfo[i].setPlayerIndex(Game.getInstance().getPlayersList().get(i).getPlayerIndex());
+			gamePlayerInfo[i].setColor(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getColor());
+			gamePlayerInfo[i].setId(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getId());
+			gamePlayerInfo[i].setName(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getName());
+			gamePlayerInfo[i].setPlayerIndex(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getPlayerIndex());
 		}
 		getView().setPlayers(gamePlayerInfo);
 		// Could you do getView().setPlayers(Game.getInstance().getPlayersList().toArray(gamePlayerInfo)); ?
@@ -59,9 +60,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	@Override
 	public void addAI() {
 		String newAI = getView().getSelectedAI();
-		Game.getServer().gameAddAI(newAI);
+		ServerProxy.getServer().gameAddAI(newAI);
 		String[] listAI = new String[10];
-		listAI[0] = Game.getServer().gameListAI();
+		listAI[0] = ServerProxy.getServer().gameListAI();
 		getView().setAIChoices(listAI);
 	}
 

@@ -92,22 +92,22 @@ public class Map {
 		Building adjacentBuilding = buildingByEdge(location);
 		if (adjacentBuilding != null) {
 			//if the same colored building, all is good
-			if (adjacentBuilding.getColor().equals(player.getColor())) {
+			if (adjacentBuilding.getColor().equals(player.getPlayerInfo().getColor())) {
 				return true;
 			}
 
 			//if different colored building, must have a road of same color on the opposite end
 			if (adjacentBuilding.getLocation().getNormalizedLocation().equals(edgeToLeftVertex(location).getNormalizedLocation())) { //leftside
 				//check both edges to the right of this, if a road is on one of them and it is the same color, all is well
-				return roadsToTheRight(location, player.getColor());
+				return roadsToTheRight(location, player.getPlayerInfo().getColor());
 			}
 			else { //rightside
 				//same as for the leftside, but checking the opposite edges for friendly roads
-				return roadsToTheLeft(location, player.getColor());
+				return roadsToTheLeft(location, player.getPlayerInfo().getColor());
 			}
 		}
 		//if no settlement, must have road of same color in any direction
-		return roadsToTheLeft(location, player.getColor()) || roadsToTheRight(location, player.getColor());
+		return roadsToTheLeft(location, player.getPlayerInfo().getColor()) || roadsToTheRight(location, player.getPlayerInfo().getColor());
 	}
 
 	/**
@@ -133,9 +133,9 @@ public class Map {
 		}
 
 		//ensures that there is a road that belongs to you at at least one of the three directions
-		if (getRoadAtEdge(adjacentEdge1) != null && getRoadAtEdge(adjacentEdge1).getColor() == player.getColor()
-				|| getRoadAtEdge(adjacentEdge2) != null && getRoadAtEdge(adjacentEdge2).getColor() == player.getColor()
-				|| getRoadAtEdge(adjacentEdge3) != null && getRoadAtEdge(adjacentEdge3).getColor() == player.getColor()) {
+		if (getRoadAtEdge(adjacentEdge1) != null && getRoadAtEdge(adjacentEdge1).getColor() == player.getPlayerInfo().getColor()
+				|| getRoadAtEdge(adjacentEdge2) != null && getRoadAtEdge(adjacentEdge2).getColor() == player.getPlayerInfo().getColor()
+				|| getRoadAtEdge(adjacentEdge3) != null && getRoadAtEdge(adjacentEdge3).getColor() == player.getPlayerInfo().getColor()) {
 			//ensures that there are no settlements adjacent to your location
 			if (buildingByEdge(adjacentEdge1) == null &&
 					buildingByEdge(adjacentEdge2) == null &&

@@ -53,7 +53,7 @@ public class Robber {
         //cannot steal if there is not an adjacent settlement/city to the robber's hex
         for (VertexDirection dir : VertexDirection.values()) {
             Building adjacentBuilding = Game.getInstance().getMap().getBuildingAtVertex(new VertexLocation(location, dir));
-            if (adjacentBuilding != null && adjacentBuilding.getColor() == victim.getColor()) {
+            if (adjacentBuilding != null && adjacentBuilding.getColor() == victim.getPlayerInfo().getColor()) {
                 return true;
             }
         }
