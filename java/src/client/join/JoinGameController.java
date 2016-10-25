@@ -7,6 +7,7 @@ import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
 import model.Facade;
 import model.Game;
+import server.ServerPoller;
 import server.ServerProxy;
 import shared.definitions.CatanColor;
 import client.base.*;
@@ -247,7 +248,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			// If join succeeded
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
-			
+			ServerPoller.getPoller().startPoller();
 			joinAction.execute();
 
 		}
