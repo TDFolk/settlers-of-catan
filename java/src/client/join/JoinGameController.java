@@ -105,7 +105,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
-		GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
+		GameInfo[] gameInfos = Game.getInstance().getServer().gameList().getGameInfos();
 
 		if(gameInfos != null){
 			getJoinGameView().setGames(gameInfos, Game.getInstance().getPlayer().getPlayerInfo());
