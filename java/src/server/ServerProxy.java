@@ -125,14 +125,15 @@ public class ServerProxy implements IServer {
 
         try{
             String result = doGetCommand(gameListCommand);
+            if(result == null){
+                return null;
+            }
+            else {
 
-            GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
+                GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
+                return gameList;
+            }
 
-//            GameListObjectResult games = new GameListObjectResult();
-//            games.setGameList(gameList);
-
-            //returns the list of the existing games
-            return gameList;
         }
         catch(ConnectException e) {
             e.printStackTrace();
@@ -670,7 +671,7 @@ public class ServerProxy implements IServer {
      * if applicable, "longest road" has been awarded
      */
     @Override
-            public String roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
+    public String roadBuilding(int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
         String roadBuildingCommand = "/moves/Road_Building";
         RoadBuildingObject roadBuildingObject = new RoadBuildingObject(playerIndex, spot1, spot2);
         String postData = roadBuildingObject.toJSON();
