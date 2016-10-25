@@ -107,7 +107,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
-		GameInfo[] gameInfos = Game.getServer().gameList().getGameInfos();
+		GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
 
 		if(gameInfos != null){
 			getJoinGameView().setGames(gameInfos, Game.getInstance().getPlayer().getPlayerInfo());
@@ -158,7 +158,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		boolean randomPorts = getNewGameView().getUseRandomPorts();
 
 
-		GameCreateObjectResult myNewGame = Game.getServer().gameCreate(randomHexes, randomNumbers, randomPorts, title);
+		GameCreateObjectResult myNewGame = ServerProxy.getServer().gameCreate(randomHexes, randomNumbers, randomPorts, title);
 		if(myNewGame != null){
 //			Gson gson = new Gson();
 //			JsonElement gameID = gson.fromJson()
