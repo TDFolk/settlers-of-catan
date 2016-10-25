@@ -50,4 +50,11 @@ public class FirstRoundState implements IGameState{
     public String getState() {
         return null;
     }
+
+    /**
+     * This function checks whether, in this state, the player has permission to initiate trading.
+     * @return true if the player may initiate trades
+     */
+    public boolean canMakeTrades(){return false;};
+
 }
