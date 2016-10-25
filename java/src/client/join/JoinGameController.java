@@ -5,6 +5,7 @@ import com.google.gson.JsonElement;
 import command.game.GameCreateObject;
 import command.game.GameCreateObjectResult;
 import command.game.GameListObject;
+import model.Facade;
 import model.Game;
 import server.ServerProxy;
 import shared.definitions.CatanColor;
@@ -231,16 +232,30 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void joinGame(CatanColor color) {
 
-		//Game.getServer().gameJoin(,color);
+		//check if game is null
+		if(this.game == null){
+			getMessageView().setTitle("Join Game Error");
+			getMessageView().setMessage("Error joining game... game == null");
+			getMessageView().showModal();
+			return;
+		}
 
+		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString())){
+			Game.getInstance().getPlayer().getPlayerInfo().setColor(color);
+			Game.getInstance().setGameInfo(this.game);
 
+			// If join succeeded
+			getSelectColorView().closeModal();
+			getJoinGameView().closeModal();
+			
+			joinAction.execute();
 
-		// If join succeeded
-		getSelectColorView().closeModal();
-		getJoinGameView().closeModal();
-		joinAction.execute();
-
-
+		}
+		else {
+			getMessageView().setTitle("Error");
+			getMessageView().setMessage("Error joining game... gameJoin command did not work!");
+			getMessageView().showModal();
+		}
 	}
 
 	/**

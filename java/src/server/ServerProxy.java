@@ -242,8 +242,14 @@ public class ServerProxy implements IServer {
 
         try{
             String result = doPostCommand(gameJoinCommand, postData);
+            if(result == null){
+                return false;
+            }
+            else {
 
-            return true;
+                return true;
+            }
+
 
         }
         catch(ConnectException e){
