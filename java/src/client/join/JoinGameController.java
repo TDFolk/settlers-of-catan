@@ -198,20 +198,21 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(!getSelectColorView().isModalShowing()){
 			getSelectColorView().showModal();
 		}
-		for(PlayerInfo playerInfo : game.getPlayers()){
-			if(playerInfo == null){
-				continue;
-			}
-			else {
+		//TODO: FIX THIS
+//		for(PlayerInfo playerInfo : game.getPlayers()){
+//			if(playerInfo == null){
+//				continue;
+//			}
+//			else {
 				//disable the colors that are chosen
 //				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
-			}
+			//}
 
 			
 //			if(playerInfo.getId() != Integer.parseInt(ServerProxy.getServer().getCatanPlayerID())){
 //				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
 //			}
-		}
+		//}
 
 		if(!getSelectColorView().isModalShowing()){
 			getSelectColorView().showModal();

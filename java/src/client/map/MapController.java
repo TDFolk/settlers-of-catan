@@ -74,6 +74,9 @@ public class MapController extends Controller implements IMapController, Observe
 			for (int y = -3; y <= maxY; ++y) {
 				int r = rand.nextInt(HexType.values().length);
 				HexType hexType = HexType.values()[r];
+				if(hexType == HexType.WATER){
+					hexType = HexType.ORE;
+				}
 				HexLocation hexLoc = new HexLocation(x, y);
 				getView().addHex(hexLoc, hexType);
 //				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
@@ -91,6 +94,9 @@ public class MapController extends Controller implements IMapController, Observe
 				for (int y = minY; y <= 3; ++y) {
 					int r = rand.nextInt(HexType.values().length);
 					HexType hexType = HexType.values()[r];
+					if(hexType == HexType.WATER){
+						hexType = HexType.ORE;
+					}
 					HexLocation hexLoc = new HexLocation(-x, y);
 					getView().addHex(hexLoc, hexType);
 //					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
