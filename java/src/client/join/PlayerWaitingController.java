@@ -1,6 +1,7 @@
 package client.join;
 
 import client.base.*;
+import client.data.PlayerInfo;
 import model.Game;
 
 import java.util.Observable;
@@ -26,17 +27,42 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		return (IPlayerWaitingView)super.getView();
 	}
 
+
+	/**
+	 * Displays the player waiting view
+	 */
 	@Override
 	public void start() {
+		PlayerInfo[] gamePlayerInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
 
-		getView().showModal();
+		for (int i = 0; i < gamePlayerInfo.length; i++) {
+			gamePlayerInfo[i].setColor(Game.getInstance().getPlayersList().get(i).getColor());
+			gamePlayerInfo[i].setId(Game.getInstance().getPlayersList().get(i).getPlayerID());
+			gamePlayerInfo[i].setName(Game.getInstance().getPlayersList().get(i).getName());
+			gamePlayerInfo[i].setPlayerIndex(Game.getInstance().getPlayersList().get(i).getPlayerIndex());
+		}
+		getView().setPlayers(gamePlayerInfo);
+		// Could you do getView().setPlayers(Game.getInstance().getPlayersList().toArray(gamePlayerInfo)); ?
+
+
+		if (gamePlayerInfo.length == 4) {
+			getView().closeModal();
+		}
+		else {
+			getView().showModal();
+		}
 	}
 
+	/**
+	 * Called when the "Add AI" button is clicked in the player waiting view
+	 */
 	@Override
 	public void addAI() {
-
-		// TEMPORARY
-		getView().closeModal();
+		String newAI = getView().getSelectedAI();
+		Game.getServer().gameAddAI(newAI);
+		String[] listAI = new String[10];
+		listAI[0] = Game.getServer().gameListAI();
+		getView().setAIChoices(listAI);
 	}
 
 	/**
@@ -47,7 +73,18 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-
+		if (arg.equals("reset")) {
+			return;
+		}
+		if (getView().isModalShowing()) {
+			PlayerInfo[] gamePlayerInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
+			Game.getInstance().getPlayersList().toArray(gamePlayerInfo);
+			getView().closeModal();
+			if (gamePlayerInfo.length < 4) {
+				getView().setPlayers(Game.getInstance().getPlayersList().toArray(gamePlayerInfo));
+				getView().showModal();
+			}
+		}
 	}
 }
 
