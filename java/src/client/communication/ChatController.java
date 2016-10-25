@@ -31,9 +31,9 @@ public class ChatController extends Controller implements IChatController, Obser
 	@Override
 	public void sendMessage(String message) {
 		Game game = Game.getInstance();
-		//Player player = game.getPlayer();
-		//CatanColor color = player.getPlayerInfo().getColor();
-		CatanColor color = CatanColor.RED;
+		Player player = game.getPlayer();
+		CatanColor color = player.getPlayerInfo().getColor();
+		//CatanColor color = CatanColor.RED;
 		game.addChatMessage(new LogEntry(color, message));
 		
 		getView().setEntries(Game.getInstance().getChatLog());

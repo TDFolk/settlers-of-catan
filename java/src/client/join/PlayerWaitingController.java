@@ -2,9 +2,11 @@ package client.join;
 
 import client.base.*;
 import client.data.PlayerInfo;
+import client.misc.MessageView;
 import model.Game;
 import server.ServerProxy;
 
+import java.util.ArrayList;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -34,6 +36,7 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	 */
 	@Override
 	public void start() {
+
 		PlayerInfo[] gamePlayerInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
 
 		for (int i = 0; i < gamePlayerInfo.length; i++) {
@@ -87,5 +90,18 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			}
 		}
 	}
+
+//	private boolean isFull(){
+//		if(Game.getInstance().getGameInfo().getPlayers().size() >= 4){
+//			return true;
+//		}
+//		return false;
+//	}
+//
+//	private void updatePlayerList(){
+//		ArrayList<PlayerInfo> playerList = new ArrayList<>(Game.getInstance().getGameInfo().getPlayers());
+//		PlayerInfo[] players = playerList.toArray(new PlayerInfo[playerList.size()]);
+//		getView().setPlayers(players);
+//	}
 }
 

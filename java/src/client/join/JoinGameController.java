@@ -250,7 +250,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString().toLowerCase())){
 			playerInfo.setColor(color);
-
+			Game.getInstance().getPlayer().setPlayerInfo(playerInfo);
 			Game.getInstance().setGameInfo(this.game);
 
 			// If join succeeded
@@ -281,6 +281,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+
 
 	}
 
