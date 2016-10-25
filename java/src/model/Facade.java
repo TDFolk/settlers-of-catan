@@ -3,11 +3,13 @@ package model;
 import decoder.Decoder;
 import decoder.JsonModels.JsonModel;
 import model.cards_resources.ResourceCards;
+import model.map.Hex;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
+import java.util.List;
 import java.util.Observable;
 
 
@@ -169,5 +171,10 @@ public class Facade {
 
     public int getPlayerSoldiers() {
         return Game.getInstance().getPlayer().getSoldiers();
+    }
+
+    public List<Hex> getHexes()
+    {
+        return Game.getInstance().getMap().getHexes();
     }
 }
