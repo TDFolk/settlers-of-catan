@@ -85,22 +85,26 @@ public class ResourceBarController extends Controller implements IResourceBarCon
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+		//set all resource card values
 		getView().setElementAmount(ResourceBarElement.BRICK, Facade.getInstance().getPlayerResource(ResourceType.BRICK));
 		getView().setElementAmount(ResourceBarElement.ORE, Facade.getInstance().getPlayerResource(ResourceType.ORE));
 		getView().setElementAmount(ResourceBarElement.SHEEP, Facade.getInstance().getPlayerResource(ResourceType.SHEEP));
 		getView().setElementAmount(ResourceBarElement.WHEAT, Facade.getInstance().getPlayerResource(ResourceType.WHEAT));
 		getView().setElementAmount(ResourceBarElement.WOOD, Facade.getInstance().getPlayerResource(ResourceType.WOOD));
 
+		//set quantities of building stores and of soldiers
 		getView().setElementAmount(ResourceBarElement.CITY, Facade.getInstance().getPlayerCities());
 		getView().setElementAmount(ResourceBarElement.SETTLEMENT, Facade.getInstance().getPlayerSettlements());
 		getView().setElementAmount(ResourceBarElement.ROAD, Facade.getInstance().getPlayerRoads());
+		getView().setElementAmount(ResourceBarElement.SOLDIERS, Facade.getInstance().getPlayerSoldiers());
 
-		getView().setElementAmount(ResourceBarElement.SOLDIERS, Facade.getInstance().getPlayerRoads());
-
-		getView().setElementEnabled(ResourceBarElement.BUY_CARD, (arg instanceof PlayingState) && Facade.getInstance().canBuyDevelopmentCard());
-		getView().setElementEnabled(ResourceBarElement.CITY, (arg instanceof PlayingState) && Facade.getInstance().canBuyCity());
-		getView().setElementEnabled(ResourceBarElement.SETTLEMENT, (arg instanceof PlayingState) && Facade.getInstance().canBuySettlement());
-		getView().setElementEnabled(ResourceBarElement.ROAD, (arg instanceof PlayingState) && Facade.getInstance().canBuyRoad());
+		IGameState state = (IGameState) arg;
+		//enable purchasing of buildings and purchasing/playing development cards, if conditions are correct
+		getView().setElementEnabled(ResourceBarElement.BUY_CARD, state.canMakePurchases() && Facade.getInstance().canBuyDevelopmentCard());
+		getView().setElementEnabled(ResourceBarElement.CITY, state.canMakePurchases() && Facade.getInstance().canBuyCity());
+		getView().setElementEnabled(ResourceBarElement.SETTLEMENT, state.canMakePurchases() && Facade.getInstance().canBuySettlement());
+		getView().setElementEnabled(ResourceBarElement.ROAD, state.canMakePurchases() && Facade.getInstance().canBuyRoad());
+		getView().setElementEnabled(ResourceBarElement.PLAY_CARD, state.canPlayDevCards() && Facade.getInstance().canPlayDevelopmentCards());
 	}
 }
 

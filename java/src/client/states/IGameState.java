@@ -11,25 +11,39 @@ import shared.locations.VertexLocation;
 public interface IGameState {
 
     /**
-     * This function checks whether or not in the current state, the player can build a road at a specific edge location.
-     * @param edgeLocation The edge location the player wants to place their road on.
-     * @return true if the player CAN place the road.
+     * This function checks whether within this state, the player has permission to buy roads/buildings/devCards
+     * @return true if the player may purchase buildings and devcards
      */
-    public boolean canBuildRoad(EdgeLocation edgeLocation);
+    public boolean canMakePurchases();
 
     /**
-     * This function checks whether or not in the current state, the player can build a settlement at the specified vertex location.
-     * @param vertexLocation The vertex location where the player wants to place their settlement on.
-     * @return true if the player CAN place the settlement.
+     * This function checks whether, in this state, the player may play their development cards.
+     * Note that this does not consider whether or not the player has already played a development card this turn
+     * @return true if the player may play development cards
      */
-    public boolean canBuildSettlement(VertexLocation vertexLocation);
+    public boolean canPlayDevCards();
 
-    /**
-     * This function checks whether or not in the current state, the player can build a city on top of their settlement at a specified vertex location.
-     * @param vertexLocation The vertex location where the player wants their city on.
-     * @return true if the player CAN build the city.
-     */
-    public boolean canBuildCity(VertexLocation vertexLocation);
+    //todo: may I delete these? ~KC
+//    /**
+//     * This function checks whether or not in the current state, the player can build a road at a specific edge location.
+//     * @param edgeLocation The edge location the player wants to place their road on.
+//     * @return true if the player CAN place the road.
+//     */
+//    public boolean canBuildRoad(EdgeLocation edgeLocation);
+//
+//    /**
+//     * This function checks whether or not in the current state, the player can build a settlement at the specified vertex location.
+//     * @param vertexLocation The vertex location where the player wants to place their settlement on.
+//     * @return true if the player CAN place the settlement.
+//     */
+//    public boolean canBuildSettlement(VertexLocation vertexLocation);
+//
+//    /**
+//     * This function checks whether or not in the current state, the player can build a city on top of their settlement at a specified vertex location.
+//     * @param vertexLocation The vertex location where the player wants their city on.
+//     * @return true if the player CAN build the city.
+//     */
+//    public boolean canBuildCity(VertexLocation vertexLocation);
 
     /**
      * This function will check if the robber can be placed in the selected hex location.

@@ -106,9 +106,9 @@ public class Facade {
         return Game.getInstance().getPlayer().canBuyDevelopmentCard();
     }
 
-    public boolean canPlayDevelopmentCard(DevCardType card)
+    public boolean canPlayDevelopmentCards()
     {
-        return Game.getInstance().getPlayer().canPlayDevelopmentCard(card);
+        return Game.getInstance().getPlayer().canPlayDevelopmentCards();
     }
 
     public boolean canDiscard(ResourceCards cards)

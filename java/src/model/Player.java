@@ -229,17 +229,12 @@ public class Player {
     }
     
     /**
-     * Determines if the player owns the specified development card and can play it
-     * @param card the card to play
-     * @return true if the player owns and can play the card
+     * Determines if the player can play a development card, ie that they havn't already played one this turn, and that
+     * they possess at least one card
+     * @return true if the player owns and can play a card
      */
-    public boolean canPlayDevelopmentCard(DevCardType card) {
-        for (int i = 0; i < developmentCards.size(); i++) {
-            if (developmentCards.get(i).getType() == card) {
-                return true;
-            }
-        }
-        return false;
+    public boolean canPlayDevelopmentCards() {
+        return !playedDevCard && developmentCards.size() > 0;
     }
     
     /**

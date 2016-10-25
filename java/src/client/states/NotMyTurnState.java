@@ -10,35 +10,23 @@ import shared.locations.VertexLocation;
  */
 public class NotMyTurnState implements IGameState{
     /**
-     * This function checks whether or not in the current state, the player can build a road at a specific edge location.
+     * This function checks whether within this state, the player has permission to buy roads/buildings/devCards
      *
-     * @param edgeLocation The edge location the player wants to place their road on.
-     * @return true if the player CAN place the road.
+     * @return true if the player may purchase buildings and devcards
      */
     @Override
-    public boolean canBuildRoad(EdgeLocation edgeLocation) {
+    public boolean canMakePurchases() {
         return false;
     }
 
     /**
-     * This function checks whether or not in the current state, the player can build a settlement at the specified vertex location.
+     * This function checks whether, in this state, the player may play their development cards.
+     * Note that this does not consider whether or not the player has already played a development card this turn
      *
-     * @param vertexLocation The vertex location where the player wants to place their settlement on.
-     * @return true if the player CAN place the settlement.
+     * @return true if the player may play development cards
      */
     @Override
-    public boolean canBuildSettlement(VertexLocation vertexLocation) {
-        return false;
-    }
-
-    /**
-     * This function checks whether or not in the current state, the player can build a city on top of their settlement at a specified vertex location.
-     *
-     * @param vertexLocation The vertex location where the player wants their city on.
-     * @return true if the player CAN build the city.
-     */
-    @Override
-    public boolean canBuildCity(VertexLocation vertexLocation) {
+    public boolean canPlayDevCards() {
         return false;
     }
 
