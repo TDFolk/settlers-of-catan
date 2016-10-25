@@ -109,12 +109,13 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void start() {
 		getJoinGameView().showModal();
 		GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
+		PlayerInfo playerInfo = new PlayerInfo();
+		playerInfo.setName(ServerProxy.getServer().getCatanUsername());
+		playerInfo.setId(Integer.parseInt(ServerProxy.getServer().getCatanPlayerID()));
 
 		if(gameInfos != null){
-			getJoinGameView().setGames(gameInfos, gameInfos[0].getPlayers().get(0));
-			//getJoinGameView().showModal();
+			getJoinGameView().setGames(gameInfos, playerInfo);
 		}
-
 
 		if(!getJoinGameView().isModalShowing()) {
 			getJoinGameView().showModal();
@@ -174,7 +175,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getMessageView().setMessage("Unable to create new game.");
 			getMessageView().showModal();
 		}
-//		getNewGameView().closeModal();
 	}
 
 
@@ -191,8 +191,22 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		//getSelectColorView().
 		Game.getInstance().setGameInfo(game);
 
-		
-
+		if(!getSelectColorView().isModalShowing()){
+			getSelectColorView().showModal();
+		}
+		for(PlayerInfo playerInfo : game.getPlayers()){
+			if(playerInfo == null){
+				continue;
+			}
+			getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
+//			if(playerInfo.getId() != Integer.parseInt(ServerProxy.getServer().getCatanPlayerID())){
+//				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
+//			}
+		}
+		this.game = game;
+		if(!getSelectColorView().isModalShowing()){
+			getSelectColorView().showModal();
+		}
 	}
 
 
@@ -218,6 +232,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void joinGame(CatanColor color) {
 
 		//Game.getServer().gameJoin(,color);
+
+
 
 		// If join succeeded
 		getSelectColorView().closeModal();

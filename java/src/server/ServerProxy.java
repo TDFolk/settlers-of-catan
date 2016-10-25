@@ -40,7 +40,8 @@ public class ServerProxy implements IServer {
     private String host = "localhost";
     private String port = "8081";
     private String baseUrl = "http://" + host + ":" + port;
-    private String catanUser = null;
+    private String catanUsername = null;
+    private String catanPlayerID = null;
     private String catanGame = null;
     private String cookie = null;
 
@@ -79,7 +80,10 @@ public class ServerProxy implements IServer {
             if(doPostCommand(loginCommand, postData) == null){
                 return false;
             }
-            return true;
+            else{
+                catanUsername = username;
+                return true;
+            }
 
         }
         catch(ConnectException e) {
@@ -782,6 +786,9 @@ public class ServerProxy implements IServer {
                         String foo = connection.getHeaderField(i);
                         //trim the cookie where the ';' starts and initialize the cookie variable
                         cookie = foo.split(";", 2)[0];
+                        String fooPlayerID = cookie.split("playerID%")[1];
+                        catanPlayerID = fooPlayerID.split("%", 2)[0];
+
 
                     }
                     i++;
@@ -815,12 +822,6 @@ public class ServerProxy implements IServer {
                 connection.setRequestProperty("Cookie", cookie);
                 //connection.connect();
             }
-//            if(catanUser != null && catanGame != null) {
-//                connection.setRequestProperty("Cookie", "catan.user=" + catanUser + "; catan.game=" + catanGame);
-//            }
-//            else if(catanUser != null){
-//                connection.setRequestProperty("Cookie", "catan.user=" + catanUser);
-//            }
 
             //Checks to see if the server returns a 200 response
             if(connection.getResponseCode() == HttpURLConnection.HTTP_OK){
@@ -855,12 +856,16 @@ public class ServerProxy implements IServer {
         return sb.toString();
     }
 
-    public String getCatanUser() {
-        return catanUser;
+    public static void setServer(ServerProxy server) {
+        ServerProxy.server = server;
     }
 
-    public void setCatanUser(String catanUser) {
-        this.catanUser = catanUser;
+    public String getCatanUsername() {
+        return catanUsername;
+    }
+
+    public void setCatanUsername(String catanUsername) {
+        this.catanUsername = catanUsername;
     }
 
     public String getCatanGame() {
@@ -901,5 +906,13 @@ public class ServerProxy implements IServer {
 
     public void setBaseUrl(String baseUrl) {
         this.baseUrl = baseUrl;
+    }
+
+    public String getCatanPlayerID() {
+        return catanPlayerID;
+    }
+
+    public void setCatanPlayerID(String catanPlayerID) {
+        this.catanPlayerID = catanPlayerID;
     }
 }
