@@ -70,10 +70,10 @@ public class Game extends Observable {
         //replace map
         ArrayList<Hex> hexes = createHexList(model.getMap().getHexes());
         ArrayList<Building> buildings = createBuildingList(model.getCities(), model.getSettlements(), model.getPlayers());
-        ArrayList<Road> roads = createRoadList(model.getRoads());
-        ArrayList<Port> ports = createPortList(model.getPorts());
+        //ArrayList<Road> roads = createRoadList(model.getRoads());
+        //ArrayList<Port> ports = createPortList(model.getPorts());
 
-        this.map = new Map(hexes, buildings,roads, ports);
+        //this.map = new Map(hexes, buildings,roads, ports);
 
         //replace Lsit<Players> players
 
@@ -228,8 +228,8 @@ public class Game extends Observable {
 
             }
 
-            Building newBuilding = new City(color, dir);
-            buildings.add();
+            //Building newBuilding = new City(color, dir);
+            //buildings.add();
         }
 
 

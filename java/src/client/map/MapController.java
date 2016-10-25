@@ -260,7 +260,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public static IGameState getState() {
 		return state;
 	}
-	
+
 
 
 }
