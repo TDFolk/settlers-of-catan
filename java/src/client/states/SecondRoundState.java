@@ -51,6 +51,10 @@ public class SecondRoundState implements IGameState{
         return null;
     }
 
-
+    /**
+     * This function checks whether, in this state, the player has permission to initiate trading.
+     * @return true if the player may initiate trades
+     */
+    public boolean canMakeTrades(){return false;};
 
 }

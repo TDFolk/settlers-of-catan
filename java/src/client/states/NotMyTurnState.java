@@ -50,4 +50,11 @@ public class NotMyTurnState implements IGameState{
     public String getState() {
         return "NotMyTurn";
     }
+
+    /**
+     * This function checks whether, in this state, the player has permission to initiate trading.
+     * @return true if the player may initiate trades
+     */
+    public boolean canMakeTrades(){return false;};
+
 }
