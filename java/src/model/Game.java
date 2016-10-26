@@ -91,6 +91,17 @@ public class Game extends Observable {
             }
         }
 
+        //update GameInfo
+        ArrayList<PlayerInfo> gameInfoPlayers = new ArrayList<>();
+        for(int i = 0; i < playersList.size(); i++)
+        {
+            if(playersList.get(i) != null)
+            {
+                gameInfoPlayers.add(playersList.get(i).getPlayerInfo());
+            }
+        }
+        this.gameInfo.setPlayers(gameInfoPlayers);
+
         //replace activeTrade
         this.activeTrade = createActiveTrade(model.getTradeOffer());
 

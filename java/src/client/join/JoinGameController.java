@@ -283,6 +283,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				playerInfo.setPlayerIndex(game.getPlayers().size());
 			}
 
+
 			//need to set player index here...
 			//playerInfo.setPlayerIndex(this.game.getPlayers().size());
 
@@ -296,6 +297,16 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 //			}
 
 			Game.getInstance().getPlayer().setPlayerInfo(playerInfo);
+
+			//To set the color of the player in the GameInfo object as well
+			for(int i = 0; i < this.game.getPlayers().size(); i++)
+			{
+				if(playerInfo.getName().equals(this.game.getPlayers().get(i).getName()))
+				{
+					this.game.getPlayers().get(i).setColor(playerInfo.getColor());
+				}
+			}
+
 			Game.getInstance().setGameInfo(this.game);
 
 			// If join succeeded

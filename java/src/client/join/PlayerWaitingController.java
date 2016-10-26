@@ -4,6 +4,7 @@ import client.base.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.misc.MessageView;
+import model.Facade;
 import model.Game;
 import server.ServerProxy;
 
@@ -37,6 +38,9 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	 */
 	@Override
 	public void start() {
+
+		Facade.getInstance().initializeData();
+
 		ArrayList<PlayerInfo> playerList = new ArrayList<>(Game.getInstance().getGameInfo().getPlayers());
 		PlayerInfo[] gamePlayerInfo = playerList.toArray(new PlayerInfo[playerList.size()]);
 		getView().setPlayers(gamePlayerInfo);

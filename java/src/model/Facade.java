@@ -64,6 +64,11 @@ public class Facade {
     }
 
 
+    public void initializeData()
+    {
+        replaceModel(ServerProxy.getServer().gameModelVersion(Game.getInstance().getVersionNumber()));
+    }
+
     /**
      *
      * @return the current client version number
