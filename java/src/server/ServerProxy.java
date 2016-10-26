@@ -48,6 +48,7 @@ public class ServerProxy implements IServer {
     private String catanPlayerID = null;
     private String catanGame = null;
     private String cookie = null;
+    private String catanCookie = null;
 
     public ServerProxy(){
 
@@ -816,6 +817,9 @@ public class ServerProxy implements IServer {
                         //catanGame = foo.substring(11, cookie.indexOf(';'));
                         //trim the cookie where the ';' starts and initialize the cookie variable
                         cookie = foo.split(";", 2)[0];
+                        if(catanCookie == null){
+                            catanCookie = foo.split(";", 2)[0];
+                        }
                         if(catanUsername == null){
                             String fooPlayerID = cookie.split("playerID%")[1];
                             catanPlayerID = fooPlayerID.split("3A", 2)[1];
@@ -825,6 +829,7 @@ public class ServerProxy implements IServer {
                             String bar = foo.split("=", 2)[1];
                             catanGame = bar.split(";", 2)[0];
                         }
+
 
                     }
                     i++;
@@ -855,7 +860,7 @@ public class ServerProxy implements IServer {
 
 
             if(cookie != null) {
-                connection.setRequestProperty("Cookie", "catan.user=" + catanUsername + "; catan.game=" + cookie);
+                connection.setRequestProperty("Cookie", catanCookie);
                 //connection.connect();
             }
 

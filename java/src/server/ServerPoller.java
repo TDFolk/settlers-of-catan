@@ -25,9 +25,9 @@ public class ServerPoller {
      * @proxy reference to the server proxy that the poller will use to poll the server
      * @TIME_INTERVAL time interval that will be used to poll the server
      */
-    private IServer proxy;
     private final long TIME_INTERVAL = 1000;
     private String currentModel;
+    private IServer proxy = ServerProxy.getServer();
 
     Timer myTimer = new Timer();
     TimerTask myTimerTask = new TimerTask() {
