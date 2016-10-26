@@ -36,8 +36,10 @@ public class ServerPoller {
             //System.out.println(TIME_INTERVAL/1000  + " second/s");
             currentModel = proxy.gameModelVersion(Facade.getInstance().getVersionNumber());
             if (currentModel != null) {
-                Facade.getInstance().replaceModel(currentModel);
-                Facade.getInstance().incrementVersionNumber();
+                if (!currentModel.equals("\"true\"")) {
+                    Facade.getInstance().replaceModel(currentModel);
+                    Facade.getInstance().incrementVersionNumber();
+                }
             }
         }
     };

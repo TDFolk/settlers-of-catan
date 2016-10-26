@@ -113,18 +113,22 @@ public class Game extends Observable {
 
     }
 
-    public Trade createActiveTrade(JsonTradeOffer offer)
+    public Trade createActiveTrade(JsonTradeOffer tradeOffer)
     {
-        if(offer == null)
+        if(tradeOffer == null)
         {
             return null;
         }
         else
         {
 
-            Trade newTrade = null;
-            int sender = offer.getSender();
-            int receiver = offer.getReceiver();
+              Trade newTrade = null;
+//            int sender = tradeOffer.getSender();
+//            int receiver = tradeOffer.getReceiver();
+//            ResourceCards offer = new ResourceCards();
+//            ResourceCards request;
+//
+//            if(tradeOffer.getOffer().getBrick() < 0)
 
 
             return newTrade;
