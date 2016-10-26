@@ -1,6 +1,5 @@
 package client.domestic;
 
-import com.sun.org.glassfish.gmbal.GmbalException;
 import model.Game;
 import model.Player;
 import model.cards_resources.ResourceCards;
