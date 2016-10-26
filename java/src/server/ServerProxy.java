@@ -123,7 +123,7 @@ public class ServerProxy implements IServer {
             }
             else{
                 catanUsername = username;
-                Game.getInstance().getPlayer().getPlayerInfo().setName(username);
+               // Game.getInstance().getPlayer().getPlayerInfo().setName(username);
                 return true;
             }
         }

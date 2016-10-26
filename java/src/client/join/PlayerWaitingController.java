@@ -1,6 +1,7 @@
 package client.join;
 
 import client.base.*;
+import client.data.GameInfo;
 import client.data.PlayerInfo;
 import client.misc.MessageView;
 import model.Game;
@@ -36,21 +37,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	 */
 	@Override
 	public void start() {
-
 		ArrayList<PlayerInfo> playerList = new ArrayList<>(Game.getInstance().getGameInfo().getPlayers());
 		PlayerInfo[] gamePlayerInfo = playerList.toArray(new PlayerInfo[playerList.size()]);
-
-//		for (int i = 0; i < gamePlayerInfo.length; i++) {
-//			gamePlayerInfo[i].setColor(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getColor());
-//			gamePlayerInfo[i].setId(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getId());
-//			gamePlayerInfo[i].setName(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getName());
-//			gamePlayerInfo[i].setPlayerIndex(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getPlayerIndex());
-//		}
 		getView().setPlayers(gamePlayerInfo);
-		// Could you do getView().setPlayers(Game.getInstance().getPlayersList().toArray(gamePlayerInfo)); ?
 
+		if (gamePlayerInfo.length >= 4) {
 
-		if (gamePlayerInfo.length == 4) {
 			getView().closeModal();
 		}
 		else {
@@ -78,9 +70,21 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+//		for (int i = 0; i < gamePlayerInfo.length; i++) {
+//			gamePlayerInfo[i].setColor(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getColor());
+//			gamePlayerInfo[i].setId(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getId());
+//			gamePlayerInfo[i].setName(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getName());
+//			gamePlayerInfo[i].setPlayerIndex(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getPlayerIndex());
+//		}
+		// Could you do getView().setPlayers(Game.getInstance().getPlayersList().toArray(gamePlayerInfo)); ?
+
+
 		if (arg.equals("reset")) {
 			return;
 		}
+
+
+
 		if (getView().isModalShowing()) {
 			PlayerInfo[] gamePlayerInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
 			Game.getInstance().getPlayersList().toArray(gamePlayerInfo);
