@@ -108,7 +108,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		}
 		
 		for (Player p : Game.getInstance().getPlayersList()) {
-			
+
 			if (p.getPlayerInfo().getPlayerIndex() != player.getPlayerInfo().getPlayerIndex()) {
 				Trade trade = new Trade(player.getPlayerInfo().getPlayerIndex(),
 						p.getPlayerInfo().getPlayerIndex(),

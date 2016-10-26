@@ -14,6 +14,7 @@ import model.map.Port;
 import model.pieces.Building;
 import model.pieces.City;
 import model.pieces.Road;
+import model.pieces.Settlement;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
@@ -330,234 +331,12 @@ public class Game extends Observable {
     {
         ArrayList<Road> roadList = new ArrayList<>();
 
-        for(int i = 0; i < roads.length; i++)
-        {
-            CatanColor color = null;
+        if(roads != null) {
+            for (int i = 0; i < roads.length; i++) {
+                CatanColor color = null;
 
-            if(players[i].getPlayerIndex() == roads[i].getOwner())
-            {
-                switch (players[i].getColor())
-                {
-                    //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
-
-                    case "red":
-                        color = CatanColor.RED;
-                        break;
-                    case "orange":
-                        color = CatanColor.ORANGE;
-                        break;
-                    case "yellow":
-                        color = CatanColor.YELLOW;
-                        break;
-                    case "blue":
-                        color = CatanColor.BLUE;
-                        break;
-                    case "green":
-                        color = CatanColor.GREEN;
-                        break;
-                    case "purple":
-                        color = CatanColor.PURPLE;
-                        break;
-                    case "puce":
-                        color = CatanColor.PUCE;
-                        break;
-                    case "white":
-                        color = CatanColor.WHITE;
-                        break;
-                    case "brown":
-                        color = CatanColor.BROWN;
-                        break;
-                    default:
-                        color = CatanColor.BLUE;
-
-                }
-            }
-
-            HexLocation hexLocation = new HexLocation(roads[i].getLocation().getX(), roads[i].getLocation().getY());
-
-            EdgeDirection dir;
-
-            //NorthWest, North, NorthEast, SouthEast, South, SouthWest;
-
-            switch(roads[i].getLocation().getDirection())
-            {
-                case "N":
-                    dir = EdgeDirection.North;
-                    break;
-                case "NW":
-                    dir = EdgeDirection.NorthWest;
-                    break;
-                case "NE":
-                    dir = EdgeDirection.NorthEast;
-                    break;
-                case "S":
-                    dir = EdgeDirection.South;
-                    break;
-                case "SE":
-                    dir = EdgeDirection.SouthEast;
-                    break;
-                case "SW":
-                    dir = EdgeDirection.SouthWest;
-                    break;
-                default:
-                    dir = EdgeDirection.NorthEast;
-
-            }
-
-            EdgeLocation loc = new EdgeLocation(hexLocation, dir);
-
-
-            Road newRoad = new Road(color, loc);
-
-            roadList.add(newRoad);
-        }
-
-        return roadList;
-    }
-
-    public ArrayList<Port> createPortList(JsonPiece[] ports)
-    {
-        ArrayList<Port> portList = new ArrayList<>();
-
-        for(int i = 0; i < ports.length; i++)
-        {
-            HexLocation hexLocation = new HexLocation(ports[i].getLocation().getX(), ports[i].getLocation().getY());
-
-            EdgeDirection dir;
-
-            //NorthWest, North, NorthEast, SouthEast, South, SouthWest;
-
-            switch(ports[i].getLocation().getDirection())
-            {
-                case "N":
-                    dir = EdgeDirection.North;
-                    break;
-                case "NW":
-                    dir = EdgeDirection.NorthWest;
-                    break;
-                case "NE":
-                    dir = EdgeDirection.NorthEast;
-                    break;
-                case "S":
-                    dir = EdgeDirection.South;
-                    break;
-                case "SE":
-                    dir = EdgeDirection.SouthEast;
-                    break;
-                case "SW":
-                    dir = EdgeDirection.SouthWest;
-                    break;
-                default:
-                    dir = EdgeDirection.NorthEast;
-
-            }
-
-            EdgeLocation loc = new EdgeLocation(hexLocation, dir);
-
-
-            Port newPort = new Port(loc);
-
-            portList.add(newPort);
-        }
-
-        return portList;
-
-    }
-
-    public ArrayList<Hex> createHexList(JsonHex[] hexes)
-    {
-        ArrayList<Hex> hexList = new ArrayList<>();
-
-        for(int i = 0; i < hexes.length; i++)
-        {
-
-            HexType type;
-
-            switch(hexes[i].getResource())
-            {
-                case "wood":
-                    type = HexType.WOOD;
-                    break;
-                case "sheep":
-                    type = HexType.SHEEP;
-                    break;
-                case "wheat":
-                    type = HexType.WHEAT;
-                    break;
-                case "brick":
-                    type = HexType.BRICK;
-                    break;
-                case "ore":
-                    type = HexType.ORE;
-                    break;
-                case "desert":
-                    type = HexType.DESERT;
-                    break;
-                case "water":
-                    type = HexType.WATER;
-                    break;
-                default:
-                    type = HexType.WATER;
-                    break;
-            }
-
-            //location
-            HexLocation hexLocation = new HexLocation(hexes[i].getLocation().getX(), hexes[i].getLocation().getY());
-
-            //number
-            int hexNumber = hexes[i].getNumber();
-
-            Hex newHex = new Hex(type, hexLocation, hexNumber);
-            hexList.add(newHex);
-        }
-
-        return hexList;
-
-    }
-
-    public ArrayList<Building> createBuildingList(JsonPiece[] cities, JsonPiece[] settlements, JsonPlayer[] players)
-    {
-        ArrayList<Building> buildings = new ArrayList<>();
-
-        for(int i = 0; i < cities.length; i++)
-        {
-            HexLocation hexLocation = new HexLocation(cities[i].getLocation().getX(), cities[i].getLocation().getY());
-
-            VertexDirection dir;
-
-            switch(cities[i].getLocation().getDirection())
-            {
-                case "W":
-                    dir = VertexDirection.West;
-                    break;
-                case "NW":
-                    dir = VertexDirection.NorthWest;
-                    break;
-                case "NE":
-                    dir = VertexDirection.NorthEast;
-                    break;
-                case "E":
-                    dir = VertexDirection.East;
-                    break;
-                case "SE":
-                    dir = VertexDirection.SouthEast;
-                    break;
-                case "SW":
-                    dir = VertexDirection.SouthWest;
-                    break;
-                default:
-                    dir = VertexDirection.NorthEast;
-
-            }
-
-            CatanColor color = null;
-
-            for(int j = 0; i < players.length; i++)
-            {
-                if(players[i].getPlayerIndex() == cities[i].getOwner())
-                {
-                    switch (players[i].getColor())
-                    {
+                if (players[i].getPlayerIndex() == roads[i].getOwner()) {
+                    switch (players[i].getColor()) {
                         //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
 
                         case "red":
@@ -593,15 +372,319 @@ public class Game extends Observable {
                     }
                 }
 
+                HexLocation hexLocation = new HexLocation(roads[i].getLocation().getX(), roads[i].getLocation().getY());
+
+                EdgeDirection dir;
+
+                //NorthWest, North, NorthEast, SouthEast, South, SouthWest;
+
+                switch (roads[i].getLocation().getDirection()) {
+                    case "N":
+                        dir = EdgeDirection.North;
+                        break;
+                    case "NW":
+                        dir = EdgeDirection.NorthWest;
+                        break;
+                    case "NE":
+                        dir = EdgeDirection.NorthEast;
+                        break;
+                    case "S":
+                        dir = EdgeDirection.South;
+                        break;
+                    case "SE":
+                        dir = EdgeDirection.SouthEast;
+                        break;
+                    case "SW":
+                        dir = EdgeDirection.SouthWest;
+                        break;
+                    default:
+                        dir = EdgeDirection.NorthEast;
+
+                }
+
+                EdgeLocation loc = new EdgeLocation(hexLocation, dir);
+
+
+                Road newRoad = new Road(color, loc);
+
+                roadList.add(newRoad);
+            }
+        }
+
+        return roadList;
+    }
+
+    public ArrayList<Port> createPortList(JsonPiece[] ports)
+    {
+        ArrayList<Port> portList = new ArrayList<>();
+
+        if(ports != null) {
+
+            for (int i = 0; i < ports.length; i++) {
+                HexLocation hexLocation = new HexLocation(ports[i].getLocation().getX(), ports[i].getLocation().getY());
+
+                EdgeDirection dir;
+
+                //NorthWest, North, NorthEast, SouthEast, South, SouthWest;
+
+                switch (ports[i].getLocation().getDirection()) {
+                    case "N":
+                        dir = EdgeDirection.North;
+                        break;
+                    case "NW":
+                        dir = EdgeDirection.NorthWest;
+                        break;
+                    case "NE":
+                        dir = EdgeDirection.NorthEast;
+                        break;
+                    case "S":
+                        dir = EdgeDirection.South;
+                        break;
+                    case "SE":
+                        dir = EdgeDirection.SouthEast;
+                        break;
+                    case "SW":
+                        dir = EdgeDirection.SouthWest;
+                        break;
+                    default:
+                        dir = EdgeDirection.NorthEast;
+
+                }
+
+                EdgeLocation loc = new EdgeLocation(hexLocation, dir);
+
+
+                Port newPort = new Port(loc);
+
+                portList.add(newPort);
+            }
+        }
+
+        return portList;
+
+    }
+
+    public ArrayList<Hex> createHexList(JsonHex[] hexes)
+    {
+        ArrayList<Hex> hexList = new ArrayList<>();
+
+        for(int i = 0; i < hexes.length; i++)
+        {
+
+            HexType type;
+
+            if(hexes[i].getResource() == null)
+            {
+                type = HexType.DESERT;
+            }
+            else {
+                switch (hexes[i].getResource()) {
+                    case "wood":
+                        type = HexType.WOOD;
+                        break;
+                    case "sheep":
+                        type = HexType.SHEEP;
+                        break;
+                    case "wheat":
+                        type = HexType.WHEAT;
+                        break;
+                    case "brick":
+                        type = HexType.BRICK;
+                        break;
+                    case "ore":
+                        type = HexType.ORE;
+                        break;
+                    case "desert":
+                        type = HexType.DESERT;
+                        break;
+                    case "water":
+                        type = HexType.WATER;
+                        break;
+                    default:
+                        type = HexType.WATER;
+                        break;
+                }
             }
 
+            //location
+            HexLocation hexLocation = new HexLocation(hexes[i].getLocation().getX(), hexes[i].getLocation().getY());
 
+            //number
+            int hexNumber = hexes[i].getNumber();
 
-            VertexLocation loc = new VertexLocation(hexLocation, dir);
-
-            Building newBuilding = new City(color, loc);
-            buildings.add(newBuilding);
+            Hex newHex = new Hex(type, hexLocation, hexNumber);
+            hexList.add(newHex);
         }
+
+        return hexList;
+
+    }
+
+    public ArrayList<Building> createBuildingList(JsonPiece[] cities, JsonPiece[] settlements, JsonPlayer[] players)
+    {
+        ArrayList<Building> buildings = new ArrayList<>();
+
+        if(cities != null) {
+
+            for (int i = 0; i < cities.length; i++) {
+                HexLocation hexLocation = new HexLocation(cities[i].getLocation().getX(), cities[i].getLocation().getY());
+
+                VertexDirection dir;
+
+                switch (cities[i].getLocation().getDirection()) {
+                    case "W":
+                        dir = VertexDirection.West;
+                        break;
+                    case "NW":
+                        dir = VertexDirection.NorthWest;
+                        break;
+                    case "NE":
+                        dir = VertexDirection.NorthEast;
+                        break;
+                    case "E":
+                        dir = VertexDirection.East;
+                        break;
+                    case "SE":
+                        dir = VertexDirection.SouthEast;
+                        break;
+                    case "SW":
+                        dir = VertexDirection.SouthWest;
+                        break;
+                    default:
+                        dir = VertexDirection.NorthEast;
+
+                }
+
+                CatanColor color = null;
+
+                for (int j = 0; i < players.length; i++) {
+                    if (players[i].getPlayerIndex() == cities[i].getOwner()) {
+                        switch (players[i].getColor()) {
+
+                            case "red":
+                                color = CatanColor.RED;
+                                break;
+                            case "orange":
+                                color = CatanColor.ORANGE;
+                                break;
+                            case "yellow":
+                                color = CatanColor.YELLOW;
+                                break;
+                            case "blue":
+                                color = CatanColor.BLUE;
+                                break;
+                            case "green":
+                                color = CatanColor.GREEN;
+                                break;
+                            case "purple":
+                                color = CatanColor.PURPLE;
+                                break;
+                            case "puce":
+                                color = CatanColor.PUCE;
+                                break;
+                            case "white":
+                                color = CatanColor.WHITE;
+                                break;
+                            case "brown":
+                                color = CatanColor.BROWN;
+                                break;
+                            default:
+                                color = CatanColor.BLUE;
+
+                        }
+                    }
+
+                }
+
+
+                VertexLocation loc = new VertexLocation(hexLocation, dir);
+
+                Building newBuilding = new City(color, loc);
+                buildings.add(newBuilding);
+            }
+        }
+
+        if(settlements != null) {
+
+
+            for (int i = 0; i < settlements.length; i++) {
+                HexLocation hexLocation = new HexLocation(settlements[i].getLocation().getX(), settlements[i].getLocation().getY());
+
+                VertexDirection dir;
+
+                switch (settlements[i].getLocation().getDirection()) {
+                    case "W":
+                        dir = VertexDirection.West;
+                        break;
+                    case "NW":
+                        dir = VertexDirection.NorthWest;
+                        break;
+                    case "NE":
+                        dir = VertexDirection.NorthEast;
+                        break;
+                    case "E":
+                        dir = VertexDirection.East;
+                        break;
+                    case "SE":
+                        dir = VertexDirection.SouthEast;
+                        break;
+                    case "SW":
+                        dir = VertexDirection.SouthWest;
+                        break;
+                    default:
+                        dir = VertexDirection.NorthEast;
+
+                }
+
+                CatanColor color = null;
+
+                for (int j = 0; i < players.length; i++) {
+                    if (players[i].getPlayerIndex() == settlements[i].getOwner()) {
+                        switch (players[i].getColor()) {
+
+                            case "red":
+                                color = CatanColor.RED;
+                                break;
+                            case "orange":
+                                color = CatanColor.ORANGE;
+                                break;
+                            case "yellow":
+                                color = CatanColor.YELLOW;
+                                break;
+                            case "blue":
+                                color = CatanColor.BLUE;
+                                break;
+                            case "green":
+                                color = CatanColor.GREEN;
+                                break;
+                            case "purple":
+                                color = CatanColor.PURPLE;
+                                break;
+                            case "puce":
+                                color = CatanColor.PUCE;
+                                break;
+                            case "white":
+                                color = CatanColor.WHITE;
+                                break;
+                            case "brown":
+                                color = CatanColor.BROWN;
+                                break;
+                            default:
+                                color = CatanColor.BLUE;
+
+                        }
+                    }
+
+                }
+
+
+                VertexLocation loc = new VertexLocation(hexLocation, dir);
+
+                Building newBuilding = new Settlement(color, loc);
+                buildings.add(newBuilding);
+            }
+        }
+
         return buildings;
 
     }
