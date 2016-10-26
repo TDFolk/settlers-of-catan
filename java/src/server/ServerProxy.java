@@ -118,7 +118,10 @@ public class ServerProxy implements IServer {
             if(doPostCommand(registerCommand, postData) == null){
                 return false;
             }
-            return true;
+            else{
+                catanUsername = username;
+                return true;
+            }
         }
         catch(ConnectException e){
             e.printStackTrace();
