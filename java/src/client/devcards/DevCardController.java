@@ -5,6 +5,7 @@ import model.Player;
 import model.cards_resources.DevelopmentCard;
 import model.cards_resources.ResourceCards;
 import model.cards_resources.Trade;
+import server.ServerProxy;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
 import client.base.*;
@@ -68,11 +69,16 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void buyCard() {
 		Player player = Game.getInstance().getPlayer();
+		int index = player.getPlayerInfo().getPlayerIndex();
+		ServerProxy.getServer().buyDevCard(index);
+		
+		/*
 		try {
 			player.buyDevelopmentCard();
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+		*/
 		
 		getBuyCardView().closeModal();
 	}
@@ -92,6 +98,11 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
 		Player player = Game.getInstance().getPlayer();
+		int index = player.getPlayerInfo().getPlayerIndex();
+		
+		ServerProxy.getServer().monopoly(resource.name(), index);
+		
+		/*
 		try {
 			player.playDevelopmentCard(DevCardType.MONOPOLY);
 		} catch (CardException e) { System.out.println(e); return; }
@@ -119,48 +130,59 @@ public class DevCardController extends Controller implements IDevCardController,
 				}
 			}
 		}
+		*/
 	}
 
 	@Override
 	public void playMonumentCard() {
 		Player player = Game.getInstance().getPlayer();
+		int index = player.getPlayerInfo().getPlayerIndex();
+		
+		ServerProxy.getServer().monument(index);
+		
+		/*
 		try {
 			player.playDevelopmentCard(DevCardType.MONUMENT);
 		} catch (CardException e) { System.out.println(e); return; }
 		player.setPlayedDevCard(true);
 		
 		player.addMonument();
+		*/
 	}
 
 	@Override
 	public void playRoadBuildCard() {
 		Player player = Game.getInstance().getPlayer();
+		int index = player.getPlayerInfo().getPlayerIndex();
+		
+		ServerProxy.getServer().roadBuilding(index, null, null);
+		
+		/*
 		try {
 			player.playDevelopmentCard(DevCardType.ROAD_BUILD);
 		} catch (CardException e) { System.out.println(e); return; }
 		player.setPlayedDevCard(true);
 		
-		/*
-		 * 
-		 * do ROAD BUiLD
-		 * 
+		// do ROAD BUiLD
 		 */
-		
+		 
 		roadAction.execute();
 	}
 
 	@Override
 	public void playSoldierCard() {
 		Player player = Game.getInstance().getPlayer();
+		int index = player.getPlayerInfo().getPlayerIndex();
+		
+		ServerProxy.getServer().soldier(index, -1, null);
+		
+		/*
 		try {
 			player.playDevelopmentCard(DevCardType.SOLDIER);
 		} catch (CardException e) { System.out.println(e); return; }
 		player.setPlayedDevCard(true);
 		
-		/*
-		 * 
-		 * do SoLDiER
-		 * 
+		// do SoLDiER
 		 */
 		
 		soldierAction.execute();
@@ -169,6 +191,11 @@ public class DevCardController extends Controller implements IDevCardController,
 	@Override
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
 		Player player = Game.getInstance().getPlayer();
+		int index = player.getPlayerInfo().getPlayerIndex();
+		
+		ServerProxy.getServer().yearOfPlenty(index, resource1, resource2);
+		
+		/*
 		try {
 			player.playDevelopmentCard(DevCardType.YEAR_OF_PLENTY);
 		} catch (CardException e) { System.out.println(e); return; }
@@ -182,6 +209,7 @@ public class DevCardController extends Controller implements IDevCardController,
 			if (Game.getInstance().getBank().canDrawResourceCard(resource2))
 				player.drawResourceCard(resource2);
 		} catch (CardException e) {}
+		*/
 	}
 
 	/**
