@@ -810,12 +810,19 @@ public class ServerProxy implements IServer {
                     if(header.equals("Set-cookie")){
                         //get the cookie
                         String foo = connection.getHeaderField(i);
+                        //catanGame = foo.substring(11, cookie.indexOf(';'));
                         //trim the cookie where the ';' starts and initialize the cookie variable
                         cookie = foo.split(";", 2)[0];
                         if(catanUsername == null){
                             String fooPlayerID = cookie.split("playerID%")[1];
-                            catanPlayerID = fooPlayerID.split("%", 2)[0];
+                            catanPlayerID = fooPlayerID.split("3A", 2)[1];
+                            catanPlayerID = catanPlayerID.split("%")[0];
                         }
+                        if(catanGame == null && foo.contains("catan.game=")){
+                            String bar = foo.split("=", 2)[1];
+                            catanGame = bar.split(";", 2)[0];
+                        }
+
                     }
                     i++;
                 }
@@ -845,7 +852,7 @@ public class ServerProxy implements IServer {
 
 
             if(cookie != null) {
-                connection.setRequestProperty("Cookie", cookie);
+                connection.setRequestProperty("Cookie", "catan.user=" + catanUsername + "; catan.game=" + cookie);
                 //connection.connect();
             }
 
@@ -890,24 +897,12 @@ public class ServerProxy implements IServer {
         return catanUsername;
     }
 
-    public void setCatanUsername(String catanUsername) {
-        this.catanUsername = catanUsername;
-    }
-
     public String getCatanGame() {
         return catanGame;
     }
 
-    public void setCatanGame(String catanGame) {
-        this.catanGame = catanGame;
-    }
-
     public String getCookie() {
         return cookie;
-    }
-
-    public void setCookie(String cookie) {
-        this.cookie = cookie;
     }
 
     public String getHost() {
@@ -938,7 +933,4 @@ public class ServerProxy implements IServer {
         return catanPlayerID;
     }
 
-    public void setCatanPlayerID(String catanPlayerID) {
-        this.catanPlayerID = catanPlayerID;
-    }
 }
