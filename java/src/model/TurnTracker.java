@@ -10,61 +10,60 @@ public class TurnTracker {
 	/**
 	 * The turn order of the players in the game
 	 */
-	private List<Player> playerOrder;
-	private int turn;
-	
+	private int currentTurn;
+	private int longestRoad;
+	private int largestArmy;
+	private String status;
+
 	/**
 	 * Constructs a new TurnTracker with no players
 	 */
 	public TurnTracker() {
-		playerOrder = new ArrayList<Player>();;
 	}
 	
 	/**
-	 * Constructs a new TurnTracker with the given list of players
-	 * @param players The players at the start of the game
+	 * Constructs a new TurnTracker with the given data with the integers referring to the player index
+	 *
 	 */
-	public TurnTracker(List<Player> players) {
-		playerOrder = players;
+	public TurnTracker(String status, int currnetTurn, int longestRoad, int largestArmy) {
+
+		this.status = status;
+		this.currentTurn = currnetTurn;
+		this. longestRoad = longestRoad;
+		this.largestArmy = largestArmy;
+
 	}
-	
-	
-	/**
-	 * Adds a player to the turn order
-	 * @param player the player to add
-	 */
-	public void addPlayer(Player player) {
-		player.getPlayerInfo().setPlayerIndex(playerOrder.size());
-		playerOrder.add(player);
+
+	public int getCurrentTurn() {
+		return currentTurn;
 	}
-	
-	/**
-	 * Removes a player from the gameplay and from the turn order
-	 * @param player The player to remove from the game
-	 */
-	public void removePlayer(Player player) {
-		playerOrder.remove(player);
-		player.getPlayerInfo().setPlayerIndex(-1);
+
+	public void setCurrentTurn(int currentTurn) {
+		this.currentTurn = currentTurn;
 	}
-	
-	/**
-	 * Ends the current player's turn and moves to the next player's turn
-	 * @return The next player whose turn it is
-	 */
-	public Player nextPlayerTurn() {
-		turn += 1;
-		turn %= playerOrder.size();
-		return playerOrder.get(turn);
+
+	public int getLongestRoad() {
+		return longestRoad;
 	}
-	
-	/**
-	 * Specifies which player's turn it is
-	 * @return The player whose turn it is
-	 */
-	public Player getPlayerTurn() {
-		return playerOrder.get(turn);
+
+	public void setLongestRoad(int longestRoad) {
+		this.longestRoad = longestRoad;
 	}
-	
-	
-	
+
+	public int getLargestArmy() {
+		return largestArmy;
+	}
+
+	public void setLargestArmy(int largestArmy) {
+		this.largestArmy = largestArmy;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
 }

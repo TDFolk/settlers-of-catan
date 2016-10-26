@@ -83,19 +83,27 @@ public class Game extends Observable {
         //replace List<Players> players
         playersList = createPlayersList(model.getPlayers());
 
-        //TODO: Finish implementing this method to fill the map data member and below.
         //replace Player
-//        for(int i = 0; i < playersList.size(); i++)
-//        {
-//            if(playersList.get(i).getPlayerInfo().getId())
-//        }
+        for(int i = 0; i < playersList.size(); i++)
+        {
+            if(playersList.get(i).getPlayerInfo().getId() == this.player.getPlayerInfo().getId())
+            {
+                this.player = playersList.get(i);
+            }
+        }
 
         //replace activeTrade
+        this.activeTrade = createActiveTrade(model.getTradeOffer());
 
         //replace turnTracker
+        TurnTracker tracker = new TurnTracker(model.getTurnTracker().getStatus(),
+                model.getTurnTracker().getCurrentTurn(),
+                model.getTurnTracker().getLongestRoad(),
+                model.getTurnTracker().getLargestArmy());
+        this.turntracker = tracker;
 
         //replace winner
-
+        this.versionNumber = model.getVersion();
 
         // Marks this Observable object as having been changed; the hasChanged method will now return true.
         this.setChanged();
@@ -103,6 +111,24 @@ public class Game extends Observable {
         // its observers and then call the clearChanged method to indicate that this object has no longer changed.
         this.notifyObservers();
 
+    }
+
+    public Trade createActiveTrade(JsonTradeOffer offer)
+    {
+        if(offer == null)
+        {
+            return null;
+        }
+        else
+        {
+
+            Trade newTrade = null;
+            int sender = offer.getSender();
+            int receiver = offer.getReceiver();
+
+
+            return newTrade;
+        }
     }
 
 
@@ -637,8 +663,8 @@ public class Game extends Observable {
         this.player = player;
     }
 
-    public Player getPlayerTurn() {
-        return this.turntracker.getPlayerTurn();
+    public int getPlayerTurn() {
+        return this.turntracker.getCurrentTurn();
     }
 
     public GameInfo getGameInfo() {

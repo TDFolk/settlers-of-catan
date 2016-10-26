@@ -21,6 +21,7 @@ public class JsonModel {
     private JsonLog chat;
     private JsonBank bank;
     private JsonTurnTracker turnTracker;
+    private JsonTradeOffer tradeOffer;
     private int winner;
     private int version;
 
@@ -142,5 +143,13 @@ public class JsonModel {
 
     public void setVersion(int version) {
         this.version = version;
+    }
+
+    public JsonTradeOffer getTradeOffer() {
+        return tradeOffer;
+    }
+
+    public void setTradeOffer(JsonTradeOffer tradeOffer) {
+        this.tradeOffer = tradeOffer;
     }
 }
