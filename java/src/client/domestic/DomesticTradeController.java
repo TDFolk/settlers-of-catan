@@ -1,12 +1,15 @@
 package client.domestic;
 
+import com.sun.org.glassfish.gmbal.GmbalException;
 import model.Game;
+import model.Player;
 import model.cards_resources.ResourceCards;
 import server.ServerProxy;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
 
+import java.util.Arrays;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -20,11 +23,18 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private IWaitView waitOverlay;
 	private IAcceptTradeOverlay acceptOverlay;
 
-	private ResourceCards cardsBeingOffered;
-	private ResourceCards originalPlayersCards;
-	private ResourceCards playersCardsTemp;
-	private int playerToTradeTo;
-	private boolean receive;
+	private ResourceCards resourcesToSend;
+	private ResourceCards resourcesToReceive;
+
+	private int playerTradingWith; // Their playerIndex
+	private int currentPlayerIndex;
+	private Player currentPlayer;
+
+	private boolean[] sendingResources;
+	private boolean[] receivingResources;
+	private boolean accept;
+	private boolean offered;
+	private boolean waiting;
 
 	/**
 	 * DomesticTradeController constructor
@@ -42,9 +52,23 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setTradeOverlay(tradeOverlay);
 		setWaitOverlay(waitOverlay);
 		setAcceptOverlay(acceptOverlay);
-		receive = false;
-		//TODO originalPlayersCards = Game.getInstance().getPlayer().getResourceCards();
-		//TODO playersCardsTemp = Game.getInstance().getPlayer().getResourceCards();
+
+		this.getTradeView().enableDomesticTrade(false);
+		resourcesToSend = new ResourceCards(0,0,0,0,0);
+		resourcesToReceive = new ResourceCards(0,0,0,0,0);
+
+		playerTradingWith = -1;
+
+		// The user can choose if they want to send or receive EACH resource
+		sendingResources = new boolean[5];
+		receivingResources = new boolean[5];
+		Arrays.fill(sendingResources, Boolean.FALSE);
+		Arrays.fill(receivingResources, Boolean.FALSE);
+
+		accept = false;
+		offered = false;
+		waiting = false;
+
 
 		// This Controller will now be notified to any changes in the Game Object
 		Game.getInstance().addObserver(this);
@@ -81,30 +105,50 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void startTrade() {
+		// reset booleans offered and waiting
+		offered = false;
+		waiting = false;
 
+		// Whether or not the user can select resources to trade.
+		getTradeOverlay().setResourceSelectionEnabled(false);
+
+		// Determine the current client's player info
+		currentPlayer = Game.getInstance().getPlayer();
+		currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
+
+		getTradeOverlay().setResourceSelectionEnabled(true);
+		// Enables or disables the ability to select a player to trade with.
+		// Whether or not player selection is currently allowed
+		getTradeOverlay().setPlayerSelectionEnabled(true);
 		getTradeOverlay().showModal();
+	}
+
+	public boolean canTrade() {
+		if (playerTradingWith != -1 && resourcesToSend.size() != 0 && resourcesToReceive.size() != 0) {
+			getTradeOverlay().setStateMessage("Trade at your own risk");
+			return true;
+		}
+		else {
+			getTradeOverlay().setStateMessage("Let's see if we can make a deal");
+			return false;
+		}
 	}
 
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
-		int playerResourceAmount = playersCardsTemp.getResource(resource);
-
-		if (playerResourceAmount > 0) {
-			cardsBeingOffered.subtractOneResource(resource);
-			playersCardsTemp.addOneResource(resource, originalPlayersCards.getResource(resource));
+		// Need to have at least 1 of the resource to decrease amount!
+		if (resourcesToReceive.getResource(resource) > 0) {
+			resourcesToReceive.subtractOneResource(resource);
+			// Adjust what the Current Player can increase and decrease
+			setResourceChangeEnabler(resource);
 		}
-
-		int currentAmount = playersCardsTemp.getResource(resource);
-
-		if (currentAmount == 0) {
-			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+		if (resourcesToSend.getResource(resource) > 0) {
+			resourcesToSend.subtractOneResource(resource);
+			setResourceChangeEnabler(resource);
 		}
-		else if (currentAmount == originalPlayersCards.getResource(resource)) {
-			getTradeOverlay().setResourceAmountChangeEnabled(resource, false, true);
-		}
-		else {
-			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
-		}
+		// Now we need to determine if a trade is valid or not after these changes
+		// to determine if we should enable the setTradeEnable
+		getTradeOverlay().setTradeEnabled(canTrade());
 	}
 
 
@@ -117,24 +161,74 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 */
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-		int playerResourceAmount = playersCardsTemp.getResource(resource);
+		Player enemyPlayer = Game.getInstance().getPlayersList().get(playerTradingWith);
+		int enemyPlayerResourceAmount = enemyPlayer.getResourceCards().getResource(resource);
 
-		if (playerResourceAmount > 0) {
-			cardsBeingOffered.addOneResource(resource, originalPlayersCards.getResource(resource));
-			playersCardsTemp.subtractOneResource(resource);
+		// Can only receive resources equal to the amount the player your trading with has
+		if (resourcesToReceive.getResource(resource) != enemyPlayerResourceAmount) {
+			resourcesToReceive.addOneResource(resource);
+			setResourceChangeEnabler(resource);
 		}
 
-		int currentAmount = playersCardsTemp.getResource(resource);
+		int currentPlayerResourceAmount = currentPlayer.getResourceCards().getResource(resource);
 
-		if (currentAmount == 0) {
-			getTradeOverlay().setResourceAmountChangeEnabled(resource, false, true);
+		// Can only send resources equal to the amount the current player has
+		if (resourcesToSend.getResource(resource) != currentPlayerResourceAmount) {
+			resourcesToSend.addOneResource(resource);
+			setResourceChangeEnabler(resource);
 		}
-		else if (currentAmount == originalPlayersCards.getResource(resource)) {
-			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+
+		getTradeOverlay().setTradeEnabled(canTrade());
+	}
+
+	public void setResourceChangeEnabler(ResourceType resourceType) {
+		// Determine is this given resource is attempting to be sent or received
+		if (receivingResources[getResourceIndex(resourceType)]) {
+			if (resourcesToReceive.getResource(resourceType) == 0) {
+				// Starts at 0 and the user can increase to request more of that resource, but can't decrease past 0!
+				getTradeOverlay().setResourceAmountChangeEnabled(resourceType, true, false);
+			}
+			else {
+				getTradeOverlay().setResourceAmountChangeEnabled(resourceType, true, true);
+			}
 		}
-		else {
-			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
+		else if (sendingResources[getResourceIndex(resourceType)]) {
+			if (resourcesToSend.getResource(resourceType) == 0) {
+				if (resourcesToSend.getResource(resourceType) == currentPlayer.getResourceCards().getResource(resourceType)) {
+					// Current Player has 0 of this resource type! Can't offer to send a resource away you don't have.
+					getTradeOverlay().setResourceAmountChangeEnabled(resourceType, false, false);
+				}
+				else {
+					// There is at least 1 resource to send if desired, but can't decrease past 0
+					getTradeOverlay().setResourceAmountChangeEnabled(resourceType, true, false);
+				}
+			}
+			else if(resourcesToSend.getResource(resourceType) == currentPlayer.getResourceCards().getResource(resourceType)) {
+				// Current Player has already offered to send max amount for this resource, can only decrease from here!
+				getTradeOverlay().setResourceAmountChangeEnabled(resourceType, false, true);
+			}
+			else {
+				// Not at 0, but not at the max, increase or decrease.. whatever your heat desires
+				getTradeOverlay().setResourceAmountChangeEnabled(resourceType, true, true);
+			}
 		}
+		// If not sending or receiving, then the none option is selected
+	}
+
+	public int getResourceIndex(ResourceType resourceType) {
+		switch (resourceType) {
+			case BRICK:
+				return 0;
+			case ORE:
+				return 1;
+			case SHEEP:
+				return 2;
+			case WHEAT:
+				return 3;
+			case WOOD:
+				return 4;
+		}
+		return -1; // failed
 	}
 
 	@Override
@@ -147,38 +241,54 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			getWaitOverlay().showModal();
 		}
 
-		int playerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
-		ServerProxy.getServer().offerTrade(playerIndex, cardsBeingOffered, playerToTradeTo);
+		ServerProxy.getServer().offerTrade(currentPlayerIndex, resourcesToSend, playerTradingWith);
 	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-		playerToTradeTo = playerIndex;
+		playerTradingWith = playerIndex;
 	}
 
 	@Override
 	public void setResourceToReceive(ResourceType resource) {
-		receive = true;
-		getTradeOverlay().setResourceAmountChangeEnabled(resource, true, false);
+		receivingResources[getResourceIndex(resource)] = true;
+		sendingResources[getResourceIndex(resource)] = false;
+
+		// The current player changed his scope, reset resource back to 0
+		resourcesToReceive.resetOneResource(resource);
+		resourcesToSend.resetOneResource(resource);
+
+		getTradeOverlay().setResourceAmount(resource, "0");
+		setResourceChangeEnabler(resource);
 	}
 
 	@Override
 	public void setResourceToSend(ResourceType resource) {
-		receive = false; //aka we are going to send
-		if (Game.getInstance().getPlayer().getResourceCards().getResource(resource) == 0) {
-			getTradeOverlay().setResourceAmountChangeEnabled(resource, false, false);
-		} else {
-			getTradeOverlay().setResourceAmountChangeEnabled(resource, true, true);
-		}
+		sendingResources[getResourceIndex(resource)] = true;
+		receivingResources[getResourceIndex(resource)] = false;
+
+		resourcesToSend.resetOneResource(resource);
+		resourcesToReceive.resetOneResource(resource);
+
+		getTradeOverlay().setResourceAmount(resource, "0");
+		setResourceChangeEnabler(resource);
 
 	}
 
 	@Override
 	public void unsetResource(ResourceType resource) {
-		cardsBeingOffered.resetOneResource(resource);
+		// When the none option is selected
+		receivingResources[getResourceIndex(resource)] = false;
+		sendingResources[getResourceIndex(resource)] = false;
+
+		resourcesToReceive.resetOneResource(resource);
+		resourcesToSend.resetOneResource(resource);
+
 		getTradeOverlay().setResourceAmount(resource, "0");
+		setResourceChangeEnabler(resource);
 
-
+		// Possible to trade now?
+		getTradeOverlay().setTradeEnabled(canTrade());
 	}
 
 	@Override
