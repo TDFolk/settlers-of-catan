@@ -797,8 +797,8 @@ public class ServerProxy implements IServer {
             connection.setRequestMethod("POST");
             connection.setDoOutput(true); //set true in order to send server our response body
 
-            if(cookie != null) {
-                connection.setRequestProperty("Cookie", cookie);
+            if(catanCookie != null) {
+                connection.setRequestProperty("Cookie", catanCookie);
             }
 
             connection.connect();
@@ -859,7 +859,7 @@ public class ServerProxy implements IServer {
             connection.setRequestMethod("GET");
 
 
-            if(cookie != null) {
+            if(catanCookie != null) {
                 connection.setRequestProperty("Cookie", catanCookie);
                 //connection.connect();
             }
