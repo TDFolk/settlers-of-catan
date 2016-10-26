@@ -196,6 +196,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		Game.getInstance().setGameInfo(game);
 		this.game = game;
 
+	//	Facade.getInstance().initializeData();
+
+		for(int i = 0; i < CatanColor.values().length; i++) {
+
+			for (PlayerInfo playerInfo : game.getPlayers()) {
+				if ((CatanColor.values()[i] == (playerInfo.getColor()))) {
+
+					//disable the colors that are chosen
+					getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
+				}
+			}
+		}
+
 		if(!getSelectColorView().isModalShowing()){
 			getSelectColorView().showModal();
 		}
@@ -219,17 +232,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 //			}
 //		}
 
-		//TODO: FIX THIS
-//		for(PlayerInfo playerInfo : game.getPlayers()){
-//			if(playerInfo == null){
-//				continue;
-//			}
-//			else {
-				//disable the colors that are chosen
-//				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
-			//}
-
-			
 //			if(playerInfo.getId() != Integer.parseInt(ServerProxy.getServer().getCatanPlayerID())){
 //				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
 //			}
@@ -271,6 +273,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		}
 
 		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString().toLowerCase())){
+
 			playerInfo.setColor(color);
 
 			//this is the current playerInfo
@@ -297,6 +300,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 //			}
 
 			Game.getInstance().getPlayer().setPlayerInfo(playerInfo);
+			Facade.getInstance().initializeData();
 
 			//To set the color of the player in the GameInfo object as well
 			for(int i = 0; i < this.game.getPlayers().size(); i++)

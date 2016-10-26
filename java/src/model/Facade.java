@@ -66,7 +66,10 @@ public class Facade {
 
     public void initializeData()
     {
-        replaceModel(ServerProxy.getServer().gameModelVersion(Game.getInstance().getVersionNumber()));
+        String result = ServerProxy.getServer().gameModelVersion(Game.getInstance().getVersionNumber());
+        if(!result.equals("\"true\"")) {
+            replaceModel(result);
+        }
     }
 
     /**

@@ -85,10 +85,16 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 
 		if (getView().isModalShowing()) {
 			PlayerInfo[] gamePlayerInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
-			Game.getInstance().getPlayersList().toArray(gamePlayerInfo);
+			//gamePlayerInfo = Game.getInstance().getPlayersList().toArray(gamePlayerInfo);
+
+			for(int i = 0; i < Game.getInstance().getPlayersList().size(); i++)
+			{
+				gamePlayerInfo[i] = Game.getInstance().getPlayersList().get(i).getPlayerInfo();
+			}
+
 			getView().closeModal();
 			if (gamePlayerInfo.length < 4) {
-				getView().setPlayers(Game.getInstance().getPlayersList().toArray(gamePlayerInfo));
+				getView().setPlayers(gamePlayerInfo);
 				getView().showModal();
 			}
 		}
