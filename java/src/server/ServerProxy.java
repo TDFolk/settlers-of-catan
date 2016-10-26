@@ -8,6 +8,7 @@ import command.game.*;
 import command.player.*;
 import command.user.LoginObject;
 import command.user.RegisterObject;
+import model.Game;
 import model.cards_resources.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -87,6 +88,7 @@ public class ServerProxy implements IServer {
             }
             else{
                 catanUsername = username;
+                //Game.getInstance().getPlayer().getPlayerInfo().setName(catanUsername);
                 return true;
             }
 
@@ -121,6 +123,7 @@ public class ServerProxy implements IServer {
             }
             else{
                 catanUsername = username;
+               // Game.getInstance().getPlayer().getPlayerInfo().setName(username);
                 return true;
             }
         }
@@ -798,7 +801,7 @@ public class ServerProxy implements IServer {
             connection.setDoOutput(true); //set true in order to send server our response body
 
             if(catanCookie != null) {
-                connection.setRequestProperty("Cookie", catanCookie);
+                connection.setRequestProperty("Cookie", catanCookie + "; catan.game=" + catanGame);
             }
 
             connection.connect();

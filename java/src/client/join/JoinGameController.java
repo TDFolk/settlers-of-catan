@@ -163,6 +163,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		boolean randomNumbers = getNewGameView().getRandomlyPlaceNumbers();
 		boolean randomPorts = getNewGameView().getUseRandomPorts();
 
+		playerInfo.setPlayerIndex(0);
 
 		GameCreateObjectResult myNewGame = ServerProxy.getServer().gameCreate(randomHexes, randomNumbers, randomPorts, title);
 		if(myNewGame != null){
@@ -198,6 +199,26 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(!getSelectColorView().isModalShowing()){
 			getSelectColorView().showModal();
 		}
+
+		if(game.getPlayers().size() > 0){
+			for(int i = 0; i < game.getPlayers().size(); i++){
+				game.getPlayers().get(i).setPlayerIndex(i);
+			}
+		}
+
+		this.game = game;
+		//iterate through the entire gameInfos list
+//		for(int i = 0; i < gameInfos.length; i++){
+//
+//			//if there are more than 0 players, do this
+//			if(gameInfos[i].getPlayers().size() != 0){
+//				//iterate through the player list, and set their playerIndex
+//				for(int j = 0; j < gameInfos[i].getPlayers().size(); j++){
+//					gameInfos[i].getPlayers().get(j).setPlayerIndex(gameInfos[i].getPlayers().size() - 1);
+//				}
+//			}
+//		}
+
 		//TODO: FIX THIS
 //		for(PlayerInfo playerInfo : game.getPlayers()){
 //			if(playerInfo == null){
@@ -251,6 +272,29 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString().toLowerCase())){
 			playerInfo.setColor(color);
+
+			//this is the current playerInfo
+			for(int i = 0; i < game.getPlayers().size(); i++){
+				if(playerInfo.getName().equals(game.getPlayers().get(i).getName())){
+					playerInfo.setPlayerIndex(i);
+				}
+			}
+			if(playerInfo.getPlayerIndex() == -1){
+				playerInfo.setPlayerIndex(game.getPlayers().size());
+			}
+
+			//need to set player index here...
+			//playerInfo.setPlayerIndex(this.game.getPlayers().size());
+
+//			for(int i = 0; i <= 3; i++){
+//				if(this.game.getPlayers().get(i).getPlayerIndex() == -1){
+//
+//				}
+//				else {
+//
+//				}
+//			}
+
 			Game.getInstance().getPlayer().setPlayerInfo(playerInfo);
 			Game.getInstance().setGameInfo(this.game);
 
@@ -258,7 +302,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
 
-			//TODO: FIX THIS
+
 			ServerPoller.getPoller().startPoller();
 
 			joinAction.execute();
