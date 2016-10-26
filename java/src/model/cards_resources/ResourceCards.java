@@ -181,31 +181,21 @@ public class ResourceCards {
         }
     }
 
-    public void addOneResource (ResourceType resource, int max) {
+    public void addOneResource (ResourceType resource) {
         if (resource.equals(ResourceType.BRICK)) {
-            if (this.brick < max) {
                 this.brick++;
-            }
         }
         else if (resource.equals(ResourceType.ORE)) {
-            if (this.ore < max) {
                 this.ore++;
-            }
         }
         else if (resource.equals(ResourceType.SHEEP)) {
-            if (this.sheep < max) {
                 this.sheep++;
-            }
         }
         else if (resource.equals(ResourceType.WHEAT)) {
-            if (this.wheat < max) {
                 this.wheat++;
-            }
         }
         else {
-            if (this.wood < max) {
                 this.wood++;
-            }
         }
     }
 }
