@@ -163,6 +163,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		boolean randomNumbers = getNewGameView().getRandomlyPlaceNumbers();
 		boolean randomPorts = getNewGameView().getUseRandomPorts();
 
+		playerInfo.setPlayerIndex(0);
 
 		GameCreateObjectResult myNewGame = ServerProxy.getServer().gameCreate(randomHexes, randomNumbers, randomPorts, title);
 		if(myNewGame != null){
@@ -198,6 +199,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(!getSelectColorView().isModalShowing()){
 			getSelectColorView().showModal();
 		}
+
 		//TODO: FIX THIS
 //		for(PlayerInfo playerInfo : game.getPlayers()){
 //			if(playerInfo == null){
@@ -251,6 +253,19 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString().toLowerCase())){
 			playerInfo.setColor(color);
+
+			//need to set player index here...
+			//playerInfo.setPlayerIndex(this.game.getPlayers().size());
+
+//			for(int i = 0; i <= 3; i++){
+//				if(this.game.getPlayers().get(i).getPlayerIndex() == -1){
+//
+//				}
+//				else {
+//
+//				}
+//			}
+
 			Game.getInstance().getPlayer().setPlayerInfo(playerInfo);
 			Game.getInstance().setGameInfo(this.game);
 
@@ -258,7 +273,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getSelectColorView().closeModal();
 			getJoinGameView().closeModal();
 
-			//TODO: FIX THIS
+
 			ServerPoller.getPoller().startPoller();
 
 			joinAction.execute();
