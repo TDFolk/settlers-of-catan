@@ -7,6 +7,8 @@ import model.Player;
 import java.util.Observable;
 import java.util.Observer;
 
+import server.ServerPoller;
+import server.ServerProxy;
 import shared.definitions.CatanColor;
 
 
@@ -33,6 +35,9 @@ public class ChatController extends Controller implements IChatController, Obser
 		Game game = Game.getInstance();
 		Player player = game.getPlayer();
 		CatanColor color = player.getPlayerInfo().getColor();
+
+		ServerProxy.getServer().sendChat(player.getPlayerInfo().getPlayerIndex(), message);
+
 		//CatanColor color = CatanColor.RED;
 		game.addChatMessage(new LogEntry(color, message));
 		

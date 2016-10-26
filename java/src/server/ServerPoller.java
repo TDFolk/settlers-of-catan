@@ -33,7 +33,7 @@ public class ServerPoller {
     TimerTask myTimerTask = new TimerTask() {
         @Override
         public void run() {
-            //System.out.println(TIME_INTERVAL/1000  + " second/s");
+            System.out.println(TIME_INTERVAL/1000  + " second/s");
             currentModel = proxy.gameModelVersion(Facade.getInstance().getVersionNumber());
             if (currentModel != null) {
                 if (!currentModel.equals("\"true\"")) {
