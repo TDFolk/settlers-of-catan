@@ -34,7 +34,7 @@ public class Game extends Observable {
 
     private static Game instance = null;
 
-    private int versionNumber = 0;
+    private int versionNumber = 1;
     private Bank bank;
     private List<Message> chat;
     private List<Message> log;
@@ -68,7 +68,7 @@ public class Game extends Observable {
 
         this.log = log;
         this.chat = chat;
-        
+
         //replace map
         ArrayList<Hex> hexes = createHexList(model.getMap().getHexes());
         ArrayList<Building> buildings = createBuildingList(model.getCities(), model.getSettlements(), model.getPlayers());
