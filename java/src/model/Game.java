@@ -69,9 +69,6 @@ public class Game extends Observable {
         this.log = log;
         this.chat = chat;
         
-        
-        
-
         //replace map
         ArrayList<Hex> hexes = createHexList(model.getMap().getHexes());
         ArrayList<Building> buildings = createBuildingList(model.getCities(), model.getSettlements(), model.getPlayers());
@@ -122,14 +119,87 @@ public class Game extends Observable {
         else
         {
 
-              Trade newTrade = null;
-//            int sender = tradeOffer.getSender();
-//            int receiver = tradeOffer.getReceiver();
-//            ResourceCards offer = new ResourceCards();
-//            ResourceCards request;
-//
-//            if(tradeOffer.getOffer().getBrick() < 0)
+            Trade newTrade = null;
+            int sender = tradeOffer.getSender();
+            int receiver = tradeOffer.getReceiver();
 
+            ResourceCards offer;
+            int offerBrick;
+            int offerOre;
+            int offerSheep;
+            int offerWheat;
+            int offerWood;
+
+            ResourceCards request;
+            int requestBrick;
+            int requestOre;
+            int requestSheep;
+            int requestWheat;
+            int requestWood;
+
+            if(tradeOffer.getOffer().getBrick() >= 0)
+            {
+                offerBrick = tradeOffer.getOffer().getBrick();
+                requestBrick = 0;
+            }
+            else
+            {
+                offerBrick = 0;
+                requestBrick = Math.abs(tradeOffer.getOffer().getBrick());
+
+            }
+
+            if(tradeOffer.getOffer().getOre() >= 0)
+            {
+                offerOre = tradeOffer.getOffer().getOre();
+                requestOre = 0;
+            }
+            else
+            {
+                offerOre = 0;
+                requestOre = Math.abs(tradeOffer.getOffer().getOre());
+            }
+
+            if(tradeOffer.getOffer().getSheep() >= 0)
+            {
+                offerSheep = tradeOffer.getOffer().getSheep();
+                requestSheep = 0;
+            }
+            else
+            {
+                offerSheep = 0;
+                requestSheep = Math.abs(tradeOffer.getOffer().getSheep());
+
+            }
+
+            if(tradeOffer.getOffer().getWheat() >= 0)
+            {
+                offerWheat = tradeOffer.getOffer().getWheat();
+                requestWheat = 0;
+            }
+            else
+            {
+                offerWheat = 0;
+                requestWheat = Math.abs(tradeOffer.getOffer().getWheat());
+
+            }
+
+            if(tradeOffer.getOffer().getWood() >= 0)
+            {
+                offerWood = tradeOffer.getOffer().getWood();
+                requestWood = 0;
+            }
+            else
+            {
+                offerWood = 0;
+                requestWood = Math.abs(tradeOffer.getOffer().getWood());
+
+            }
+
+            offer = new ResourceCards(offerBrick, offerOre, offerSheep, offerWheat ,offerWood);
+            request = new ResourceCards(requestBrick, requestOre, requestSheep ,requestWheat, requestWood);
+
+            newTrade = new Trade(sender, receiver, offer, request);
 
             return newTrade;
         }

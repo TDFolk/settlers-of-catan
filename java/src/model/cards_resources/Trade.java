@@ -1,24 +1,25 @@
 package model.cards_resources;
 
+import model.Game;
 import model.Player;
 
 /**
  * Class representing a singular trade offer and the information
  *
- * Created by kcwillmore on 9/17/16.
+ * Created by Brandon Oct 25th boi..
  */
 public class Trade {
 
     /**
-     * The player who initialized the trade
+     * The player (index) who initialized the trade
      */
-    private Player sender;
+    private int sender;
     
     /**
-     * The player who is being offered a trade by the sender.
+     * The player (index) who is being offered a trade by the sender.
      * this player is the one who would ultimately choose to accept or reject this trade
      */
-    private Player receiver;
+    private int receiver;
     
     /**
      * The resources that the sender is offering up for trade from their resources
@@ -38,7 +39,7 @@ public class Trade {
      * @param offer what the sender is offering up from their resources
      * @param request what the sender expects in return from the recipient
      */
-    public Trade(Player sender, Player receiver, ResourceCards offer, ResourceCards request) {
+    public Trade(int sender, int receiver, ResourceCards offer, ResourceCards request) {
         this.sender = sender;
         this.receiver = receiver;
         this.offer = offer;
@@ -50,15 +51,19 @@ public class Trade {
      * @return true if both players have the resources required
      */
     public boolean canTrade() {
-        return sender.getResourceCards().canPay(offer) && receiver.getResourceCards().canPay(request);
+        return Game.getInstance().getPlayersList().get(sender).getResourceCards().canPay(offer)
+                && Game.getInstance().getPlayersList().get(receiver).getResourceCards().canPay(request);
     }
     
     public void executeTrade() {
-    	sender.forfeitCards(offer);
-    	receiver.forfeitCards(request);
+        Player send = Game.getInstance().getPlayersList().get(sender);
+        Player receive = Game.getInstance().getPlayersList().get(receiver);
+
+    	send.forfeitCards(offer);
+    	receive.forfeitCards(request);
     	
-    	sender.acceptCards(request);
-    	receiver.acceptCards(offer);
+    	send.acceptCards(request);
+    	receive.acceptCards(offer);
     }
 
 }
