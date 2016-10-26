@@ -57,7 +57,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	@Override
 	public void update(Observable o, Object arg) {
 		System.out.println(arg);
-		Player player = Game.getInstance().getPlayerTurn();
+		Player player = Game.getInstance().getPlayersList().get(Game.getInstance().getPlayerTurn());
 		PlayerInfo info = player.getPlayerInfo();
 		String playerName = info.getName();
 		CatanColor color = player.getPlayerInfo().getColor();
