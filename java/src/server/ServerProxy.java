@@ -860,7 +860,8 @@ public class ServerProxy implements IServer {
 
 
             if(catanCookie != null) {
-                connection.setRequestProperty("Cookie", catanCookie);
+                connection.setRequestProperty("Cookie", catanCookie + "; catan.game=" + catanGame);
+
                 //connection.connect();
             }
 
