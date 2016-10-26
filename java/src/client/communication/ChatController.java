@@ -42,7 +42,7 @@ public class ChatController extends Controller implements IChatController, Obser
 
 		Game.getInstance().addChatMessage(new LogEntry(playerColor, message));
 
-		//getView().setEntries(Game.getInstance().getChatLog());
+		getView().setEntries(Game.getInstance().getChatLog());
 	}
 
 	/**

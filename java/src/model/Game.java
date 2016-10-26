@@ -37,8 +37,8 @@ public class Game extends Observable {
 
     private int versionNumber = 1;
     private Bank bank;
-    private List<Message> chat;
-    private List<Message> log;
+    //private List<Message> chat;
+    //private List<Message> log;
     private List<LogEntry> chatLog = new ArrayList<LogEntry>();
     private List<LogEntry> historyLog = new ArrayList<LogEntry>();
     private Map map;
@@ -64,11 +64,12 @@ public class Game extends Observable {
                                                 model.getBank().getWood());
         this.bank = new Bank(pool, deck);
 
-        ArrayList<Message> chat = createMessageList(model.getChat().getLines());
-        ArrayList<Message> log = createMessageList(model.getLog().getLines());
+        ArrayList<LogEntry> chat = createLogList(model.getChat().getLines(), model.getPlayers());
+        ArrayList<LogEntry> log = createLogList(model.getLog().getLines(), model.getPlayers());
 
-        this.log = log;
-        this.chat = chat;
+        this.chatLog = chat;
+        this.historyLog = log;
+
 
         //replace map
         ArrayList<Hex> hexes = createHexList(model.getMap().getHexes());
@@ -214,70 +215,72 @@ public class Game extends Observable {
 
             for(int i = 0; i < players.length; i++)
             {
-                CatanColor color = null;
-                switch (players[i].getColor())
-                {
-                    //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+                if(players[i] != null) {
 
-                    case "red":
-                        color = CatanColor.RED;
-                        break;
-                    case "orange":
-                        color = CatanColor.ORANGE;
-                        break;
-                    case "yellow":
-                        color = CatanColor.YELLOW;
-                        break;
-                    case "blue":
-                        color = CatanColor.BLUE;
-                        break;
-                    case "green":
-                        color = CatanColor.GREEN;
-                        break;
-                    case "purple":
-                        color = CatanColor.PURPLE;
-                        break;
-                    case "puce":
-                        color = CatanColor.PUCE;
-                        break;
-                    case "white":
-                        color = CatanColor.WHITE;
-                        break;
-                    case "brown":
-                        color = CatanColor.BROWN;
-                        break;
-                    default:
-                        color = CatanColor.BLUE;
+                    CatanColor color = null;
+                    switch (players[i].getColor()) {
+                        //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
 
+                        case "red":
+                            color = CatanColor.RED;
+                            break;
+                        case "orange":
+                            color = CatanColor.ORANGE;
+                            break;
+                        case "yellow":
+                            color = CatanColor.YELLOW;
+                            break;
+                        case "blue":
+                            color = CatanColor.BLUE;
+                            break;
+                        case "green":
+                            color = CatanColor.GREEN;
+                            break;
+                        case "purple":
+                            color = CatanColor.PURPLE;
+                            break;
+                        case "puce":
+                            color = CatanColor.PUCE;
+                            break;
+                        case "white":
+                            color = CatanColor.WHITE;
+                            break;
+                        case "brown":
+                            color = CatanColor.BROWN;
+                            break;
+                        default:
+                            color = CatanColor.BLUE;
+
+                    }
+
+                    JsonResource r = players[i].getResources();
+                    ResourceCards resourceCards = new ResourceCards(r.getBrick(), r.getOre(),
+                            r.getSheep(), r.getWheat(), r.getWood());
+
+                    ArrayList<DevelopmentCard> newDevCards = createDevCardList(players[i].getNewDevCards());
+                    ArrayList<DevelopmentCard> oldDevCards = createDevCardList(players[i].getOldDevCards());
+
+
+                    PlayerID id = new PlayerID(players[i].getPlayerID());
+
+                    Player newPlayer = new Player(players[i].getName(),
+                            color,
+                            players[i].getSettlements(),
+                            players[i].getCities(),
+                            players[i].getRoads(),
+                            resourceCards,
+                            oldDevCards,
+                            newDevCards,
+                            id,
+                            players[i].getPlayerIndex(),
+                            players[i].isDiscarded(),
+                            players[i].isPlayedDevCard(),
+                            players[i].getMonuments(),
+                            players[i].getSoldiers(),
+                            players[i].getVictoryPoints());
+
+                    playersList.add(newPlayer);
                 }
-
-                JsonResource r = players[i].getResources();
-                ResourceCards resourceCards = new ResourceCards(r.getBrick(), r.getOre(),
-                        r.getSheep(), r.getWheat(), r.getWood());
-
-                ArrayList<DevelopmentCard> newDevCards = createDevCardList(players[i].getNewDevCards());
-                ArrayList<DevelopmentCard> oldDevCards = createDevCardList(players[i].getOldDevCards());
-
-
-                PlayerID id = new PlayerID(players[i].getPlayerID());
-
-                Player newPlayer = new Player(players[i].getName(),
-                        color,
-                        players[i].getSettlements(),
-                        players[i].getCities(),
-                        players[i].getRoads(),
-                        resourceCards,
-                        oldDevCards,
-                        newDevCards,
-                        id,
-                        players[i].getPlayerIndex(),
-                        players[i].isDiscarded(),
-                        players[i].isPlayedDevCard(),
-                        players[i].getMonuments(),
-                        players[i].getSoldiers(),
-                        players[i].getVictoryPoints());
-
-                playersList.add(newPlayer);
             }
 
             return playersList;
@@ -689,14 +692,54 @@ public class Game extends Observable {
 
     }
 
-    public ArrayList<Message> createMessageList(JsonLine[] lines)
+    public ArrayList<LogEntry> createLogList(JsonLine[] lines, JsonPlayer[] players)
     {
 
-        ArrayList<Message> messageList = new ArrayList<>();
+        ArrayList<LogEntry> messageList = new ArrayList<>();
 
         for(int i = 0; i < lines.length; i++)
         {
-            messageList.add(new Message(lines[i].getMessage(), lines[i].getSource()));
+            CatanColor color = null;
+            for (int j = 0; j < players.length; j++)
+            {
+                if(players[j] != null && (lines[i].getSource().equals(players[j].getName())))
+                {
+                    switch (players[j].getColor()) {
+
+                        case "red":
+                            color = CatanColor.RED;
+                            break;
+                        case "orange":
+                            color = CatanColor.ORANGE;
+                            break;
+                        case "yellow":
+                            color = CatanColor.YELLOW;
+                            break;
+                        case "blue":
+                            color = CatanColor.BLUE;
+                            break;
+                        case "green":
+                            color = CatanColor.GREEN;
+                            break;
+                        case "purple":
+                            color = CatanColor.PURPLE;
+                            break;
+                        case "puce":
+                            color = CatanColor.PUCE;
+                            break;
+                        case "white":
+                            color = CatanColor.WHITE;
+                            break;
+                        case "brown":
+                            color = CatanColor.BROWN;
+                            break;
+                        default:
+                            color = CatanColor.BLUE;
+
+                    }
+                }
+            }
+            messageList.add(new LogEntry(color, lines[i].getMessage()));
         }
 
         return messageList;
@@ -763,23 +806,6 @@ public class Game extends Observable {
 
         }
         return instance;
-    }
-
-    /**
-     * Initialize/reinitialize all of the data in the model from the info returned by the server
-     */
-    public void initializeData(int versionNumber, Bank bank, List<Message> chat, List<Message> log, Map map,
-                                                        List<Player> playersList, Player player, Trade activeTrade, TurnTracker turnTracker, Player winner) {
-        this.versionNumber = versionNumber;
-        this.bank = bank;
-        this.chat = chat;
-        this.log = log;
-        this.map = map;
-        this.playersList = playersList;
-        this.player = player;
-        this.activeTrade = activeTrade; //null if none is ongoing
-        this.turntracker = turnTracker;
-        this.winner = winner;
     }
 
     public int getVersionNumber() {

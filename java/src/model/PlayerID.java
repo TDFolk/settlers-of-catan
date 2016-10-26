@@ -11,8 +11,8 @@ public class PlayerID {
 	 * @param id the player's identifier
 	 * @throws PlayerIDException if the id specified is outside the domain [0, 3]
 	 */
-	public PlayerID(int id) throws PlayerIDException {
-		if (id < 0 || id > 3) throw new PlayerIDException();
+	public PlayerID(int id){
+
 		this.id = id;
 	}
 		

@@ -118,9 +118,6 @@ public class DiscardController extends Controller implements IDiscardController,
 		int currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 		String gameState = MapController.getState().toString();
 
-		if (arg.equals("reset")) {
-			return;
-		}
 		// DiscardCardsObject (Json)
 		if (gameState.equals("DiscardingState")) {
 			// Player has over 7 cards

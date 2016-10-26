@@ -209,19 +209,19 @@ public class MapController extends Controller implements IMapController, Observe
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg.equals("reset")){
-			resetView();
-			init = false;
-			return;
-		}
+//		if(arg.equals("reset")){
+//			resetView();
+//			init = false;
+//			return;
+//		}
 		if(!init){
 			resetView();
 			init = true;
 			initFromModel();
 		}
-		if(arg.equals(true)){
-
-		}
+//		if(arg.equals(true)){
+//
+//		}
 	}
 
 

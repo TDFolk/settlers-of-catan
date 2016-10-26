@@ -38,7 +38,7 @@ public class ServerPoller {
             if (currentModel != null) {
                 if (!currentModel.equals("\"true\"")) {
                     Facade.getInstance().replaceModel(currentModel);
-                    Facade.getInstance().incrementVersionNumber();
+                    //Facade.getInstance().incrementVersionNumber();
                 }
             }
         }

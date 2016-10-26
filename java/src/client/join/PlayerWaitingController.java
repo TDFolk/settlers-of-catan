@@ -79,12 +79,6 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		// Could you do getView().setPlayers(Game.getInstance().getPlayersList().toArray(gamePlayerInfo)); ?
 
 
-		if (arg.equals("reset")) {
-			return;
-		}
-
-
-
 		if (getView().isModalShowing()) {
 			PlayerInfo[] gamePlayerInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
 			Game.getInstance().getPlayersList().toArray(gamePlayerInfo);

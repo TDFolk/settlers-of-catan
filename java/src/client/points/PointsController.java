@@ -63,11 +63,11 @@ public class PointsController extends Controller implements IPointsController, O
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		if(arg.equals("reset")){
-			this.currentPoints = 0;
-			getPointsView().setPoints(currentPoints);
-			return;
-		}
+//		if(arg.equals("reset")){
+//			this.currentPoints = 0;
+//			getPointsView().setPoints(currentPoints);
+//			return;
+//		}
 
 		int comparePoints = Game.getInstance().getPlayer().getVictoryPoints();
 
