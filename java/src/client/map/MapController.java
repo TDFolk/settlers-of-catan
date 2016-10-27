@@ -5,6 +5,7 @@ import java.util.*;
 import client.states.IGameState;
 import client.states.NotMyTurnState;
 import model.Game;
+import model.map.Hex;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
@@ -65,77 +66,93 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	protected void initFromModel() {
+		if(Game.getInstance().getGameInfo() != null){
+			List<Hex> hexes = Game.getInstance().getMap().getHexes();
+			for(Hex hex : hexes){
 
-		Random rand = new Random();
-
-		for (int x = 0; x <= 3; ++x) {
-
-			int maxY = 3 - x;
-			for (int y = -3; y <= maxY; ++y) {
-				int r = rand.nextInt(HexType.values().length);
-				HexType hexType = HexType.values()[r];
-				if(hexType == HexType.WATER){
-					hexType = HexType.ORE;
+				//this sets the middle, where the robber goes
+				if(hex.getHexType() == null){
+					getView().addHex(hex.getLocation(), HexType.DESERT);
 				}
-				HexLocation hexLoc = new HexLocation(x, y);
-				getView().addHex(hexLoc, hexType);
-//				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-//						CatanColor.RED);
-//				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-//						CatanColor.BLUE);
-//				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-//						CatanColor.ORANGE);
-//				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-//				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
-			}
-
-			if (x != 0) {
-				int minY = x - 3;
-				for (int y = minY; y <= 3; ++y) {
-					int r = rand.nextInt(HexType.values().length);
-					HexType hexType = HexType.values()[r];
-					if(hexType == HexType.WATER){
-						hexType = HexType.ORE;
-					}
-					HexLocation hexLoc = new HexLocation(-x, y);
-					getView().addHex(hexLoc, hexType);
-//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-//							CatanColor.RED);
-//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-//							CatanColor.BLUE);
-//					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-//							CatanColor.ORANGE);
-//					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-//					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+				else {
+					getView().addHex(hex.getLocation(), hex.getHexType());
+					getView().addNumber(hex.getLocation(), hex.getNumberToken());
 				}
 			}
+			water();
+			
 		}
 
-
-		PortType portType = PortType.BRICK;
-		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-
-		//place the robber
-		getView().placeRobber(new HexLocation(0, 0));
-
-//		getView().addNumber(new HexLocation(-2, 0), 2);
-//		getView().addNumber(new HexLocation(-2, 1), 3);
-//		getView().addNumber(new HexLocation(-2, 2), 4);
-//		getView().addNumber(new HexLocation(-1, 0), 5);
-//		getView().addNumber(new HexLocation(-1, 1), 6);
-//		getView().addNumber(new HexLocation(1, -1), 8);
-//		getView().addNumber(new HexLocation(1, 0), 9);
-//		getView().addNumber(new HexLocation(2, -2), 10);
-//		getView().addNumber(new HexLocation(2, -1), 11);
-//		getView().addNumber(new HexLocation(2, 0), 12);
-
-		//this adds the water to the border
-		water();
+//		Random rand = new Random();
+//
+//		for (int x = 0; x <= 3; ++x) {
+//
+//			int maxY = 3 - x;
+//			for (int y = -3; y <= maxY; ++y) {
+//				int r = rand.nextInt(HexType.values().length);
+//				HexType hexType = HexType.values()[r];
+//				if(hexType == HexType.WATER){
+//					hexType = HexType.ORE;
+//				}
+//				HexLocation hexLoc = new HexLocation(x, y);
+//				getView().addHex(hexLoc, hexType);
+////				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+////						CatanColor.RED);
+////				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+////						CatanColor.BLUE);
+////				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+////						CatanColor.ORANGE);
+////				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
+////				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+//			}
+//
+//			if (x != 0) {
+//				int minY = x - 3;
+//				for (int y = minY; y <= 3; ++y) {
+//					int r = rand.nextInt(HexType.values().length);
+//					HexType hexType = HexType.values()[r];
+//					if(hexType == HexType.WATER){
+//						hexType = HexType.ORE;
+//					}
+//					HexLocation hexLoc = new HexLocation(-x, y);
+//					getView().addHex(hexLoc, hexType);
+////					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
+////							CatanColor.RED);
+////					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
+////							CatanColor.BLUE);
+////					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
+////							CatanColor.ORANGE);
+////					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
+////					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
+//				}
+//			}
+//		}
+//
+//
+//		PortType portType = PortType.BRICK;
+//		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
+//		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
+//		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
+//		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
+//		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
+//		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
+//
+//		//place the robber
+//		getView().placeRobber(new HexLocation(0, 0));
+//
+////		getView().addNumber(new HexLocation(-2, 0), 2);
+////		getView().addNumber(new HexLocation(-2, 1), 3);
+////		getView().addNumber(new HexLocation(-2, 2), 4);
+////		getView().addNumber(new HexLocation(-1, 0), 5);
+////		getView().addNumber(new HexLocation(-1, 1), 6);
+////		getView().addNumber(new HexLocation(1, -1), 8);
+////		getView().addNumber(new HexLocation(1, 0), 9);
+////		getView().addNumber(new HexLocation(2, -2), 10);
+////		getView().addNumber(new HexLocation(2, -1), 11);
+////		getView().addNumber(new HexLocation(2, 0), 12);
+//
+//		//this adds the water to the border
+//		water();
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
