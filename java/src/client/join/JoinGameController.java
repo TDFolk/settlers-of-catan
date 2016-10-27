@@ -342,7 +342,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	@Override
 	public void update(Observable o, Object arg) {
 
+		if(getJoinGameView().isModalShowing()){
 
+//			start();
+		}
 	}
 
 	public GameInfo getGame() {
