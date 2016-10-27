@@ -70,7 +70,9 @@ public class DevCardController extends Controller implements IDevCardController,
 	public void buyCard() {
 		Player player = Game.getInstance().getPlayer();
 		int index = player.getPlayerInfo().getPlayerIndex();
-		ServerProxy.getServer().buyDevCard(index);
+		
+		if (player.canBuyDevelopmentCard())
+			ServerProxy.getServer().buyDevCard(index);
 		
 		/*
 		try {
@@ -100,7 +102,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		Player player = Game.getInstance().getPlayer();
 		int index = player.getPlayerInfo().getPlayerIndex();
 		
-		ServerProxy.getServer().monopoly(resource.name(), index);
+		if (player.canPlayDevelopmentCard(DevCardType.MONOPOLY))
+			ServerProxy.getServer().monopoly(resource.name(), index);
 		
 		/*
 		try {
@@ -138,7 +141,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		Player player = Game.getInstance().getPlayer();
 		int index = player.getPlayerInfo().getPlayerIndex();
 		
-		ServerProxy.getServer().monument(index);
+		if (player.canPlayDevelopmentCard(DevCardType.MONUMENT))
+			ServerProxy.getServer().monument(index);
 		
 		/*
 		try {
@@ -155,7 +159,11 @@ public class DevCardController extends Controller implements IDevCardController,
 		Player player = Game.getInstance().getPlayer();
 		int index = player.getPlayerInfo().getPlayerIndex();
 		
-		ServerProxy.getServer().roadBuilding(index, null, null);
+		if (player.canPlayDevelopmentCard(DevCardType.ROAD_BUILD)) {
+			roadAction.execute();
+			
+			ServerProxy.getServer().roadBuilding(index, null, null);
+		}
 		
 		/*
 		try {
@@ -166,7 +174,6 @@ public class DevCardController extends Controller implements IDevCardController,
 		// do ROAD BUiLD
 		 */
 		 
-		roadAction.execute();
 	}
 
 	@Override
@@ -174,7 +181,12 @@ public class DevCardController extends Controller implements IDevCardController,
 		Player player = Game.getInstance().getPlayer();
 		int index = player.getPlayerInfo().getPlayerIndex();
 		
-		ServerProxy.getServer().soldier(index, -1, null);
+		if (player.canPlayDevelopmentCard(DevCardType.SOLDIER)) {
+			soldierAction.execute();
+			
+			ServerProxy.getServer().soldier(index, -1, null);
+		}
+			
 		
 		/*
 		try {
@@ -185,7 +197,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		// do SoLDiER
 		 */
 		
-		soldierAction.execute();
+		
 	}
 
 	@Override
@@ -193,7 +205,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		Player player = Game.getInstance().getPlayer();
 		int index = player.getPlayerInfo().getPlayerIndex();
 		
-		ServerProxy.getServer().yearOfPlenty(index, resource1, resource2);
+		if (player.canPlayDevelopmentCard(DevCardType.YEAR_OF_PLENTY))
+			ServerProxy.getServer().yearOfPlenty(index, resource1, resource2);
 		
 		/*
 		try {
@@ -229,6 +242,16 @@ public class DevCardController extends Controller implements IDevCardController,
 		int year = 0;
 		
 		for (DevelopmentCard card : player.getDevelopmentCards()) {
+			switch (card.getType()) {
+			case MONOPOLY: mono++; break;
+			case MONUMENT: monu++; break;
+			case ROAD_BUILD: road++; break;
+			case SOLDIER: sold++; break;
+			case YEAR_OF_PLENTY: year++; break;
+			}
+		}
+		
+		for (DevelopmentCard card : player.getNewDevelopmentCards()) {
 			switch (card.getType()) {
 			case MONOPOLY: mono++; break;
 			case MONUMENT: monu++; break;

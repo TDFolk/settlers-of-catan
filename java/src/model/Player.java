@@ -168,6 +168,15 @@ public class Player {
         }
     }
     
+    public boolean canPlayDevelopmentCard(DevCardType card) {
+    	for (DevelopmentCard devCard : developmentCards) {
+    		if (devCard.getType() == card) {
+    			return true;
+    		}
+    	}
+    	return false;
+    }
+    
     /**
      * Plays the development card specified and brings about its effects
      * @pre Player must own the card specified
@@ -179,9 +188,10 @@ public class Player {
     	for (DevelopmentCard devCard : developmentCards) {
     		if (devCard.getType() == card) {
     			developmentCards.remove(devCard);
-    			break;
+    			return;
     		}
     	}
+    	throw new CardException();
     }
     
     /**
