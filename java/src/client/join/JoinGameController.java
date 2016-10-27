@@ -171,7 +171,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 //			JsonElement gameID = gson.fromJson()
 			getNewGameView().closeModal();
 			//CHANGE RED LATER
-			ServerProxy.getServer().gameJoin(myNewGame.getId(), "red");
+			//ServerProxy.getServer().gameJoin(myNewGame.getId(), "red");
 			this.start();
 		}
 		else {
