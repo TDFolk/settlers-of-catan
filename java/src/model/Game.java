@@ -48,6 +48,7 @@ public class Game extends Observable {
     private TurnTracker turntracker;
     private Player winner;
     private GameInfo gameInfo;
+    private PlayerInfo currentPlayerInfo;
 
 
     public void replaceModel(JsonModel model)
@@ -847,19 +848,8 @@ public class Game extends Observable {
         this.player = player;
     }
 
-
-    public void updateGameInfo(GameInfo[] newGameList) {
-
-        for(int i = 0; i < newGameList.length; i++)
-        {
-            if(this.gameInfo.getId() == newGameList[i].getId())
-            {
-                this.gameInfo = newGameList[i];
-            }
-        }
-
-        setChanged();
-        notifyObservers();
-
+    public PlayerInfo getCurrentPlayerInfo() {
+        return currentPlayerInfo;
     }
+    
 }
