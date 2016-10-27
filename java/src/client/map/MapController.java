@@ -72,20 +72,21 @@ public class MapController extends Controller implements IMapController, Observe
 			//put water on the board
 			water();
 
+			//TODO FIX THIS
 			if(Game.getInstance().getMap() != null){
-				Hex[] hexes = new Hex[Game.getInstance().getMap().getHexes().size()];
-				hexes = Game.getInstance().getMap().getHexes().toArray(hexes);
-				for(Hex hex : hexes){
-
-					//this sets the middle, where the robber goes
-					if(hex.getHexType() == null){
-						getView().addHex(hex.getLocation(), HexType.DESERT);
-					}
-					else {
-						getView().addHex(hex.getLocation(), hex.getHexType());
-						getView().addNumber(hex.getLocation(), hex.getNumberToken());
-					}
-				}
+//				Hex[] hexes = new Hex[Game.getInstance().getMap().getHexes().size()];
+//				hexes = Game.getInstance().getMap().getHexes().toArray(hexes);
+//				for(Hex hex : hexes){
+//
+//					//this sets the middle, where the robber goes
+//					if(hex.getHexType() == null){
+//						getView().addHex(hex.getLocation(), HexType.DESERT);
+//					}
+//					else {
+//						getView().addHex(hex.getLocation(), hex.getHexType());
+//						getView().addNumber(hex.getLocation(), hex.getNumberToken());
+//					}
+//				}
 			}
 
 //			List<Port> ports = Game.getInstance().getMap().getPorts();
