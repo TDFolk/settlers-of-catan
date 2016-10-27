@@ -67,29 +67,29 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	protected void initFromModel() {
-		if(Game.getInstance().getGameInfo() != null){
-			//put water on the board
-			water();
-
-			List<Hex> hexes = Game.getInstance().getMap().getHexes();
-			for(Hex hex : hexes){
-
-				//this sets the middle, where the robber goes
-				if(hex.getHexType() == null){
-					getView().addHex(hex.getLocation(), HexType.DESERT);
-				}
-				else {
-					getView().addHex(hex.getLocation(), hex.getHexType());
-					getView().addNumber(hex.getLocation(), hex.getNumberToken());
-				}
-			}
-			List<Port> ports = Game.getInstance().getMap().getPorts();
-			for(Port port : ports){
-				getView().addHex(port.getLocation(), HexType.WATER);
-				
-			}
-
-		}
+//		if(Game.getInstance().getGameInfo() != null){
+//			//put water on the board
+//			water();
+//
+//			List<Hex> hexes = Game.getInstance().getMap().getHexes();
+//			for(Hex hex : hexes){
+//
+//				//this sets the middle, where the robber goes
+//				if(hex.getHexType() == null){
+//					getView().addHex(hex.getLocation(), HexType.DESERT);
+//				}
+//				else {
+//					getView().addHex(hex.getLocation(), hex.getHexType());
+//					getView().addNumber(hex.getLocation(), hex.getNumberToken());
+//				}
+//			}
+//			List<Port> ports = Game.getInstance().getMap().getPorts();
+//			for(Port port : ports){
+//				getView().addHex(port.getLocation(), HexType.WATER);
+//
+//			}
+//
+//		}
 
 //		Random rand = new Random();
 //
