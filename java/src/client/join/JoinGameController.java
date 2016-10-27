@@ -263,6 +263,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString().toLowerCase())){
 
 			playerInfo.setColor(color);
+			Game.getInstance().setCurrentPlayerInfo(this.playerInfo);
 
 			//this is the current playerInfo
 			for(int i = 0; i < game.getPlayers().size(); i++){

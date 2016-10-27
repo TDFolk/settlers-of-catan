@@ -48,6 +48,7 @@ public class Game extends Observable {
     private TurnTracker turntracker;
     private Player winner;
     private GameInfo gameInfo;
+    private PlayerInfo currentPlayerInfo;
 
 
     public void replaceModel(JsonModel model)
@@ -847,6 +848,11 @@ public class Game extends Observable {
         this.player = player;
     }
 
+    public PlayerInfo getCurrentPlayerInfo() {
+        return currentPlayerInfo;
+    }
 
-
+    public void setCurrentPlayerInfo(PlayerInfo currentPlayerInfo) {
+        this.currentPlayerInfo = currentPlayerInfo;
+    }
 }
