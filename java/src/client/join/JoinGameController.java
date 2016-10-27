@@ -110,6 +110,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
+		
 		getJoinGameView().showModal();
 		GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
 
@@ -204,7 +205,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				if ((CatanColor.values()[i] == (playerInfo.getColor()))) {
 
 					//disable the colors that are chosen
-					getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
+
+					if(playerInfo.getId() != this.playerInfo.getId()){
+						getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
+					}
 				}
 			}
 		}
