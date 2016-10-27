@@ -1,9 +1,8 @@
-package test.model;
+package model;
 
 import model.Game;
 import model.Player;
 import model.cards_resources.DevelopmentCard;
-import model.map.GeneralPort;
 import model.map.Hex;
 import model.map.Map;
 import model.map.Port;
@@ -135,8 +134,8 @@ public class PlayerTest {
         HexLocation hLoc = new HexLocation(-1,2);
         EdgeLocation eLoc = new EdgeLocation(hLoc, EdgeDirection.South);
 
-        Port myPort = new GeneralPort(eLoc, ResourceType.BRICK);
-        ports.add(myPort);
+        //Port myPort = new GeneralPort(eLoc, ResourceType.BRICK);
+        //ports.add(myPort);
 
         List<Hex> hexes = new ArrayList<>();
         List<Building> buildings = new ArrayList<>();
