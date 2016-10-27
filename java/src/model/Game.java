@@ -851,5 +851,21 @@ public class Game extends Observable {
     public PlayerInfo getCurrentPlayerInfo() {
         return currentPlayerInfo;
     }
-    
+
+    public void updateGameInfo(GameInfo[] newGameList) {
+
+        for (int i = 0; i < newGameList.length; i++) {
+            if (this.gameInfo.getId() == newGameList[i].getId()) {
+                this.gameInfo = newGameList[i];
+            }
+        }
+
+        setChanged();
+        notifyObservers();
+    }
+
+        public void setCurrentPlayerInfo(PlayerInfo currentPlayerInfo) {
+            this.currentPlayerInfo = currentPlayerInfo;
+
+        }
 }
