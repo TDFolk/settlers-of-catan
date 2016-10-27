@@ -6,6 +6,7 @@ import client.states.IGameState;
 import client.states.NotMyTurnState;
 import model.Game;
 import model.map.Hex;
+import model.map.Port;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
@@ -67,6 +68,9 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	protected void initFromModel() {
 		if(Game.getInstance().getGameInfo() != null){
+			//put water on the board
+			water();
+
 			List<Hex> hexes = Game.getInstance().getMap().getHexes();
 			for(Hex hex : hexes){
 
@@ -79,8 +83,12 @@ public class MapController extends Controller implements IMapController, Observe
 					getView().addNumber(hex.getLocation(), hex.getNumberToken());
 				}
 			}
-			water();
-			
+			List<Port> ports = Game.getInstance().getMap().getPorts();
+			for(Port port : ports){
+				getView().addHex(port.getLocation(), HexType.WATER);
+				if(port.get)
+			}
+
 		}
 
 //		Random rand = new Random();

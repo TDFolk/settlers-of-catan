@@ -3,23 +3,33 @@ package model.map;
 import model.Game;
 import model.Player;
 import model.pieces.Building;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
+import shared.definitions.ResourceType;
+import shared.locations.*;
 
 /**
  * This class represents the game object, ports
  * Created by jihoon on 9/17/16.
  */
 public class Port {
-    private EdgeLocation location;
+
+
+    private HexLocation location;
+    private ResourceType resourceType;
+    private EdgeDirection direction;
+    private int ratio;
+
+    public Port(ResourceType resourceType, HexLocation location, EdgeDirection direction, int ratio){
+        this.resourceType = resourceType;
+        this.location = location;
+        this.direction = direction;
+        this.ratio = ratio;
+    }
 
     /**
      * Constructor for port
      * @param location location of the selected port
      */
-    public Port(EdgeLocation location) {
+    public Port(HexLocation location) {
         this.location = location;
     }
 
@@ -27,18 +37,35 @@ public class Port {
      * Returns the edge location where the port is located
      * @return location
      */
-    public EdgeLocation getLocation() {
+    public HexLocation getLocation() {
         return location;
     }
 
-    /**
-     * This function checks if the player can trade with a specific port
-     * @return true if player can trade with this port
-     */
-    public boolean canTrade(Player player) {
-        //checks that this player actually has access to this port
-        return Game.getInstance().getMap().buildingByEdge(location) != null &&
-                Game.getInstance().getMap().buildingByEdge(location).getColor().equals(player.getPlayerInfo().getColor());
+    public void setLocation(HexLocation location) {
+        this.location = location;
     }
 
+    public ResourceType getResourceType() {
+        return resourceType;
+    }
+
+    public void setResourceType(ResourceType resourceType) {
+        this.resourceType = resourceType;
+    }
+
+    public EdgeDirection getDirection() {
+        return direction;
+    }
+
+    public void setDirection(EdgeDirection direction) {
+        this.direction = direction;
+    }
+
+    public int getRatio() {
+        return ratio;
+    }
+
+    public void setRatio(int ratio) {
+        this.ratio = ratio;
+    }
 }
