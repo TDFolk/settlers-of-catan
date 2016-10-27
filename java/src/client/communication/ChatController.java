@@ -33,8 +33,6 @@ public class ChatController extends Controller implements IChatController, Obser
 
 	@Override
 	public void sendMessage(String message) {
-
-
 		int playerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 		CatanColor playerColor = Game.getInstance().getPlayer().getPlayerInfo().getColor();
 

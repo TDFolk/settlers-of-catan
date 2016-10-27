@@ -31,15 +31,9 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	}
 	
 	private void initFromModel() {
-		
-		//<temp>
-		
 		List<LogEntry> entries = new ArrayList<LogEntry>();
-		entries.add(new LogEntry(CatanColor.BROWN, "This is a brown message"));
-		entries.add(new LogEntry(CatanColor.ORANGE, "This is an orange message ss x y z w.  This is an orange message.  This is an orange message.  This is an orange message."));
+		entries.add(new LogEntry(CatanColor.BROWN, "THERE IS NO HISTORY"));
 		getView().setEntries(entries);
-	
-		//</temp>
 	}
 
 	/**
