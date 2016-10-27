@@ -110,7 +110,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void start() {
-		
+
 		getJoinGameView().showModal();
 		GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
 
@@ -224,22 +224,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		}
 
 		this.game = game;
-		//iterate through the entire gameInfos list
-//		for(int i = 0; i < gameInfos.length; i++){
-//
-//			//if there are more than 0 players, do this
-//			if(gameInfos[i].getPlayers().size() != 0){
-//				//iterate through the player list, and set their playerIndex
-//				for(int j = 0; j < gameInfos[i].getPlayers().size(); j++){
-//					gameInfos[i].getPlayers().get(j).setPlayerIndex(gameInfos[i].getPlayers().size() - 1);
-//				}
-//			}
-//		}
-
-//			if(playerInfo.getId() != Integer.parseInt(ServerProxy.getServer().getCatanPlayerID())){
-//				getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
-//			}
-		//}
 
 		if(!getSelectColorView().isModalShowing()){
 			getSelectColorView().showModal();
@@ -289,19 +273,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			if(playerInfo.getPlayerIndex() == -1){
 				playerInfo.setPlayerIndex(game.getPlayers().size());
 			}
-
-
-			//need to set player index here...
-			//playerInfo.setPlayerIndex(this.game.getPlayers().size());
-
-//			for(int i = 0; i <= 3; i++){
-//				if(this.game.getPlayers().get(i).getPlayerIndex() == -1){
-//
-//				}
-//				else {
-//
-//				}
-//			}
 
 			Game.getInstance().getPlayer().setPlayerInfo(playerInfo);
 			Facade.getInstance().initializeData();
