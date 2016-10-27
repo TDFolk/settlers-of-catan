@@ -2,13 +2,13 @@ package server;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
-import com.google.gson.Gson;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
 import command.game.*;
 import command.player.*;
 import command.user.LoginObject;
 import command.user.RegisterObject;
 import model.Game;
+import model.Player;
 import model.cards_resources.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
@@ -148,21 +148,22 @@ public class ServerProxy implements IServer {
 
         try{
             String result = doGetCommand(gameListCommand);
+
+            JsonParser parser = new JsonParser();
+            JsonArray resultObject = parser.parse(result).getAsJsonArray();
+
             if(result == null){
                 return null;
             }
             else {
                 GameInfo[] gameInfos = gson.fromJson(result, GameInfo[].class);
 
-                //GameListObject[] gameList = gson.fromJson(result, GameListObject[].class);
-
-
                 for(int i = 0; i < gameInfos.length; i++)
                 {
                     ArrayList<PlayerInfo> players = new ArrayList<>();
                     for (PlayerInfo p : gameInfos[i].getPlayers())
                     {
-                        if(p.getId() != -1)
+                        if(!p.getName().equals(""))//changed from using teh ID to the Index. -1 ID is allowed
                         {
                             players.add(p);
                         }
@@ -171,7 +172,90 @@ public class ServerProxy implements IServer {
                     gameInfos[i].setPlayers(players);
 
                 }
+                /* Json Array
+                [{"title":"Default Game",
+                "id":0,
+                "players":[{"color":"orange","name":"Sam","id":0},
+                    {"color":"blue","name":"Brooke","id":1},
+                    {"color":"red","name":"Pete","id":10},
+                    {"color":"green","name":"Mark","id":11}]},
 
+                 {"title":"AI Game",
+                 "id":1,
+                 "players":[{"color":"orange","name":"Pete","id":10},
+                    {"color":"white","name":"Squall","id":-2},
+                    {"color":"purple","name":"Miguel","id":-3},
+                    {"color":"puce","name":"Ken","id":-4}]},
+
+                 {"title":"Empty Game",
+                 "id":2,
+                 "players":[{"color":"orange","name":"Sam","id":0},
+                    {"color":"blue","name":"Brooke","id":1},
+                    {"color":"red","name":"Pete","id":10},
+                    {"color":"green","name":"Mark","id":11}]},
+                 {"title":"RoblocksSSSS",
+                 "id":3,
+                 "players":[{"color":"blue","name":"aaa","id":12}
+                            ,{},{},{}]}]
+                */
+
+                //set the colors and indexes of each player in each game
+                for(int i = 0; i < gameInfos.length; i++)
+                {
+                    JsonObject game = resultObject.get(i).getAsJsonObject();
+                    JsonArray playerList = game.getAsJsonArray("players");
+
+                    for (int j = 0; j < gameInfos[i].getPlayers().size(); j++)
+                    {
+                        PlayerInfo curPlayer = gameInfos[i].getPlayers().get(j);
+
+                        JsonObject player = playerList.get(j).getAsJsonObject();
+
+                       String stringColor = player.getAsJsonPrimitive("color").getAsString();
+
+                        CatanColor color = null;
+                        switch (stringColor) {
+                            //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+
+                            case "red":
+                                color = CatanColor.RED;
+                                break;
+                            case "orange":
+                                color = CatanColor.ORANGE;
+                                break;
+                            case "yellow":
+                                color = CatanColor.YELLOW;
+                                break;
+                            case "blue":
+                                color = CatanColor.BLUE;
+                                break;
+                            case "green":
+                                color = CatanColor.GREEN;
+                                break;
+                            case "purple":
+                                color = CatanColor.PURPLE;
+                                break;
+                            case "puce":
+                                color = CatanColor.PUCE;
+                                break;
+                            case "white":
+                                color = CatanColor.WHITE;
+                                break;
+                            case "brown":
+                                color = CatanColor.BROWN;
+                                break;
+                            default:
+                                color = CatanColor.BLUE;
+
+                        }
+
+                        curPlayer.setColor(color);
+                        curPlayer.setPlayerIndex(j);
+
+                    }
+
+
+                }
 
                 GameListHolder holder = new GameListHolder();
 

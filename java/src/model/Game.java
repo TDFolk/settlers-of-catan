@@ -218,7 +218,6 @@ public class Game extends Observable {
         }
     }
 
-
     public ArrayList<Player> createPlayersList(JsonPlayer[] players)
     {
         try {
