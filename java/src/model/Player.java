@@ -1,11 +1,11 @@
 package model;
 
 import client.data.PlayerInfo;
-import model.map.GeneralPort;
+//import model.map.GeneralPort;
 import model.map.Port;
 import model.cards_resources.ResourceCards;
 import model.cards_resources.Trade;
-import model.map.ResourcePort;
+//import model.map.ResourcePort;
 import model.pieces.City;
 import model.pieces.Road;
 import model.pieces.Settlement;
@@ -305,15 +305,15 @@ public class Player {
     public boolean canPortTrade(ResourceType resource) {
         if (resource == null) {
             for (Port port : Game.getInstance().getMap().getPorts()) {
-                if (port instanceof GeneralPort && port.canTrade(this)) {
-                    return true;
-                }
+//                if (port instanceof GeneralPort && port.canTrade(this)) {
+//                    return true;
+//                }
             }
         } else {
             for (Port port : Game.getInstance().getMap().getPorts()) {
-                if (port instanceof ResourcePort && ((ResourcePort) port).getPortType() == resource && port.canTrade(this)) {
-                    return true;
-                }
+//                if (port instanceof ResourcePort && ((ResourcePort) port).getPortType() == resource && port.canTrade(this)) {
+//                    return true;
+//                }
             }
         }
         return false;

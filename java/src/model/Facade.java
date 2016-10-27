@@ -5,7 +5,7 @@ import decoder.JsonModels.JsonModel;
 import model.cards_resources.ResourceCards;
 import model.map.Hex;
 import model.map.Port;
-import model.map.ResourcePort;
+//import model.map.ResourcePort;
 import server.ServerProxy;
 import shared.definitions.DevCardType;
 import shared.definitions.ResourceType;
@@ -162,9 +162,9 @@ public class Facade {
      */
     public boolean canPortTrade() {
         for (Port port : Game.getInstance().getMap().getPorts()) {
-            if (port.canTrade(Game.getInstance().getPlayer())){
-                return true;
-            }
+//            if (port.canTrade(Game.getInstance().getPlayer())){
+//                return true;
+//            }
         }
         return false;
     }

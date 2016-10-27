@@ -436,38 +436,7 @@ public class Game extends Observable {
             for (int i = 0; i < ports.length; i++) {
                 HexLocation hexLocation = new HexLocation(ports[i].getLocation().getX(), ports[i].getLocation().getY());
 
-                EdgeDirection dir;
-
-                //NorthWest, North, NorthEast, SouthEast, South, SouthWest;
-
-                switch (ports[i].getLocation().getDirection()) {
-                    case "N":
-                        dir = EdgeDirection.North;
-                        break;
-                    case "NW":
-                        dir = EdgeDirection.NorthWest;
-                        break;
-                    case "NE":
-                        dir = EdgeDirection.NorthEast;
-                        break;
-                    case "S":
-                        dir = EdgeDirection.South;
-                        break;
-                    case "SE":
-                        dir = EdgeDirection.SouthEast;
-                        break;
-                    case "SW":
-                        dir = EdgeDirection.SouthWest;
-                        break;
-                    default:
-                        dir = EdgeDirection.NorthEast;
-
-                }
-
-                EdgeLocation loc = new EdgeLocation(hexLocation, dir);
-
-
-                Port newPort = new Port(loc);
+                Port newPort = new Port(hexLocation);
 
                 portList.add(newPort);
             }
