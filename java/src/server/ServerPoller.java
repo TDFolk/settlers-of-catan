@@ -1,6 +1,8 @@
 package server;
 
+import client.data.GameInfo;
 import com.google.gson.JsonObject;
+import command.game.GameListHolder;
 import model.Facade;
 
 import java.util.Timer;
@@ -27,13 +29,28 @@ public class ServerPoller {
      */
     private final long TIME_INTERVAL = 1000;
     private String currentModel;
+    private GameInfo[] oldGameList;
+    private GameInfo[] newGameList;
     private IServer proxy = ServerProxy.getServer();
 
     Timer myTimer = new Timer();
     TimerTask myTimerTask = new TimerTask() {
         @Override
         public void run() {
+
             System.out.println(TIME_INTERVAL/1000  + " second/s");
+
+            newGameList = proxy.gameList().getGameInfos();
+
+            if( oldGameList == null || !oldGameList.equals(newGameList))
+            {
+                System.out.println("Updating the GameInfo");
+
+                oldGameList = newGameList;
+
+                Facade.getInstance().updateGameInfo(newGameList);
+            }
+
             currentModel = proxy.gameModelVersion(Facade.getInstance().getVersionNumber());
             if (currentModel != null) {
                 if (!currentModel.equals("\"true\"")) {

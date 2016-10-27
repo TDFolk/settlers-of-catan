@@ -1,5 +1,6 @@
 package model;
 
+import client.data.GameInfo;
 import decoder.Decoder;
 import decoder.JsonModels.JsonModel;
 import model.cards_resources.ResourceCards;
@@ -209,5 +210,11 @@ public class Facade {
 
     public int getPlayerIndex() {
         return Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
+    }
+
+    public void updateGameInfo(GameInfo[] newGameList) {
+
+        Game.getInstance().updateGameInfo(newGameList);
+
     }
 }

@@ -74,41 +74,16 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-//		for (int i = 0; i < gamePlayerInfo.length; i++) {
-//			gamePlayerInfo[i].setColor(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getColor());
-//			gamePlayerInfo[i].setId(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getId());
-//			gamePlayerInfo[i].setName(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getName());
-//			gamePlayerInfo[i].setPlayerIndex(Game.getInstance().getPlayersList().get(i).getPlayerInfo().getPlayerIndex());
-//		}
-		// Could you do getView().setPlayers(Game.getInstance().getPlayersList().toArray(gamePlayerInfo)); ?
+
 		if (getView().isModalShowing()) {
-			PlayerInfo[] gamePlayerInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
-			//gamePlayerInfo = Game.getInstance().getPlayersList().toArray(gamePlayerInfo);
-
-			for(int i = 0; i < Game.getInstance().getPlayersList().size(); i++)
-			{
-				gamePlayerInfo[i] = Game.getInstance().getPlayersList().get(i).getPlayerInfo();
-			}
-
 			getView().closeModal();
-			if (gamePlayerInfo.length < 4) {
-				getView().setPlayers(gamePlayerInfo);
-				getView().showModal();
-			}
+			ArrayList<PlayerInfo> playerList = new ArrayList<>(Game.getInstance().getGameInfo().getPlayers());
+			PlayerInfo[] gamePlayerInfo = playerList.toArray(new PlayerInfo[playerList.size()]);
+			getView().setPlayers(gamePlayerInfo);
+
+			getView().showModal();
 		}
 	}
 
-//	private boolean isFull(){
-//		if(Game.getInstance().getGameInfo().getPlayers().size() >= 4){
-//			return true;
-//		}
-//		return false;
-//	}
-//
-//	private void updatePlayerList(){
-//		ArrayList<PlayerInfo> playerList = new ArrayList<>(Game.getInstance().getGameInfo().getPlayers());
-//		PlayerInfo[] players = playerList.toArray(new PlayerInfo[playerList.size()]);
-//		getView().setPlayers(players);
-//	}
 }
 
