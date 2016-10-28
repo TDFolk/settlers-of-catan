@@ -70,13 +70,15 @@ public class MapController extends Controller implements IMapController, Observe
 		if(Game.getInstance().getGameInfo() != null){
 			//put water on the board
 			water();
-			//model.map.Map map = Game.getInstance().getMap();
-			//TODO FIX THIS
+
+			//checking if map is ever null... it should always be true if it gets here though
 			if(Game.getInstance().getMap() != null){
+				//List hexes -> array hexes
 				Hex[] hexes = new Hex[Game.getInstance().getMap().getHexes().size()];
 				hexes = Game.getInstance().getMap().getHexes().toArray(hexes);
 				for(Hex hex : hexes){
 					if(hex.getHexType() == HexType.DESERT){
+						//this is the robber information
 						getView().addHex(hex.getLocation(), hex.getHexType());
 						getView().placeRobber(hex.getLocation());
 						robberLocation = hex.getLocation();
@@ -144,15 +146,6 @@ public class MapController extends Controller implements IMapController, Observe
 //				}
 //			}
 //		}
-//
-//
-//		PortType portType = PortType.BRICK;
-//		getView().addPort(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.North), portType);
-//		getView().addPort(new EdgeLocation(new HexLocation(0, -3), EdgeDirection.South), portType);
-//		getView().addPort(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.NorthEast), portType);
-//		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
-//		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
-//		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
