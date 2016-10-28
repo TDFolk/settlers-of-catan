@@ -51,7 +51,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	@Override
 	public void update(Observable o, Object arg) {
 
-		if (!(MapController.getState() instanceof NotMyTurnState)) {
+		if (MapController.isGameStarted()) {
 
 
 			Player player = Game.getInstance().getPlayersList().get(Game.getInstance().getPlayerTurn());
@@ -67,7 +67,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 			}
 
 
-			getView().setEntries(Game.getInstance().getChatLog());
+			getView().setEntries(Game.getInstance().getHistory());
 		}
 	}
 	
