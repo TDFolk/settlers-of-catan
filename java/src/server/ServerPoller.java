@@ -1,10 +1,14 @@
 package server;
 
 import client.data.GameInfo;
+import client.data.PlayerInfo;
 import com.google.gson.JsonObject;
 import command.game.GameListHolder;
 import model.Facade;
+import model.Player;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -42,7 +46,7 @@ public class ServerPoller {
 
             newGameList = proxy.gameList().getGameInfos();
 
-            if( oldGameList == null || !oldGameList.equals(newGameList))
+            if( oldGameList == null || gameListHasChanged(oldGameList, newGameList))
             {
                 System.out.println("Updating the GameInfo");
 
@@ -60,6 +64,52 @@ public class ServerPoller {
             }
         }
     };
+
+    private boolean gameListHasChanged(GameInfo[] oldGameList, GameInfo[] newGameList) {
+
+        if(oldGameList.length != newGameList.length)
+        {
+            return true;
+        }
+        else {
+
+            for (int i = 0; i < oldGameList.length; i++) {
+                if(oldGameList[i].getId() != newGameList[i].getId())
+                {
+                    return true;
+                }
+
+                if(!oldGameList[i].getTitle().equals(newGameList[i].getTitle()))
+                {
+                    return true;
+                }
+
+                List<PlayerInfo> oldPLayers = oldGameList[i].getPlayers();
+                List<PlayerInfo> newPlayers = newGameList[i].getPlayers();
+
+                if(oldPLayers.size() != newPlayers.size())
+                {
+                    return true;
+                }
+
+                //check the info of each player to verify it is the same
+                for(int j = 0; j < oldPLayers.size(); j++)
+                {
+                    if(!oldPLayers.get(j).getName().equals(newPlayers.get(j).getName()))
+                    {
+                        return true;
+                    }
+
+                    if (oldPLayers.get(j).getColor() != newPlayers.get(j).getColor())
+                    {
+                        return true;
+                    }
+                }
+            }
+        }
+
+        return false;
+    }
 
     /**
      *
