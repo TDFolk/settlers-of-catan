@@ -1,6 +1,7 @@
 package client.maritime;
 
 import client.map.MapController;
+import client.states.PlayingState;
 import model.Facade;
 import model.Game;
 import server.ServerProxy;
@@ -123,7 +124,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		getTradeView().enableMaritimeTrade(Facade.getInstance().canPortTrade());
+
+		if (MapController.getState() instanceof PlayingState) {
+
+			getTradeView().enableMaritimeTrade(Facade.getInstance().canPortTrade());
+		}
 	}
 
 	private boolean hasResourcePort(ResourceType resource) {

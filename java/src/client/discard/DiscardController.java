@@ -1,6 +1,7 @@
 package client.discard;
 
 import client.map.MapController;
+import client.states.DiscardingState;
 import decoder.JsonModels.JsonTurnTracker;
 import model.Facade;
 import model.Game;
@@ -115,28 +116,33 @@ public class DiscardController extends Controller implements IDiscardController,
 	public void update(Observable o, Object arg) {
 		// The Game class has a list of Players and also a single Player?
 		// How do controllers know who's turn it is?
-		int currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
-		String gameState = MapController.getState().toString();
+		if(MapController.getState() instanceof DiscardingState)
+		{
 
-		// DiscardCardsObject (Json)
-		if (gameState.equals("DiscardingState")) {
-			// Player has over 7 cards
-			if (Game.getInstance().getPlayer().overResourceLimit()) {
-				// The DiscardView UI is not showing
-				if (!getDiscardView().isModalShowing()) {
-					// Have to discard half their resources
-					cardsToDiscard = (Game.getInstance().getPlayer().getResourceCards().size() / 2);
-					playersCards = Game.getInstance().getPlayer().getResourceCards();
-					numCardsPickedToDiscard = 0;
-					resourcesPickedToDiscard = new ResourceCards(0,0,0,0,0);
-					// Show the UI
-					getDiscardView().showModal();
-					// Update the UI DiscardView
-					this.updateDiscardView();
+
+			int currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
+			String gameState = MapController.getState().toString();
+
+			// DiscardCardsObject (Json)
+			if (gameState.equals("DiscardingState")) {
+				// Player has over 7 cards
+				if (Game.getInstance().getPlayer().overResourceLimit()) {
+					// The DiscardView UI is not showing
+					if (!getDiscardView().isModalShowing()) {
+						// Have to discard half their resources
+						cardsToDiscard = (Game.getInstance().getPlayer().getResourceCards().size() / 2);
+						playersCards = Game.getInstance().getPlayer().getResourceCards();
+						numCardsPickedToDiscard = 0;
+						resourcesPickedToDiscard = new ResourceCards(0,0,0,0,0);
+						// Show the UI
+						getDiscardView().showModal();
+						// Update the UI DiscardView
+						this.updateDiscardView();
+					}
 				}
-			}
-			else {
-				// Close down any modals that may be showing?
+				else {
+					// Close down any modals that may be showing?
+				}
 			}
 		}
 	}

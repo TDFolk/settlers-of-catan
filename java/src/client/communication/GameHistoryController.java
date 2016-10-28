@@ -4,6 +4,8 @@ import java.util.*;
 
 import client.base.*;
 import client.data.PlayerInfo;
+import client.map.MapController;
+import client.states.NotMyTurnState;
 import model.Facade;
 import model.Game;
 import model.Player;
@@ -48,22 +50,25 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		Player player = Game.getInstance().getPlayersList().get(Game.getInstance().getPlayerTurn());
-		PlayerInfo info = player.getPlayerInfo();
-		String playerName = info.getName();
-		CatanColor color = player.getPlayerInfo().getColor();
-		
-		String message = playerName + " has changed the value of Object: " + arg;
-		Game.getInstance().addHistoryEntry(new LogEntry(color, message));
-		
-		if (arg != null) {
-			System.out.println("GAME HISTORY: " + message);
+
+		if (!(MapController.getState() instanceof NotMyTurnState)) {
+
+
+			Player player = Game.getInstance().getPlayersList().get(Game.getInstance().getPlayerTurn());
+			PlayerInfo info = player.getPlayerInfo();
+			String playerName = info.getName();
+			CatanColor color = player.getPlayerInfo().getColor();
+
+			String message = playerName + " has changed the value of Object: " + arg;
+			Game.getInstance().addHistoryEntry(new LogEntry(color, message));
+
+			if (arg != null) {
+				System.out.println("GAME HISTORY: " + message);
+			}
+
+
+			getView().setEntries(Game.getInstance().getChatLog());
 		}
-		
-		
-		
-		
-		getView().setEntries(Game.getInstance().getChatLog());
 	}
 	
 }

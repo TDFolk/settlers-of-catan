@@ -331,19 +331,15 @@ public class JoinGameController extends Controller implements IJoinGameControlle
         //currentGameInfos
 		if(getJoinGameView().isModalShowing()){
 
-			GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
-			currentGameInfos = gameInfos;
+				GameInfo[] gameInfos = Game.getInstance().getGameInfos();
 
-			playerInfo.setName(ServerProxy.getServer().getCatanUsername());
-			playerInfo.setId(Integer.parseInt(ServerProxy.getServer().getCatanPlayerID()));
+				if(gameInfos != null){
+					getJoinGameView().setGames(gameInfos, playerInfo);
+				}
 
-			if(gameInfos != null){
-				getJoinGameView().setGames(gameInfos, playerInfo);
-			}
-
-			if(!getJoinGameView().isModalShowing()) {
-				getJoinGameView().showModal();
-			}
+				if(!getJoinGameView().isModalShowing()) {
+					getJoinGameView().showModal();
+				}
 		}
 	}
 

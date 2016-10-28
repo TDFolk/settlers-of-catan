@@ -2,6 +2,8 @@ package client.points;
 
 import client.base.*;
 import client.data.PlayerInfo;
+import client.map.MapController;
+import client.states.NotMyTurnState;
 import model.Game;
 import model.Player;
 
@@ -69,35 +71,37 @@ public class PointsController extends Controller implements IPointsController, O
 //			return;
 //		}
 
-		int comparePoints = Game.getInstance().getPlayer().getVictoryPoints();
+		if(!(MapController.getState() instanceof NotMyTurnState)) {
 
-		//compare the points to see if the player has gained any more points
-		if(comparePoints != this.currentPoints){
-			this.currentPoints = comparePoints;
-			getPointsView().setPoints(this.currentPoints);
-		}
+			int comparePoints = Game.getInstance().getPlayer().getVictoryPoints();
 
-		//did anyone win?
+			//compare the points to see if the player has gained any more points
+			if (comparePoints != this.currentPoints) {
+				this.currentPoints = comparePoints;
+				getPointsView().setPoints(this.currentPoints);
+			}
 
-		//index of this client's player
-		int currentIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
+			//did anyone win?
 
-		//made a list to make for loop easier to read
-		List<Player> playersList = Game.getInstance().getPlayersList();
+			//index of this client's player
+			int currentIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 
-		//this for loop goes through all of the players and sees if anyone has reached 10 or more points
-		//if a player is found with 10 points or more, view is switched to FinishedView()
-		for(int i = 0; i < Game.getInstance().getPlayersList().size(); i++){
-			Player currentPlayer = playersList.get(i);
-			if(Game.getInstance().getPlayersList().get(i).getVictoryPoints() >= 10){
-				//END THE GAME, SOMEONE HAS REACHED 10 OR MORE POINTS
-				getFinishedView().setWinner(currentPlayer.getPlayerInfo().getName(), currentPlayer.getPlayerInfo().getPlayerIndex() == currentIndex);
-				getFinishedView().showModal();
+			//made a list to make for loop easier to read
+			List<Player> playersList = Game.getInstance().getPlayersList();
+
+			//this for loop goes through all of the players and sees if anyone has reached 10 or more points
+			//if a player is found with 10 points or more, view is switched to FinishedView()
+			for (int i = 0; i < Game.getInstance().getPlayersList().size(); i++) {
+				Player currentPlayer = playersList.get(i);
+				if (Game.getInstance().getPlayersList().get(i).getVictoryPoints() >= 10) {
+					//END THE GAME, SOMEONE HAS REACHED 10 OR MORE POINTS
+					getFinishedView().setWinner(currentPlayer.getPlayerInfo().getName(), currentPlayer.getPlayerInfo().getPlayerIndex() == currentIndex);
+					getFinishedView().showModal();
+				}
+
 			}
 
 		}
-
-
 
 	}
 	

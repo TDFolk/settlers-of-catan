@@ -1,5 +1,7 @@
 package client.devcards;
 
+import client.map.MapController;
+import client.states.PlayingState;
 import model.Game;
 import model.Player;
 import model.cards_resources.DevelopmentCard;
@@ -233,39 +235,62 @@ public class DevCardController extends Controller implements IDevCardController,
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		Player player = Game.getInstance().getPlayer();
-		
-		int mono = 0;
-		int monu = 0;
-		int road = 0;
-		int sold = 0;
-		int year = 0;
-		
-		for (DevelopmentCard card : player.getDevelopmentCards()) {
-			switch (card.getType()) {
-			case MONOPOLY: mono++; break;
-			case MONUMENT: monu++; break;
-			case ROAD_BUILD: road++; break;
-			case SOLDIER: sold++; break;
-			case YEAR_OF_PLENTY: year++; break;
+
+		if (MapController.getState() instanceof PlayingState) {
+			Player player = Game.getInstance().getPlayer();
+
+			int mono = 0;
+			int monu = 0;
+			int road = 0;
+			int sold = 0;
+			int year = 0;
+
+			for (DevelopmentCard card : player.getDevelopmentCards()) {
+				switch (card.getType()) {
+					case MONOPOLY:
+						mono++;
+						break;
+					case MONUMENT:
+						monu++;
+						break;
+					case ROAD_BUILD:
+						road++;
+						break;
+					case SOLDIER:
+						sold++;
+						break;
+					case YEAR_OF_PLENTY:
+						year++;
+						break;
+				}
 			}
-		}
-		
-		for (DevelopmentCard card : player.getNewDevelopmentCards()) {
-			switch (card.getType()) {
-			case MONOPOLY: mono++; break;
-			case MONUMENT: monu++; break;
-			case ROAD_BUILD: road++; break;
-			case SOLDIER: sold++; break;
-			case YEAR_OF_PLENTY: year++; break;
+
+			for (DevelopmentCard card : player.getNewDevelopmentCards()) {
+				switch (card.getType()) {
+					case MONOPOLY:
+						mono++;
+						break;
+					case MONUMENT:
+						monu++;
+						break;
+					case ROAD_BUILD:
+						road++;
+						break;
+					case SOLDIER:
+						sold++;
+						break;
+					case YEAR_OF_PLENTY:
+						year++;
+						break;
+				}
 			}
+
+			getPlayCardView().setCardAmount(DevCardType.MONOPOLY, mono);
+			getPlayCardView().setCardAmount(DevCardType.MONUMENT, monu);
+			getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, road);
+			getPlayCardView().setCardAmount(DevCardType.SOLDIER, sold);
+			getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, year);
 		}
-		
-		getPlayCardView().setCardAmount(DevCardType.MONOPOLY, mono);
-		getPlayCardView().setCardAmount(DevCardType.MONUMENT, monu);
-		getPlayCardView().setCardAmount(DevCardType.ROAD_BUILD, road);
-		getPlayCardView().setCardAmount(DevCardType.SOLDIER, sold);
-		getPlayCardView().setCardAmount(DevCardType.YEAR_OF_PLENTY, year);
 	}
 }
 

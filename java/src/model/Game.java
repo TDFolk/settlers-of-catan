@@ -923,12 +923,12 @@ public class Game extends Observable {
                     this.gameInfo = newGameList[i];
                 }
             }
-
+        }
             allGameInfos = newGameList;
 
             setChanged();
             notifyObservers();
-        }
+
     }
 
     public void setCurrentPlayerInfo(PlayerInfo currentPlayerInfo) {
