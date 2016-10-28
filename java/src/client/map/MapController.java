@@ -60,11 +60,11 @@ public class MapController extends Controller implements IMapController, Observe
 	protected void initFromModel() {
 
 		if(Game.getInstance().getGameInfo() != null){
-			//put water on the board
-			water();
-
 			//checking if map is ever null... it should always be true if it gets here though
 			if(Game.getInstance().getMap() != null){
+				init = true;
+				//put water on the board
+				water();
 				//List hexes -> array hexes
 				Hex[] hexes = new Hex[Game.getInstance().getMap().getHexes().size()];
 				hexes = Game.getInstance().getMap().getHexes().toArray(hexes);
@@ -213,11 +213,8 @@ public class MapController extends Controller implements IMapController, Observe
 	public void update(Observable o, Object arg) {
 		if(!init){
 			state = new NotMyTurnState();
-			init = true;
 			initFromModel();
-
 		}
-
 	}
 
 
