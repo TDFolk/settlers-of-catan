@@ -78,6 +78,8 @@ public class MapController extends Controller implements IMapController, Observe
 				for(Hex hex : hexes){
 					if(hex.getHexType() == HexType.DESERT){
 						getView().addHex(hex.getLocation(), hex.getHexType());
+						getView().placeRobber(hex.getLocation());
+						robberLocation = hex.getLocation();
 					}
 					else {
 						getView().addHex(hex.getLocation(), hex.getHexType());
@@ -89,13 +91,11 @@ public class MapController extends Controller implements IMapController, Observe
 				List<Port> ports = Game.getInstance().getMap().getPorts();
 				for(Port port : ports){
 					if(port.getResourceType() == null){
-						//getView().addPort(new EdgeLocation(port.getLocation(), port.getDirection()), PortType.THREE);
+						getView().addPort(new EdgeLocation(port.getLocation(), port.getDirection()), PortType.THREE);
 					}
 					else {
-						//getView().addPort(new EdgeLocation(port.getLocation(), port.getDirection()), PortType.valueOf(port.getResourceType().toString()));
+						getView().addPort(new EdgeLocation(port.getLocation(), port.getDirection()), PortType.valueOf(port.getResourceType().toString()));
 					}
-					//getView().addHex(port.getLocation(), HexType.WATER);
-					//getView().addPort(port.getDirection(), PortType.THREE);
 				}
 			}
 		}
@@ -153,23 +153,6 @@ public class MapController extends Controller implements IMapController, Observe
 //		getView().addPort(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.SouthEast), portType);
 //		getView().addPort(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.SouthWest), portType);
 //		getView().addPort(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.NorthWest), portType);
-//
-//		//place the robber
-//		getView().placeRobber(new HexLocation(0, 0));
-//
-////		getView().addNumber(new HexLocation(-2, 0), 2);
-////		getView().addNumber(new HexLocation(-2, 1), 3);
-////		getView().addNumber(new HexLocation(-2, 2), 4);
-////		getView().addNumber(new HexLocation(-1, 0), 5);
-////		getView().addNumber(new HexLocation(-1, 1), 6);
-////		getView().addNumber(new HexLocation(1, -1), 8);
-////		getView().addNumber(new HexLocation(1, 0), 9);
-////		getView().addNumber(new HexLocation(2, -2), 10);
-////		getView().addNumber(new HexLocation(2, -1), 11);
-////		getView().addNumber(new HexLocation(2, 0), 12);
-//
-//		//this adds the water to the border
-//		water();
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
