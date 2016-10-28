@@ -51,7 +51,7 @@ public class Game extends Observable {
     private Player winner;
     private GameInfo gameInfo;
     private PlayerInfo currentPlayerInfo;
-    private GameInfo[] gameInfos;
+    private GameInfo[] allGameInfos;
 
 
     public void replaceModel(JsonModel model)
@@ -924,6 +924,8 @@ public class Game extends Observable {
                 }
             }
 
+            allGameInfos = newGameList;
+
             setChanged();
             notifyObservers();
         }
@@ -935,10 +937,10 @@ public class Game extends Observable {
     }
 
     public GameInfo[] getGameInfos() {
-        return gameInfos;
+        return allGameInfos;
     }
 
     public void setGameInfos(GameInfo[] gameInfos) {
-        this.gameInfos = gameInfos;
+        this.allGameInfos = gameInfos;
     }
 }
