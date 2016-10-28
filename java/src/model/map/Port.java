@@ -1,8 +1,5 @@
 package model.map;
 
-import model.Game;
-import model.Player;
-import model.pieces.Building;
 import shared.definitions.ResourceType;
 import shared.locations.*;
 
@@ -12,19 +9,10 @@ import shared.locations.*;
  */
 public class Port {
 
-    private EdgeLocation edgeLocation;
     private HexLocation location;
     private ResourceType resourceType;
     private EdgeDirection direction;
     private int ratio;
-
-    public Port(EdgeLocation edgeLocation, HexLocation location, ResourceType resourceType, EdgeDirection direction, int ratio) {
-        this.edgeLocation = edgeLocation;
-        this.location = location;
-        this.resourceType = resourceType;
-        this.direction = direction;
-        this.ratio = ratio;
-    }
 
     public Port(ResourceType resourceType, HexLocation location, EdgeDirection direction, int ratio){
         this.resourceType = resourceType;
@@ -77,11 +65,4 @@ public class Port {
         this.ratio = ratio;
     }
 
-    public EdgeLocation getEdgeLocation() {
-        return edgeLocation;
-    }
-
-    public void setEdgeLocation(EdgeLocation edgeLocation) {
-        this.edgeLocation = edgeLocation;
-    }
 }

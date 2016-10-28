@@ -88,6 +88,12 @@ public class MapController extends Controller implements IMapController, Observe
 
 				List<Port> ports = Game.getInstance().getMap().getPorts();
 				for(Port port : ports){
+					if(port.getResourceType() == null){
+						//getView().addPort(new EdgeLocation(port.getLocation(), port.getDirection()), PortType.THREE);
+					}
+					else {
+						//getView().addPort(new EdgeLocation(port.getLocation(), port.getDirection()), PortType.valueOf(port.getResourceType().toString()));
+					}
 					//getView().addHex(port.getLocation(), HexType.WATER);
 					//getView().addPort(port.getDirection(), PortType.THREE);
 				}
