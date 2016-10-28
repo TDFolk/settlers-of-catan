@@ -5,8 +5,7 @@ import java.util.*;
 import client.states.IGameState;
 import client.states.NotMyTurnState;
 import model.Game;
-import model.map.Hex;
-import model.map.Port;
+import model.map.*;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
@@ -71,30 +70,26 @@ public class MapController extends Controller implements IMapController, Observe
 		if(Game.getInstance().getGameInfo() != null){
 			//put water on the board
 			water();
-
+			//model.map.Map map = Game.getInstance().getMap();
 			//TODO FIX THIS
 			if(Game.getInstance().getMap() != null){
-//				Hex[] hexes = new Hex[Game.getInstance().getMap().getHexes().size()];
-//				hexes = Game.getInstance().getMap().getHexes().toArray(hexes);
-//				for(Hex hex : hexes){
-//
-//					//this sets the middle, where the robber goes
-//					if(hex.getHexType() == null){
-//						getView().addHex(hex.getLocation(), HexType.DESERT);
-//					}
-//					else {
-//						getView().addHex(hex.getLocation(), hex.getHexType());
-//						getView().addNumber(hex.getLocation(), hex.getNumberToken());
-//					}
-//				}
+				Hex[] hexes = new Hex[Game.getInstance().getMap().getHexes().size()];
+				hexes = Game.getInstance().getMap().getHexes().toArray(hexes);
+				for(Hex hex : hexes){
+					if(hex.getHexType() == HexType.DESERT){
+						getView().addHex(hex.getLocation(), hex.getHexType());
+					}
+					else {
+						getView().addHex(hex.getLocation(), hex.getHexType());
+						getView().addNumber(hex.getLocation(), hex.getNumberToken());
+
+					}
+				}
+				List<Port> ports = Game.getInstance().getMap().getPorts();
+				for(Port port : ports){
+					getView().addHex(port.getLocation(), HexType.WATER);
+				}
 			}
-
-//			List<Port> ports = Game.getInstance().getMap().getPorts();
-//			for(Port port : ports){
-//				getView().addHex(port.getLocation(), HexType.WATER);
-//
-//			}
-
 		}
 
 //		Random rand = new Random();

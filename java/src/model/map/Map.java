@@ -22,7 +22,6 @@ public class Map {
 	private List<Road> roads;
 	private List<Port> ports;
 
-
 	/**
 	 * Constructor of a map
 	 * all the info is pre-made by the database and packaged here for y(our) convenience
