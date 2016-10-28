@@ -52,6 +52,11 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 		else {
 			getView().showModal();
 		}
+
+		String[] AIList = new String[1];
+		//AIList[0] = ServerProxy.getServer().gameListAI();
+		AIList[0] = "LARGEST_ARMY";
+		getView().setAIChoices(AIList);
 	}
 
 	/**
@@ -61,10 +66,8 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 	public void addAI() {
 		String newAI = getView().getSelectedAI();
 		ServerProxy.getServer().gameAddAI(newAI);
-		String[] listAI = new String[10];
-		listAI[0] = ServerProxy.getServer().gameListAI();
-		getView().setAIChoices(listAI);
 	}
+
 
 	/**
 	 * This method is called whenever the observed object is changed. An application calls an
@@ -81,7 +84,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			PlayerInfo[] gamePlayerInfo = playerList.toArray(new PlayerInfo[playerList.size()]);
 			getView().setPlayers(gamePlayerInfo);
 
-			getView().showModal();
+			if (gamePlayerInfo.length == 4) {
+				getView().closeModal();
+			}
+			else {
+				getView().showModal();
+			}
 		}
 	}
 
