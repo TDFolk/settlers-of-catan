@@ -3,7 +3,9 @@ package client.join;
 import client.base.*;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.map.MapController;
 import client.misc.MessageView;
+import client.states.FirstRoundState;
 import model.Facade;
 import model.Game;
 import server.ServerProxy;
@@ -83,6 +85,12 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			getView().setPlayers(gamePlayerInfo);
 
 			if (gamePlayerInfo.length == 4) {
+
+				//change the state
+				MapController.setState(new FirstRoundState());
+				//game is starting now!!!!
+				MapController.setGameStarted(true);
+				
 				getView().closeModal();
 			}
 			else {

@@ -17,7 +17,8 @@ import client.data.*;
  * Implementation for the map controller
  */
 public class MapController extends Controller implements IMapController, Observer {
-	
+
+	private static boolean gameStarted = false;
 	private IRobView robView;
 	/**
 	 * to initialize a new state
@@ -260,7 +261,16 @@ public class MapController extends Controller implements IMapController, Observe
 		return state;
 	}
 
+	public static void setState(IGameState state) {
+		MapController.state = state;
+	}
 
+	public static boolean isGameStarted() {
+		return gameStarted;
+	}
 
+	public static void setGameStarted(boolean gameStarted) {
+		MapController.gameStarted = gameStarted;
+	}
 }
 
