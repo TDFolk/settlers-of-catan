@@ -10,12 +10,7 @@ public class JsonModel {
 
     private JsonDeck deck;
     private JsonMap map;
-    private JsonPiece roads[];
-    private JsonPiece cities[];
-    private JsonPiece settlements[];
-    private int radius;
-    private JsonPiece ports[];
-    private JsonRobber robber;
+
     private JsonPlayer players[];
     private JsonLog log;
     private JsonLog chat;
@@ -39,54 +34,6 @@ public class JsonModel {
 
     public void setMap(JsonMap map) {
         this.map = map;
-    }
-
-    public JsonPiece[] getRoads() {
-        return roads;
-    }
-
-    public void setRoads(JsonPiece[] roads) {
-        this.roads = roads;
-    }
-
-    public JsonPiece[] getCities() {
-        return cities;
-    }
-
-    public void setCities(JsonPiece[] cities) {
-        this.cities = cities;
-    }
-
-    public JsonPiece[] getSettlements() {
-        return settlements;
-    }
-
-    public void setSettlements(JsonPiece[] settlements) {
-        this.settlements = settlements;
-    }
-
-    public int getRadius() {
-        return radius;
-    }
-
-    public void setRadius(int radius) {
-        this.radius = radius;
-    }
-
-    public JsonPiece[] getPorts() {
-        return ports;
-    }
-
-    public void setPorts(JsonPiece[] ports) {
-        this.ports = ports;
-    }
-
-    public JsonRobber getRobber() {
-        return robber;
-    }
-
-    public void setRobber(JsonRobber robber) {
-        this.robber = robber;
     }
 
     public JsonPlayer[] getPlayers() {

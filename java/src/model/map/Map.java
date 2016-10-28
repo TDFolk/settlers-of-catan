@@ -4,10 +4,7 @@ import model.Player;
 import model.pieces.Building;
 import model.pieces.Road;
 import shared.definitions.CatanColor;
-import shared.locations.EdgeDirection;
-import shared.locations.EdgeLocation;
-import shared.locations.VertexDirection;
-import shared.locations.VertexLocation;
+import shared.locations.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,6 +18,8 @@ public class Map {
 	private List<Building> buildings;
 	private List<Road> roads;
 	private List<Port> ports;
+	private int radius;
+	private HexLocation robber;
 
 	/**
 	 * Constructor of a map
@@ -31,11 +30,13 @@ public class Map {
 	 * @param roads on the map
 	 * @param ports on the map
 	 */
-	public Map(List<Hex> hexes, List<Building> buildings, List<Road> roads, List<Port> ports) {
+	public Map(List<Hex> hexes, List<Building> buildings, List<Road> roads, List<Port> ports, int radius, HexLocation robber) {
 		this.hexes = hexes;
 		this.buildings = buildings;
 		this.roads = roads;
 		this.ports = ports;
+		this.radius = radius;
+		this.robber = robber;
 	}
 
 	/**

@@ -141,8 +141,8 @@ public class PlayerTest {
         List<Building> buildings = new ArrayList<>();
         List<Road> roads = new ArrayList<>();
 
-        Map myMap = new Map(hexes, buildings, roads, ports);
-        Game.getInstance().setMap(myMap);
+        //Map myMap = new Map(hexes, buildings, roads, ports);
+        //Game.getInstance().setMap(myMap);
 
         myPlayer = new Player();
         //assertFalse(myPlayer.canTradeWithPort(eLoc));
