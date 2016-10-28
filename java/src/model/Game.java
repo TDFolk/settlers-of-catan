@@ -18,7 +18,9 @@ import model.pieces.Settlement;
 import shared.definitions.CatanColor;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
+import shared.definitions.ResourceType;
 import shared.locations.*;
+import sun.security.x509.EDIPartyName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -438,7 +440,65 @@ public class Game extends Observable {
             for (int i = 0; i < ports.length; i++) {
                 HexLocation hexLocation = new HexLocation(ports[i].getLocation().getX(), ports[i].getLocation().getY());
 
-                Port newPort = new Port(hexLocation);
+                ResourceType resource;
+
+                if(ports[i].getResource() == null)
+                {
+                    resource = null;
+                }
+                else {
+
+
+                    switch (ports[i].getResource()) {
+                        case "wood":
+                            resource = ResourceType.WOOD;
+                            break;
+                        case "ore":
+                            resource = ResourceType.ORE;
+                            break;
+                        case "sheep":
+                            resource = ResourceType.SHEEP;
+                            break;
+                        case "wheat":
+                            resource = ResourceType.WHEAT;
+                            break;
+                        case "brick":
+                            resource = ResourceType.BRICK;
+                            break;
+                        default:
+                            resource = null;
+                            break;
+                    }
+                }
+
+
+                //NorthWest, North, NorthEast, SouthEast, South, SouthWest;
+
+                EdgeDirection direction = null;
+                switch (ports[i].getDirection())
+                {
+                    case "NW":
+                        direction = EdgeDirection.NorthWest;
+                        break;
+                    case "N":
+                        direction = EdgeDirection.North;
+                        break;
+                    case "NE":
+                        direction = EdgeDirection.NorthEast;
+                        break;
+                    case "SE":
+                        direction = EdgeDirection.SouthEast;
+                        break;
+                    case "S":
+                        direction = EdgeDirection.South;
+                        break;
+                    case "SW":
+                        direction = EdgeDirection.SouthWest;
+                        break;
+                }
+
+
+                Port newPort = new Port(resource, hexLocation, direction, ports[i].getRatio());
 
                 portList.add(newPort);
             }
@@ -855,14 +915,17 @@ public class Game extends Observable {
 
     public void updateGameInfo(GameInfo[] newGameList) {
 
-        for (int i = 0; i < newGameList.length; i++) {
-            if (this.gameInfo.getId() == newGameList[i].getId()) {
-                this.gameInfo = newGameList[i];
-            }
-        }
+        if(this.gameInfo != null) {
 
-        setChanged();
-        notifyObservers();
+            for (int i = 0; i < newGameList.length; i++) {
+                if (this.gameInfo.getId() == newGameList[i].getId()) {
+                    this.gameInfo = newGameList[i];
+                }
+            }
+
+            setChanged();
+            notifyObservers();
+        }
     }
 
         public void setCurrentPlayerInfo(PlayerInfo currentPlayerInfo) {

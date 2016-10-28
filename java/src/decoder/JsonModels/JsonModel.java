@@ -10,7 +10,6 @@ public class JsonModel {
 
     private JsonDeck deck;
     private JsonMap map;
-
     private JsonPlayer players[];
     private JsonLog log;
     private JsonLog chat;
