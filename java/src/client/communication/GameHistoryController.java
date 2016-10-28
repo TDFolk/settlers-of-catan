@@ -4,6 +4,7 @@ import java.util.*;
 
 import client.base.*;
 import client.data.PlayerInfo;
+import model.Facade;
 import model.Game;
 import model.Player;
 import shared.definitions.*;
@@ -31,6 +32,9 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	}
 	
 	private void initFromModel() {
+		Game game = Game.getInstance();
+		List<LogEntry> log = game.getHistory();
+		
 		List<LogEntry> entries = new ArrayList<LogEntry>();
 		entries.add(new LogEntry(CatanColor.BROWN, "THERE IS NO HISTORY"));
 		getView().setEntries(entries);
@@ -44,7 +48,6 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		System.out.println(arg);
 		Player player = Game.getInstance().getPlayersList().get(Game.getInstance().getPlayerTurn());
 		PlayerInfo info = player.getPlayerInfo();
 		String playerName = info.getName();
@@ -53,6 +56,9 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		String message = playerName + " has changed the value of Object: " + arg;
 		Game.getInstance().addHistoryEntry(new LogEntry(color, message));
 		
+		if (arg != null) {
+			System.out.println("GAME HISTORY: " + message);
+		}
 		
 		
 		

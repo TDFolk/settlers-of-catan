@@ -162,7 +162,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		if (player.canPlayDevelopmentCard(DevCardType.ROAD_BUILD)) {
 			roadAction.execute();
 			
-			ServerProxy.getServer().roadBuilding(index, null, null);
+			//ServerProxy.getServer().roadBuilding(index, null, null); ?????
 		}
 		
 		/*
@@ -184,7 +184,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		if (player.canPlayDevelopmentCard(DevCardType.SOLDIER)) {
 			soldierAction.execute();
 			
-			ServerProxy.getServer().soldier(index, -1, null);
+			//ServerProxy.getServer().soldier(index, -1, null); ?????
 		}
 			
 		
