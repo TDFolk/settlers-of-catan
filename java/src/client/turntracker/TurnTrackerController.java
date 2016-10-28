@@ -86,7 +86,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				getView().updateGameState("End Turn", true);
 				break;
 			case "NotMyTurnState":
-				getView().updateGameState("Relax and Take Notes", false);
+//				getView().updateGameState("Relax and Take Notes", false);
+				getView().updateGameState("Not My Turn", false);
 				break;
 			case "DiscardingState":
 				getView().updateGameState("Discarding", false);

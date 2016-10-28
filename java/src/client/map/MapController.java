@@ -2,6 +2,7 @@ package client.map;
 
 import java.util.*;
 
+import client.states.FirstRoundState;
 import client.states.IGameState;
 import client.states.NotMyTurnState;
 import model.Game;
@@ -18,8 +19,6 @@ import client.data.*;
 public class MapController extends Controller implements IMapController, Observer {
 	
 	private IRobView robView;
-
-
 	/**
 	 * to initialize a new state
 	 *      eg: state = new PlayingState();
@@ -28,16 +27,9 @@ public class MapController extends Controller implements IMapController, Observe
 	 * depending on the state, each function will return something different
 	 */
 	private static IGameState state;
-
-
 	private EdgeLocation firstRoad;
 	HexLocation robberLocation;
-
 	private boolean init = false;
-
-
-
-
 	//????
 	RobPlayerInfo[] empty = {};
 	
@@ -219,19 +211,13 @@ public class MapController extends Controller implements IMapController, Observe
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-//		if(arg.equals("reset")){
-//			resetView();
-//			init = false;
-//			return;
-//		}
 		if(!init){
-			resetView();
+			state = new NotMyTurnState();
 			init = true;
 			initFromModel();
+
 		}
-//		if(arg.equals(true)){
-//
-//		}
+
 	}
 
 
