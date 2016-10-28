@@ -294,7 +294,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			getJoinGameView().closeModal();
 
 
-//			ServerPoller.getPoller().startPoller();
+			ServerPoller.getPoller().startPoller();
 
 			joinAction.execute();
 
