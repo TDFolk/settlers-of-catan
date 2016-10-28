@@ -1,5 +1,6 @@
 package client.join;
 
+import client.map.MapController;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import command.game.GameCreateObject;
@@ -298,6 +299,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			}
 
 			Game.getInstance().setGameInfo(this.game);
+			MapController.setGameStarted(true);
 
 			// If join succeeded
 			getSelectColorView().closeModal();

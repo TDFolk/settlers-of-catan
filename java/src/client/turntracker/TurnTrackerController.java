@@ -42,15 +42,18 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	
 	private void initFromModel() {
 
+		//default color of the catan client... white
 		CatanColor playerColor = CatanColor.WHITE;
 
+		//change the default color to the current player when color is chosen
 		if(Game.getInstance().getCurrentPlayerInfo() != null){
 			playerColor = Game.getInstance().getCurrentPlayerInfo().getColor();
 
 		}
 
-
+		//this is the method that sets the color
 		getView().setLocalPlayerColor(playerColor);
+
 
 		//PlayerInfo[] playersInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
 		PlayerInfo[] playersInfo = new PlayerInfo[4];

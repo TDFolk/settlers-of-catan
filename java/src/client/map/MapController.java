@@ -7,6 +7,10 @@ import client.states.IGameState;
 import client.states.NotMyTurnState;
 import model.Game;
 import model.map.*;
+import model.pieces.Building;
+import model.pieces.City;
+import model.pieces.Road;
+import model.pieces.Settlement;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
@@ -216,6 +220,42 @@ public class MapController extends Controller implements IMapController, Observe
 			state = new NotMyTurnState();
 			initFromModel();
 		}
+		if(arg.equals(true)){
+			//set up states here
+			doState();
+			//update map
+			updateCatanMap();
+		}
+	}
+
+	public void doState(){
+		if(state instanceof FirstRoundState){
+			getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+		}
+	}
+
+	private void updateCatanMap(){
+		Game game = Game.getInstance();
+
+		//place buildings
+		for(Building building : game.getMap().getBuildings()){
+			//place settlements
+			if(building instanceof Settlement){
+				getView().placeSettlement(building.getLocation(), building.getColor());
+			}
+			//place cities
+			else if(building instanceof City){
+				getView().placeCity(building.getLocation(), building.getColor());
+			}
+		}
+
+		//place roads
+		for(Road road : game.getMap().getRoads()){
+			getView().placeRoad(road.getLocation(), road.getColor());
+		}
+
+		//place robber
+		getView().placeRobber(game.getMap().getRobber());
 	}
 
 
@@ -250,11 +290,6 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().addHex(new HexLocation(-3, 0), HexType.WATER);
 		getView().addHex(new HexLocation(-2, -1), HexType.WATER);
 		getView().addHex(new HexLocation(-1, -2), HexType.WATER);
-	}
-
-	private void resetView(){
-//		getView().reset();
-		state = new NotMyTurnState();
 	}
 
 	public static IGameState getState() {

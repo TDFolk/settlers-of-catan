@@ -87,10 +87,10 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 			if (gamePlayerInfo.length == 4) {
 
 				//change the state
-				MapController.setState(new FirstRoundState());
+				//MapController.setState(new FirstRoundState());
 				//game is starting now!!!!
-				MapController.setGameStarted(true);
-				
+				//MapController.setGameStarted(true);
+
 				getView().closeModal();
 			}
 			else {

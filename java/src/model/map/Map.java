@@ -307,4 +307,19 @@ public class Map {
 		this.ports = ports;
 	}
 
+	public HexLocation getRobber() {
+		return robber;
+	}
+
+	public void setRobber(HexLocation robber) {
+		this.robber = robber;
+	}
+
+	public int getRadius() {
+		return radius;
+	}
+
+	public void setRadius(int radius) {
+		this.radius = radius;
+	}
 }
