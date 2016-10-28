@@ -1,6 +1,8 @@
 package client.communication;
 
 import client.base.*;
+import com.sun.prism.impl.BaseMesh;
+import model.Facade;
 import model.Game;
 import model.Player;
 
@@ -36,9 +38,13 @@ public class ChatController extends Controller implements IChatController, Obser
 		int playerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 		CatanColor playerColor = Game.getInstance().getPlayer().getPlayerInfo().getColor();
 
-		ServerProxy.getServer().sendChat(playerIndex, message);
+		//String model = ServerProxy.getServer().sendChat(playerIndex, Game.getInstance().getPlayer().getPlayerInfo().getName() + ": " + message);
+		String model = ServerProxy.getServer().sendChat(playerIndex, message);
 
-		Game.getInstance().addChatMessage(new LogEntry(playerColor, message));
+		Facade.getInstance().replaceModel(model);
+
+
+	//	Game.getInstance().addChatMessage(new LogEntry(playerColor, message));
 
 		getView().setEntries(Game.getInstance().getChatLog());
 	}
@@ -52,9 +58,6 @@ public class ChatController extends Controller implements IChatController, Obser
 	@Override
 	public void update(Observable o, Object arg) {
 //		ArrayList<LogEntry> entries = new ArrayList<>();
-
-
-
 
 		getView().setEntries(Game.getInstance().getChatLog());
 	}

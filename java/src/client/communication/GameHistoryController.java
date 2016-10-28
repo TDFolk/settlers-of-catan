@@ -38,7 +38,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 		List<LogEntry> log = game.getHistory();
 		
 		List<LogEntry> entries = new ArrayList<LogEntry>();
-		entries.add(new LogEntry(CatanColor.BROWN, "THERE IS NO HISTORY"));
+		entries.add(new LogEntry(CatanColor.GREEN, "Catan by //TODO"));
 		getView().setEntries(entries);
 	}
 
@@ -53,6 +53,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 
 		if (MapController.isGameStarted()) {
 
+			System.out.println("Updating History");
 
 			Player player = Game.getInstance().getPlayersList().get(Game.getInstance().getPlayerTurn());
 			PlayerInfo info = player.getPlayerInfo();

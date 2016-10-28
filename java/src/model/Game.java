@@ -39,8 +39,6 @@ public class Game extends Observable {
 
     private int versionNumber = 1;
     private Bank bank;
-    //private List<Message> chat;
-    //private List<Message> log;
     private List<LogEntry> chatLog = new ArrayList<LogEntry>();
     private List<LogEntry> historyLog = new ArrayList<LogEntry>();
     private Map map;
@@ -68,8 +66,8 @@ public class Game extends Observable {
                                                 model.getBank().getWood());
         this.bank = new Bank(pool, deck);
 
-        ArrayList<LogEntry> chat = createLogList(model.getChat().getLines(), model.getPlayers());
-        ArrayList<LogEntry> log = createLogList(model.getLog().getLines(), model.getPlayers());
+        ArrayList<LogEntry> chat = createLogList(model.getChat().getLines(), model.getPlayers(), "chat");
+        ArrayList<LogEntry> log = createLogList(model.getLog().getLines(), model.getPlayers(), "history");
 
         this.chatLog = chat;
         this.historyLog = log;
@@ -734,58 +732,65 @@ public class Game extends Observable {
 
     }
 
-    public ArrayList<LogEntry> createLogList(JsonLine[] lines, JsonPlayer[] players)
+    public ArrayList<LogEntry> createLogList(JsonLine[] lines, JsonPlayer[] players, String type)
     {
 
         ArrayList<LogEntry> messageList = new ArrayList<>();
 
         for(int i = 0; i < lines.length; i++)
         {
-            CatanColor color = null;
-            for (int j = 0; j < players.length; j++)
-            {
-                if(players[j] != null && (lines[i].getSource().equals(players[j].getName())))
-                {
-                    switch (players[j].getColor()) {
+            if((type.equals("chat") && !historyHack(lines[i].getMessage())) || (type.equals("history")
+                    && historyHack(lines[i].getMessage()))) {
 
-                        case "red":
-                            color = CatanColor.RED;
-                            break;
-                        case "orange":
-                            color = CatanColor.ORANGE;
-                            break;
-                        case "yellow":
-                            color = CatanColor.YELLOW;
-                            break;
-                        case "blue":
-                            color = CatanColor.BLUE;
-                            break;
-                        case "green":
-                            color = CatanColor.GREEN;
-                            break;
-                        case "purple":
-                            color = CatanColor.PURPLE;
-                            break;
-                        case "puce":
-                            color = CatanColor.PUCE;
-                            break;
-                        case "white":
-                            color = CatanColor.WHITE;
-                            break;
-                        case "brown":
-                            color = CatanColor.BROWN;
-                            break;
-                        default:
-                            color = CatanColor.BLUE;
+                CatanColor color = null;
+                for (int j = 0; j < players.length; j++) {
+                    if (players[j] != null && (lines[i].getSource().equals(players[j].getName()))) {
+                        switch (players[j].getColor()) {
 
+                            case "red":
+                                color = CatanColor.RED;
+                                break;
+                            case "orange":
+                                color = CatanColor.ORANGE;
+                                break;
+                            case "yellow":
+                                color = CatanColor.YELLOW;
+                                break;
+                            case "blue":
+                                color = CatanColor.BLUE;
+                                break;
+                            case "green":
+                                color = CatanColor.GREEN;
+                                break;
+                            case "purple":
+                                color = CatanColor.PURPLE;
+                                break;
+                            case "puce":
+                                color = CatanColor.PUCE;
+                                break;
+                            case "white":
+                                color = CatanColor.WHITE;
+                                break;
+                            case "brown":
+                                color = CatanColor.BROWN;
+                                break;
+                            default:
+                                color = CatanColor.BLUE;
+
+                        }
                     }
                 }
+                messageList.add(new LogEntry(color, lines[i].getMessage()));
             }
-            messageList.add(new LogEntry(color, lines[i].getMessage()));
         }
 
         return messageList;
 
+    }
+
+    public boolean historyHack(String message)
+    {
+        return message.startsWith("#history");
     }
     
     public void addChatMessage(LogEntry entry) {
