@@ -28,11 +28,17 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	private ISelectColorView selectColorView;
 	private IMessageView messageView;
 	private IAction joinAction;
+	private static boolean canPoll = false;
 
 	private GameInfo game;
 	private PlayerInfo playerInfo;
     private GameInfo[] currentGameInfos;
 
+
+	public static boolean canPoll()
+	{
+		return canPoll;
+	}
 
 	/**
 	 * JoinGameController constructor
@@ -264,6 +270,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString().toLowerCase())){
 
+			canPoll = true;
+
 			playerInfo.setColor(color);
 			Game.getInstance().setCurrentPlayerInfo(this.playerInfo);
 
@@ -321,10 +329,21 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	public void update(Observable o, Object arg) {
 
         //currentGameInfos
-
 		if(getJoinGameView().isModalShowing()){
 
-//			start();
+			GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
+			currentGameInfos = gameInfos;
+
+			playerInfo.setName(ServerProxy.getServer().getCatanUsername());
+			playerInfo.setId(Integer.parseInt(ServerProxy.getServer().getCatanPlayerID()));
+
+			if(gameInfos != null){
+				getJoinGameView().setGames(gameInfos, playerInfo);
+			}
+
+			if(!getJoinGameView().isModalShowing()) {
+				getJoinGameView().showModal();
+			}
 		}
 	}
 

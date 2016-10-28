@@ -2,6 +2,7 @@ package server;
 
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.join.JoinGameController;
 import com.google.gson.JsonObject;
 import command.game.GameListHolder;
 import model.Facade;
@@ -55,13 +56,17 @@ public class ServerPoller {
                 Facade.getInstance().updateGameInfo(newGameList);
             }
 
-            currentModel = proxy.gameModelVersion(Facade.getInstance().getVersionNumber());
-            if (currentModel != null) {
-                if (!currentModel.equals("\"true\"")) {
-                    Facade.getInstance().replaceModel(currentModel);
-                    //Facade.getInstance().incrementVersionNumber();
+            if(JoinGameController.canPoll())
+            {
+                currentModel = proxy.gameModelVersion(Facade.getInstance().getVersionNumber());
+                if (currentModel != null) {
+                    if (!currentModel.equals("\"true\"")) {
+                        Facade.getInstance().replaceModel(currentModel);
+                        //Facade.getInstance().incrementVersionNumber();
+                    }
                 }
             }
+
         }
     };
 
