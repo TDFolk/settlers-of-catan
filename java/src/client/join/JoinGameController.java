@@ -31,6 +31,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 	private GameInfo game;
 	private PlayerInfo playerInfo;
+    private GameInfo[] currentGameInfos;
 
 
 	/**
@@ -113,6 +114,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		getJoinGameView().showModal();
 		GameInfo[] gameInfos = ServerProxy.getServer().gameList().getGameInfos();
+        currentGameInfos = gameInfos;
 
 		playerInfo.setName(ServerProxy.getServer().getCatanUsername());
 		playerInfo.setId(Integer.parseInt(ServerProxy.getServer().getCatanPlayerID()));
@@ -317,6 +319,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+
+        //currentGameInfos
 
 		if(getJoinGameView().isModalShowing()){
 
