@@ -211,19 +211,21 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		for(int i = 0; i < CatanColor.values().length; i++) {
 
 			for (PlayerInfo playerInfo : game.getPlayers()) {
+				//check all the players if they have the same color as this one
 				if ((CatanColor.values()[i] == (playerInfo.getColor()))) {
 
 					//disable the colors that are chosen
 
-					if(playerInfo.getId() != this.playerInfo.getId()){
-						getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
+
+					if(playerInfo.getId() == this.playerInfo.getId()){
+						getSelectColorView().setColorEnabled(playerInfo.getColor(), true);
 					}
 					else {
-
+						getSelectColorView().setColorEnabled(playerInfo.getColor(), false);
 					}
 				}
 				else {
-					getSelectColorView().setColorEnabled(CatanColor.values()[i], true);
+					//getSelectColorView().setColorEnabled(CatanColor.values()[i], true);
 				}
 			}
 		}
@@ -252,7 +254,10 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void cancelJoinGame() {
-	
+		for(int i = 0; i < CatanColor.values().length; i++){
+			getSelectColorView().setColorEnabled(CatanColor.values()[i], true);
+		}
+
 		getJoinGameView().closeModal();
 	}
 

@@ -3,6 +3,7 @@ package client.turntracker;
 import client.data.PlayerInfo;
 import client.map.MapController;
 import client.states.DiscardingState;
+import client.states.FirstRoundState;
 import model.Facade;
 import model.Game;
 import model.Player;
@@ -124,7 +125,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				boolean currentTest = isCurrentTurn(index);
 				boolean largestTest= isLargestArmy(index);
 				boolean longestTest = isLongestRoad(index);
-				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
+//				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
 			}
 
 			//check to see if the game is over...
@@ -134,6 +135,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			}
 
 
+
+			//end turn here???
+//			if(MapController.getState() instanceof FirstRoundState){
+//				//ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
+//			}
 		}
 		//game hasn't started yet
 		else {
