@@ -297,10 +297,7 @@ public class MapController extends Controller implements IMapController, Observe
 
 		//place roads
 		for(Road road : game.getMap().getRoads()){
-			if(road.getColor() == null){
-				System.out.println("ERROR ERROR ERROR");
-				getView().placeRoad(road.getLocation(), road.getColor());
-			}
+			getView().placeRoad(road.getLocation(), road.getColor());
 		}
 
 		//place robber

@@ -58,10 +58,11 @@ public class ServerPoller {
 
             if(JoinGameController.canPoll())
             {
-                System.out.println("Updating Model");
+
                 currentModel = proxy.gameModelVersion(Facade.getInstance().getVersionNumber());
                 if (currentModel != null) {
                     if (!currentModel.equals("\"true\"")) {
+                        System.out.println("Updating Model");
                         Facade.getInstance().replaceModel(currentModel);
                         //Facade.getInstance().incrementVersionNumber();
                     }
