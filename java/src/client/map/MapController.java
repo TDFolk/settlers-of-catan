@@ -43,6 +43,9 @@ public class MapController extends Controller implements IMapController, Observe
 
 	private boolean firstRoundDone = false;
 	private boolean secondRoundDone = false;
+
+	private List<Road> roadList = new ArrayList<>();
+	private List<Settlement> settlementList = new ArrayList<>();
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -104,51 +107,6 @@ public class MapController extends Controller implements IMapController, Observe
 				}
 			}
 		}
-
-//		Random rand = new Random();
-//
-//		for (int x = 0; x <= 3; ++x) {
-//
-//			int maxY = 3 - x;
-//			for (int y = -3; y <= maxY; ++y) {
-//				int r = rand.nextInt(HexType.values().length);
-//				HexType hexType = HexType.values()[r];
-//				if(hexType == HexType.WATER){
-//					hexType = HexType.ORE;
-//				}
-//				HexLocation hexLoc = new HexLocation(x, y);
-//				getView().addHex(hexLoc, hexType);
-////				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-////						CatanColor.RED);
-////				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-////						CatanColor.BLUE);
-////				getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-////						CatanColor.ORANGE);
-////				getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-////				getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
-//			}
-//
-//			if (x != 0) {
-//				int minY = x - 3;
-//				for (int y = minY; y <= 3; ++y) {
-//					int r = rand.nextInt(HexType.values().length);
-//					HexType hexType = HexType.values()[r];
-//					if(hexType == HexType.WATER){
-//						hexType = HexType.ORE;
-//					}
-//					HexLocation hexLoc = new HexLocation(-x, y);
-//					getView().addHex(hexLoc, hexType);
-////					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.NorthWest),
-////							CatanColor.RED);
-////					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.SouthWest),
-////							CatanColor.BLUE);
-////					getView().placeRoad(new EdgeLocation(hexLoc, EdgeDirection.South),
-////							CatanColor.ORANGE);
-////					getView().placeSettlement(new VertexLocation(hexLoc,  VertexDirection.NorthWest), CatanColor.GREEN);
-////					getView().placeCity(new VertexLocation(hexLoc,  VertexDirection.NorthEast), CatanColor.PURPLE);
-//				}
-//			}
-//		}
 	}
 
 	public boolean canPlaceRoad(EdgeLocation edgeLoc) {
@@ -175,6 +133,7 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().placeRoad(edgeLoc, Game.getInstance().getCurrentPlayerInfo().getColor());
 		if(state instanceof FirstRoundState || state instanceof SecondRoundState){
 			ServerProxy.getServer().buildRoad(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), edgeLoc, true);
+			roadList.add(new Road(Game.getInstance().getCurrentPlayerInfo().getColor(), edgeLoc));
 		}
 
 	}
@@ -183,6 +142,7 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().placeSettlement(vertLoc, Game.getInstance().getCurrentPlayerInfo().getColor());
 		if(state instanceof FirstRoundState || state instanceof SecondRoundState){
 			ServerProxy.getServer().buildSettlement(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), vertLoc, true);
+			settlementList.add(new Settlement(Game.getInstance().getCurrentPlayerInfo().getColor(), vertLoc));
 		}
 	}
 
