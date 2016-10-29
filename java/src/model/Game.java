@@ -983,9 +983,30 @@ public class Game extends Observable {
             for (int i = 0; i < newGameList.length; i++) {
                 if (this.gameInfo.getId() == newGameList[i].getId()) {
                     this.gameInfo = newGameList[i];
+
+                    //update the client's player list as well
+                    for(int j = 0; j < newGameList[i].getPlayers().size(); j++)
+                    {
+                        if(playersList != null) {
+                            for (int k = 0; k < this.playersList.size(); k++) {
+
+                                //don't add a player to the player list if he is already in there...
+                                if (newGameList[i].getPlayers().get(j).getId() != this.playersList.get(k).getPlayerInfo().getId()) {
+
+                                    PlayerInfo playerInfo = newGameList[i].getPlayers().get(j);
+                                    Player p = new Player();
+                                    p.setPlayerInfo(playerInfo);
+
+                                    this.playersList.add(p);
+                                }
+                            }
+                        }
+                    }
+
                 }
             }
         }
+
             allGameInfos = newGameList;
 
             setChanged();
