@@ -135,8 +135,11 @@ public class MapController extends Controller implements IMapController, Observe
 		if(state instanceof FirstRoundState || state instanceof SecondRoundState){
 			ServerProxy.getServer().buildRoad(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), edgeLoc, true);
 			roadList.add(new Road(Game.getInstance().getCurrentPlayerInfo().getColor(), edgeLoc));
-		}
 
+
+			//is this the right place to finish the turn????
+			ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
+		}
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
@@ -226,12 +229,8 @@ public class MapController extends Controller implements IMapController, Observe
 						//we're done with the 1st round state
 						firstRoundDone = true;
 						state = new NotMyTurnState();
-
-						//this response needs to update the model
-						//String response = ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
-						//Facade.getInstance().replaceModel(response);
+						return;
 					}
-					return;
 				}
 
 			}

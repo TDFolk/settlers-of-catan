@@ -111,6 +111,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			currentTurn = Game.getInstance().getTurnTracker().getCurrentTurn();
 			largestArmy = Game.getInstance().getTurnTracker().getLargestArmy();
 			longestRoad = Game.getInstance().getTurnTracker().getLongestRoad();
+			winner = -1;
 
 			List<Player> playersList = Game.getInstance().getPlayersList();
 			for(Player player : playersList){
