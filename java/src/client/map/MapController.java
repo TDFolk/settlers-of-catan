@@ -220,7 +220,9 @@ public class MapController extends Controller implements IMapController, Observe
 			state = new NotMyTurnState();
 			initFromModel();
 		}
-		if(arg.equals(true)){
+
+		//if game started...
+		if(isGameStarted()){
 			//set up states here
 			doState();
 			//update map
@@ -229,8 +231,15 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void doState(){
-		if(state instanceof FirstRoundState){
-			getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+		//check if the client's turn is the same as current player's turn, if so, do these
+		if(Game.getInstance().getPlayerTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
+			if(state instanceof FirstRoundState){
+				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+			}
+		}
+		//it's not our turn, so set the state to NotMyTurnState
+		else{
+			state = new NotMyTurnState();
 		}
 	}
 
