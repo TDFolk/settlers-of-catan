@@ -244,7 +244,9 @@ public class MapController extends Controller implements IMapController, Observe
 			//check if we've done the first round of the game
 			if(!firstRoundDone){
 				state = new FirstRoundState();
-				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getGameInfo().getPlayers().get(Game.getInstance().getPlayerTurn()).getColor(), false);
+				getView().startDrop(PieceType.ROAD, Game.getInstance().getGameInfo().getPlayers().get(Game.getInstance().getPlayerTurn()).getColor(), false);
+				//getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
 
 				//we're done with the 1st round state
 				firstRoundDone = true;
