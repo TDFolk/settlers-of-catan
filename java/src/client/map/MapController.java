@@ -5,6 +5,7 @@ import java.util.*;
 import client.states.FirstRoundState;
 import client.states.IGameState;
 import client.states.NotMyTurnState;
+import client.states.SecondRoundState;
 import model.Game;
 import model.map.*;
 import model.pieces.Building;
@@ -37,6 +38,9 @@ public class MapController extends Controller implements IMapController, Observe
 	private boolean init = false;
 	//????
 	RobPlayerInfo[] empty = {};
+
+	private boolean firstRoundDone = false;
+	private boolean secondRoundDone = false;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -222,7 +226,7 @@ public class MapController extends Controller implements IMapController, Observe
 		}
 
 		//if game started...
-		if(isGameStarted()){
+		if(isGameStarted() && (Game.getInstance().getPlayersList().size() == 4)){
 			//set up states here
 			doState();
 			//update map
@@ -233,9 +237,26 @@ public class MapController extends Controller implements IMapController, Observe
 	public void doState(){
 		//check if the client's turn is the same as current player's turn, if so, do these
 		if(Game.getInstance().getPlayerTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
-			if(state instanceof FirstRoundState){
+
+			//check if we've done the first round of the game
+			if(!firstRoundDone){
+				state = new FirstRoundState();
 				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+
+				//we're done with the 1st round state
+				firstRoundDone = true;
 			}
+
+			//check if we've done the second round of the game
+			if(!secondRoundDone){
+				state = new SecondRoundState();
+				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+
+				//we're done with the 2nd round state
+				secondRoundDone = true;
+			}
+
+
 		}
 		//it's not our turn, so set the state to NotMyTurnState
 		else{
