@@ -230,9 +230,9 @@ public class MapController extends Controller implements IMapController, Observe
 		if(Game.getInstance().getGameInfo() != null){
 			if(isGameStarted() && (Game.getInstance().getGameInfo().getPlayers().size() == 4)){
 				//set up states here
-				//doState();
+				doState();
 				//update map
-				//updateCatanMap();
+				updateCatanMap();
 			}
 		}
 	}
