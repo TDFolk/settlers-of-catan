@@ -77,7 +77,10 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		if (hasResourcePort(giveResource)) {
 			ratio = 2;
 		}
-		ServerProxy.getServer().maritimeTrade(Facade.getInstance().getPlayerIndex(), ratio, giveResource.name(), getResource.name());
+
+		String model = ServerProxy.getServer().maritimeTrade(Facade.getInstance().getPlayerIndex(), ratio, giveResource.name(), getResource.name());
+		Facade.getInstance().replaceModel(model);
+
 		tradeOverlay.reset();
 		getTradeOverlay().closeModal();
 	}
