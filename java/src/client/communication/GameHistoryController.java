@@ -55,18 +55,7 @@ public class GameHistoryController extends Controller implements IGameHistoryCon
 
 			System.out.println("Updating History");
 
-//			Player player = Game.getInstance().getPlayersList().get(Game.getInstance().getPlayerTurn());
-//			PlayerInfo info = player.getPlayerInfo();
-//			String playerName = info.getName();
-//			CatanColor color = player.getPlayerInfo().getColor();
-
-//			String message = playerName + " has changed the value of Object: " + arg;
 //			Game.getInstance().addHistoryEntry(new LogEntry(color, message));
-//
-//			if (arg != null) {
-//				System.out.println("GAME HISTORY: " + message);
-//			}
-
 
 			getView().setEntries(Game.getInstance().getHistory());
 		}
