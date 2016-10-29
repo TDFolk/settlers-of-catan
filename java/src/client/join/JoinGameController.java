@@ -272,8 +272,8 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		if(ServerProxy.getServer().gameJoin(this.game.getId(), color.toString().toLowerCase())){
 
-			ServerProxy.getServer().sendChat(playerInfo.getPlayerIndex(),
-					"random#showmethemoney " + getPlayerInfo().getName() + " has joined the game");
+//			ServerProxy.getServer().sendChat(playerInfo.getPlayerIndex(),
+//					"random#showmethemoney " + getPlayerInfo().getName() + " has joined the game");
 
 			canPoll = true;
 
