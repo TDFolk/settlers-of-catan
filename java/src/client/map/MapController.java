@@ -171,13 +171,18 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void placeRoad(EdgeLocation edgeLoc) {
-		
 		getView().placeRoad(edgeLoc, Game.getInstance().getCurrentPlayerInfo().getColor());
+		if(state instanceof FirstRoundState || state instanceof SecondRoundState){
+			ServerProxy.getServer().buildRoad(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), edgeLoc, true);
+		}
+
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
-		
 		getView().placeSettlement(vertLoc, Game.getInstance().getCurrentPlayerInfo().getColor());
+		if(state instanceof FirstRoundState || state instanceof SecondRoundState){
+			ServerProxy.getServer().buildSettlement(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), vertLoc, true);
+		}
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
@@ -198,7 +203,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void cancelMove() {
-		
+
 	}
 	
 	public void playSoldierCard() {	
@@ -246,11 +251,12 @@ public class MapController extends Controller implements IMapController, Observe
 			if(!firstRoundDone){
 				state = new FirstRoundState();
 				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
-
 				getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
 
 				//we're done with the 1st round state
 				firstRoundDone = true;
+
+				return;
 			}
 
 			//check if we've done the second round of the game
@@ -262,6 +268,8 @@ public class MapController extends Controller implements IMapController, Observe
 
 				//we're done with the 2nd round state
 				secondRoundDone = true;
+
+				return;
 			}
 
 
