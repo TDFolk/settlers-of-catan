@@ -5,6 +5,7 @@ import client.map.MapController;
 import client.states.DiscardingState;
 import model.Facade;
 import model.Game;
+import model.Player;
 import server.ServerProxy;
 import shared.definitions.CatanColor;
 import client.base.*;
@@ -18,6 +19,11 @@ import java.util.Observer;
  * Implementation for the turn tracker controller
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController, Observer {
+
+	private int largestArmy;
+	private int longestRoad;
+	private int currentTurn;
+	private int winner;
 
 	public TurnTrackerController(ITurnTrackerView view) {
 		
@@ -55,21 +61,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		getView().setLocalPlayerColor(playerColor);
 
 
-		//PlayerInfo[] playersInfo = new PlayerInfo[Game.getInstance().getPlayersList().size()];
-		PlayerInfo[] playersInfo = new PlayerInfo[4];
-
-		for (int i = 0; i < playersInfo.length; i++) {
-			//playersInfo[i] = Game.getInstance().getPlayersList().get(i).getPlayerInfo();
-
-		}
-
-		if (playersInfo.length == 4) {
-			for (int i = 0; i < playersInfo.length; i++) {
-				//getView().initializePlayer(playersInfo[i].getPlayerIndex(), playersInfo[i].getName(),
-						//playersInfo[i].getColor());
-			}
-		}
-
 		String gameState = MapController.getState().toString();
 
 		switch (gameState) {
@@ -89,11 +80,14 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				getView().updateGameState("End Turn", true);
 				break;
 			case "NotMyTurnState":
-//				getView().updateGameState("Relax and Take Notes", false);
 				getView().updateGameState("Not My Turn", false);
 				break;
 			case "DiscardingState":
 				getView().updateGameState("Discarding", false);
+				break;
+			default:
+				getView().updateGameState("Not My Turn", false);
+				break;
 		}
 
 	}
@@ -106,7 +100,27 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+		if(MapController.isGameStarted() && (Game.getInstance().getGameInfo().getPlayers().size() == 4)){
+			largestArmy = Game.getInstance().getTurnTracker().getLargestArmy();
+			longestRoad = Game.getInstance().getTurnTracker().getLongestRoad();
+			currentTurn = Game.getInstance().getTurnTracker().getCurrentTurn();
+
+			List<Player> playersList = Game.getInstance().getPlayersList();
+			for(Player player : playersList){
+				if(player.getVictoryPoints() >= 10){
+					//set this winner = Game.getInstance().getWinner();
+					winner = 0;
+				}
+
+			}
+		}
+
+
+
+
 		initFromModel();
+
+
 	}
 }
 
