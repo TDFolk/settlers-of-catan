@@ -48,6 +48,8 @@ public class Game extends Observable {
     private Trade activeTrade; //null if none is ongoing
     private TurnTracker turnTracker;
     private Player winner;
+
+
     private GameInfo gameInfo;
     private PlayerInfo currentPlayerInfo;
     private GameInfo[] allGameInfos;
@@ -1011,4 +1013,13 @@ public class Game extends Observable {
     public void setTurnTracker(TurnTracker turnTracker) {
         this.turnTracker = turnTracker;
     }
+
+    public Player getWinner() {
+        return winner;
+    }
+
+    public void setWinner(Player winner) {
+        this.winner = winner;
+    }
+
 }
