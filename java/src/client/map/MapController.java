@@ -12,6 +12,7 @@ import model.pieces.Building;
 import model.pieces.City;
 import model.pieces.Road;
 import model.pieces.Settlement;
+import server.ServerProxy;
 import shared.definitions.*;
 import shared.locations.*;
 import client.base.*;
@@ -171,17 +172,17 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public void placeRoad(EdgeLocation edgeLoc) {
 		
-		getView().placeRoad(edgeLoc, CatanColor.ORANGE);
+		getView().placeRoad(edgeLoc, Game.getInstance().getCurrentPlayerInfo().getColor());
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
 		
-		getView().placeSettlement(vertLoc, CatanColor.ORANGE);
+		getView().placeSettlement(vertLoc, Game.getInstance().getCurrentPlayerInfo().getColor());
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
 		
-		getView().placeCity(vertLoc, CatanColor.ORANGE);
+		getView().placeCity(vertLoc, Game.getInstance().getCurrentPlayerInfo().getColor());
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
@@ -193,7 +194,7 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
 		
-		getView().startDrop(pieceType, CatanColor.ORANGE, true);
+		getView().startDrop(pieceType, Game.getInstance().getCurrentPlayerInfo().getColor(), true);
 	}
 	
 	public void cancelMove() {
@@ -244,9 +245,9 @@ public class MapController extends Controller implements IMapController, Observe
 			//check if we've done the first round of the game
 			if(!firstRoundDone){
 				state = new FirstRoundState();
-				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getGameInfo().getPlayers().get(Game.getInstance().getPlayerTurn()).getColor(), false);
-				getView().startDrop(PieceType.ROAD, Game.getInstance().getGameInfo().getPlayers().get(Game.getInstance().getPlayerTurn()).getColor(), false);
-				//getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+
+				getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
 
 				//we're done with the 1st round state
 				firstRoundDone = true;
@@ -256,6 +257,8 @@ public class MapController extends Controller implements IMapController, Observe
 			if(!secondRoundDone){
 				state = new SecondRoundState();
 				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+				getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+
 
 				//we're done with the 2nd round state
 				secondRoundDone = true;
