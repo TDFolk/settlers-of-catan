@@ -7,6 +7,7 @@ import client.states.IGameState;
 import client.states.NotMyTurnState;
 import client.states.SecondRoundState;
 import model.Game;
+import model.TurnTracker;
 import model.map.*;
 import model.pieces.Building;
 import model.pieces.City;
@@ -245,7 +246,8 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public void doState(){
 		//check if the client's turn is the same as current player's turn, if so, do these
-		if(Game.getInstance().getPlayerTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
+		TurnTracker turn = Game.getInstance().getTurnTracker();
+		if(turn.getCurrentTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
 
 			//check if we've done the first round of the game
 			if(!firstRoundDone){
