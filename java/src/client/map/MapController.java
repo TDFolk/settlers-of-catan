@@ -6,6 +6,7 @@ import client.states.FirstRoundState;
 import client.states.IGameState;
 import client.states.NotMyTurnState;
 import client.states.SecondRoundState;
+import model.Facade;
 import model.Game;
 import model.TurnTracker;
 import model.map.*;
@@ -212,14 +213,22 @@ public class MapController extends Controller implements IMapController, Observe
 			//check if we've done the first round of the game
 			if(!firstRoundDone){
 				state = new FirstRoundState();
-				getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
-				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
 
-				//we're done with the 1st round state
-				firstRoundDone = true;
+				if(roadList.size() == 0){
+					getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+				}
+				else if(settlementList.size() == 0){
+					getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+				}
 
 				if(roadList.size() == 1 && settlementList.size() == 1){
-					ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
+					//we're done with the 1st round state
+					firstRoundDone = true;
+					state = new NotMyTurnState();
+
+					//this response needs to update the model
+					String response = ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
+					//Facade.getInstance().replaceModel(response);
 				}
 				return;
 			}
