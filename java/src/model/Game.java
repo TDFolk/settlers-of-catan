@@ -797,7 +797,7 @@ public class Game extends Observable {
 
         for(int i = 0; i < lines.length; i++)
         {
-            if((type.equals("chat") && !historyHack(lines[i].getMessage()))) {
+            if((type.equals("chat") && !historyHack(lines[i].getMessage())) || type.equals("history")) {
 
                 CatanColor color = null;
                 for (int j = 0; j < players.length; j++) {
