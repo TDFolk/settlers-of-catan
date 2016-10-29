@@ -210,30 +210,33 @@ public class MapController extends Controller implements IMapController, Observe
 		TurnTracker turn = Game.getInstance().getTurnTracker();
 		if(turn.getCurrentTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
 
-			//check if we've done the first round of the game
-			if(!firstRoundDone){
-				state = new FirstRoundState();
+			if(Game.getInstance().getTurnTracker().getStatus().equals("FirstRound")){
+				//check if we've done the first round of the game
+				if(!firstRoundDone){
+					state = new FirstRoundState();
 
-				if(roadList.size() == 0){
-					getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
-				}
-				else if(settlementList.size() == 0){
-					getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+					if(settlementList.size() == 0){
+						getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+					}
+					else if(roadList.size() == 0){
+						getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+					}
+
+					if(roadList.size() == 1 && settlementList.size() == 1){
+						//we're done with the 1st round state
+						firstRoundDone = true;
+						state = new NotMyTurnState();
+
+						//this response needs to update the model
+						//String response = ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
+						//Facade.getInstance().replaceModel(response);
+					}
+					return;
 				}
 
-				if(roadList.size() == 1 && settlementList.size() == 1){
-					//we're done with the 1st round state
-					firstRoundDone = true;
-					state = new NotMyTurnState();
-
-					//this response needs to update the model
-					String response = ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
-					//Facade.getInstance().replaceModel(response);
-				}
-				return;
 			}
-
-			//check if we've done the second round of the game
+			else if(Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")){
+				//check if we've done the second round of the game
 //			if(!secondRoundDone){
 //				state = new SecondRoundState();
 //				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
@@ -245,8 +248,7 @@ public class MapController extends Controller implements IMapController, Observe
 //
 //				return;
 //			}
-
-
+			}
 		}
 		//it's not our turn, so set the state to NotMyTurnState
 		else{

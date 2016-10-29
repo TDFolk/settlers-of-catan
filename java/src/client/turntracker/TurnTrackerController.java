@@ -27,6 +27,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	private int winner;
 	private boolean gameOver = false;
 
+	private String endTurnResponse;
+
 	public TurnTrackerController(ITurnTrackerView view) {
 		
 		super(view);
@@ -45,7 +47,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	@Override
 	public void endTurn() {
-		ServerProxy.getServer().finishTurn(Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex());
+		//end turn here... need to update the model with this response
+		endTurnResponse = ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
 	}
 	
 	private void initFromModel() {
