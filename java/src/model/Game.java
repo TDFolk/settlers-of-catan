@@ -3,6 +3,7 @@ package model;
 import client.communication.LogEntry;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import com.google.gson.JsonParser;
 import decoder.JsonModels.*;
 import model.cards_resources.Bank;
 import model.cards_resources.DevelopmentCard;
@@ -68,6 +69,7 @@ public class Game extends Observable {
 
         ArrayList<LogEntry> chat = createLogList(model.getChat().getLines(), model.getPlayers(), "chat");
         ArrayList<LogEntry> log = createLogList(model.getLog().getLines(), model.getPlayers(), "history");
+        addHacks(log, model.getChat().getLines(), model.getPlayers());
 
         this.chatLog = chat;
         this.historyLog = log;
@@ -123,6 +125,60 @@ public class Game extends Observable {
         // If this object has changed, as indicated by the hasChanged method, then notify all of
         // its observers and then call the clearChanged method to indicate that this object has no longer changed.
         this.notifyObservers();
+
+    }
+
+    private void addHacks(ArrayList<LogEntry> log, JsonLine[] lines, JsonPlayer[] players) {
+
+        for(int i = 0; i < lines.length; i++)
+        {
+            if(historyHack(lines[i].getMessage()))
+            {
+                CatanColor color = null;
+                for (int j = 0; j < players.length; j++) {
+                    if (players[j] != null && (lines[i].getSource().equals(players[j].getName()))) {
+                        switch (players[j].getColor()) {
+
+                            case "red":
+                                color = CatanColor.RED;
+                                break;
+                            case "orange":
+                                color = CatanColor.ORANGE;
+                                break;
+                            case "yellow":
+                                color = CatanColor.YELLOW;
+                                break;
+                            case "blue":
+                                color = CatanColor.BLUE;
+                                break;
+                            case "green":
+                                color = CatanColor.GREEN;
+                                break;
+                            case "purple":
+                                color = CatanColor.PURPLE;
+                                break;
+                            case "puce":
+                                color = CatanColor.PUCE;
+                                break;
+                            case "white":
+                                color = CatanColor.WHITE;
+                                break;
+                            case "brown":
+                                color = CatanColor.BROWN;
+                                break;
+                            default:
+                                color = CatanColor.BLUE;
+
+                        }
+                    }
+                }
+
+                String message = lines[i].getMessage().split("#showmethemoney ", 2)[1];
+
+                LogEntry newLog = new LogEntry(color, message);
+                log.add(newLog);
+            }
+        }
 
     }
 
@@ -739,8 +795,7 @@ public class Game extends Observable {
 
         for(int i = 0; i < lines.length; i++)
         {
-            if((type.equals("chat") && !historyHack(lines[i].getMessage())) || (type.equals("history")
-                    && historyHack(lines[i].getMessage()))) {
+            if((type.equals("chat") && !historyHack(lines[i].getMessage()))) {
 
                 CatanColor color = null;
                 for (int j = 0; j < players.length; j++) {
@@ -790,7 +845,7 @@ public class Game extends Observable {
 
     public boolean historyHack(String message)
     {
-        return message.startsWith("#history");
+        return message.contains("#showmethemoney");
     }
     
     public void addChatMessage(LogEntry entry) {

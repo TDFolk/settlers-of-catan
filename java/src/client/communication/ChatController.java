@@ -38,8 +38,8 @@ public class ChatController extends Controller implements IChatController, Obser
 		int playerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 		CatanColor playerColor = Game.getInstance().getPlayer().getPlayerInfo().getColor();
 
-		//String model = ServerProxy.getServer().sendChat(playerIndex, Game.getInstance().getPlayer().getPlayerInfo().getName() + ": " + message);
-		String model = ServerProxy.getServer().sendChat(playerIndex, message);
+		String model = ServerProxy.getServer().sendChat(playerIndex, Game.getInstance().getPlayer().getPlayerInfo().getName() + ": " + message);
+		//String model = ServerProxy.getServer().sendChat(playerIndex, message);
 
 		Facade.getInstance().replaceModel(model);
 
