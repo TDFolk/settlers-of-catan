@@ -1003,4 +1003,12 @@ public class Game extends Observable {
     public void setGameInfos(GameInfo[] gameInfos) {
         this.allGameInfos = gameInfos;
     }
+    
+    public TurnTracker getTurnTracker() {
+        return turnTracker;
+    }
+
+    public void setTurnTracker(TurnTracker turnTracker) {
+        this.turnTracker = turnTracker;
+    }
 }
