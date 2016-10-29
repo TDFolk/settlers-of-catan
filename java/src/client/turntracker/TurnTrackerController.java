@@ -30,7 +30,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		
 		super(view);
 		
-		initFromModel();
+		//initFromModel();
 
 		// This Controller will now be notified to any changes in the Game Object
 		Game.getInstance().addObserver(this);
@@ -62,6 +62,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		getView().setLocalPlayerColor(playerColor);
 
 
+
 		String gameState = MapController.getState().toString();
 
 		switch (gameState) {
@@ -87,7 +88,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				getView().updateGameState("Discarding", false);
 				break;
 			default:
-				getView().updateGameState("Waiting for other players...", false);
+				getView().updateGameState("Not My Turn", false);
 				break;
 		}
 
@@ -102,6 +103,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	@Override
 	public void update(Observable o, Object arg) {
 		if(MapController.isGameStarted() && (Game.getInstance().getGameInfo().getPlayers().size() == 4)){
+			initFromModel();
 			currentTurn = Game.getInstance().getTurnTracker().getCurrentTurn();
 			largestArmy = Game.getInstance().getTurnTracker().getLargestArmy();
 			longestRoad = Game.getInstance().getTurnTracker().getLongestRoad();
@@ -118,6 +120,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				}
 
 				//update the player view depending on what they have
+				int vp = player.getVictoryPoints();
+				boolean currentTest = isCurrentTurn(index);
+				boolean largestTest= isLargestArmy(index);
+				boolean longestTest = isLongestRoad(index);
 				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
 			}
 
@@ -129,13 +135,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 
 		}
-
-
-
-
-		initFromModel();
-
-
+		//game hasn't started yet
+		else {
+			getView().updateGameState("Waiting for other players...", false);
+		}
 	}
 
 	private boolean isCurrentTurn(int index){
