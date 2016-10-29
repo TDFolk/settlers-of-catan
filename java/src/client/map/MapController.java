@@ -252,8 +252,8 @@ public class MapController extends Controller implements IMapController, Observe
 			//check if we've done the first round of the game
 			if(!firstRoundDone){
 				state = new FirstRoundState();
-				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
 				getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
 
 				//we're done with the 1st round state
 				firstRoundDone = true;
@@ -297,7 +297,10 @@ public class MapController extends Controller implements IMapController, Observe
 
 		//place roads
 		for(Road road : game.getMap().getRoads()){
-			getView().placeRoad(road.getLocation(), road.getColor());
+			if(road.getColor() == null){
+				System.out.println("ERROR ERROR ERROR");
+				getView().placeRoad(road.getLocation(), road.getColor());
+			}
 		}
 
 		//place robber
