@@ -1,5 +1,6 @@
 package command.player;
 
+import client.map.MapController;
 import com.google.gson.Gson;
 import shared.locations.EdgeLocation;
 
@@ -28,7 +29,7 @@ public class BuildRoadObject {
                 "  \"roadLocation\": {\n" +
                 "    \"x\": \"" + roadLocation.getHexLoc().getX() + "\",\n" +
                 "    \"y\": \"" + roadLocation.getHexLoc().getY() + "\",\n" +
-                "    \"direction\": \"" + roadLocation.getDir() + "\"\n" +
+                "    \"direction\": \"" + MapController.directionToString(roadLocation.getDir().toString()) + "\"\n" +
                 "  },\n" +
                 "  \"free\": \"Boolean\"\n" +
                 "}";

@@ -1,5 +1,6 @@
 package command.player;
 
+import client.map.MapController;
 import com.google.gson.Gson;
 import shared.locations.VertexLocation;
 
@@ -25,7 +26,7 @@ public class BuildSettlementObject {
                 "  \"vertexLocation\": {\n" +
                 "    \"x\": \"" + vertexLocation.getHexLoc().getX() + "\",\n" +
                 "    \"y\": \"" + vertexLocation.getHexLoc().getY() + "\",\n" +
-                "    \"direction\": \"" + vertexLocation.getDir() + "\"\n" +
+                "    \"direction\": \"" + MapController.directionToString(vertexLocation.getDir().toString()) + "\"\n" +
                 "  },\n" +
                 "  \"free\": \"" + free + "\"\n" +
                 "}";
