@@ -46,7 +46,7 @@ public class Game extends Observable {
     private List<Player> playersList;
     private Player player;
     private Trade activeTrade; //null if none is ongoing
-    private TurnTracker turntracker;
+    private TurnTracker turnTracker;
     private Player winner;
     private GameInfo gameInfo;
     private PlayerInfo currentPlayerInfo;
@@ -115,7 +115,7 @@ public class Game extends Observable {
                 model.getTurnTracker().getCurrentTurn(),
                 model.getTurnTracker().getLongestRoad(),
                 model.getTurnTracker().getLargestArmy());
-        this.turntracker = tracker;
+        this.turnTracker = tracker;
 
         //replace winner
         this.versionNumber = model.getVersion();
@@ -949,7 +949,7 @@ public class Game extends Observable {
     }
 
     public int getPlayerTurn() {
-        return this.turntracker.getCurrentTurn();
+        return this.turnTracker.getCurrentTurn();
     }
 
     public GameInfo getGameInfo() {
