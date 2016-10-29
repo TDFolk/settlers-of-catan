@@ -22,7 +22,7 @@ public class BuildSettlementObject {
     public String toJSON(){
         String response = "{\n" +
                 "  \"type\": \"buildSettlement\",\n" +
-                "  \"playerIndex\": \"" + playerIndex + "\",\n" +
+                "  \"playerIndex\": " + playerIndex + ",\n" +
                 "  \"vertexLocation\": {\n" +
                 "    \"x\": \"" + vertexLocation.getHexLoc().getX() + "\",\n" +
                 "    \"y\": \"" + vertexLocation.getHexLoc().getY() + "\",\n" +
