@@ -225,6 +225,7 @@ public class MapController extends Controller implements IMapController, Observe
 						getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
 					}
 
+					//did we do it correctly?
 					if(roadList.size() == 1 && settlementList.size() == 1){
 						//we're done with the 1st round state
 						firstRoundDone = true;
@@ -235,18 +236,24 @@ public class MapController extends Controller implements IMapController, Observe
 
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")){
-				//check if we've done the second round of the game
-//			if(!secondRoundDone){
-//				state = new SecondRoundState();
-//				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
-//				getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
-//
-//
-//				//we're done with the 2nd round state
-//				secondRoundDone = true;
-//
-//				return;
-//			}
+//				check if we've done the second round of the game
+				if (!secondRoundDone) {
+					state = new SecondRoundState();
+
+					if(settlementList.size() == 1){
+						getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+					}
+					else if(roadList.size() == 1)
+						getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+					}
+
+					//did we do it correctly?
+					if(roadList.size() == 2 && settlementList.size() == 2) {
+						//we're done with the 2nd round state
+						secondRoundDone = true;
+						state = new NotMyTurnState();
+						return;
+				}
 			}
 		}
 		//it's not our turn, so set the state to NotMyTurnState
