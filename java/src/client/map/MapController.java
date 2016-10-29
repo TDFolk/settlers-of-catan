@@ -262,17 +262,17 @@ public class MapController extends Controller implements IMapController, Observe
 			}
 
 			//check if we've done the second round of the game
-			if(!secondRoundDone){
-				state = new SecondRoundState();
-				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
-				getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
-
-
-				//we're done with the 2nd round state
-				secondRoundDone = true;
-
-				return;
-			}
+//			if(!secondRoundDone){
+//				state = new SecondRoundState();
+//				getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+//				getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+//
+//
+//				//we're done with the 2nd round state
+//				secondRoundDone = true;
+//
+//				return;
+//			}
 
 
 		}
@@ -284,8 +284,6 @@ public class MapController extends Controller implements IMapController, Observe
 
 	private void updateCatanMap(){
 		Game game = Game.getInstance();
-
-		//place buildings
 		for(Building building : game.getMap().getBuildings()){
 			//place settlements
 			if(building instanceof Settlement){
