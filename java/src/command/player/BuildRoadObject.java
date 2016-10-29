@@ -25,7 +25,7 @@ public class BuildRoadObject {
 //        return gson.toJson(this);
         String response = "{\n" +
                 "  \"type\": \"buildRoad\",\n" +
-                "  \"playerIndex\": \"integer\",\n" +
+                "  \"playerIndex\": "+ playerIndex +",\n" +
                 "  \"roadLocation\": {\n" +
                 "    \"x\": \"" + roadLocation.getHexLoc().getX() + "\",\n" +
                 "    \"y\": \"" + roadLocation.getHexLoc().getY() + "\",\n" +
