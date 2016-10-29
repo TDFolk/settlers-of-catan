@@ -20,10 +20,11 @@ import java.util.Observer;
  */
 public class TurnTrackerController extends Controller implements ITurnTrackerController, Observer {
 
+	private int currentTurn;
 	private int largestArmy;
 	private int longestRoad;
-	private int currentTurn;
 	private int winner;
+	private boolean gameOver = false;
 
 	public TurnTrackerController(ITurnTrackerView view) {
 		
@@ -86,7 +87,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				getView().updateGameState("Discarding", false);
 				break;
 			default:
-				getView().updateGameState("Not My Turn", false);
+				getView().updateGameState("Waiting for other players...", false);
 				break;
 		}
 
@@ -101,18 +102,32 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	@Override
 	public void update(Observable o, Object arg) {
 		if(MapController.isGameStarted() && (Game.getInstance().getGameInfo().getPlayers().size() == 4)){
+			currentTurn = Game.getInstance().getTurnTracker().getCurrentTurn();
 			largestArmy = Game.getInstance().getTurnTracker().getLargestArmy();
 			longestRoad = Game.getInstance().getTurnTracker().getLongestRoad();
-			currentTurn = Game.getInstance().getTurnTracker().getCurrentTurn();
 
 			List<Player> playersList = Game.getInstance().getPlayersList();
 			for(Player player : playersList){
+				int index = player.getPlayerInfo().getPlayerIndex();
+
+				//set the winner to whoever has 10+ victory points...
 				if(player.getVictoryPoints() >= 10){
-					//set this winner = Game.getInstance().getWinner();
-					winner = 0;
+					//set this winner = Game.getInstance().getWinner();...????
+					winner = player.getPlayerInfo().getPlayerIndex();
+					gameOver = true;
 				}
 
+				//update the player view depending on what they have
+				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
 			}
+
+			//check to see if the game is over...
+			if(isGameOver()){
+				//end the game here....
+				getView().updateGameState("GAME OVER!", false);
+			}
+
+
 		}
 
 
@@ -121,6 +136,35 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		initFromModel();
 
 
+	}
+
+	private boolean isCurrentTurn(int index){
+		if(index == currentTurn){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	private boolean isLargestArmy(int index){
+		if(index == largestArmy){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	private boolean isLongestRoad(int index){
+		if(index == longestRoad){
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+
+	private boolean isGameOver(){
+		return this.gameOver;
 	}
 }
 
