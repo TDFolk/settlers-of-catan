@@ -218,6 +218,9 @@ public class MapController extends Controller implements IMapController, Observe
 				//we're done with the 1st round state
 				firstRoundDone = true;
 
+				if(roadList.size() == 1 && settlementList.size() == 1){
+					ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
+				}
 				return;
 			}
 
