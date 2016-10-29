@@ -740,8 +740,8 @@ public class Game extends Observable {
                 CatanColor color = null;
 
                 for (int j = 0; j < players.length; j++) {
-                    if (players[i].getPlayerIndex() == settlements[i].getOwner()) {
-                        switch (players[i].getColor()) {
+                    if (players[j].getPlayerIndex() == settlements[i].getOwner()) {
+                        switch (players[j].getColor()) {
 
                             case "red":
                                 color = CatanColor.RED;
