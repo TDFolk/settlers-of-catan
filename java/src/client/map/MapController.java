@@ -238,7 +238,7 @@ public class MapController extends Controller implements IMapController, Observe
 				//set up states here
 				doState();
 				//update map
-				//updateCatanMap();
+				updateCatanMap();
 			}
 		}
 	}
