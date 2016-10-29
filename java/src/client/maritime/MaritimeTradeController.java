@@ -63,7 +63,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		}
 		setGettableResources();
 		setGivableResources();
-		tradeOverlay.showGiveOptions(threeForOne ? ALL_RESOURCES : twoForOnes);
+		tradeOverlay.showGiveOptions(givableResources);
 		tradeOverlay.hideGetOptions();
 		tradeOverlay.setCancelEnabled(true);
 		tradeOverlay.setTradeEnabled(false);
@@ -72,10 +72,13 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void makeTrade() {
-		//trusts that previous steps worked correctly. If you don't have the 2:1 port necessary, you must have had a 3:1
-		int ratio = 3;
+		int ratio;
 		if (hasResourcePort(giveResource)) {
 			ratio = 2;
+		} else if (threeForOne) {
+			ratio = 3;
+		} else {
+			ratio = 4;
 		}
 
 		String model = ServerProxy.getServer().maritimeTrade(Facade.getInstance().getPlayerIndex(), ratio, giveResource.name(), getResource.name());
@@ -101,7 +104,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	@Override
 	public void setGiveResource(ResourceType resource) {
 		giveResource = resource;
-		tradeOverlay.selectGiveOption(resource, hasResourcePort(resource) ? 2 : 3);
+		tradeOverlay.selectGiveOption(resource, hasResourcePort(resource) ? 2 : (threeForOne ? 3 : 4));
 		tradeOverlay.showGetOptions(gettableResources);
 		tradeOverlay.hideGiveOptions();
 	}
@@ -165,8 +168,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			}
 		} else {
 			int i = 0;
-			for (ResourceType resource : twoForOnes) {
-				if (Facade.getInstance().getPlayerResource(resource) >=2) {
+			for (ResourceType resource : ALL_RESOURCES) {
+				if (Facade.getInstance().getPlayerResource(resource) >= 4 ||
+						Facade.getInstance().getPlayerResource(resource) >= 2 && Facade.getInstance().canPortTrade(resource)) {
 					givableResources[i++] = resource;
 				}
 			}
