@@ -21,8 +21,6 @@ public class BuildRoadObject {
     }
 
     public String toJSON(){
-//        Gson gson = new Gson();
-//        return gson.toJson(this);
         String response = "{\n" +
                 "  \"type\": \"buildRoad\",\n" +
                 "  \"playerIndex\": "+ playerIndex +",\n" +
@@ -31,7 +29,7 @@ public class BuildRoadObject {
                 "    \"y\": \"" + roadLocation.getHexLoc().getY() + "\",\n" +
                 "    \"direction\": \"" + MapController.directionToString(roadLocation.getDir().toString()) + "\"\n" +
                 "  },\n" +
-                "  \"free\": \"Boolean\"\n" +
+                "  \"free\": \"" + free + "\"\n" +
                 "}";
         return response;
     }
