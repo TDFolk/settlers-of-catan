@@ -656,7 +656,7 @@ public class Game extends Observable {
 
                 CatanColor color = null;
 
-                for (int j = 0; i < players.length; i++) {
+                for (int j = 0; j < players.length; j++) {
                     if (players[i].getPlayerIndex() == cities[i].getOwner()) {
                         switch (players[i].getColor()) {
 
@@ -737,7 +737,7 @@ public class Game extends Observable {
 
                 CatanColor color = null;
 
-                for (int j = 0; i < players.length; i++) {
+                for (int j = 0; j < players.length; j++) {
                     if (players[i].getPlayerIndex() == settlements[i].getOwner()) {
                         switch (players[i].getColor()) {
 
