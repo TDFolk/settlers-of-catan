@@ -226,12 +226,14 @@ public class MapController extends Controller implements IMapController, Observe
 		}
 
 		//if game started...
-		if(isGameStarted() && (Game.getInstance().getPlayersList().size() == 4)){
+
+		if(isGameStarted() && (Game.getInstance().getGameInfo().getPlayers().size() == 4)){
 			//set up states here
 			doState();
 			//update map
 			updateCatanMap();
 		}
+
 	}
 
 	public void doState(){
