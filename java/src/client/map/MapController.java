@@ -353,5 +353,45 @@ public class MapController extends Controller implements IMapController, Observe
 	public static void setGameStarted(boolean gameStarted) {
 		MapController.gameStarted = gameStarted;
 	}
+
+	public static String directionToString(String direction){
+		String returnString = "";
+		switch(direction) {
+
+			case "North":
+				returnString = "N";
+				break;
+
+			case "West" :
+				returnString = "W";
+				break;
+
+			case "South" :
+				returnString = "S";
+				break;
+
+			case "East" :
+				returnString = "E";
+				break;
+
+			case "NorthEast":
+				returnString = "NE";
+				break;
+
+			case "NorthWest":
+				returnString = "NW";
+				break;
+
+			case "SouthEast":
+				returnString = "SE";
+				break;
+
+			case "SouthWest":
+				returnString = "SW";
+				break;
+
+		}
+		return returnString;
+	}
 }
 
