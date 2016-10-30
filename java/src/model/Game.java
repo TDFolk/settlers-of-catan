@@ -409,40 +409,42 @@ public class Game extends Observable {
             for (int i = 0; i < roads.length; i++) {
                 CatanColor color = null;
 
-                if (players[i].getPlayerIndex() == roads[i].getOwner()) {
-                    switch (players[i].getColor()) {
-                        //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+                for(int j = 0; j < players.length; j++) {
+                    if (players[j].getPlayerIndex() == roads[i].getOwner()) {
+                        switch (players[j].getColor()) {
+                            //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
 
-                        case "red":
-                            color = CatanColor.RED;
-                            break;
-                        case "orange":
-                            color = CatanColor.ORANGE;
-                            break;
-                        case "yellow":
-                            color = CatanColor.YELLOW;
-                            break;
-                        case "blue":
-                            color = CatanColor.BLUE;
-                            break;
-                        case "green":
-                            color = CatanColor.GREEN;
-                            break;
-                        case "purple":
-                            color = CatanColor.PURPLE;
-                            break;
-                        case "puce":
-                            color = CatanColor.PUCE;
-                            break;
-                        case "white":
-                            color = CatanColor.WHITE;
-                            break;
-                        case "brown":
-                            color = CatanColor.BROWN;
-                            break;
-                        default:
-                            color = CatanColor.BLUE;
+                            case "red":
+                                color = CatanColor.RED;
+                                break;
+                            case "orange":
+                                color = CatanColor.ORANGE;
+                                break;
+                            case "yellow":
+                                color = CatanColor.YELLOW;
+                                break;
+                            case "blue":
+                                color = CatanColor.BLUE;
+                                break;
+                            case "green":
+                                color = CatanColor.GREEN;
+                                break;
+                            case "purple":
+                                color = CatanColor.PURPLE;
+                                break;
+                            case "puce":
+                                color = CatanColor.PUCE;
+                                break;
+                            case "white":
+                                color = CatanColor.WHITE;
+                                break;
+                            case "brown":
+                                color = CatanColor.BROWN;
+                                break;
+                            default:
+                                color = CatanColor.BLUE;
 
+                        }
                     }
                 }
 
@@ -628,6 +630,7 @@ public class Game extends Observable {
         if(cities != null) {
 
             for (int i = 0; i < cities.length; i++) {
+
                 HexLocation hexLocation = new HexLocation(cities[i].getLocation().getX(), cities[i].getLocation().getY());
 
                 VertexDirection dir;
@@ -659,7 +662,7 @@ public class Game extends Observable {
                 CatanColor color = null;
 
                 for (int j = 0; j < players.length; j++) {
-                    if (players[i].getPlayerIndex() == cities[i].getOwner()) {
+                    if (players[j].getPlayerIndex() == cities[i].getOwner()) {
                         switch (players[i].getColor()) {
 
                             case "red":
@@ -738,6 +741,8 @@ public class Game extends Observable {
                 }
 
                 CatanColor color = null;
+
+
 
                 for (int j = 0; j < players.length; j++) {
                     if (players[j].getPlayerIndex() == settlements[i].getOwner()) {
