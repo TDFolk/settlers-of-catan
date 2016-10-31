@@ -1,5 +1,6 @@
 package client.domestic;
 
+import client.map.MapController;
 import model.Game;
 import model.Player;
 import model.cards_resources.ResourceCards;
@@ -310,7 +311,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-
+		if (MapController.getState().canMakeTrades()) {
+			getTradeView().enableDomesticTrade(true);
+		} else {
+			getTradeView().enableDomesticTrade(false);
+		}
 	}
 }
 
