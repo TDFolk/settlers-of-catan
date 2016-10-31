@@ -25,7 +25,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	private ResourceType[] twoForOnes;
 	private ResourceType[] gettableResources;
 	private ResourceType[] givableResources;
-	
+	private String stateMessageGive = "Select the resource you'd like to give.";
+	private String stateMessageGet = "Select the resource you'd like to get.";
+
 	private static ResourceType[] ALL_RESOURCES = new ResourceType[]{ResourceType.BRICK, ResourceType.ORE, ResourceType.SHEEP, ResourceType.WHEAT, ResourceType.WOOD};
 
 	public MaritimeTradeController(IMaritimeTradeView tradeView, IMaritimeTradeOverlay tradeOverlay) {
@@ -67,6 +69,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		tradeOverlay.hideGetOptions();
 		tradeOverlay.setCancelEnabled(true);
 		tradeOverlay.setTradeEnabled(false);
+		tradeOverlay.setStateMessage(stateMessageGive);
 		getTradeOverlay().showModal();
 	}
 
@@ -99,6 +102,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getResource = resource;
 		tradeOverlay.selectGetOption(resource, 1);
 		tradeOverlay.setTradeEnabled(true);
+		tradeOverlay.setStateMessage("You want to trade away your" + giveResource.name() + " and in return receive " + getResource.name() + "?");
 	}
 
 	@Override
@@ -107,18 +111,21 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		tradeOverlay.selectGiveOption(resource, hasResourcePort(resource) ? 2 : (threeForOne ? 3 : 4));
 		tradeOverlay.showGetOptions(gettableResources);
 		tradeOverlay.hideGiveOptions();
+		tradeOverlay.setStateMessage(stateMessageGet);
 	}
 
 	@Override
 	public void unsetGetValue() {
 		tradeOverlay.showGetOptions(gettableResources);
 		tradeOverlay.setTradeEnabled(false);
+		tradeOverlay.setStateMessage(stateMessageGet);
 	}
 
 	@Override
 	public void unsetGiveValue() {
 		tradeOverlay.showGiveOptions(givableResources);
 		tradeOverlay.hideGetOptions();
+		tradeOverlay.setStateMessage(stateMessageGive);
 	}
 
 	/**
