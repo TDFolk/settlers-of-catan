@@ -107,6 +107,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		if (player.canPlayDevelopmentCard(DevCardType.MONOPOLY))
 			ServerProxy.getServer().monopoly(resource.name(), index);
 		
+		getPlayCardView().closeModal();
+		
 		/*
 		try {
 			player.playDevelopmentCard(DevCardType.MONOPOLY);
@@ -146,6 +148,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		if (player.canPlayDevelopmentCard(DevCardType.MONUMENT))
 			ServerProxy.getServer().monument(index);
 		
+		getPlayCardView().closeModal();
+		
 		/*
 		try {
 			player.playDevelopmentCard(DevCardType.MONUMENT);
@@ -166,6 +170,8 @@ public class DevCardController extends Controller implements IDevCardController,
 			
 			//ServerProxy.getServer().roadBuilding(index, null, null); ?????
 		}
+		
+		getPlayCardView().closeModal();
 		
 		/*
 		try {
@@ -190,6 +196,7 @@ public class DevCardController extends Controller implements IDevCardController,
 			//ServerProxy.getServer().soldier(index, -1, null); ?????
 		}
 			
+		getPlayCardView().closeModal();
 		
 		/*
 		try {
@@ -210,6 +217,8 @@ public class DevCardController extends Controller implements IDevCardController,
 		
 		if (player.canPlayDevelopmentCard(DevCardType.YEAR_OF_PLENTY))
 			ServerProxy.getServer().yearOfPlenty(index, resource1, resource2);
+		
+		getPlayCardView().closeModal();
 		
 		/*
 		try {
