@@ -240,4 +240,8 @@ public class Facade {
     public Hex getHexAtLocation(HexLocation location) {
         return Game.getInstance().getMap().getHexAtLocation(location);
     }
+
+    public boolean playerOverResourceLimit() {
+        return Game.getInstance().getPlayer().overResourceLimit();
+    }
 }
