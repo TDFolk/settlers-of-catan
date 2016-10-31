@@ -63,7 +63,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 				twoForOnes[i++] = resource;
 			}
 		}
-		setGettableResources();
 		setGivableResources();
 		tradeOverlay.showGiveOptions(givableResources);
 		tradeOverlay.hideGetOptions();
@@ -75,6 +74,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void makeTrade() {
+		//assumes that previous checks worked, and goes for the most favorable ratio you have
 		int ratio;
 		if (hasResourcePort(giveResource)) {
 			ratio = 2;
@@ -87,7 +87,6 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		String model = ServerProxy.getServer().maritimeTrade(Facade.getInstance().getPlayerIndex(), ratio, giveResource.name(), getResource.name());
 		Facade.getInstance().replaceModel(model);
 
-		tradeOverlay.reset();
 		getTradeOverlay().closeModal();
 	}
 
@@ -102,15 +101,15 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		getResource = resource;
 		tradeOverlay.selectGetOption(resource, 1);
 		tradeOverlay.setTradeEnabled(true);
-		tradeOverlay.setStateMessage("You want to trade away your" + giveResource.name() + " and in return receive " + getResource.name() + "?");
+		tradeOverlay.setStateMessage("Trade your " + giveResource.name() + " for " + getResource.name() + "?");
 	}
 
 	@Override
 	public void setGiveResource(ResourceType resource) {
 		giveResource = resource;
+		setGettableResources(resource);
 		tradeOverlay.selectGiveOption(resource, hasResourcePort(resource) ? 2 : (threeForOne ? 3 : 4));
 		tradeOverlay.showGetOptions(gettableResources);
-		tradeOverlay.hideGiveOptions();
 		tradeOverlay.setStateMessage(stateMessageGet);
 	}
 
@@ -153,11 +152,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 		return false;
 	}
 
-	private void setGettableResources() {
+	private void setGettableResources(ResourceType cantGet) {
 		gettableResources = new ResourceType[5];
 		int i = 0;
 		for (ResourceType resource : ALL_RESOURCES) {
-			if (Facade.getInstance().canDrawResourceCard(resource)) {
+			if (Facade.getInstance().canDrawResourceCard(resource) && resource != cantGet) {
 				gettableResources[i++] = resource;
 			}
 		}
