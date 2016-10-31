@@ -134,6 +134,11 @@ public class Map {
 			adjacentEdge3 = edgeToRightEdge(new EdgeLocation(adjacentEdge1.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.South));
 		}
 
+		// The edges all around the water
+		if (location.getHexLoc().getX() == 4 ||
+				location.getHexLoc().getX() == -4) {
+			return false;
+		}
 
 		//ensures that there are no settlements adjacent to your location
 		if (buildingByEdge(adjacentEdge1) == null &&
@@ -156,7 +161,29 @@ public class Map {
 	}
 
 
-
+	public boolean isWater(HexLocation hexLocation) {
+		if (hexLocation.equals(new HexLocation(0, -3)) ||
+				hexLocation.equals(new HexLocation(1, -3)) ||
+				hexLocation.equals(new HexLocation(2, -3)) ||
+				hexLocation.equals(new HexLocation(3, -3)) ||
+				hexLocation.equals(new HexLocation(3, -2)) ||
+				hexLocation.equals(new HexLocation(3, -1)) ||
+				hexLocation.equals(new HexLocation(3, 0)) ||
+				hexLocation.equals(new HexLocation(2, 1)) ||
+				hexLocation.equals(new HexLocation(1, 2)) ||
+				hexLocation.equals(new HexLocation(0, 3)) ||
+				hexLocation.equals(new HexLocation(-1, 3)) ||
+				hexLocation.equals(new HexLocation(-2, 3)) ||
+				hexLocation.equals(new HexLocation(-3, 3)) ||
+				hexLocation.equals(new HexLocation(-3, 2)) ||
+				hexLocation.equals(new HexLocation(-3, 1)) ||
+				hexLocation.equals(new HexLocation(-3, 0)) ||
+				hexLocation.equals(new HexLocation(-2, -1)) ||
+				hexLocation.equals(new HexLocation(-1, -2))) {
+			return true;
+		}
+		return false;
+	}
 
 	/**
 	 * Given an edge, finds the vertex to the left of it
