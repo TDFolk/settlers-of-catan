@@ -6,6 +6,7 @@ import decoder.JsonModels.JsonTurnTracker;
 import model.Facade;
 import model.Game;
 import model.cards_resources.ResourceCards;
+import server.ServerProxy;
 import shared.definitions.*;
 import client.base.*;
 import client.misc.*;
@@ -103,6 +104,8 @@ public class DiscardController extends Controller implements IDiscardController,
 		if (resourcesPickedToDiscard.size() == cardsToDiscard) {
 			getDiscardView().closeModal();
 			Game.getInstance().getPlayer().getResourceCards().reduceResources(resourcesPickedToDiscard);
+
+			ServerProxy.getServer().discardCards(Facade.getInstance().getPlayerIndex(), resourcesPickedToDiscard);
 		}
 	}
 
