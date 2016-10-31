@@ -2,10 +2,7 @@ package client.map;
 
 import java.util.*;
 
-import client.states.FirstRoundState;
-import client.states.IGameState;
-import client.states.NotMyTurnState;
-import client.states.SecondRoundState;
+import client.states.*;
 import model.Facade;
 import model.Game;
 import model.TurnTracker;
@@ -48,6 +45,7 @@ public class MapController extends Controller implements IMapController, Observe
 	//need to get this info from the server..........
 	private List<Road> roadList = new ArrayList<>();
 	private List<Building> settlementList = new ArrayList<>();
+	private List<Building> cityList = new ArrayList<>();
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -137,7 +135,6 @@ public class MapController extends Controller implements IMapController, Observe
 			ServerProxy.getServer().buildRoad(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), edgeLoc, true);
 			roadList.add(new Road(Game.getInstance().getCurrentPlayerInfo().getColor(), edgeLoc));
 
-
 			//is this the right place to finish the turn????
 			ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
 		}
@@ -210,31 +207,15 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void doState(){
+		//check if the player rejoined...
+		checkBuildingList();
+
 		//check if the client's turn is the same as current player's turn, if so, do these
 		TurnTracker turn = Game.getInstance().getTurnTracker();
 		if(turn.getCurrentTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
 
+			//is the server status in the first round?
 			if(Game.getInstance().getTurnTracker().getStatus().equals("FirstRound")){
-
-
-				//iterate through building list and parse settlements....
-				if(Game.getInstance().getMap().getBuildings() != null){
-					for(Building building : Game.getInstance().getMap().getBuildings()){
-						if(building instanceof Settlement && building.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
-							settlementList.add(building);
-						}
-					}
-				}
-
-				//iterate through road list
-				if(Game.getInstance().getMap().getRoads() != null){
-					for(Road road : Game.getInstance().getMap().getRoads()){
-						if(road.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
-							roadList.add(road);
-						}
-					}
-				}
-
 
 				//check if we've done the first round of the game
 				if(!firstRoundDone){
@@ -257,8 +238,10 @@ public class MapController extends Controller implements IMapController, Observe
 				}
 
 			}
+			//is the server status in the second round?
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")){
-//				check if we've done the second round of the game
+
+				//check if we've done the second round of the game
 				if (!secondRoundDone) {
 					state = new SecondRoundState();
 
@@ -277,6 +260,16 @@ public class MapController extends Controller implements IMapController, Observe
 						return;
 				}
 			}
+			else if(Game.getInstance().getTurnTracker().getStatus().equals("Playing")){
+				state = new PlayingState();
+			}
+			else if(Game.getInstance().getTurnTracker().getStatus().equals("Robbing")){
+				state = new RobbingState();
+
+			}
+			else if(Game.getInstance().getTurnTracker().getStatus().equals("Rolling")){
+				state = new RollingState();
+			}
 		}
 		//it's not our turn, so set the state to NotMyTurnState
 		else{
@@ -284,6 +277,7 @@ public class MapController extends Controller implements IMapController, Observe
 		}
 	}
 
+	//this method draws all the settlements, roads, buildings, and robbers
 	private void updateCatanMap(){
 		Game game = Game.getInstance();
 		for(Building building : game.getMap().getBuildings()){
@@ -305,7 +299,6 @@ public class MapController extends Controller implements IMapController, Observe
 		//place robber
 		getView().placeRobber(game.getMap().getRobber());
 	}
-
 
 	//this method puts water hexes to the map view on the borders of the catan map
 	private void water(){
@@ -338,6 +331,30 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().addHex(new HexLocation(-3, 0), HexType.WATER);
 		getView().addHex(new HexLocation(-2, -1), HexType.WATER);
 		getView().addHex(new HexLocation(-1, -2), HexType.WATER);
+	}
+
+	//this method checks to see if the user is re-joining a game, making sure the states are being set properly
+	private void checkBuildingList(){
+		//iterate through building list and parse settlements....
+		if(Game.getInstance().getMap().getBuildings() != null){
+			for(Building building : Game.getInstance().getMap().getBuildings()){
+				if(building instanceof Settlement && building.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
+					settlementList.add(building);
+				}
+				else if(building instanceof City && building.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
+					cityList.add(building);
+				}
+			}
+		}
+
+		//iterate through road list
+		if(Game.getInstance().getMap().getRoads() != null){
+			for(Road road : Game.getInstance().getMap().getRoads()){
+				if(road.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
+					roadList.add(road);
+				}
+			}
+		}
 	}
 
 	public static IGameState getState() {
