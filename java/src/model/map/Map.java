@@ -412,4 +412,13 @@ public class Map {
 		//checks that this player actually has access to this port
 		return buildingByEdge(location) != null && buildingByEdge(location).getColor().equals(player.getPlayerInfo().getColor());
 	}
+
+	public Hex getHexAtLocation(HexLocation location) {
+		for (Hex hex : hexes) {
+			if (hex.getLocation().equals(location)) {
+				return hex;
+			}
+		}
+		return null;
+	}
 }

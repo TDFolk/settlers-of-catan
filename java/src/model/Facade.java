@@ -9,8 +9,10 @@ import model.map.Port;
 //import model.map.ResourcePort;
 import server.ServerProxy;
 import shared.definitions.DevCardType;
+import shared.definitions.HexType;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
 import shared.locations.VertexLocation;
 
 import java.util.List;
@@ -233,5 +235,9 @@ public class Facade {
 
         Game.getInstance().updateGameInfo(newGameList);
 
+    }
+
+    public Hex getHexAtLocation(HexLocation location) {
+        return Game.getInstance().getMap().getHexAtLocation(location);
     }
 }
