@@ -37,7 +37,7 @@ public class MapController extends Controller implements IMapController, Observe
 	HexLocation robberLocation;
 	private boolean init = false;
 	//????
-	RobPlayerInfo[] empty = {};
+	//RobPlayerInfo[] empty = {};
 
 	private boolean firstRoundDone = false;
 	private boolean secondRoundDone = false;
@@ -150,6 +150,9 @@ public class MapController extends Controller implements IMapController, Observe
 				//state = new RollingState();
 			}
 		}
+		else {
+			ServerProxy.getServer().buildRoad(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), edgeLoc, false);
+		}
 	}
 
 	public void placeSettlement(VertexLocation vertLoc) {
@@ -161,6 +164,9 @@ public class MapController extends Controller implements IMapController, Observe
 				secondBuilding = new Settlement(Game.getInstance().getCurrentPlayerInfo().getColor(), vertLoc);
 			}
 		}
+		else {
+			ServerProxy.getServer().buildSettlement(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), vertLoc, false);
+		}
 	}
 
 	public void placeCity(VertexLocation vertLoc) {
@@ -169,11 +175,25 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
-		
+		if(getRobView().isModalShowing()){
+			getRobView().closeModal();
+		}
+
+		getRobView().setPlayers(null);
 		getView().placeRobber(hexLoc);
-		robberLocation = hexLoc;
-		
+
+		ArrayList<RobPlayerInfo> robPlayerInfoArrayList = new ArrayList<>();
+		int index = Game.getInstance().getCurrentPlayerInfo().getPlayerIndex();
+
+//		for(int i = 0; i < 4; i++){
+//			if(i != index){
+//
+//			}
+//		}
+
+
 		getRobView().showModal();
+		robberLocation = hexLoc;
 	}
 	
 	public void startMove(PieceType pieceType, boolean isFree, boolean allowDisconnected) {	
@@ -285,10 +305,15 @@ public class MapController extends Controller implements IMapController, Observe
 				}
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Playing")){
-				//state = new PlayingState();
+				if(!(state instanceof PlayingState)){
+					state = new PlayingState();
+				}
+
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Robbing")){
-				state = new RobbingState();
+				if(!(state instanceof RobbingState)){
+					state = new RobbingState();
+				}
 				getView().startDrop(PieceType.ROBBER, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
 				//return;
 
