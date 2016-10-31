@@ -139,6 +139,11 @@ public class DiscardController extends Controller implements IDiscardController,
                     this.updateDiscardView();
                 }
             }
+        } else { //todo this is inefficient, but should  keep the test button from freezing. delete later if we can disable the test button
+            cardsToDiscard = (Game.getInstance().getPlayer().getResourceCards().size() / 2);
+            playersCards = Game.getInstance().getPlayer().getResourceCards();
+            numCardsPickedToDiscard = 0;
+            resourcesPickedToDiscard = new ResourceCards(0, 0, 0, 0, 0);
         }
     }
 
