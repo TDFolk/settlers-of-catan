@@ -126,7 +126,6 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-
 		return true;
 	}
 
