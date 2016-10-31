@@ -138,8 +138,12 @@ public class MapController extends Controller implements IMapController, Observe
 			ServerProxy.getServer().buildRoad(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), edgeLoc, true);
 			roadList.add(new Road(Game.getInstance().getCurrentPlayerInfo().getColor(), edgeLoc));
 
+
 			//is this the right place to finish the turn????
 			ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
+			if(state instanceof SecondRoundState){
+				state = new RollingState();
+			}
 		}
 	}
 
@@ -281,9 +285,9 @@ public class MapController extends Controller implements IMapController, Observe
 				state = new RobbingState();
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Rolling")){
-				state = new RollingState();
+				//state = new RollingState();
 				//it goes in here but it never changes.....??????????????????
-				Game.getInstance().notifyObservers();
+				//Game.getInstance().notifyObservers();
 			}
 		}
 		//it's not our turn, so set the state to NotMyTurnState
