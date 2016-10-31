@@ -226,7 +226,7 @@ public class Facade {
     }
 
     public int getPlayerIndex() {
-        return Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
+        return Game.getInstance().getCurrentPlayerInfo().getPlayerIndex();
     }
 
     public void updateGameInfo(GameInfo[] newGameList) {
