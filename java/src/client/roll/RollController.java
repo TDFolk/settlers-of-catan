@@ -23,7 +23,7 @@ import java.util.Random;
 public class RollController extends Controller implements IRollController, Observer {
 
 	private IRollResultView resultView;
-	private Timer countdownTimer;
+	private Timer countdownTimer = new Timer(0, null);
 
 	/**
 	 * RollController constructor
