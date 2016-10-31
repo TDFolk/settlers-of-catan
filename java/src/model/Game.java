@@ -166,6 +166,7 @@ public class Game extends Observable {
             case "Discarding":
                 newState = new DiscardingState();
                 break;
+
             default:
                 newState = new NotMyTurnState();
             
