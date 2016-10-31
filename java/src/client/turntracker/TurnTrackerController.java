@@ -28,6 +28,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	private int longestRoad;
 	private int winner;
 	private boolean gameOver = false;
+	private boolean playersInitialized = false;
 
 	private String endTurnResponse;
 
@@ -119,7 +120,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			List<Player> playersList = Game.getInstance().getPlayersList();
 			for(Player player : playersList){
 				int index = player.getPlayerInfo().getPlayerIndex();
-
+				if (!playersInitialized) {
+					getView().initializePlayer(index, player.getPlayerInfo().getName(), player.getPlayerInfo().getColor());
+				}
 				//set the winner to whoever has 10+ victory points...
 				if(player.getVictoryPoints() >= 10){
 					//set this winner = Game.getInstance().getWinner();...????
@@ -134,6 +137,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 //				boolean longestTest = isLongestRoad(index);
 				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
 			}
+			playersInitialized = true;
 
 			//check to see if the game is over...
 			if(isGameOver()){
