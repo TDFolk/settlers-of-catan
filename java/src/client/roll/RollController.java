@@ -65,6 +65,7 @@ public class RollController extends Controller implements IRollController, Obser
 		int totalValue = dice1 + dice2;
 
 		getRollView().closeModal();
+		//getRollView().setMessage("Rolling automatically in 5");
 		//making the call to the server to roll
 		ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
 
@@ -101,6 +102,7 @@ public class RollController extends Controller implements IRollController, Obser
 
 				//if the seconds goes down less than 5
 				if(seconds <= 0){
+					getRollView().setMessage("Rolling automatically in " + seconds);
 					countdownTimer.stop();
 					rollDice();
 					//MapController.setState(new PlayingState());

@@ -92,7 +92,7 @@ public class MapController extends Controller implements IMapController, Observe
 						//this is the robber information
 						getView().addHex(hex.getLocation(), hex.getHexType());
 						getView().placeRobber(hex.getLocation());
-						robberLocation = hex.getLocation();
+						robberLocation = Game.getInstance().getMap().getRobber();
 					}
 					else {
 						getView().addHex(hex.getLocation(), hex.getHexType());
@@ -128,7 +128,10 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		
+		if(hexLoc.getX() == robberLocation.getX() && hexLoc.getY() == robberLocation.getY()){
+			return false;
+		}
+
 		return true;
 	}
 
@@ -166,6 +169,7 @@ public class MapController extends Controller implements IMapController, Observe
 	public void placeRobber(HexLocation hexLoc) {
 		
 		getView().placeRobber(hexLoc);
+		robberLocation = hexLoc;
 		
 		getRobView().showModal();
 	}
@@ -244,7 +248,7 @@ public class MapController extends Controller implements IMapController, Observe
 						//we're done with the 1st round state
 						firstRoundDone = true;
 						state = new NotMyTurnState();
-						return;
+						//return;
 					}
 				}
 
@@ -274,7 +278,7 @@ public class MapController extends Controller implements IMapController, Observe
 						//we're done with the 2nd round state
 						secondRoundDone = true;
 						//state = new NotMyTurnState();
-						return;
+						//return;
 					}
 				}
 			}
@@ -282,7 +286,10 @@ public class MapController extends Controller implements IMapController, Observe
 				//state = new PlayingState();
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Robbing")){
-				//state = new RobbingState();
+				state = new RobbingState();
+				getView().startDrop(PieceType.ROBBER, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+				//return;
+
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Rolling")){
 				//state = new RollingState();
