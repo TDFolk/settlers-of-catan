@@ -3,6 +3,8 @@ package model;
 import client.communication.LogEntry;
 import client.data.GameInfo;
 import client.data.PlayerInfo;
+import client.map.MapController;
+import client.states.*;
 import com.google.gson.JsonParser;
 import decoder.JsonModels.*;
 import model.cards_resources.Bank;
@@ -121,6 +123,9 @@ public class Game extends Observable {
                 model.getTurnTracker().getLargestArmy());
         this.turnTracker = tracker;
 
+        //updates the state in the mapcontroller
+        setState(model.getTurnTracker().getStatus());
+
         //replace winner
         this.versionNumber = model.getVersion();
 
@@ -129,6 +134,43 @@ public class Game extends Observable {
         // If this object has changed, as indicated by the hasChanged method, then notify all of
         // its observers and then call the clearChanged method to indicate that this object has no longer changed.
         this.notifyObservers();
+
+    }
+
+    private void setState(String status) {
+
+        IGameState newState = null;
+
+        switch(status)
+        {
+            case "Rolling":
+                newState= new RollingState();
+                break;
+
+            case "FirstRound":
+                newState= new FirstRoundState();
+                break;
+
+            case "SecondRound":
+                newState= new SecondRoundState();
+                break;
+
+            case "Playing":
+                newState= new PlayingState();
+                break;
+
+            case "Robbing":
+                newState= new RollingState();
+                break;
+
+            default:
+                newState= new NotMyTurnState();
+                break;
+
+
+        }
+
+        MapController.setState(newState);
 
     }
 
