@@ -147,25 +147,42 @@ public class Facade {
     }
 
     /**
-     * Determines if the player has access to and sufficient resources for a maritime trade of the specified port type.
+     * Determines if the player has access to a maritime trade of the specified port type.
      *
      * @param resource Resource for 2:1 trades, set resource to null for 3:1 trading
      * @return true if the player may make a maritime trade of that type
      */
-    public boolean canPortTrade(ResourceType resource)
+    public boolean hasPortAccess(ResourceType resource)
     {
-        return Game.getInstance().getPlayer().canPortTrade(resource);
+        for (Port port : Game.getInstance().getMap().getPorts()) {
+            if (port.getResourceType() == resource && Game.getInstance().getMap().canPortTrade(Game.getInstance().getPlayer(), port)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean hasPortResources(ResourceType portType) {
+        if (portType == null) {
+            return Game.getInstance().getPlayer().hasResourcesOfQuantity(3);
+        } else {
+            return Game.getInstance().getPlayer().hasPortTradeResources(portType);
+        }
+    }
+
+    public boolean canFourForOne() {
+        return Game.getInstance().getPlayer().hasResourcesOfQuantity(4);
     }
 
     /**
      * Determines if the player has access to any ports at all
      * @return true if the player has access to a port
      */
-    public boolean canPortTrade() {
+    public boolean hasPortAccess() {
         for (Port port : Game.getInstance().getMap().getPorts()) {
-//            if (port.canTrade(Game.getInstance().getPlayer())){
-//                return true;
-//            }
+            if (Game.getInstance().getMap().canPortTrade(Game.getInstance().getPlayer(), port)){
+                return true;
+            }
         }
         return false;
     }

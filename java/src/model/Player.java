@@ -311,27 +311,28 @@ public class Player {
 
     /**
      * Determines if a player can maritime trade with port of the given resource.
-     * NULL resource means try with a 3:1 port
+     * Does not work with null port, only resource ports
      * @param resource
      * @return
      */
-    public boolean canPortTrade(ResourceType resource) {
-        if (resource == null) {
-            for (Port port : Game.getInstance().getMap().getPorts()) {
-//                if (port instanceof GeneralPort && port.canTrade(this)) {
-//                    return true;
-//                }
-            }
-        } else {
-            for (Port port : Game.getInstance().getMap().getPorts()) {
-//                if (port instanceof ResourcePort && ((ResourcePort) port).getPortType() == resource && port.canTrade(this)) {
-//                    return true;
-//                }
-            }
-        }
-        return false;
+    public boolean hasPortTradeResources(ResourceType resource) {
+        return resourceCards.getResource(resource) >= 2;
     }
-    
+
+    /**
+     * CHeck to see if a player has at least one resource at or above the given value
+     * for checking if user can do 3:1 or 4:1 trading
+     * @param quantity how many of a resource at least one of the user's resources must have
+     * @return true if the player has at least quantity of any one of their resources
+     */
+    public boolean hasResourcesOfQuantity(int quantity) {
+        return resourceCards.getBrick() >= quantity ||
+                resourceCards.getOre() >= quantity ||
+                resourceCards.getSheep() >= quantity ||
+                resourceCards.getWheat() >= quantity ||
+                resourceCards.getWood() >= quantity;
+    }
+
     /**
      * Determines if the player has enough resources to make the trade
      * @param offer the resources being offered for the trade

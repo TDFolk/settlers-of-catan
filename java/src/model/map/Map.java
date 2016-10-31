@@ -402,4 +402,14 @@ public class Map {
 	public void setRadius(int radius) {
 		this.radius = radius;
 	}
+
+	/**
+	 * This function checks if the player can trade with a specific port
+	 * @return true if player can trade with this port
+	 */
+	public boolean canPortTrade(Player player, Port port) {
+		EdgeLocation location = port.getEdgeLocation();
+		//checks that this player actually has access to this port
+		return buildingByEdge(location) != null && buildingByEdge(location).getColor().equals(player.getPlayerInfo().getColor());
+	}
 }

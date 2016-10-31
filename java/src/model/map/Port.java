@@ -10,7 +10,9 @@ import shared.locations.*;
 public class Port {
 
     private HexLocation location;
+    //resourceType of null implies a 3:1 generic port
     private ResourceType resourceType;
+    private EdgeLocation edgeLocation;
     private EdgeDirection direction;
     private int ratio;
 
@@ -19,6 +21,7 @@ public class Port {
         this.location = location;
         this.direction = direction;
         this.ratio = ratio;
+        edgeLocation = new EdgeLocation(location, direction);
     }
 
     /**
@@ -65,4 +68,7 @@ public class Port {
         this.ratio = ratio;
     }
 
+    public EdgeLocation getEdgeLocation() {
+        return edgeLocation;
+    }
 }

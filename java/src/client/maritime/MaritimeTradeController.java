@@ -55,11 +55,11 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 	@Override
 	public void startTrade() {
-		threeForOne = Facade.getInstance().canPortTrade(null);
+		threeForOne = Facade.getInstance().hasPortAccess(null);
 		twoForOnes = new ResourceType[5];
 		int i = 0;
 		for (ResourceType resource : ALL_RESOURCES) {
-			if (Facade.getInstance().canPortTrade(resource)) {
+			if (Facade.getInstance().hasPortAccess(resource)) {
 				twoForOnes[i++] = resource;
 			}
 		}
@@ -140,7 +140,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 
 		if (MapController.getState() instanceof PlayingState) {
 
-			getTradeView().enableMaritimeTrade(Facade.getInstance().canPortTrade());
+			getTradeView().enableMaritimeTrade(Facade.getInstance().hasPortAccess());
 		}
 	}
 
@@ -169,7 +169,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			int i = 0;
 			for (ResourceType resource : ALL_RESOURCES){
 				if (Facade.getInstance().getPlayerResource(resource) >= 3 ||
-						Facade.getInstance().getPlayerResource(resource) >= 2 && Facade.getInstance().canPortTrade(resource)) {
+						Facade.getInstance().getPlayerResource(resource) >= 2 && Facade.getInstance().hasPortAccess(resource)) {
 					givableResources[i++] = resource;
 				}
 			}
@@ -177,7 +177,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			int i = 0;
 			for (ResourceType resource : ALL_RESOURCES) {
 				if (Facade.getInstance().getPlayerResource(resource) >= 4 ||
-						Facade.getInstance().getPlayerResource(resource) >= 2 && Facade.getInstance().canPortTrade(resource)) {
+						Facade.getInstance().getPlayerResource(resource) >= 2 && Facade.getInstance().hasPortAccess(resource)) {
 					givableResources[i++] = resource;
 				}
 			}
