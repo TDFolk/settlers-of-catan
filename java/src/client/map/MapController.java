@@ -47,6 +47,8 @@ public class MapController extends Controller implements IMapController, Observe
 	private List<Building> settlementList = new ArrayList<>();
 	private List<Building> cityList = new ArrayList<>();
 
+	private static Building secondBuilding;
+
 //	private boolean checkFirst = false;
 //	private boolean checkSecond = false;
 	
@@ -146,7 +148,9 @@ public class MapController extends Controller implements IMapController, Observe
 		if(state instanceof FirstRoundState || state instanceof SecondRoundState){
 			ServerProxy.getServer().buildSettlement(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), vertLoc, true);
 			settlementList.add(new Settlement(Game.getInstance().getCurrentPlayerInfo().getColor(), vertLoc));
-
+			if (state instanceof  SecondRoundState) {
+				secondBuilding = new Settlement(Game.getInstance().getCurrentPlayerInfo().getColor(), vertLoc);
+			}
 		}
 	}
 
@@ -254,6 +258,7 @@ public class MapController extends Controller implements IMapController, Observe
 					state = new SecondRoundState();
 					if(settlementList.size() == 1){
 						getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+
 
 					}
 					else if(roadList.size() == 1){
@@ -421,6 +426,10 @@ public class MapController extends Controller implements IMapController, Observe
 
 		}
 		return returnString;
+	}
+
+	public static Building getSecondBuilding() {
+		return secondBuilding;
 	}
 }
 

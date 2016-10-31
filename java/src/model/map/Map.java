@@ -1,6 +1,7 @@
 package model.map;
 
 import client.main.Catan;
+import client.map.MapController;
 import model.Game;
 import model.Player;
 import model.pieces.Building;
@@ -104,11 +105,8 @@ public class Map {
 		Building adjacentBuilding = buildingByEdge(location);
 		if (Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")) {
 			if (adjacentBuilding != null && buildings != null) {
-				// Always going to be at either index 0 or 7 i believe, but it is random which one
-				for (int i = 0; i < 4; i++) {
-					if (adjacentBuilding.getLocation().getNormalizedLocation().equals(Game.getInstance().getMap().buildings.get(i).getLocation().getNormalizedLocation())) {
-						return false;
-					}
+				if (!adjacentBuilding.getLocation().getNormalizedLocation().equals(MapController.getSecondBuilding().getLocation().getNormalizedLocation())) {
+					return false;
 				}
 			}
 		}
