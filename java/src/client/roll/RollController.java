@@ -4,11 +4,17 @@ import client.base.*;
 import client.map.MapController;
 import client.states.IGameState;
 import client.states.RollingState;
+import model.Facade;
 import model.Game;
+import server.ServerProxy;
 
+import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
+
 
 
 /**
@@ -17,7 +23,7 @@ import java.util.Random;
 public class RollController extends Controller implements IRollController, Observer {
 
 	private IRollResultView resultView;
-	private Random rng;
+	private Timer countdownTimer;
 
 	/**
 	 * RollController constructor
@@ -33,8 +39,6 @@ public class RollController extends Controller implements IRollController, Obser
 
 		// This Controller will now be notified to any changes in the Game Object
 		Game.getInstance().addObserver(this);
-
-		rng = new Random();
 	}
 	
 	public IRollResultView getResultView() {
@@ -50,12 +54,19 @@ public class RollController extends Controller implements IRollController, Obser
 	
 	@Override
 	public void rollDice() {
-		//generate two dice rolls between 1 and 6
-		int dice1 = rng.nextInt(6) + 1;
-		int dice2 = rng.nextInt(6) + 1;
+		//stop countdown here
+		if(countdownTimer.isRunning()){
+			countdownTimer.stop();
+		}
 
-		resultView.setRollValue(dice1 + dice2);
-		getRollView().closeModal();
+		int dice1 = (int)(Math.random() * 6) + 1;
+		int dice2 = (int)(Math.random() * 6) + 1;
+		int totalValue = dice1 + dice2;
+
+		//making the call to the server to roll
+		ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
+
+		getResultView().setRollValue(totalValue);
 		getResultView().showModal();
 	}
 
@@ -67,12 +78,34 @@ public class RollController extends Controller implements IRollController, Obser
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
+		//check if the state is in rolling state
 		if(MapController.getState() instanceof RollingState){
+			//check if the servers's turn matches this client's turn
 			if(Game.getInstance().getTurnTracker().getCurrentTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
+				//if so, show the modal and start the countdown
 				getRollView().showModal();
+				countdown();
 			}
 		}
 	}
 
+	private void countdown(){
+		ActionListener actionListener = new ActionListener() {
+			int seconds = 5;
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				seconds--;
+				getRollView().setMessage("Rolling automatically in " + seconds + " seconds...");
+
+				//if the seconds goes down less than 5
+				if(seconds <= 0){
+					rollDice();
+				}
+			}
+		};
+		countdownTimer = new Timer(1000, actionListener);
+		countdownTimer.start();
+
+	}
 }
 
