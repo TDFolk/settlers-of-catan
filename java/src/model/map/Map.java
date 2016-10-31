@@ -4,6 +4,7 @@ import model.Game;
 import model.Player;
 import model.pieces.Building;
 import model.pieces.Road;
+import model.pieces.Settlement;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
 import shared.locations.*;
@@ -49,7 +50,7 @@ public class Map {
 	public Building getBuildingAtVertex(VertexLocation location) {
 		for (Building building : buildings) {
 			if (building.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation())) {
-				return building;
+					return building;
 			}
 		}
 		return null;
@@ -63,7 +64,6 @@ public class Map {
 		}
 		return null;
 	}
-
 
 	/**
 	 * Finds out if a city or settlement is built on the vertices of this edge
@@ -90,8 +90,26 @@ public class Map {
 		if (getRoadAtEdge(location) != null) {
 			return false;
 		}
+		// Tries to place a road into the ocean water
+		if (isWater(location)) {
+			// Can't build into the ocean!
+			return false;
+		}
 		//check for buildings adjacent to road edge
 		Building adjacentBuilding = buildingByEdge(location);
+		if (Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")) {
+			if (adjacentBuilding != null && buildings != null) {
+				int index = 0;
+				for (int i = 0; i < Game.getInstance().getMap().buildings.size(); i++) {
+					if (adjacentBuilding.getColor().equals(player.getPlayerInfo().getColor())) {
+						index = i;
+					}
+				}
+				if (!adjacentBuilding.equals(Game.getInstance().getMap().buildings.get(index))) {
+					return false;
+				}
+			}
+		}
 		if (adjacentBuilding != null) {
 			//if the same colored building, all is good
 			if (adjacentBuilding.getColor().equals(player.getPlayerInfo().getColor())) {
@@ -109,7 +127,35 @@ public class Map {
 			}
 		}
 		//if no settlement, must have road of same color in any direction
-		return roadsToTheLeft(location, player.getPlayerInfo().getColor()) || roadsToTheRight(location, player.getPlayerInfo().getColor());
+		if (!Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")) {
+			return roadsToTheLeft(location, player.getPlayerInfo().getColor()) || roadsToTheRight(location, player.getPlayerInfo().getColor());
+		}
+		return false;
+	}
+
+	public boolean isWater(EdgeLocation edgeLocation) {
+		if (edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(3, 0), EdgeDirection.North)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(2, 1), EdgeDirection.NorthEast)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(1, 2), EdgeDirection.NorthEast)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.NorthEast)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(0, 3), EdgeDirection.NorthWest)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(-1, 3), EdgeDirection.NorthWest)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(-2, 3), EdgeDirection.NorthWest)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(-3, 3), EdgeDirection.North)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(-3, 2), EdgeDirection.North)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(-3, 1), EdgeDirection.North)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(-3, 0), EdgeDirection.NorthEast)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(-2, -1), EdgeDirection.NorthEast)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(-1, -2), EdgeDirection.NorthEast)) || //GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(1, -3), EdgeDirection.NorthWest)) || //GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(2, -3), EdgeDirection.NorthWest)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(3, -3), EdgeDirection.NorthWest)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(3, -2), EdgeDirection.North)) || // GOOD
+				edgeLocation.getNormalizedLocation().equals(new EdgeLocation(new HexLocation(3, -1), EdgeDirection.North)))  { // GOOD
+			return true;
+		}
+
+		return false;
 	}
 
 	/**
@@ -136,7 +182,28 @@ public class Map {
 
 		// The edges all around the water
 		if (location.getHexLoc().getX() == 4 ||
-				location.getHexLoc().getX() == -4) {
+				location.getHexLoc().getX() == -4 ||
+				location.getHexLoc().getY() == 4 ||
+				location.getHexLoc().getY() == -3 ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(3, 0), VertexDirection.NorthEast)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(3, -1), VertexDirection.NorthEast)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(3, -2), VertexDirection.NorthEast)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(-3, 1), VertexDirection.NorthWest)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(-3, 2), VertexDirection.NorthWest)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(-3, 3), VertexDirection.NorthWest)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(-3, 0), VertexDirection.NorthWest)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(-3, 0), VertexDirection.NorthEast)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(-2, -1), VertexDirection.NorthWest)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(-2, -1), VertexDirection.NorthEast)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(-1, -2), VertexDirection.NorthWest)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(-1, -2), VertexDirection.NorthEast)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(0, -3), VertexDirection.NorthWest)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(1, 3), VertexDirection.NorthEast)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(1, 3), VertexDirection.NorthWest)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(2, 2), VertexDirection.NorthEast)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(2, 2), VertexDirection.NorthWest)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(3, 1), VertexDirection.NorthEast)) ||
+				location.getNormalizedLocation().equals(new VertexLocation(new HexLocation(3, 1), VertexDirection.NorthWest))) {
 			return false;
 		}
 
@@ -156,31 +223,6 @@ public class Map {
 					return true;
 				}
 			}
-		}
-		return false;
-	}
-
-
-	public boolean isWater(HexLocation hexLocation) {
-		if (hexLocation.equals(new HexLocation(0, -3)) ||
-				hexLocation.equals(new HexLocation(1, -3)) ||
-				hexLocation.equals(new HexLocation(2, -3)) ||
-				hexLocation.equals(new HexLocation(3, -3)) ||
-				hexLocation.equals(new HexLocation(3, -2)) ||
-				hexLocation.equals(new HexLocation(3, -1)) ||
-				hexLocation.equals(new HexLocation(3, 0)) ||
-				hexLocation.equals(new HexLocation(2, 1)) ||
-				hexLocation.equals(new HexLocation(1, 2)) ||
-				hexLocation.equals(new HexLocation(0, 3)) ||
-				hexLocation.equals(new HexLocation(-1, 3)) ||
-				hexLocation.equals(new HexLocation(-2, 3)) ||
-				hexLocation.equals(new HexLocation(-3, 3)) ||
-				hexLocation.equals(new HexLocation(-3, 2)) ||
-				hexLocation.equals(new HexLocation(-3, 1)) ||
-				hexLocation.equals(new HexLocation(-3, 0)) ||
-				hexLocation.equals(new HexLocation(-2, -1)) ||
-				hexLocation.equals(new HexLocation(-1, -2))) {
-			return true;
 		}
 		return false;
 	}
