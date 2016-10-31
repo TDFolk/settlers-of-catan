@@ -7,6 +7,7 @@ import model.cards_resources.ResourceCards;
 import model.map.Hex;
 import model.map.Port;
 //import model.map.ResourcePort;
+import model.pieces.Building;
 import server.ServerProxy;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
@@ -247,5 +248,9 @@ public class Facade {
 
     public boolean canPlaceCity(VertexLocation location) {
         return Game.getInstance().getMap().canPlaceCity(location);
+    }
+
+    public Building getBuildingAtVertex(VertexLocation location) {
+        return Game.getInstance().getMap().getBuildingAtVertex(location);
     }
 }
