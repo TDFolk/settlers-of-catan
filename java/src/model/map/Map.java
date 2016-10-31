@@ -1,5 +1,6 @@
 package model.map;
 
+import client.main.Catan;
 import model.Game;
 import model.Player;
 import model.pieces.Building;
@@ -95,18 +96,19 @@ public class Map {
 			// Can't build into the ocean!
 			return false;
 		}
+
+
+
+
 		//check for buildings adjacent to road edge
 		Building adjacentBuilding = buildingByEdge(location);
 		if (Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")) {
 			if (adjacentBuilding != null && buildings != null) {
-				int index = 0;
-				for (int i = 0; i < Game.getInstance().getMap().buildings.size(); i++) {
-					if (adjacentBuilding.getColor().equals(player.getPlayerInfo().getColor())) {
-						index = i;
+				// Always going to be at either index 0 or 7 i believe, but it is random which one
+				for (int i = 0; i < 4; i++) {
+					if (adjacentBuilding.getLocation().getNormalizedLocation().equals(Game.getInstance().getMap().buildings.get(i).getLocation().getNormalizedLocation())) {
+						return false;
 					}
-				}
-				if (!adjacentBuilding.equals(Game.getInstance().getMap().buildings.get(index))) {
-					return false;
 				}
 			}
 		}
