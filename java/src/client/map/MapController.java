@@ -272,6 +272,8 @@ public class MapController extends Controller implements IMapController, Observe
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Rolling")){
 				state = new RollingState();
+				//it goes in here but it never changes.....??????????????????
+				Game.getInstance().notifyObservers();
 			}
 		}
 		//it's not our turn, so set the state to NotMyTurnState
