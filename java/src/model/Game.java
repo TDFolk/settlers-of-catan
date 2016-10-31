@@ -144,24 +144,30 @@ public class Game extends Observable {
         switch(status)
         {
             case "Rolling":
-                newState= new RollingState();
+                newState = new RollingState();
                 break;
 
             case "FirstRound":
-                newState= new FirstRoundState();
+                newState = new FirstRoundState();
                 break;
 
             case "SecondRound":
-                newState= new SecondRoundState();
+                newState = new SecondRoundState();
                 break;
 
             case "Playing":
-                newState= new PlayingState();
+                newState = new PlayingState();
                 break;
 
             case "Robbing":
-                newState= new RollingState();
+                newState = new RollingState();
                 break;
+
+            case "Discarding":
+                newState = new DiscardingState();
+                break;
+            default:
+                newState = new NotMyTurnState();
             
 
         }
