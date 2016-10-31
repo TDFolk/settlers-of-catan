@@ -46,6 +46,9 @@ public class MapController extends Controller implements IMapController, Observe
 	private List<Road> roadList = new ArrayList<>();
 	private List<Building> settlementList = new ArrayList<>();
 	private List<Building> cityList = new ArrayList<>();
+
+//	private boolean checkFirst = false;
+//	private boolean checkSecond = false;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -145,6 +148,7 @@ public class MapController extends Controller implements IMapController, Observe
 		if(state instanceof FirstRoundState || state instanceof SecondRoundState){
 			ServerProxy.getServer().buildSettlement(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), vertLoc, true);
 			settlementList.add(new Settlement(Game.getInstance().getCurrentPlayerInfo().getColor(), vertLoc));
+
 		}
 	}
 
@@ -207,15 +211,16 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void doState(){
-		//check if the player rejoined...
-		checkBuildingList();
+		//checkBuildingList();
 
 		//check if the client's turn is the same as current player's turn, if so, do these
 		TurnTracker turn = Game.getInstance().getTurnTracker();
+		String status = turn.getStatus();
 		if(turn.getCurrentTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
 
 			//is the server status in the first round?
 			if(Game.getInstance().getTurnTracker().getStatus().equals("FirstRound")){
+				//checkBuildingList();
 
 				//check if we've done the first round of the game
 				if(!firstRoundDone){
@@ -240,15 +245,15 @@ public class MapController extends Controller implements IMapController, Observe
 			}
 			//is the server status in the second round?
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")){
-
 				//check if we've done the second round of the game
 				if (!secondRoundDone) {
+					//checkBuildingList();
 					state = new SecondRoundState();
-
 					if(settlementList.size() == 1){
 						getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
+
 					}
-					else if(roadList.size() == 1)
+					else if(roadList.size() == 1){
 						getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
 					}
 
@@ -258,6 +263,7 @@ public class MapController extends Controller implements IMapController, Observe
 						secondRoundDone = true;
 						state = new NotMyTurnState();
 						return;
+					}
 				}
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Playing")){
@@ -265,7 +271,6 @@ public class MapController extends Controller implements IMapController, Observe
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Robbing")){
 				state = new RobbingState();
-
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Rolling")){
 				state = new RollingState();
@@ -333,24 +338,24 @@ public class MapController extends Controller implements IMapController, Observe
 		getView().addHex(new HexLocation(-1, -2), HexType.WATER);
 	}
 
-	//this method checks to see if the user is re-joining a game, making sure the states are being set properly
+	//TODO: CHECK THE RE-JOIN...
 	private void checkBuildingList(){
-		//iterate through building list and parse settlements....
 		if(Game.getInstance().getMap().getBuildings() != null){
 			for(Building building : Game.getInstance().getMap().getBuildings()){
 				if(building instanceof Settlement && building.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
+					settlementList = new ArrayList<>();
 					settlementList.add(building);
 				}
-				else if(building instanceof City && building.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
+				else if(building instanceof  City && building.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
+					cityList = new ArrayList<>();
 					cityList.add(building);
 				}
 			}
 		}
-
-		//iterate through road list
 		if(Game.getInstance().getMap().getRoads() != null){
 			for(Road road : Game.getInstance().getMap().getRoads()){
 				if(road.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
+					roadList = new ArrayList<>();
 					roadList.add(road);
 				}
 			}
