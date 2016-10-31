@@ -1,9 +1,11 @@
 package model.map;
 
+import model.Game;
 import model.Player;
 import model.pieces.Building;
 import model.pieces.Road;
 import shared.definitions.CatanColor;
+import shared.definitions.HexType;
 import shared.locations.*;
 
 import java.util.ArrayList;
@@ -132,19 +134,28 @@ public class Map {
 			adjacentEdge3 = edgeToRightEdge(new EdgeLocation(adjacentEdge1.getHexLoc().getNeighborLoc(EdgeDirection.North), EdgeDirection.South));
 		}
 
-		//ensures that there is a road that belongs to you at at least one of the three directions
-		if (getRoadAtEdge(adjacentEdge1) != null && getRoadAtEdge(adjacentEdge1).getColor() == player.getPlayerInfo().getColor()
-				|| getRoadAtEdge(adjacentEdge2) != null && getRoadAtEdge(adjacentEdge2).getColor() == player.getPlayerInfo().getColor()
-				|| getRoadAtEdge(adjacentEdge3) != null && getRoadAtEdge(adjacentEdge3).getColor() == player.getPlayerInfo().getColor()) {
-			//ensures that there are no settlements adjacent to your location
-			if (buildingByEdge(adjacentEdge1) == null &&
-					buildingByEdge(adjacentEdge2) == null &&
-					buildingByEdge(adjacentEdge3) == null) {
+
+		//ensures that there are no settlements adjacent to your location
+		if (buildingByEdge(adjacentEdge1) == null &&
+				buildingByEdge(adjacentEdge2) == null &&
+				buildingByEdge(adjacentEdge3) == null) {
+			if (Game.getInstance().getTurnTracker().getStatus().equals("FirstRound") ||
+					Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")) {
 				return true;
+			}
+			else {
+				//ensures that there is a road that belongs to you at at least one of the three directions
+				if (getRoadAtEdge(adjacentEdge1) != null && getRoadAtEdge(adjacentEdge1).getColor() == player.getPlayerInfo().getColor()
+						|| getRoadAtEdge(adjacentEdge2) != null && getRoadAtEdge(adjacentEdge2).getColor() == player.getPlayerInfo().getColor()
+						|| getRoadAtEdge(adjacentEdge3) != null && getRoadAtEdge(adjacentEdge3).getColor() == player.getPlayerInfo().getColor()) {
+					return true;
+				}
 			}
 		}
 		return false;
 	}
+
+
 
 
 	/**

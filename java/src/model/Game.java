@@ -109,6 +109,8 @@ public class Game extends Observable {
         }
         this.gameInfo.setPlayers(gameInfoPlayers);
 
+
+
         //replace activeTrade
         this.activeTrade = createActiveTrade(model.getTradeOffer());
 

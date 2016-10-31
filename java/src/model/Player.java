@@ -2,6 +2,7 @@ package model;
 
 import client.data.PlayerInfo;
 //import model.map.GeneralPort;
+import client.states.FirstRoundState;
 import model.map.Port;
 import model.cards_resources.ResourceCards;
 import model.cards_resources.Trade;
@@ -276,8 +277,14 @@ public class Player {
      * @return true if a settlement can be placed at the specified location
      */
     public boolean canPlaceSettlement(VertexLocation vertex) {
-    	if (settlements > 0 && canBuySettlement()) {
-    	    return Game.getInstance().getMap().canPlaceSettlement(vertex, this);
+    	if (settlements > 0) {
+    	    if (Game.getInstance().getTurnTracker().getStatus().equals("FirstRound") ||
+                    Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")){
+                return Game.getInstance().getMap().canPlaceSettlement(vertex, this);
+            }
+    	    else if (canBuySettlement()) {
+                return Game.getInstance().getMap().canPlaceSettlement(vertex, this);
+            }
         }
         return false;
     }
@@ -290,8 +297,14 @@ public class Player {
      * @return true if a settlement can be placed at the specified location
      */
     public boolean canPlaceRoad(EdgeLocation edge) {
-    	if (roads > 0 && canBuyRoad()) {
-    	    return Game.getInstance().getMap().canPlaceRoad(edge, this);
+    	if (roads > 0) {
+            if (Game.getInstance().getTurnTracker().getStatus().equals("FirstRound") ||
+                    Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")) {
+                return Game.getInstance().getMap().canPlaceRoad(edge, this);
+            }
+            else if (canBuyRoad()) {
+                return Game.getInstance().getMap().canPlaceRoad(edge, this);
+            }
         }
         return false;
     }
