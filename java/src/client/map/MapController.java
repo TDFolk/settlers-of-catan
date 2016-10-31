@@ -45,8 +45,9 @@ public class MapController extends Controller implements IMapController, Observe
 	private boolean firstRoundDone = false;
 	private boolean secondRoundDone = false;
 
+	//need to get this info from the server..........
 	private List<Road> roadList = new ArrayList<>();
-	private List<Settlement> settlementList = new ArrayList<>();
+	private List<Building> settlementList = new ArrayList<>();
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -214,6 +215,27 @@ public class MapController extends Controller implements IMapController, Observe
 		if(turn.getCurrentTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
 
 			if(Game.getInstance().getTurnTracker().getStatus().equals("FirstRound")){
+
+
+				//iterate through building list and parse settlements....
+				if(Game.getInstance().getMap().getBuildings() != null){
+					for(Building building : Game.getInstance().getMap().getBuildings()){
+						if(building instanceof Settlement && building.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
+							settlementList.add(building);
+						}
+					}
+				}
+
+				//iterate through road list
+				if(Game.getInstance().getMap().getRoads() != null){
+					for(Road road : Game.getInstance().getMap().getRoads()){
+						if(road.getColor().equals(Game.getInstance().getCurrentPlayerInfo().getColor())){
+							roadList.add(road);
+						}
+					}
+				}
+
+
 				//check if we've done the first round of the game
 				if(!firstRoundDone){
 					state = new FirstRoundState();
