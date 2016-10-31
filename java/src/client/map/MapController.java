@@ -142,7 +142,7 @@ public class MapController extends Controller implements IMapController, Observe
 			//is this the right place to finish the turn????
 			ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
 			if(state instanceof SecondRoundState){
-				state = new RollingState();
+				//state = new RollingState();
 			}
 		}
 	}
@@ -230,7 +230,7 @@ public class MapController extends Controller implements IMapController, Observe
 
 				//check if we've done the first round of the game
 				if(!firstRoundDone){
-					state = new FirstRoundState();
+					//state = new FirstRoundState();
 
 					if(settlementList.size() == 0){
 						getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
@@ -243,7 +243,7 @@ public class MapController extends Controller implements IMapController, Observe
 					if(roadList.size() == 1 && settlementList.size() == 1){
 						//we're done with the 1st round state
 						firstRoundDone = true;
-						state = new NotMyTurnState();
+						//state = new NotMyTurnState();
 						return;
 					}
 				}
@@ -259,7 +259,7 @@ public class MapController extends Controller implements IMapController, Observe
 				//check if we've done the second round of the game
 				if (!secondRoundDone) {
 					//checkBuildingList();
-					state = new SecondRoundState();
+					//state = new SecondRoundState();
 					if(settlementList.size() == 1){
 						getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
 
@@ -273,16 +273,16 @@ public class MapController extends Controller implements IMapController, Observe
 					if(roadList.size() == 2 && settlementList.size() == 2) {
 						//we're done with the 2nd round state
 						secondRoundDone = true;
-						state = new NotMyTurnState();
+						//state = new NotMyTurnState();
 						return;
 					}
 				}
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Playing")){
-				state = new PlayingState();
+				//state = new PlayingState();
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Robbing")){
-				state = new RobbingState();
+				//state = new RobbingState();
 			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Rolling")){
 				//state = new RollingState();

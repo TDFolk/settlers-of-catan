@@ -66,7 +66,7 @@ public class RollController extends Controller implements IRollController, Obser
 
 		//making the call to the server to roll
 		ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
-		MapController.setState(new PlayingState());
+		//MapController.setState(new PlayingState());
 
 		getResultView().setRollValue(totalValue);
 		getResultView().showModal();
