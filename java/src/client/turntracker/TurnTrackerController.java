@@ -128,11 +128,11 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				}
 
 				//update the player view depending on what they have
-				int vp = player.getVictoryPoints();
-				boolean currentTest = isCurrentTurn(index);
-				boolean largestTest= isLargestArmy(index);
-				boolean longestTest = isLongestRoad(index);
-//				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
+//				int vp = player.getVictoryPoints();
+//				boolean currentTest = isCurrentTurn(index);
+//				boolean largestTest= isLargestArmy(index);
+//				boolean longestTest = isLongestRoad(index);
+				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
 			}
 
 			//check to see if the game is over...

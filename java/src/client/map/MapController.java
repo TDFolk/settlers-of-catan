@@ -131,7 +131,9 @@ public class MapController extends Controller implements IMapController, Observe
 		if(hexLoc.getX() == robberLocation.getX() && hexLoc.getY() == robberLocation.getY()){
 			return false;
 		}
-
+		if(Facade.getInstance().getHexAtLocation(hexLoc).getHexType() == HexType.WATER){
+			return false;
+		}
 		return true;
 	}
 
