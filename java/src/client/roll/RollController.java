@@ -67,8 +67,10 @@ public class RollController extends Controller implements IRollController, Obser
 	 */
 	@Override
 	public void update(Observable o, Object arg) {
-		if (MapController.getState() instanceof RollingState && !getRollView().isModalShowing()) {
-			getRollView().showModal();
+		if(MapController.getState() instanceof RollingState){
+			if(Game.getInstance().getTurnTracker().getCurrentTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
+				getRollView().showModal();
+			}
 		}
 	}
 
