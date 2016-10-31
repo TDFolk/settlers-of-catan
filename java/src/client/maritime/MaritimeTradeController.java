@@ -84,7 +84,7 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 			ratio = 4;
 		}
 
-		String model = ServerProxy.getServer().maritimeTrade(Facade.getInstance().getPlayerIndex(), ratio, giveResource.name(), getResource.name());
+		String model = ServerProxy.getServer().maritimeTrade(Facade.getInstance().getPlayerIndex(), ratio, giveResource.name().toLowerCase(), getResource.name().toLowerCase());
 		Facade.getInstance().replaceModel(model);
 
 		getTradeOverlay().closeModal();
