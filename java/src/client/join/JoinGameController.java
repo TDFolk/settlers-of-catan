@@ -271,8 +271,6 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 	 */
 	@Override
 	public void joinGame(CatanColor color) {
-
-
 		//check if game is null
 		if(this.game == null){
 			getMessageView().setTitle("Join Game Error");
@@ -286,6 +284,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 //			ServerProxy.getServer().sendChat(playerInfo.getPlayerIndex(),
 //					"random#showmethemoney " + getPlayerInfo().getName() + " has joined the game");
 
+			Game.getInstance().setVersionNumber(this.game.getId());
 			canPoll = true;
 
 			playerInfo.setColor(color);
@@ -302,7 +301,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 			}
 
 			Game.getInstance().getPlayer().setPlayerInfo(playerInfo);
-			Facade.getInstance().initializeData();
+			//Facade.getInstance().initializeData();
 
 			//To set the color of the player in the GameInfo object as well
 			for(int i = 0; i < this.game.getPlayers().size(); i++)
