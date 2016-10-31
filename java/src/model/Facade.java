@@ -244,4 +244,8 @@ public class Facade {
     public boolean playerOverResourceLimit() {
         return Game.getInstance().getPlayer().overResourceLimit();
     }
+
+    public boolean canPlaceCity(VertexLocation location) {
+        return Game.getInstance().getMap().canPlaceCity(location);
+    }
 }

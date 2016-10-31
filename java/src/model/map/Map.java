@@ -2,6 +2,7 @@ package model.map;
 
 import client.main.Catan;
 import client.map.MapController;
+import model.Facade;
 import model.Game;
 import model.Player;
 import model.pieces.Building;
@@ -420,5 +421,16 @@ public class Map {
 			}
 		}
 		return null;
+	}
+
+	public boolean canPlaceCity(VertexLocation location) {
+		for (Building building : buildings) {
+			if (building instanceof Settlement &&
+					building.getLocation().getNormalizedLocation().equals(location.getNormalizedLocation()) &&
+					building.getColor() == Game.getInstance().getPlayer().getPlayerInfo().getColor()) {
+				return true;
+			}
+		}
+		return false;
 	}
 }
