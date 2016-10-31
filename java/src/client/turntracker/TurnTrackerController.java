@@ -4,6 +4,7 @@ import client.data.PlayerInfo;
 import client.map.MapController;
 import client.states.DiscardingState;
 import client.states.FirstRoundState;
+import client.states.PlayingState;
 import model.Facade;
 import model.Game;
 import model.Player;
@@ -141,9 +142,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 
 			//end turn here???
-//			if(MapController.getState() instanceof FirstRoundState){
-//				//ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
-//			}
+			if(MapController.getState() instanceof PlayingState){
+
+				//ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
+			}
 		}
 		//game hasn't started yet
 		else {

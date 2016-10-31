@@ -3,6 +3,7 @@ package client.roll;
 import client.base.*;
 import client.map.MapController;
 import client.states.IGameState;
+import client.states.PlayingState;
 import client.states.RollingState;
 import model.Facade;
 import model.Game;
@@ -65,6 +66,7 @@ public class RollController extends Controller implements IRollController, Obser
 
 		//making the call to the server to roll
 		ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
+		MapController.setState(new PlayingState());
 
 		getResultView().setRollValue(totalValue);
 		getResultView().showModal();
@@ -95,7 +97,7 @@ public class RollController extends Controller implements IRollController, Obser
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				seconds--;
-				getRollView().setMessage("Rolling automatically in " + seconds + " seconds...");
+				getRollView().setMessage("Rolling automatically in " + seconds);
 
 				//if the seconds goes down less than 5
 				if(seconds <= 0){
