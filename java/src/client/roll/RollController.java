@@ -101,13 +101,13 @@ public class RollController extends Controller implements IRollController, Obser
 
 				//if the seconds goes down less than 5
 				if(seconds <= 0){
+					countdownTimer.stop();
 					rollDice();
 				}
 			}
 		};
 		countdownTimer = new Timer(1000, actionListener);
 		countdownTimer.start();
-
 	}
 }
 
