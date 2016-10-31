@@ -33,7 +33,7 @@ public class MapController extends Controller implements IMapController, Observe
 	 * depending on the state, each function will return something different
 	 */
 	private static IGameState state;
-	private EdgeLocation firstRoad;
+	//private EdgeLocation firstRoad;
 	HexLocation robberLocation;
 	private boolean init = false;
 	//????
@@ -51,6 +51,9 @@ public class MapController extends Controller implements IMapController, Observe
 
 //	private boolean checkFirst = false;
 //	private boolean checkSecond = false;
+
+	private boolean playingSoldier = false;
+	private boolean playingRoadBuilding = false;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -185,11 +188,11 @@ public class MapController extends Controller implements IMapController, Observe
 		ArrayList<RobPlayerInfo> robPlayerInfoArrayList = new ArrayList<>();
 		int index = Game.getInstance().getCurrentPlayerInfo().getPlayerIndex();
 
-//		for(int i = 0; i < 4; i++){
-//			if(i != index){
-//
-//			}
-//		}
+		for(int i = 0; i < 4; i++){
+			if(i != index){
+				
+			}
+		}
 
 
 		getRobView().showModal();
@@ -202,19 +205,59 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void cancelMove() {
+		playingRoadBuilding = false;
+		playingSoldier = false;
+		if(!(state instanceof PlayingState)){
+			state = new PlayingState();
+		}
+	}
+	
+	public void playSoldierCard() {
+		playingSoldier = true;
+		state = new RobbingState();
+		getView().startDrop(PieceType.ROBBER, Game.getInstance().getCurrentPlayerInfo().getColor(), true);
+	}
 
+	
+	public void playRoadBuildingCard() {
+		playingRoadBuilding = true;
+
+		int index = Game.getInstance().getCurrentPlayerInfo().getPlayerIndex();
+		if(Game.getInstance().getPlayersList().get(index).getRoads() == 0){
+			//no more roads to build....
+			return;
+		}
+		getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), true);
 	}
 	
-	public void playSoldierCard() {	
-		
-	}
-	
-	public void playRoadBuildingCard() {	
-		
-	}
-	
-	public void robPlayer(RobPlayerInfo victim) {	
-		
+	public void robPlayer(RobPlayerInfo victim) {
+
+		//this will check if the soldier card was played
+		if(playingSoldier){
+			playingSoldier = false;
+			if(victim == null){
+				//do something here
+				ServerProxy.getServer().soldier(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), -1, robberLocation);
+			}
+			else {
+				ServerProxy.getServer().soldier(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), victim.getPlayerIndex(), robberLocation);
+			}
+		}
+		//this will be for if you roll a 7
+		else {
+			if(victim == null){
+				ServerProxy.getServer().robPlayer(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), -1, robberLocation);
+			}
+			else {
+				ServerProxy.getServer().robPlayer(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), victim.getPlayerIndex(), robberLocation);
+			}
+		}
+
+		//.... is it showing?
+		if(getRobView().isModalShowing()){
+			getRobView().closeModal();
+		}
+
 	}
 
 	/**
@@ -243,8 +286,6 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void doState(){
-		//checkBuildingList();
-
 		//check if the client's turn is the same as current player's turn, if so, do these
 		TurnTracker turn = Game.getInstance().getTurnTracker();
 		String status = turn.getStatus();
@@ -277,10 +318,6 @@ public class MapController extends Controller implements IMapController, Observe
 			}
 			//is the server status in the second round?
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")){
-//				if(!checkSecond){
-//					checkBuildingList();
-//					checkSecond = true;
-//				}
 
 				//check if we've done the second round of the game
 				if (!secondRoundDone) {
@@ -318,10 +355,12 @@ public class MapController extends Controller implements IMapController, Observe
 				//return;
 
 			}
+			else if(Game.getInstance().getTurnTracker().getStatus().equals("Discarding")){
+				//do something
+			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Rolling")){
 				//state = new RollingState();
-				//it goes in here but it never changes.....??????????????????
-				//Game.getInstance().notifyObservers();
+
 			}
 		}
 		//it's not our turn, so set the state to NotMyTurnState
