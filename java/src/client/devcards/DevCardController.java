@@ -186,6 +186,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		if (player.canPlayDevelopmentCard(DevCardType.SOLDIER)) {
 			soldierAction.execute();
 			
+			player.addSoldier();
 			//ServerProxy.getServer().soldier(index, -1, null); ?????
 		}
 			
