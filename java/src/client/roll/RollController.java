@@ -64,9 +64,9 @@ public class RollController extends Controller implements IRollController, Obser
 		int dice2 = (int)(Math.random() * 6) + 1;
 		int totalValue = dice1 + dice2;
 
+		getRollView().closeModal();
 		//making the call to the server to roll
 		ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
-		//MapController.setState(new PlayingState());
 
 		getResultView().setRollValue(totalValue);
 		getResultView().showModal();
@@ -103,6 +103,7 @@ public class RollController extends Controller implements IRollController, Obser
 				if(seconds <= 0){
 					countdownTimer.stop();
 					rollDice();
+					//MapController.setState(new PlayingState());
 				}
 			}
 		};
