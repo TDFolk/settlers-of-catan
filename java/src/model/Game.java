@@ -162,11 +162,7 @@ public class Game extends Observable {
             case "Robbing":
                 newState= new RollingState();
                 break;
-
-            default:
-                newState= new NotMyTurnState();
-                break;
-
+            
 
         }
 
