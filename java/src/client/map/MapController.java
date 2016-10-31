@@ -243,6 +243,11 @@ public class MapController extends Controller implements IMapController, Observe
 			}
 			//is the server status in the second round?
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")){
+//				if(!checkSecond){
+//					checkBuildingList();
+//					checkSecond = true;
+//				}
+
 				//check if we've done the second round of the game
 				if (!secondRoundDone) {
 					//checkBuildingList();
