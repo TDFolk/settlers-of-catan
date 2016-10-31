@@ -4,6 +4,7 @@ import client.base.*;
 import client.map.MapController;
 import client.states.IGameState;
 import client.states.PlayingState;
+import client.states.RobbingState;
 import client.states.RollingState;
 import model.Facade;
 import model.Game;
@@ -68,6 +69,10 @@ public class RollController extends Controller implements IRollController, Obser
 		//getRollView().setMessage("Rolling automatically in 5");
 		//making the call to the server to roll
 		ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
+
+		if(totalValue == 7){
+			MapController.setState(new RobbingState());
+		}
 
 		getResultView().setRollValue(totalValue);
 		getResultView().showModal();
