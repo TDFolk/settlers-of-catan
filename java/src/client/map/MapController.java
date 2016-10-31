@@ -126,7 +126,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-		
+
 		return true;
 	}
 
@@ -175,6 +175,8 @@ public class MapController extends Controller implements IMapController, Observe
 	public void placeCity(VertexLocation vertLoc) {
 		
 		getView().placeCity(vertLoc, Game.getInstance().getCurrentPlayerInfo().getColor());
+		ServerProxy.getServer().buildCity(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), vertLoc);
+
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
