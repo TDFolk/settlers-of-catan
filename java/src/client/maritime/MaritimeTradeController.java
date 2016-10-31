@@ -138,8 +138,9 @@ public class MaritimeTradeController extends Controller implements IMaritimeTrad
 	public void update(Observable o, Object arg) {
 
 		if (MapController.getState() instanceof PlayingState) {
-
-			getTradeView().enableMaritimeTrade(Facade.getInstance().hasPortAccess());
+			getTradeView().enableMaritimeTrade(true);
+		} else {
+			getTradeView().enableMaritimeTrade(false);
 		}
 	}
 
