@@ -51,7 +51,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	public void endTurn() {
 		//end turn here... need to update the model with this response
 		endTurnResponse = ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
-		MapController.setState(new NotMyTurnState());
+		//MapController.setState(new NotMyTurnState());
 	}
 	
 	private void initFromModel() {
