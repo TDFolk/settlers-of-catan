@@ -71,10 +71,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 		switch (gameState) {
 			case "FirstRoundState":
-				getView().updateGameState("First Round Phase", false);
+				getView().updateGameState("First Round", false);
 				break;
 			case "SecondRoundState":
-				getView().updateGameState("Second Round State", false);
+				getView().updateGameState("Second Round", false);
 				break;
 			case "RollingState":
 				getView().updateGameState("Rolling", false);
