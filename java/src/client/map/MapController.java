@@ -5,7 +5,9 @@ import java.util.*;
 import client.states.*;
 import model.Facade;
 import model.Game;
+import model.Player;
 import model.TurnTracker;
+import model.cards_resources.ResourceCards;
 import model.map.*;
 import model.pieces.Building;
 import model.pieces.City;
@@ -183,10 +185,59 @@ public class MapController extends Controller implements IMapController, Observe
 			getRobView().closeModal();
 		}
 
-		getRobView().setPlayers(null);
-		getView().placeRobber(hexLoc);
+		Facade.getInstance().getHexAtLocation(hexLoc);
+
+		ArrayList<VertexLocation> vertexes = new ArrayList<>();
+
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.NorthEast));
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.SouthWest));
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.East));
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.NorthWest));
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.West));
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.SouthEast));
 
 		ArrayList<RobPlayerInfo> robPlayerInfoArrayList = new ArrayList<>();
+
+		//Gets the number of cards of each player who has a building on a vertex touching the hex
+		for(int i = 0; i < vertexes.size(); i++)
+		{
+			Building b = Facade.getInstance().getBuildingAtVertex(vertexes.get(i));
+
+			if(b != null)
+			{
+
+				List<Player> players = Game.getInstance().getPlayersList();
+
+				for(int j = 0; j < players.size(); j++)
+				{
+					if(players.get(j).getPlayerInfo().getColor() == b.getColor())
+					{
+						RobPlayerInfo rob = new RobPlayerInfo();
+						int totalCards = 0;
+
+						ResourceCards cards = players.get(j).getResourceCards();
+
+						totalCards += cards.getBrick();
+						totalCards += cards.getOre();
+						totalCards += cards.getSheep();
+						totalCards += cards.getWheat();
+						totalCards += cards.getWood();
+
+						rob.setNumCards(totalCards);
+
+						robPlayerInfoArrayList.add(rob);
+					}
+				}
+			}
+		}
+
+		RobPlayerInfo[] infos = new RobPlayerInfo[robPlayerInfoArrayList.size()];
+		robPlayerInfoArrayList.toArray(infos);
+
+		getRobView().setPlayers(infos);
+		getView().placeRobber(hexLoc);
+
+
 		int index = Game.getInstance().getCurrentPlayerInfo().getPlayerIndex();
 
 		for(int i = 0; i < 4; i++){

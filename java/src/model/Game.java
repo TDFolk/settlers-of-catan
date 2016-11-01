@@ -88,6 +88,8 @@ public class Game extends Observable {
 
         this.map = new Map(hexes, buildings,roads, ports, model.getMap().getRadius(), robber);
 
+        
+
         //replace List<Players> players
         playersList = createPlayersList(model.getPlayers());
 
