@@ -129,6 +129,10 @@ public class Game extends Observable {
         if(turnTracker.getCurrentTurn() == currentPlayerInfo.getPlayerIndex()){
             isMyTurn = true;
         }
+        else
+        {
+            isMyTurn = false;
+        }
 
         //updates the state in the mapcontroller
         setState(model.getTurnTracker().getStatus());
@@ -147,37 +151,44 @@ public class Game extends Observable {
     private void setState(String status) {
 
         IGameState newState = null;
+        if(isMyTurn) {
 
-        switch(status)
+            switch (status) {
+                case "Rolling":
+                    newState = new RollingState();
+                    break;
+
+                case "FirstRound":
+                    newState = new FirstRoundState();
+                    break;
+
+                case "SecondRound":
+                    newState = new SecondRoundState();
+                    break;
+
+                case "Playing":
+                    newState = new PlayingState();
+                    break;
+
+                case "Robbing":
+                    newState = new RollingState();
+                    break;
+
+                case "Discarding":
+                    newState = new DiscardingState();
+                    break;
+
+                default:
+                   System.out.println("ERROR!!!!!!!!!!!!!");
+
+
+            }
+
+
+        }
+        else
         {
-            case "Rolling":
-                newState = new RollingState();
-                break;
-
-            case "FirstRound":
-                newState = new FirstRoundState();
-                break;
-
-            case "SecondRound":
-                newState = new SecondRoundState();
-                break;
-
-            case "Playing":
-                newState = new PlayingState();
-                break;
-
-            case "Robbing":
-                newState = new RollingState();
-                break;
-
-            case "Discarding":
-                newState = new DiscardingState();
-                break;
-
-            default:
-                newState = new NotMyTurnState();
-            
-
+            newState = new NotMyTurnState();
         }
 
         MapController.setState(newState);
