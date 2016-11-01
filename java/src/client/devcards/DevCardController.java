@@ -106,20 +106,8 @@ public class DevCardController extends Controller implements IDevCardController,
 
 	@Override
 	public void playMonopolyCard(ResourceType resource) {
-<<<<<<< HEAD
-
 		ServerProxy.getServer().monopoly(resource.name().toLowerCase(), Facade.getInstance().getPlayerIndex());
 
-=======
-		Player player = Game.getInstance().getPlayer();
-		int index = player.getPlayerInfo().getPlayerIndex();
-		
-		if (player.canPlayDevelopmentCard(DevCardType.MONOPOLY))
-			ServerProxy.getServer().monopoly(resource.name(), index);
-		
-		getPlayCardView().closeModal();
-		
->>>>>>> origin/master
 		/*
 		try {
 			player.playDevelopmentCard(DevCardType.MONOPOLY);
@@ -155,9 +143,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	public void playMonumentCard() {
 
 		ServerProxy.getServer().monument(Facade.getInstance().getPlayerIndex());
-		
-		getPlayCardView().closeModal();
-		
+
 		/*
 		try {
 			player.playDevelopmentCard(DevCardType.MONUMENT);
@@ -174,9 +160,7 @@ public class DevCardController extends Controller implements IDevCardController,
 		roadAction.execute();
 
 		//ServerProxy.getServer().roadBuilding(index, null, null); ?????
-		
-		getPlayCardView().closeModal();
-		
+
 		/*
 		try {
 			player.playDevelopmentCard(DevCardType.ROAD_BUILD);
@@ -192,7 +176,6 @@ public class DevCardController extends Controller implements IDevCardController,
 	public void playSoldierCard() {
 
 		soldierAction.execute();
-			
 		
 		/*
 		try {
@@ -210,9 +193,7 @@ public class DevCardController extends Controller implements IDevCardController,
 	public void playYearOfPlentyCard(ResourceType resource1, ResourceType resource2) {
 
 		ServerProxy.getServer().yearOfPlenty(Facade.getInstance().getPlayerIndex(), resource1, resource2);
-		
-		getPlayCardView().closeModal();
-		
+
 		/*
 		try {
 			player.playDevelopmentCard(DevCardType.YEAR_OF_PLENTY);
