@@ -1,6 +1,8 @@
 package client.domestic;
 
+import client.data.PlayerInfo;
 import client.map.MapController;
+import model.Facade;
 import model.Game;
 import model.Player;
 import model.cards_resources.ResourceCards;
@@ -10,6 +12,7 @@ import client.base.*;
 import client.misc.*;
 
 import java.util.Arrays;
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -29,12 +32,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private int playerTradingWith; // Their playerIndex
 	private int currentPlayerIndex;
 	private Player currentPlayer;
+	private PlayerInfo enemyPlayerInfo[];
 
 	private boolean[] sendingResources;
 	private boolean[] receivingResources;
 	private boolean accept;
 	private boolean offered;
 	private boolean waiting;
+	private boolean firstInit;
 
 	/**
 	 * DomesticTradeController constructor
@@ -54,8 +59,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		setAcceptOverlay(acceptOverlay);
 
 		this.getTradeView().enableDomesticTrade(false);
+
 		resourcesToSend = new ResourceCards(0,0,0,0,0);
 		resourcesToReceive = new ResourceCards(0,0,0,0,0);
+		enemyPlayerInfo = new PlayerInfo[3];
 
 		playerTradingWith = -1;
 
@@ -68,14 +75,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		accept = false;
 		offered = false;
 		waiting = false;
-
+		firstInit = true;
 
 		// This Controller will now be notified to any changes in the Game Object
 		Game.getInstance().addObserver(this);
 	}
 	
 	public IDomesticTradeView getTradeView() {
-		
 		return (IDomesticTradeView)super.getView();
 	}
 
@@ -125,8 +131,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	public boolean canTrade() {
 		if (playerTradingWith != -1 && resourcesToSend.size() != 0 && resourcesToReceive.size() != 0) {
-			getTradeOverlay().setStateMessage("Trade at your own risk");
+			getTradeOverlay().setStateMessage("Send Trade Offer");
 			return true;
+		}
+		else if (playerTradingWith == -1){
+			getTradeOverlay().setStateMessage("Select a Player to trade with");
+			return false;
 		}
 		else {
 			getTradeOverlay().setStateMessage("Let's see if we can make a deal");
@@ -137,12 +147,12 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void decreaseResourceAmount(ResourceType resource) {
 		// Need to have at least 1 of the resource to decrease amount!
-		if (resourcesToReceive.getResource(resource) > 0) {
+		if (resourcesToReceive.getResource(resource) > 0 && receivingResources[getResourceIndex(resource)]) {
 			resourcesToReceive.subtractOneResource(resource);
 			// Adjust what the Current Player can increase and decrease
 			setResourceChangeEnabler(resource);
 		}
-		if (resourcesToSend.getResource(resource) > 0) {
+		if (resourcesToSend.getResource(resource) > 0 && sendingResources[getResourceIndex(resource)]) {
 			resourcesToSend.subtractOneResource(resource);
 			setResourceChangeEnabler(resource);
 		}
@@ -165,7 +175,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		int enemyPlayerResourceAmount = enemyPlayer.getResourceCards().getResource(resource);
 
 		// Can only receive resources equal to the amount the player your trading with has
-		if (resourcesToReceive.getResource(resource) != enemyPlayerResourceAmount) {
+		if (resourcesToReceive.getResource(resource) <= enemyPlayerResourceAmount && receivingResources[getResourceIndex(resource)]) {
 			resourcesToReceive.addOneResource(resource);
 			setResourceChangeEnabler(resource);
 		}
@@ -173,7 +183,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		int currentPlayerResourceAmount = currentPlayer.getResourceCards().getResource(resource);
 
 		// Can only send resources equal to the amount the current player has
-		if (resourcesToSend.getResource(resource) != currentPlayerResourceAmount) {
+		if (resourcesToSend.getResource(resource) <= currentPlayerResourceAmount && sendingResources[getResourceIndex(resource)]) {
 			resourcesToSend.addOneResource(resource);
 			setResourceChangeEnabler(resource);
 		}
@@ -182,11 +192,23 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 
 	public void setResourceChangeEnabler(ResourceType resourceType) {
+		Player enemyPlayer = Game.getInstance().getPlayersList().get(playerTradingWith);
+		int enemyPlayerResourceAmount = enemyPlayer.getResourceCards().getResource(resourceType);
 		// Determine is this given resource is attempting to be sent or received
 		if (receivingResources[getResourceIndex(resourceType)]) {
 			if (resourcesToReceive.getResource(resourceType) == 0) {
-				// Starts at 0 and the user can increase to request more of that resource, but can't decrease past 0!
-				getTradeOverlay().setResourceAmountChangeEnabled(resourceType, true, false);
+				if (resourcesToReceive.getResource(resourceType) == enemyPlayerResourceAmount) {
+					// Enemy player has 0 of this resource
+					getTradeOverlay().setResourceAmountChangeEnabled(resourceType, false, false);
+				}
+				else {
+					// Starts at 0 and the user can increase to request more of that resource, but can't decrease past 0!
+					getTradeOverlay().setResourceAmountChangeEnabled(resourceType, true, false);
+				}
+			}
+			else if (resourcesToReceive.getResource(resourceType) == enemyPlayerResourceAmount){
+				// Already requesting to receive all of the enemies resources of this type
+				getTradeOverlay().setResourceAmountChangeEnabled(resourceType, false, true);
 			}
 			else {
 				getTradeOverlay().setResourceAmountChangeEnabled(resourceType, true, true);
@@ -242,6 +264,24 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 
 		ServerProxy.getServer().offerTrade(currentPlayerIndex, resourcesToSend, playerTradingWith);
+		setGetResources();
+	}
+	public void setGetResources() {
+		if (resourcesToReceive.getBrick() > 0) {
+			getAcceptOverlay().addGetResource(ResourceType.BRICK, resourcesToReceive.getBrick());
+		}
+		if (resourcesToReceive.getOre() > 0) {
+			getAcceptOverlay().addGetResource(ResourceType.ORE, resourcesToReceive.getOre());
+		}
+		if (resourcesToReceive.getSheep() > 0) {
+			getAcceptOverlay().addGetResource(ResourceType.SHEEP, resourcesToReceive.getSheep());
+		}
+		if (resourcesToReceive.getWheat() > 0) {
+			getAcceptOverlay().addGetResource(ResourceType.WHEAT, resourcesToReceive.getWheat());
+		}
+		if (resourcesToReceive.getWood() > 0) {
+			getAcceptOverlay().addGetResource(ResourceType.WOOD, resourcesToReceive.getWood());
+		}
 	}
 
 	@Override
@@ -313,6 +353,19 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void update(Observable o, Object arg) {
 		if (MapController.getState().canMakeTrades()) {
 			getTradeView().enableDomesticTrade(true);
+			if (firstInit) {
+				List<PlayerInfo> playerInfoData = Game.getInstance().getGameInfo().getPlayers();
+				int count = 0;
+				for (int i = 0; i < playerInfoData.size(); i++) {
+					if (!playerInfoData.get(i).getName().equals(Game.getInstance().getCurrentPlayerInfo().getName())) {
+						enemyPlayerInfo[count] = playerInfoData.get(i);
+						count++;
+					}
+				}
+				getTradeOverlay().setPlayers(enemyPlayerInfo);
+				firstInit = false;
+			}
+
 		} else {
 			getTradeView().enableDomesticTrade(false);
 		}
