@@ -3,6 +3,7 @@ package model;
 import client.data.GameInfo;
 import decoder.Decoder;
 import decoder.JsonModels.JsonModel;
+import model.cards_resources.DevelopmentCard;
 import model.cards_resources.ResourceCards;
 import model.map.Hex;
 import model.map.Port;
@@ -252,5 +253,9 @@ public class Facade {
 
     public Building getBuildingAtVertex(VertexLocation location) {
         return Game.getInstance().getMap().getBuildingAtVertex(location);
+    }
+
+    public boolean canPlayDevCard(DevCardType card) {
+        return Game.getInstance().getPlayer().canPlayDevelopmentCard(card);
     }
 }
