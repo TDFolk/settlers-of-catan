@@ -561,7 +561,7 @@ public class MapController extends Controller implements IMapController, Observe
 		return secondBuilding;
 	}
 
-	public static HexLocation getRobberLocation() {
+	public static HexLocation getRobberLocation() {	
 		return robberLocation;
 	}
 
