@@ -5,7 +5,9 @@ import java.util.*;
 import client.states.*;
 import model.Facade;
 import model.Game;
+import model.Player;
 import model.TurnTracker;
+import model.cards_resources.ResourceCards;
 import model.map.*;
 import model.pieces.Building;
 import model.pieces.City;
@@ -33,8 +35,8 @@ public class MapController extends Controller implements IMapController, Observe
 	 * depending on the state, each function will return something different
 	 */
 	private static IGameState state;
-	private EdgeLocation firstRoad;
-	HexLocation robberLocation;
+	//private EdgeLocation firstRoad;
+	private static HexLocation robberLocation;
 	private boolean init = false;
 	//????
 	//RobPlayerInfo[] empty = {};
@@ -51,6 +53,9 @@ public class MapController extends Controller implements IMapController, Observe
 
 //	private boolean checkFirst = false;
 //	private boolean checkSecond = false;
+
+	private boolean playingSoldier = false;
+	private boolean playingRoadBuilding = false;
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -123,8 +128,7 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceCity(VertexLocation vertLoc) {
-		
-		return true;
+		return Facade.getInstance().canPlaceCity(vertLoc);
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
@@ -172,6 +176,8 @@ public class MapController extends Controller implements IMapController, Observe
 	public void placeCity(VertexLocation vertLoc) {
 		
 		getView().placeCity(vertLoc, Game.getInstance().getCurrentPlayerInfo().getColor());
+		ServerProxy.getServer().buildCity(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), vertLoc);
+
 	}
 
 	public void placeRobber(HexLocation hexLoc) {
@@ -179,17 +185,66 @@ public class MapController extends Controller implements IMapController, Observe
 			getRobView().closeModal();
 		}
 
-		getRobView().setPlayers(null);
-		getView().placeRobber(hexLoc);
+		Facade.getInstance().getHexAtLocation(hexLoc);
+
+		ArrayList<VertexLocation> vertexes = new ArrayList<>();
+
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.NorthEast));
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.SouthWest));
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.East));
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.NorthWest));
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.West));
+		vertexes.add(new VertexLocation(hexLoc, VertexDirection.SouthEast));
 
 		ArrayList<RobPlayerInfo> robPlayerInfoArrayList = new ArrayList<>();
+
+		//Gets the number of cards of each player who has a building on a vertex touching the hex
+		for(int i = 0; i < vertexes.size(); i++)
+		{
+			Building b = Facade.getInstance().getBuildingAtVertex(vertexes.get(i));
+
+			if(b != null)
+			{
+
+				List<Player> players = Game.getInstance().getPlayersList();
+
+				for(int j = 0; j < players.size(); j++)
+				{
+					if(players.get(j).getPlayerInfo().getColor() == b.getColor())
+					{
+						RobPlayerInfo rob = new RobPlayerInfo();
+						int totalCards = 0;
+
+						ResourceCards cards = players.get(j).getResourceCards();
+
+						totalCards += cards.getBrick();
+						totalCards += cards.getOre();
+						totalCards += cards.getSheep();
+						totalCards += cards.getWheat();
+						totalCards += cards.getWood();
+
+						rob.setNumCards(totalCards);
+
+						robPlayerInfoArrayList.add(rob);
+					}
+				}
+			}
+		}
+
+		RobPlayerInfo[] infos = new RobPlayerInfo[robPlayerInfoArrayList.size()];
+		robPlayerInfoArrayList.toArray(infos);
+
+		getRobView().setPlayers(infos);
+		getView().placeRobber(hexLoc);
+
+
 		int index = Game.getInstance().getCurrentPlayerInfo().getPlayerIndex();
 
-//		for(int i = 0; i < 4; i++){
-//			if(i != index){
-//
-//			}
-//		}
+		for(int i = 0; i < 4; i++){
+			if(i != index){
+				
+			}
+		}
 
 
 		getRobView().showModal();
@@ -202,19 +257,59 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 	
 	public void cancelMove() {
+		playingRoadBuilding = false;
+		playingSoldier = false;
+		if(!(state instanceof PlayingState)){
+			state = new PlayingState();
+		}
+	}
+	
+	public void playSoldierCard() {
+		playingSoldier = true;
+		state = new RobbingState();
+		getView().startDrop(PieceType.ROBBER, Game.getInstance().getCurrentPlayerInfo().getColor(), true);
+	}
 
+	
+	public void playRoadBuildingCard() {
+		playingRoadBuilding = true;
+
+		int index = Game.getInstance().getCurrentPlayerInfo().getPlayerIndex();
+		if(Game.getInstance().getPlayersList().get(index).getRoads() == 0){
+			//no more roads to build....
+			return;
+		}
+		getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), true);
 	}
 	
-	public void playSoldierCard() {	
-		
-	}
-	
-	public void playRoadBuildingCard() {	
-		
-	}
-	
-	public void robPlayer(RobPlayerInfo victim) {	
-		
+	public void robPlayer(RobPlayerInfo victim) {
+
+		//this will check if the soldier card was played
+		if(playingSoldier){
+			playingSoldier = false;
+			if(victim == null){
+				//do something here
+				ServerProxy.getServer().soldier(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), -1, robberLocation);
+			}
+			else {
+				ServerProxy.getServer().soldier(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), victim.getPlayerIndex(), robberLocation);
+			}
+		}
+		//this will be for if you roll a 7
+		else {
+			if(victim == null){
+				ServerProxy.getServer().robPlayer(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), -1, robberLocation);
+			}
+			else {
+				ServerProxy.getServer().robPlayer(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), victim.getPlayerIndex(), robberLocation);
+			}
+		}
+
+		//.... is it showing?
+		if(getRobView().isModalShowing()){
+			getRobView().closeModal();
+		}
+
 	}
 
 	/**
@@ -243,8 +338,6 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public void doState(){
-		//checkBuildingList();
-
 		//check if the client's turn is the same as current player's turn, if so, do these
 		TurnTracker turn = Game.getInstance().getTurnTracker();
 		String status = turn.getStatus();
@@ -277,10 +370,6 @@ public class MapController extends Controller implements IMapController, Observe
 			}
 			//is the server status in the second round?
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")){
-//				if(!checkSecond){
-//					checkBuildingList();
-//					checkSecond = true;
-//				}
 
 				//check if we've done the second round of the game
 				if (!secondRoundDone) {
@@ -318,10 +407,12 @@ public class MapController extends Controller implements IMapController, Observe
 				//return;
 
 			}
+			else if(Game.getInstance().getTurnTracker().getStatus().equals("Discarding")){
+				//do something
+			}
 			else if(Game.getInstance().getTurnTracker().getStatus().equals("Rolling")){
 				//state = new RollingState();
-				//it goes in here but it never changes.....??????????????????
-				//Game.getInstance().notifyObservers();
+
 			}
 		}
 		//it's not our turn, so set the state to NotMyTurnState
@@ -468,6 +559,14 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public static Building getSecondBuilding() {
 		return secondBuilding;
+	}
+
+	public static HexLocation getRobberLocation() {	
+		return robberLocation;
+	}
+
+	public static void setRobberLocation(HexLocation robberLocation) {
+		MapController.robberLocation = robberLocation;
 	}
 }
 

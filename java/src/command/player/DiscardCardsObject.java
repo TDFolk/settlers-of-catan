@@ -41,13 +41,13 @@ public class DiscardCardsObject {
 //        return gson.toJson(this);
         return "{" +
                 "\"type\": " + "\"" + type + "\"," +
-                "\"playerIndex\": " + "\"" + playerIndex + "\"," +
+                "\"playerIndex\": " + playerIndex + "," +
                 "\"discardedCards\": {" +
-                "\"brick\": " + "\"" + discardedCards.getBrick() + "\"," +
-                "\"ore\": " + "\"" + discardedCards.getOre() + "\"," +
-                "\"sheep\": " + "\"" + discardedCards.getSheep() + "\"," +
-                "\"wheat\": " + "\"" + discardedCards.getWheat() + "\"," +
-                "\"wood\": " + "\"" + discardedCards.getWood() + "\"}" +
+                "\"brick\": " + discardedCards.getBrick() + "," +
+                "\"ore\": " + discardedCards.getOre() + "," +
+                "\"sheep\": " + discardedCards.getSheep() + "," +
+                "\"wheat\": " + discardedCards.getWheat() + "," +
+                "\"wood\": " + discardedCards.getWood() + "}" +
                 "}";
 
     }

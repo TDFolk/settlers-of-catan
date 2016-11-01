@@ -40,8 +40,7 @@ public class Player {
     private int monuments;
     private int soldiers;
     private int victoryPoints;
-    private PlayerInfo playerInfo;
-    
+    private PlayerInfo playerInfo;    
     
     
     /**
@@ -430,6 +429,10 @@ public class Player {
 
     public void setSoldiers(int soldiers) {
         this.soldiers = soldiers;
+    }
+    
+    public void addSoldier() {
+    	this.soldiers++;
     }
 
     public int getVictoryPoints() {

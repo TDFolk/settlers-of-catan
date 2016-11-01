@@ -51,10 +51,11 @@ public class Game extends Observable {
     private TurnTracker turnTracker;
     private Player winner;
 
-
     private GameInfo gameInfo;
     private PlayerInfo currentPlayerInfo;
     private GameInfo[] allGameInfos;
+
+    private boolean isMyTurn = false;
 
 
     public void replaceModel(JsonModel model)
@@ -87,6 +88,8 @@ public class Game extends Observable {
         HexLocation robber = new HexLocation(model.getMap().getRobber().getX(),model.getMap().getRobber().getY());
 
         this.map = new Map(hexes, buildings,roads, ports, model.getMap().getRadius(), robber);
+
+        MapController.setRobberLocation(robber);
 
         //replace List<Players> players
         playersList = createPlayersList(model.getPlayers());
@@ -123,6 +126,14 @@ public class Game extends Observable {
                 model.getTurnTracker().getLargestArmy());
         this.turnTracker = tracker;
 
+        if(turnTracker.getCurrentTurn() == currentPlayerInfo.getPlayerIndex()){
+            isMyTurn = true;
+        }
+        else
+        {
+            isMyTurn = false;
+        }
+
         //updates the state in the mapcontroller
         setState(model.getTurnTracker().getStatus());
 
@@ -140,30 +151,44 @@ public class Game extends Observable {
     private void setState(String status) {
 
         IGameState newState = null;
+        if(isMyTurn) {
 
-        switch(status)
+            switch (status) {
+                case "Rolling":
+                    newState = new RollingState();
+                    break;
+
+                case "FirstRound":
+                    newState = new FirstRoundState();
+                    break;
+
+                case "SecondRound":
+                    newState = new SecondRoundState();
+                    break;
+
+                case "Playing":
+                    newState = new PlayingState();
+                    break;
+
+                case "Robbing":
+                    newState = new RollingState();
+                    break;
+
+                case "Discarding":
+                    newState = new DiscardingState();
+                    break;
+
+                default:
+                   System.out.println("ERROR!!!!!!!!!!!!!");
+
+
+            }
+
+
+        }
+        else
         {
-            case "Rolling":
-                newState= new RollingState();
-                break;
-
-            case "FirstRound":
-                newState= new FirstRoundState();
-                break;
-
-            case "SecondRound":
-                newState= new SecondRoundState();
-                break;
-
-            case "Playing":
-                newState= new PlayingState();
-                break;
-
-            case "Robbing":
-                newState= new RollingState();
-                break;
-            
-
+            newState = new NotMyTurnState();
         }
 
         MapController.setState(newState);
@@ -1088,4 +1113,11 @@ public class Game extends Observable {
         this.winner = winner;
     }
 
+    public boolean isMyTurn() {
+        return isMyTurn;
+    }
+
+    public void setMyTurn(boolean myTurn) {
+        isMyTurn = myTurn;
+    }
 }

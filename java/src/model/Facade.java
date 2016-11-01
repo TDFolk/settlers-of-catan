@@ -3,10 +3,12 @@ package model;
 import client.data.GameInfo;
 import decoder.Decoder;
 import decoder.JsonModels.JsonModel;
+import model.cards_resources.DevelopmentCard;
 import model.cards_resources.ResourceCards;
 import model.map.Hex;
 import model.map.Port;
 //import model.map.ResourcePort;
+import model.pieces.Building;
 import server.ServerProxy;
 import shared.definitions.DevCardType;
 import shared.definitions.HexType;
@@ -239,5 +241,21 @@ public class Facade {
 
     public Hex getHexAtLocation(HexLocation location) {
         return Game.getInstance().getMap().getHexAtLocation(location);
+    }
+
+    public boolean playerOverResourceLimit() {
+        return Game.getInstance().getPlayer().overResourceLimit();
+    }
+
+    public boolean canPlaceCity(VertexLocation location) {
+        return Game.getInstance().getMap().canPlaceCity(location);
+    }
+
+    public Building getBuildingAtVertex(VertexLocation location) {
+        return Game.getInstance().getMap().getBuildingAtVertex(location);
+    }
+
+    public boolean canPlayDevCard(DevCardType card) {
+        return Game.getInstance().getPlayer().canPlayDevelopmentCard(card);
     }
 }

@@ -19,8 +19,12 @@ public class YearOfPlentyObject {
     }
 
     public String toJSON(){
-        Gson gson = new Gson();
-        return gson.toJson(this);
+        return "{\n" +
+                "  \"type\": \"" + type + "\",\n" +
+                "  \"playerIndex\": " + playerIndex + ",\n" +
+                "  \"resource1\": \"" + resource1.toString().toLowerCase() + "\",\n" +
+                "  \"resource2\": \"" + resource2.toString().toLowerCase() + "\"\n" +
+                "}";
     }
 
     public String getType() {
