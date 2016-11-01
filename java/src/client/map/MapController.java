@@ -36,7 +36,7 @@ public class MapController extends Controller implements IMapController, Observe
 	 */
 	private static IGameState state;
 	//private EdgeLocation firstRoad;
-	HexLocation robberLocation;
+	private static HexLocation robberLocation;
 	private boolean init = false;
 	//????
 	//RobPlayerInfo[] empty = {};
@@ -559,6 +559,14 @@ public class MapController extends Controller implements IMapController, Observe
 
 	public static Building getSecondBuilding() {
 		return secondBuilding;
+	}
+
+	public static HexLocation getRobberLocation() {
+		return robberLocation;
+	}
+
+	public static void setRobberLocation(HexLocation robberLocation) {
+		MapController.robberLocation = robberLocation;
 	}
 }
 
