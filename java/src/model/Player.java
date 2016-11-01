@@ -40,8 +40,7 @@ public class Player {
     private int monuments;
     private int soldiers;
     private int victoryPoints;
-    private PlayerInfo playerInfo;
-    
+    private PlayerInfo playerInfo;    
     
     
     /**

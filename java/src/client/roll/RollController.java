@@ -64,15 +64,19 @@ public class RollController extends Controller implements IRollController, Obser
 		int dice1 = (int)(Math.random() * 6) + 1;
 		int dice2 = (int)(Math.random() * 6) + 1;
 		int totalValue = dice1 + dice2;
+		if (totalValue == 7)
+			totalValue = 6;
+		
+		/*
+		if(totalValue == 7){
+			MapController.setState(new RobbingState());
+		}
+		*/
 
 		getRollView().closeModal();
 		//getRollView().setMessage("Rolling automatically in 5");
 		//making the call to the server to roll
 		ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
-
-		if(totalValue == 7){
-			MapController.setState(new RobbingState());
-		}
 
 		getResultView().setRollValue(totalValue);
 		getResultView().showModal();
@@ -91,6 +95,7 @@ public class RollController extends Controller implements IRollController, Obser
 			//check if the servers's turn matches this client's turn
 			if(Game.getInstance().getTurnTracker().getCurrentTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
 				//if so, show the modal and start the countdown
+				getRollView().setMessage("Rolling automatically in 5");
 				getRollView().showModal();
 				countdown();
 			}
