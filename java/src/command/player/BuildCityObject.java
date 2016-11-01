@@ -1,5 +1,6 @@
 package command.player;
 
+import client.map.MapController;
 import shared.locations.VertexLocation;
 
 /**
@@ -18,11 +19,11 @@ public class BuildCityObject {
     public String toJSON(){
         String response = "{\n" +
                 "  \"type\": \"buildCity\",\n" +
-                "  \"playerIndex\": \"" + playerIndex + "\",\n" +
+                "  \"playerIndex\": " + playerIndex + ",\n" +
                 "  \"vertexLocation\": {\n" +
-                "    \"x\": \"" + vertexLocation.getHexLoc().getX() + "\",\n" +
-                "    \"y\": \"" + vertexLocation.getHexLoc().getY() + "\",\n" +
-                "    \"direction\": \"" + vertexLocation.getDir() +  "\"\n" +
+                "    \"x\": " + vertexLocation.getHexLoc().getX() + ",\n" +
+                "    \"y\": " + vertexLocation.getHexLoc().getY() + ",\n" +
+                "    \"direction\": \"" + MapController.directionToString(vertexLocation.getDir().toString())+  "\"\n" +
                 "  }\n" +
                 "}";
 

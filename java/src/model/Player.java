@@ -431,6 +431,10 @@ public class Player {
     public void setSoldiers(int soldiers) {
         this.soldiers = soldiers;
     }
+    
+    public void addSoldier() {
+    	this.soldiers++;
+    }
 
     public int getVictoryPoints() {
         return victoryPoints;
