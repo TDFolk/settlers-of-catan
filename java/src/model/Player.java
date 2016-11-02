@@ -297,13 +297,7 @@ public class Player {
      */
     public boolean canPlaceRoad(EdgeLocation edge) {
     	if (roads > 0) {
-            if (Game.getInstance().getTurnTracker().getStatus().equals("FirstRound") ||
-                    Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")) {
-                return Game.getInstance().getMap().canPlaceRoad(edge, this);
-            }
-            else if (canBuyRoad()) {
-                return Game.getInstance().getMap().canPlaceRoad(edge, this);
-            }
+            return Game.getInstance().getMap().canPlaceRoad(edge, this);
         }
         return false;
     }
