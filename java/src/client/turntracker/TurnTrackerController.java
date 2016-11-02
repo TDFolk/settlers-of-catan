@@ -152,6 +152,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				getView().updateGameState("GAME OVER!", false);
 
 				isWinner = true;
+				ServerProxy.getServer().sendChat(Game.getInstance().getCurrentPlayerInfo().getId(), "#showmethemoney WINNER!!!");
+
 			}
 		}
 		//game hasn't started yet
