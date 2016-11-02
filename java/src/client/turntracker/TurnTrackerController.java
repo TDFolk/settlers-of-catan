@@ -27,9 +27,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	private int currentTurn;
 	private int largestArmy;
 	private int longestRoad;
-	private static int winner;
+	private int winner;
 	private boolean gameOver = false;
 	private boolean playersInitialized = false;
+	private static boolean isWinner = false;
 
 	private String endTurnResponse;
 
@@ -149,6 +150,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				//end the game here....
 				//need to reset the game here
 				getView().updateGameState("GAME OVER!", false);
+				isWinner = true;
 			}
 		}
 		//game hasn't started yet
@@ -186,8 +188,8 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		return this.gameOver;
 	}
 
-	public static int getWinner() {
-		return winner;
+	public static boolean isWinner() {
+		return isWinner;
 	}
 }
 
