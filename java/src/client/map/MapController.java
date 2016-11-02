@@ -56,6 +56,7 @@ public class MapController extends Controller implements IMapController, Observe
 
 	private boolean playingSoldier = false;
 	private boolean playingRoadBuilding = false;
+	private List<HexLocation> waterLocationList = new ArrayList<>();
 	
 	public MapController(IMapView view, IRobView robView) {
 		
@@ -132,10 +133,10 @@ public class MapController extends Controller implements IMapController, Observe
 	}
 
 	public boolean canPlaceRobber(HexLocation hexLoc) {
-		if(hexLoc.getX() == robberLocation.getX() && hexLoc.getY() == robberLocation.getY()){
+		if(hexLoc.equals(robberLocation)){
 			return false;
 		}
-		if(Facade.getInstance().getHexAtLocation(hexLoc).getHexType() == HexType.WATER){
+		if(!checkRobber(waterLocationList, hexLoc)){
 			return false;
 		}
 		return true;
@@ -453,35 +454,44 @@ public class MapController extends Controller implements IMapController, Observe
 
 	//this method puts water hexes to the map view on the borders of the catan map
 	private void water(){
-		//top to top-right corner
-		getView().addHex(new HexLocation(0, -3), HexType.WATER);
-		getView().addHex(new HexLocation(1, -3), HexType.WATER);
-		getView().addHex(new HexLocation(2, -3), HexType.WATER);
+		waterLocationList = new ArrayList<>();
 
-		//top-right corner to bottom-right corner
-		getView().addHex(new HexLocation(3, -3), HexType.WATER);
-		getView().addHex(new HexLocation(3, -2), HexType.WATER);
-		getView().addHex(new HexLocation(3, -1), HexType.WATER);
+		waterLocationList.add(new HexLocation(0, -3));
+		waterLocationList.add(new HexLocation(1, -3));
+		waterLocationList.add(new HexLocation(2, -3));
 
-		//bottom-right corner to bottom
-		getView().addHex(new HexLocation(3, 0), HexType.WATER);
-		getView().addHex(new HexLocation(2, 1), HexType.WATER);
-		getView().addHex(new HexLocation(1, 2), HexType.WATER);
+		waterLocationList.add(new HexLocation(3, -3));
+		waterLocationList.add(new HexLocation(3, -2));
+		waterLocationList.add(new HexLocation(3, -1));
 
-		//bottom to bottom-left corner
-		getView().addHex(new HexLocation(0, 3), HexType.WATER);
-		getView().addHex(new HexLocation(-1, 3), HexType.WATER);
-		getView().addHex(new HexLocation(-2, 3), HexType.WATER);
+		waterLocationList.add(new HexLocation(3, 0));
+		waterLocationList.add(new HexLocation(2, 1));
+		waterLocationList.add(new HexLocation(1, 2));
 
-		//bottom-left to top-left corner
-		getView().addHex(new HexLocation(-3, 3), HexType.WATER);
-		getView().addHex(new HexLocation(-3, 2), HexType.WATER);
-		getView().addHex(new HexLocation(-3, 1), HexType.WATER);
+		waterLocationList.add(new HexLocation(0, 3));
+		waterLocationList.add(new HexLocation(-1, 3));
+		waterLocationList.add(new HexLocation(-2, 3));
 
-		//top-left corner to top
-		getView().addHex(new HexLocation(-3, 0), HexType.WATER);
-		getView().addHex(new HexLocation(-2, -1), HexType.WATER);
-		getView().addHex(new HexLocation(-1, -2), HexType.WATER);
+		waterLocationList.add(new HexLocation(-3, 3));
+		waterLocationList.add(new HexLocation(-3, 2));
+		waterLocationList.add(new HexLocation(-3, 1));
+
+		waterLocationList.add(new HexLocation(-3, 0));
+		waterLocationList.add(new HexLocation(-2, -1));
+		waterLocationList.add(new HexLocation(-1, -2));
+
+		for(int i = 0; i < waterLocationList.size(); i ++){
+			getView().addHex(waterLocationList.get(i), HexType.WATER);
+		}
+	}
+
+	private boolean checkRobber(List<HexLocation> waterLocationList, HexLocation hexLoc){
+		for(int i = 0; i < waterLocationList.size(); i++){
+			if(waterLocationList.get(i).equals(hexLoc)){
+				return false;
+			}
+		}
+		return true;
 	}
 
 	//TODO: CHECK THE RE-JOIN...

@@ -7,6 +7,8 @@ import command.game.*;
 import command.player.*;
 import command.user.LoginObject;
 import command.user.RegisterObject;
+import decoder.JsonModels.JsonModel;
+import decoder.JsonModels.JsonTradeOffer;
 import model.Game;
 import model.Player;
 import model.cards_resources.ResourceCards;
@@ -649,8 +651,18 @@ public class ServerProxy implements IServer {
                 return null;
             } else {
                 Gson gson = new Gson();
-                OfferTradeObject response = gson.fromJson(result, OfferTradeObject.class);
-                return response;
+                JsonModel response = gson.fromJson(result, JsonModel.class);
+
+                ResourceCards responseOffer = new ResourceCards(response.getTradeOffer().getOffer().getBrick(),
+                        response.getTradeOffer().getOffer().getOre(),
+                        response.getTradeOffer().getOffer().getSheep(),
+                        response.getTradeOffer().getOffer().getWheat(),
+                        response.getTradeOffer().getOffer().getWood());
+
+                OfferTradeObject trade = new OfferTradeObject(response.getTradeOffer().getSender(), responseOffer
+                                                            , response.getTradeOffer().getReceiver());
+
+                return trade;
             }
         }
         catch(ConnectException e){

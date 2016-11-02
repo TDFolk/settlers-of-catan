@@ -21,11 +21,11 @@ public class SoldierObject {
     public String toJSON(){
         String response = "{\n" +
                 "  \"type\": \"Soldier\",\n" +
-                "  \"playerIndex\": \"" + playerIndex + "\",\n" +
-                "  \"victimIndex\": \"" + victimIndex + "\",\n" +
+                "  \"playerIndex\": " + playerIndex + ",\n" +
+                "  \"victimIndex\": " + victimIndex + ",\n" +
                 "  \"location\": {\n" +
-                "    \"x\": \"" + location.getX() + "\",\n" +
-                "    \"y\": \"" + location.getY() + "\"\n" +
+                "    \"x\": " + location.getX() + ",\n" +
+                "    \"y\": " + location.getY() + "\n" +
                 "  }\n" +
                 "}";
         return  response;

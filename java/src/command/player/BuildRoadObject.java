@@ -25,8 +25,8 @@ public class BuildRoadObject {
                 "  \"type\": \"buildRoad\",\n" +
                 "  \"playerIndex\": "+ playerIndex +",\n" +
                 "  \"roadLocation\": {\n" +
-                "    \"x\": \"" + roadLocation.getHexLoc().getX() + "\",\n" +
-                "    \"y\": \"" + roadLocation.getHexLoc().getY() + "\",\n" +
+                "    \"x\": " + roadLocation.getHexLoc().getX() + ",\n" +
+                "    \"y\": " + roadLocation.getHexLoc().getY() + ",\n" +
                 "    \"direction\": \"" + MapController.directionToString(roadLocation.getDir().toString()) + "\"\n" +
                 "  },\n" +
                 "  \"free\": \"" + free + "\"\n" +

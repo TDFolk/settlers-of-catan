@@ -223,7 +223,7 @@ public class Player {
      * @return true if the player has the resources to buy a road
      */
     public boolean canBuyRoad() {
-    	return resourceCards.canPay(Road.COST);
+    	return roads > 0 && resourceCards.canPay(Road.COST);
     }
     
     /**
@@ -231,7 +231,7 @@ public class Player {
      * @return true if the player has the resources to buy a settlement
      */
     public boolean canBuySettlement() {
-        return resourceCards.canPay(Settlement.COST);
+        return settlements > 0 && resourceCards.canPay(Settlement.COST);
     }
     
     /**
@@ -239,7 +239,7 @@ public class Player {
      * @return true if the player has the resources to buy a city
      */
     public boolean canBuyCity() {
-        return resourceCards.canPay(City.COST);
+        return cities > 0 && resourceCards.canPay(City.COST);
     }
     
     /**
@@ -297,13 +297,7 @@ public class Player {
      */
     public boolean canPlaceRoad(EdgeLocation edge) {
     	if (roads > 0) {
-            if (Game.getInstance().getTurnTracker().getStatus().equals("FirstRound") ||
-                    Game.getInstance().getTurnTracker().getStatus().equals("SecondRound")) {
-                return Game.getInstance().getMap().canPlaceRoad(edge, this);
-            }
-            else if (canBuyRoad()) {
-                return Game.getInstance().getMap().canPlaceRoad(edge, this);
-            }
+            return Game.getInstance().getMap().canPlaceRoad(edge, this);
         }
         return false;
     }

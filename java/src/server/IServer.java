@@ -8,6 +8,7 @@ import command.player.AcceptTradeObject;
 import command.player.DiscardedCards;
 import command.player.OfferTradeObject;
 import command.player.RoadLocation;
+import decoder.JsonModels.JsonTradeOffer;
 import model.cards_resources.ResourceCards;
 import shared.definitions.CatanColor;
 import shared.definitions.ResourceType;
