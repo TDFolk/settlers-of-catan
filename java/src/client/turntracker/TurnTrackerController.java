@@ -2,6 +2,7 @@ package client.turntracker;
 
 import client.data.PlayerInfo;
 import client.map.MapController;
+import client.roll.RollController;
 import client.states.DiscardingState;
 import client.states.FirstRoundState;
 import client.states.NotMyTurnState;
@@ -53,6 +54,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 		//end turn here... need to update the model with this response
 		endTurnResponse = ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
 		//MapController.setState(new NotMyTurnState());
+		RollController.setRolled(false);
 	}
 	
 	private void initFromModel() {

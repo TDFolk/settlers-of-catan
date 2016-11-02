@@ -186,6 +186,10 @@ public class Game extends Observable {
 
 
         }
+        else if (!isMyTurn() && Game.getInstance().getTurnTracker().getStatus().equals("Discarding")) 
+        { 
+        	newState = new DiscardingState(); 
+        } 
         else
         {
             newState = new NotMyTurnState();
