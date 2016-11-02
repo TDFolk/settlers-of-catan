@@ -20,15 +20,15 @@ public class RoadBuildingObject {
     public String toJSON(){
         String response = "{\n" +
                 "  \"type\": \"Road_Building\",\n" +
-                "  \"playerIndex\": \"" + playerIndex + "\",\n" +
+                "  \"playerIndex\": " + playerIndex + ",\n" +
                 "  \"spot1\": {\n" +
-                "    \"x\": \"" + spot1.getHexLoc().getX() + "\",\n" +
-                "    \"y\": \"" + spot1.getHexLoc().getY() +"\",\n" +
-                "    \"direction\": \"" + spot1.getDir() + "\"\n" +
+                "    \"x\": " + spot1.getHexLoc().getX() + ",\n" +
+                "    \"y\": " + spot1.getHexLoc().getY() +",\n" +
+                "    \"direction\": \"" + spot1.getDir() + "\n" +
                 "  },\n" +
                 "  \"spot2\": {\n" +
-                "    \"x\": \"" + spot2.getHexLoc().getX() +"\",\n" +
-                "    \"y\": \"" + spot2.getHexLoc().getY() + "\",\n" +
+                "    \"x\": " + spot2.getHexLoc().getX() +",\n" +
+                "    \"y\": " + spot2.getHexLoc().getY() + ",\n" +
                 "    \"direction\": \"" + spot2.getDir() + "\"\n" +
                 "  }\n" +
                 "}";

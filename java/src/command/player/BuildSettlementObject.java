@@ -24,8 +24,8 @@ public class BuildSettlementObject {
                 "  \"type\": \"buildSettlement\",\n" +
                 "  \"playerIndex\": " + playerIndex + ",\n" +
                 "  \"vertexLocation\": {\n" +
-                "    \"x\": \"" + vertexLocation.getHexLoc().getX() + "\",\n" +
-                "    \"y\": \"" + vertexLocation.getHexLoc().getY() + "\",\n" +
+                "    \"x\": " + vertexLocation.getHexLoc().getX() + ",\n" +
+                "    \"y\": " + vertexLocation.getHexLoc().getY() + ",\n" +
                 "    \"direction\": \"" + MapController.directionToString(vertexLocation.getDir().toString()) + "\"\n" +
                 "  },\n" +
                 "  \"free\": \"" + free + "\"\n" +
