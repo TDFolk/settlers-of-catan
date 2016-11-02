@@ -359,15 +359,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				}
 		}
 
-		//redo this
 		if(TurnTrackerController.isWinner()){
-			getJoinGameView().showModal();
+			//show the modal here....
+			//getJoinGameView().showModal();
 		}
 
-		//... test this
-//		if(TurnTrackerController.getWinner() != -1){
-//			getJoinGameView().showModal();
-//		}
 	}
 
 	public GameInfo getGame() {
