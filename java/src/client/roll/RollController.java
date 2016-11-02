@@ -75,10 +75,10 @@ public class RollController extends Controller implements IRollController, Obser
 		getRollView().closeModal();
 		//getRollView().setMessage("Rolling automatically in 5");
 		//making the call to the server to roll
-		String response = ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
+		String model = ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
 		
 		if (totalValue == 7)
-			System.out.println("SERVER MODEL WHEN ROLLING A 7: " + response);
+			System.out.println("SERVER MODEL WHEN ROLLING A 7: " + model);
 
 		getResultView().setRollValue(totalValue);
 		getResultView().showModal();
