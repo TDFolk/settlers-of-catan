@@ -1,6 +1,7 @@
 package client.join;
 
 import client.map.MapController;
+import client.turntracker.TurnTrackerController;
 import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import command.game.GameCreateObject;
@@ -356,6 +357,11 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 				if(!getJoinGameView().isModalShowing()) {
 					getJoinGameView().showModal();
 				}
+		}
+
+		//... test this
+		if(TurnTrackerController.getWinner() != -1){
+			getJoinGameView().showModal();
 		}
 	}
 

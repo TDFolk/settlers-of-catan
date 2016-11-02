@@ -27,7 +27,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 	private int currentTurn;
 	private int largestArmy;
 	private int longestRoad;
-	private int winner;
+	private static int winner;
 	private boolean gameOver = false;
 	private boolean playersInitialized = false;
 
@@ -184,6 +184,10 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 
 	private boolean isGameOver(){
 		return this.gameOver;
+	}
+
+	public static int getWinner() {
+		return winner;
 	}
 }
 
