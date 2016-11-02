@@ -56,6 +56,8 @@ public class MapController extends Controller implements IMapController, Observe
 
 	private boolean playingSoldier = false;
 	private boolean playingRoadBuilding = false;
+	private EdgeLocation roadBuilding1;
+
 	private List<HexLocation> waterLocationList = new ArrayList<>();
 	
 	public MapController(IMapView view, IRobView robView) {
@@ -153,6 +155,26 @@ public class MapController extends Controller implements IMapController, Observe
 			ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
 			if(state instanceof SecondRoundState){
 				//state = new RollingState();
+			}
+		}
+		else if(playingRoadBuilding){
+			int index = Game.getInstance().getCurrentPlayerInfo().getPlayerIndex();
+			if(roadBuilding1 == null){
+				//this means the player only has 1 road left... so they can only play 1
+				if(Game.getInstance().getPlayersList().get(index).getRoads() == 1){
+
+					ServerProxy.getServer().roadBuilding(index, edgeLoc, null);
+					playingRoadBuilding = false;
+				}
+				else {
+					roadBuilding1 = edgeLoc;
+					getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), true);
+				}
+			}
+			else {
+				ServerProxy.getServer().roadBuilding(index, edgeLoc, roadBuilding1);
+				roadBuilding1 = null;
+				playingRoadBuilding = false;
 			}
 		}
 		else {
@@ -281,12 +303,13 @@ public class MapController extends Controller implements IMapController, Observe
 	
 	public void playRoadBuildingCard() {
 		playingRoadBuilding = true;
-
+		roadBuilding1 = null;
 		int index = Game.getInstance().getCurrentPlayerInfo().getPlayerIndex();
 		if(Game.getInstance().getPlayersList().get(index).getRoads() == 0){
 			//no more roads to build....
 			return;
 		}
+
 		getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), true);
 	}
 	
