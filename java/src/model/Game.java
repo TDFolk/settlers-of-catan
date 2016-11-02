@@ -737,7 +737,7 @@ public class Game extends Observable {
 
                 for (int j = 0; j < players.length; j++) {
                     if (players[j].getPlayerIndex() == cities[i].getOwner()) {
-                        switch (players[i].getColor()) {
+                        switch (players[j].getColor()) {
 
                             case "red":
                                 color = CatanColor.RED;
