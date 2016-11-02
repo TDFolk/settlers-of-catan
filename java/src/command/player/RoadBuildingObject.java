@@ -1,5 +1,6 @@
 package command.player;
 
+import client.map.MapController;
 import shared.locations.EdgeLocation;
 
 /**
@@ -29,7 +30,7 @@ public class RoadBuildingObject {
                 "  \"spot2\": {\n" +
                 "    \"x\": " + spot2.getHexLoc().getX() +",\n" +
                 "    \"y\": " + spot2.getHexLoc().getY() + ",\n" +
-                "    \"direction\": \"" + spot2.getDir() + "\"\n" +
+                "    \"direction\": \"" + MapController.directionToString(spot2.getDir().toString()) + "\"\n" +
                 "  }\n" +
                 "}";
 
