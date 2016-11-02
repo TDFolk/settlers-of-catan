@@ -151,7 +151,7 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				//need to reset the game here
 				getView().updateGameState("GAME OVER!", false);
 
-				//isWinner = true;
+				isWinner = true;
 			}
 		}
 		//game hasn't started yet

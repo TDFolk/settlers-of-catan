@@ -361,7 +361,7 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 
 		if(TurnTrackerController.isWinner()){
 			//show the modal here....
-			//getJoinGameView().showModal();
+			getJoinGameView().showModal();
 		}
 
 	}
