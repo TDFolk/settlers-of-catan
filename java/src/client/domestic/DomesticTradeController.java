@@ -39,6 +39,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	private int currentPlayerIndex;
 	private Player currentPlayer;
 	private PlayerInfo enemyPlayerInfo[];
+	private OfferTradeObject currentOffer;
 
 	private boolean[] sendingResources;
 	private boolean[] receivingResources;
@@ -133,6 +134,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		// Whether or not player selection is currently allowed
 		getTradeOverlay().setPlayerSelectionEnabled(true);
 		getTradeOverlay().showModal();
+		canTrade();
 	}
 
 	public boolean canTrade() {
@@ -145,7 +147,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			return false;
 		}
 		else {
-			getTradeOverlay().setStateMessage("Let's see if we can make a deal");
+			getTradeOverlay().setStateMessage("Send Trade Offer");
 			return false;
 		}
 	}
@@ -249,9 +251,13 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		offered = true;
 		waiting = true;
 
+		ResourceCards finalOffer = new ResourceCards(0,0,0,0,0);
+
+
 		OfferTradeObject domesticTrade;
 		domesticTrade = ServerProxy.getServer().offerTrade(currentPlayerIndex, resourcesToSend, playerTradingWith);
 		Game.getInstance().setDomesticTradeInfo(domesticTrade);
+		setAcceptViewResources();
 
 		playerTradingWith = -1;
 		resourcesToReceive = new ResourceCards(0,0,0,0,0);
@@ -312,6 +318,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
 		playerTradingWith = playerIndex;
+		canTrade();
 	}
 
 	@Override
@@ -365,9 +372,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	public void acceptTrade(boolean willAccept) {
 		currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 
-		AcceptTradeObject acceptTrade;
-		acceptTrade = ServerProxy.getServer().acceptTrade(currentPlayerIndex, willAccept);
-		Game.getInstance().setAcceptTrade(acceptTrade);
+		ServerProxy.getServer().acceptTrade(currentPlayerIndex, willAccept);
 
 		getAcceptOverlay().closeModal();
 		accept = false;
@@ -400,11 +405,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			getTradeView().enableDomesticTrade(false);
 		}
 		// Need to examine 2 different perspectives here
-		OfferTradeObject currentOffer = Game.getInstance().getDomesticTradeInfo();
-		AcceptTradeObject currentAccept = Game.getInstance().getAcceptTrade();
+		//AcceptTradeObject currentAccept = Game.getInstance().getAcceptTrade();
 
 		// Depending on if you are the receiver or sender you have different views
-		if (MapController.getState() instanceof PlayingState && currentOffer != null) {
+		if (MapController.getState() instanceof PlayingState && Game.getInstance().getDomesticTradeInfo() != null) {
+			currentOffer = Game.getInstance().getDomesticTradeInfo();
 			currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 			if (currentPlayerIndex == currentOffer.getPlayerIndex()) {
 				if (!offered) {
@@ -421,11 +426,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 			}
 		}
 		else {
-			if (Game.getInstance().getPlayer().getPlayerInfo() != null && currentOffer != null) {
+			if (Game.getInstance().getPlayer().getPlayerInfo() != null && Game.getInstance().getDomesticTradeInfo() != null) {
+				currentOffer = Game.getInstance().getDomesticTradeInfo();
 				currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 				if (currentPlayerIndex == currentOffer.getReceiver()) {
 					if(!accept) {
-						setAcceptViewResources();
 						this.acceptOverlay.showModal();
 					}
 				}
