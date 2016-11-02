@@ -168,6 +168,7 @@ public class MapController extends Controller implements IMapController, Observe
 				}
 				else {
 					roadBuilding1 = edgeLoc;
+					Game.getInstance().getMap().getRoads().add(new Road(Game.getInstance().getCurrentPlayerInfo().getColor(), edgeLoc));
 					getView().startDrop(PieceType.ROAD, Game.getInstance().getCurrentPlayerInfo().getColor(), true);
 				}
 			}
