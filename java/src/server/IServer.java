@@ -4,7 +4,9 @@ import com.google.gson.JsonObject;
 import command.game.GameCreateObjectResult;
 import command.game.GameListHolder;
 import command.game.GameListObject;
+import command.player.AcceptTradeObject;
 import command.player.DiscardedCards;
+import command.player.OfferTradeObject;
 import command.player.RoadLocation;
 import model.cards_resources.ResourceCards;
 import shared.definitions.CatanColor;
@@ -137,7 +139,7 @@ public interface IServer {
      * @param willAccept Whether or not you accept the offered trade
      * @return if the trade was accepted or not
      */
-    public String acceptTrade(int playerIndex, boolean willAccept);
+    public AcceptTradeObject acceptTrade(int playerIndex, boolean willAccept);
 
     /**
      * Discards the desired cards from the resource hand
@@ -222,7 +224,7 @@ public interface IServer {
      * @param receiver the recipient of the trade offer(playerIndex)
      * @return success of offered trade; was it accepted
      */
-    public String offerTrade(int playerIndex, ResourceCards offer, int receiver);
+    public OfferTradeObject offerTrade(int playerIndex, ResourceCards offer, int receiver);
 
 
     /**

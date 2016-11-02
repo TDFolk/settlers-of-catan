@@ -6,6 +6,8 @@ import client.data.PlayerInfo;
 import client.map.MapController;
 import client.states.*;
 import com.google.gson.JsonParser;
+import command.player.AcceptTradeObject;
+import command.player.OfferTradeObject;
 import decoder.JsonModels.*;
 import model.cards_resources.Bank;
 import model.cards_resources.DevelopmentCard;
@@ -54,6 +56,9 @@ public class Game extends Observable {
     private GameInfo gameInfo;
     private PlayerInfo currentPlayerInfo;
     private GameInfo[] allGameInfos;
+
+    private OfferTradeObject domesticTradeInfo;
+    private AcceptTradeObject acceptTrade;
 
     private boolean isMyTurn = false;
 
@@ -1119,5 +1124,25 @@ public class Game extends Observable {
 
     public void setMyTurn(boolean myTurn) {
         isMyTurn = myTurn;
+    }
+
+    public OfferTradeObject getDomesticTradeInfo() {
+        return domesticTradeInfo;
+    }
+
+    public void setDomesticTradeInfo(OfferTradeObject domesticTradeInfo) {
+        this.domesticTradeInfo = domesticTradeInfo;
+        this.setChanged();
+        this.notifyObservers();
+    }
+
+    public AcceptTradeObject getAcceptTrade() {
+        return acceptTrade;
+    }
+
+    public void setAcceptTrade(AcceptTradeObject acceptTrade) {
+        this.acceptTrade = acceptTrade;
+        this.setChanged();
+        this.notifyObservers();
     }
 }

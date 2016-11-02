@@ -7,7 +7,9 @@ import com.google.gson.JsonParser;
 import command.game.GameCreateObjectResult;
 import command.game.GameListHolder;
 import command.game.GameListObject;
+import command.player.AcceptTradeObject;
 import command.player.DiscardedCards;
+import command.player.OfferTradeObject;
 import command.player.RoadLocation;
 import model.cards_resources.ResourceCards;
 import server.IServer;
@@ -226,9 +228,9 @@ public class MockServer implements IServer {
      * the trade offer is removed
      */
     @Override
-    public String acceptTrade(int playerIndex, boolean willAccept) {
+    public AcceptTradeObject acceptTrade(int playerIndex, boolean willAccept) {
 
-        return "";
+        return null;
     }
 
     /**
@@ -333,10 +335,10 @@ public class MockServer implements IServer {
      * @post the trade is offered to the other player(stored in the server model)
      */
     @Override
-    public String offerTrade(int playerIndex, ResourceCards offer, int receiver) {
+    public OfferTradeObject offerTrade(int playerIndex, ResourceCards offer, int receiver) {
 
-
-        return jsonModelExample;
+        return null;
+        //return jsonModelExample;
     }
 
     /**

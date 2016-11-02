@@ -2,10 +2,16 @@ package client.domestic;
 
 import client.data.PlayerInfo;
 import client.map.MapController;
+import client.states.NotMyTurnState;
+import client.states.PlayingState;
+import command.player.AcceptTradeObject;
+import command.player.OfferTradeObject;
 import model.Facade;
 import model.Game;
 import model.Player;
+import model.TurnTracker;
 import model.cards_resources.ResourceCards;
+import model.map.Map;
 import server.ServerProxy;
 import shared.definitions.*;
 import client.base.*;
@@ -171,19 +177,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	 */
 	@Override
 	public void increaseResourceAmount(ResourceType resource) {
-		Player enemyPlayer = Game.getInstance().getPlayersList().get(playerTradingWith);
-		int enemyPlayerResourceAmount = enemyPlayer.getResourceCards().getResource(resource);
-
-		// Can only receive resources equal to the amount the player your trading with has
-		if (resourcesToReceive.getResource(resource) <= enemyPlayerResourceAmount && receivingResources[getResourceIndex(resource)]) {
+		// Can request to receive as many resources as you want
+		if (receivingResources[getResourceIndex(resource)]) {
 			resourcesToReceive.addOneResource(resource);
 			setResourceChangeEnabler(resource);
 		}
 
-		int currentPlayerResourceAmount = currentPlayer.getResourceCards().getResource(resource);
-
 		// Can only send resources equal to the amount the current player has
-		if (resourcesToSend.getResource(resource) <= currentPlayerResourceAmount && sendingResources[getResourceIndex(resource)]) {
+		if (sendingResources[getResourceIndex(resource)]) {
 			resourcesToSend.addOneResource(resource);
 			setResourceChangeEnabler(resource);
 		}
@@ -192,23 +193,11 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	}
 
 	public void setResourceChangeEnabler(ResourceType resourceType) {
-		Player enemyPlayer = Game.getInstance().getPlayersList().get(playerTradingWith);
-		int enemyPlayerResourceAmount = enemyPlayer.getResourceCards().getResource(resourceType);
 		// Determine is this given resource is attempting to be sent or received
 		if (receivingResources[getResourceIndex(resourceType)]) {
 			if (resourcesToReceive.getResource(resourceType) == 0) {
-				if (resourcesToReceive.getResource(resourceType) == enemyPlayerResourceAmount) {
-					// Enemy player has 0 of this resource
-					getTradeOverlay().setResourceAmountChangeEnabled(resourceType, false, false);
-				}
-				else {
-					// Starts at 0 and the user can increase to request more of that resource, but can't decrease past 0!
-					getTradeOverlay().setResourceAmountChangeEnabled(resourceType, true, false);
-				}
-			}
-			else if (resourcesToReceive.getResource(resourceType) == enemyPlayerResourceAmount){
-				// Already requesting to receive all of the enemies resources of this type
-				getTradeOverlay().setResourceAmountChangeEnabled(resourceType, false, true);
+				// Starts at 0 and the user can increase to request more of that resource, but can't decrease past 0!
+				getTradeOverlay().setResourceAmountChangeEnabled(resourceType, true, false);
 			}
 			else {
 				getTradeOverlay().setResourceAmountChangeEnabled(resourceType, true, true);
@@ -255,32 +244,68 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void sendTradeOffer() {
-		if (getTradeOverlay().isModalShowing()) {
-			getTradeOverlay().closeModal();
-		}
+		getTradeOverlay().closeModal();
+		getWaitOverlay().showModal();
+		offered = true;
+		waiting = true;
 
-		if (!getWaitOverlay().isModalShowing()) {
-			getWaitOverlay().showModal();
-		}
+		OfferTradeObject domesticTrade;
+		domesticTrade = ServerProxy.getServer().offerTrade(currentPlayerIndex, resourcesToSend, playerTradingWith);
+		Game.getInstance().setDomesticTradeInfo(domesticTrade);
 
-		ServerProxy.getServer().offerTrade(currentPlayerIndex, resourcesToSend, playerTradingWith);
-		setGetResources();
+		playerTradingWith = -1;
+		resourcesToReceive = new ResourceCards(0,0,0,0,0);
+		resourcesToSend = new ResourceCards(0,0,0,0,0);
 	}
-	public void setGetResources() {
+
+	public void setAcceptViewResources() {
+		this.acceptOverlay.reset();
+		accept = true;
+		Player enemyPlayer = Game.getInstance().getPlayersList().get(playerTradingWith);
 		if (resourcesToReceive.getBrick() > 0) {
 			getAcceptOverlay().addGetResource(ResourceType.BRICK, resourcesToReceive.getBrick());
+			if (resourcesToReceive.getBrick() > enemyPlayer.getResourceCards().getBrick()) {
+				getAcceptOverlay().setAcceptEnabled(false);
+			}
 		}
 		if (resourcesToReceive.getOre() > 0) {
 			getAcceptOverlay().addGetResource(ResourceType.ORE, resourcesToReceive.getOre());
+			if (resourcesToReceive.getOre() > enemyPlayer.getResourceCards().getOre()) {
+				getAcceptOverlay().setAcceptEnabled(false);
+			}
 		}
 		if (resourcesToReceive.getSheep() > 0) {
 			getAcceptOverlay().addGetResource(ResourceType.SHEEP, resourcesToReceive.getSheep());
+			if (resourcesToReceive.getSheep() > enemyPlayer.getResourceCards().getSheep()) {
+				getAcceptOverlay().setAcceptEnabled(false);
+			}
 		}
 		if (resourcesToReceive.getWheat() > 0) {
 			getAcceptOverlay().addGetResource(ResourceType.WHEAT, resourcesToReceive.getWheat());
+			if (resourcesToReceive.getWheat() > enemyPlayer.getResourceCards().getWheat()) {
+				getAcceptOverlay().setAcceptEnabled(false);
+			}
 		}
 		if (resourcesToReceive.getWood() > 0) {
 			getAcceptOverlay().addGetResource(ResourceType.WOOD, resourcesToReceive.getWood());
+			if (resourcesToReceive.getWood() > enemyPlayer.getResourceCards().getWood()) {
+				getAcceptOverlay().setAcceptEnabled(false);
+			}
+		}
+		if (resourcesToSend.getBrick() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.BRICK, resourcesToSend.getBrick());
+		}
+		if (resourcesToSend.getOre() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.ORE, resourcesToSend.getOre());
+		}
+		if (resourcesToSend.getSheep() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.SHEEP, resourcesToSend.getSheep());
+		}
+		if (resourcesToSend.getWheat() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.WHEAT, resourcesToSend.getWheat());
+		}
+		if (resourcesToSend.getWood() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.WOOD, resourcesToSend.getWood());
 		}
 	}
 
@@ -338,9 +363,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	@Override
 	public void acceptTrade(boolean willAccept) {
-		int currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
-		ServerProxy.getServer().acceptTrade(currentPlayerIndex, willAccept);
+		currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
+
+		AcceptTradeObject acceptTrade;
+		acceptTrade = ServerProxy.getServer().acceptTrade(currentPlayerIndex, willAccept);
+		Game.getInstance().setAcceptTrade(acceptTrade);
+
 		getAcceptOverlay().closeModal();
+		accept = false;
 	}
 
 	/**
@@ -365,9 +395,41 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				getTradeOverlay().setPlayers(enemyPlayerInfo);
 				firstInit = false;
 			}
-
-		} else {
+		}
+		else {
 			getTradeView().enableDomesticTrade(false);
+		}
+		// Need to examine 2 different perspectives here
+		OfferTradeObject currentOffer = Game.getInstance().getDomesticTradeInfo();
+		AcceptTradeObject currentAccept = Game.getInstance().getAcceptTrade();
+
+		// Depending on if you are the receiver or sender you have different views
+		if (MapController.getState() instanceof PlayingState && currentOffer != null) {
+			currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
+			if (currentPlayerIndex == currentOffer.getPlayerIndex()) {
+				if (!offered) {
+					offered = true;
+					waiting = true;
+					getWaitOverlay().showModal();
+				}
+			}
+			else {
+				if (waiting) {
+					getWaitOverlay().closeModal();
+					waiting = false;
+				}
+			}
+		}
+		else {
+			if (Game.getInstance().getPlayer().getPlayerInfo() != null && currentOffer != null) {
+				currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
+				if (currentPlayerIndex == currentOffer.getReceiver()) {
+					if(!accept) {
+						setAcceptViewResources();
+						this.acceptOverlay.showModal();
+					}
+				}
+			}
 		}
 	}
 }
