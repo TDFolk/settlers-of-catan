@@ -105,7 +105,8 @@ public class DiscardController extends Controller implements IDiscardController,
             getDiscardView().closeModal();
             Game.getInstance().getPlayer().getResourceCards().reduceResources(resourcesPickedToDiscard);
 
-            ServerProxy.getServer().discardCards(Facade.getInstance().getPlayerIndex(), resourcesPickedToDiscard);
+            String model = ServerProxy.getServer().discardCards(Facade.getInstance().getPlayerIndex(), resourcesPickedToDiscard);
+            System.out.println("DISCARDING GIVES THIS MODEL: " + model);
         }
     }
 

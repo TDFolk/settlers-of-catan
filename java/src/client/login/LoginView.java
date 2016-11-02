@@ -2,6 +2,7 @@ package client.login;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -12,9 +13,11 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import client.base.*;
+
 import java.awt.GridLayout;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JComponent;
@@ -61,6 +64,8 @@ public class LoginView extends OverlayView implements ILoginView
         this.setOpaque(true);
         this.setLayout(new BorderLayout());
         this.setBorder(BorderFactory.createLineBorder(Color.black, BORDER_WIDTH));
+        Dimension myDimension = new Dimension(1150, 600);
+		this.setPreferredSize(myDimension);
 //
 //        label = new JLabel("Login View");
 //        Font labelFont = label.getFont();

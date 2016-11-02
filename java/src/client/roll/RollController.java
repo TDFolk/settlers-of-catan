@@ -26,6 +26,7 @@ public class RollController extends Controller implements IRollController, Obser
 
 	private IRollResultView resultView;
 	private Timer countdownTimer = new Timer(0, null);
+	private static boolean rolled = false;
 
 	/**
 	 * RollController constructor
@@ -64,8 +65,6 @@ public class RollController extends Controller implements IRollController, Obser
 		int dice1 = (int)(Math.random() * 6) + 1;
 		int dice2 = (int)(Math.random() * 6) + 1;
 		int totalValue = dice1 + dice2;
-		if (totalValue == 7)
-			totalValue = 6;
 		
 		/*
 		if(totalValue == 7){
@@ -76,11 +75,23 @@ public class RollController extends Controller implements IRollController, Obser
 		getRollView().closeModal();
 		//getRollView().setMessage("Rolling automatically in 5");
 		//making the call to the server to roll
-		ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
+		String model = ServerProxy.getServer().rollNumber(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex(), totalValue);
+		
+		if (totalValue == 7)
+			System.out.println("SERVER MODEL WHEN ROLLING A 7: " + model);
 
 		getResultView().setRollValue(totalValue);
 		getResultView().showModal();
 	}
+	
+	public static boolean hasRolled() {
+		return rolled;
+	}
+
+	public static void setRolled(boolean rolled) {
+		RollController.rolled = rolled;
+	}
+	
 
 	/**
 	 * This method is called whenever the observed object is changed. An application calls an
@@ -91,12 +102,13 @@ public class RollController extends Controller implements IRollController, Obser
 	@Override
 	public void update(Observable o, Object arg) {
 		//check if the state is in rolling state
-		if(MapController.getState() instanceof RollingState){
+		if(MapController.getState() instanceof RollingState && !rolled){
 			//check if the servers's turn matches this client's turn
 			if(Game.getInstance().getTurnTracker().getCurrentTurn() == Game.getInstance().getCurrentPlayerInfo().getPlayerIndex()){
 				//if so, show the modal and start the countdown
 				getRollView().setMessage("Rolling automatically in 5");
 				getRollView().showModal();
+				rolled = true;
 				countdown();
 			}
 		}

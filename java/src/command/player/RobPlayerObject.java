@@ -20,11 +20,11 @@ public class RobPlayerObject {
     public String toJSON(){
         String response = "{\n" +
                 "  \"type\": \"robPlayer\",\n" +
-                "  \"playerIndex\": \"" + playerIndex + "\",\n" +
-                "  \"victimIndex\": \"" + victimIndex + "\",\n" +
+                "  \"playerIndex\": " + playerIndex + ",\n" +
+                "  \"victimIndex\": " + victimIndex + ",\n" +
                 "  \"location\": {\n" +
-                "    \"x\": \"" + location.getX() + "\",\n" +
-                "    \"y\": \"" + location.getY() + "\"\n" +
+                "    \"x\": " + location.getX() + ",\n" +
+                "    \"y\": " + location.getY() + "\n" +
                 "  }\n" +
                 "}";
         return response;
