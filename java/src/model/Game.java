@@ -1066,20 +1066,26 @@ public class Game extends Observable {
                     //update the client's player list as well
                     for(int j = 0; j < newGameList[i].getPlayers().size(); j++)
                     {
+                        List<Player> players = new ArrayList<>();
+
                         if(playersList != null) {
-                            for (int k = 0; k < this.playersList.size(); k++) {
+                            //don't add a player to the player list if he is already in there...
+                            //if (newGameList[i].getPlayers().get(j).getId() != this.playersList.get(k).getPlayerInfo().getId()) {
+                            if(!isInList(newGameList[i].getPlayers().get(j).getId(), this.playersList)){
+                                PlayerInfo playerInfo = newGameList[i].getPlayers().get(j);
+                                Player p = new Player();
+                                p.setPlayerInfo(playerInfo);
 
-                                //don't add a player to the player list if he is already in there...
-                                if (newGameList[i].getPlayers().get(j).getId() != this.playersList.get(k).getPlayerInfo().getId()) {
-
-                                    PlayerInfo playerInfo = newGameList[i].getPlayers().get(j);
-                                    Player p = new Player();
-                                    p.setPlayerInfo(playerInfo);
-
-                                    this.playersList.add(p);
-                                }
+                                players.add(p);
                             }
+
                         }
+
+                        for(Player p : players)
+                        {
+                            this.playersList.add(p);
+                        }
+
                     }
 
                 }
@@ -1091,6 +1097,19 @@ public class Game extends Observable {
             setChanged();
             notifyObservers();
 
+    }
+
+    public boolean isInList(int playerID, List<Player> playerList)
+    {
+        for(Player p : playerList)
+        {
+            if(p.getPlayerInfo().getId() == playerID)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     public void setCurrentPlayerInfo(PlayerInfo currentPlayerInfo) {
