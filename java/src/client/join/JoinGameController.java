@@ -360,9 +360,9 @@ public class JoinGameController extends Controller implements IJoinGameControlle
 		}
 
 		//... test this
-		if(TurnTrackerController.getWinner() != -1){
-			getJoinGameView().showModal();
-		}
+//		if(TurnTrackerController.getWinner() != -1){
+//			getJoinGameView().showModal();
+//		}
 	}
 
 	public GameInfo getGame() {
