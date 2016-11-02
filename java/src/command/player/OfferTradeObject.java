@@ -48,15 +48,15 @@ public class OfferTradeObject {
     public String toJSON(){
         String response = "{\n" +
                 "  \"type\": \"offerTrade\",\n" +
-                "  \"playerIndex\": \"" + playerIndex + "\",\n" +
+                "  \"playerIndex\": " + playerIndex + ",\n" +
                 "  \"offer\": {\n" +
-                "    \"brick\": \"" + offer.getBrick() +  "\",\n" +
-                "    \"ore\": \"" + offer.getOre() + "\",\n" +
-                "    \"sheep\": \"" + offer.getSheep() + " \",\n" +
-                "    \"wheat\": \"" + offer.getWheat() + "\",\n" +
-                "    \"wood\": \"" + offer.getWood() + "\"\n" +
+                "    \"brick\": " + offer.getBrick() +  ",\n" +
+                "    \"ore\": " + offer.getOre() + ",\n" +
+                "    \"sheep\": " + offer.getSheep() + " ,\n" +
+                "    \"wheat\": " + offer.getWheat() + ",\n" +
+                "    \"wood\": " + offer.getWood() + "\n" +
                 "  },\n" +
-                "  \"receiver\": \"" + receiver + "\"\n" +
+                "  \"receiver\": " + receiver + "\n" +
                 "}";
         return response;
     }

@@ -229,7 +229,8 @@ public class MapController extends Controller implements IMapController, Observe
 						rob.setName(players.get(j).getPlayerInfo().getName());
 						rob.setId(players.get(j).getPlayerInfo().getId());
 
-						if(!robPlayerInfoArrayList.contains(rob)) {
+						if(!robPlayerInfoArrayList.contains(rob) && rob.getId()
+								!= Game.getInstance().getCurrentPlayerInfo().getId()) {
 							robPlayerInfoArrayList.add(rob);
 						}
 					}
