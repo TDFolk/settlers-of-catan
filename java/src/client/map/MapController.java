@@ -136,7 +136,7 @@ public class MapController extends Controller implements IMapController, Observe
 		if(hexLoc.equals(robberLocation)){
 			return false;
 		}
-		if(checkRobber(waterLocationList, hexLoc)){
+		if(!checkRobber(waterLocationList, hexLoc)){
 			return false;
 		}
 		return true;

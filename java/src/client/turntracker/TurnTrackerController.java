@@ -132,12 +132,9 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 					gameOver = true;
 				}
 
-				//update the player view depending on what they have
-//				int vp = player.getVictoryPoints();
-//				boolean currentTest = isCurrentTurn(index);
-//				boolean largestTest= isLargestArmy(index);
-//				boolean longestTest = isLongestRoad(index);
-				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
+				//update the player information here
+//				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
+				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), true, true);
 			}
 			playersInitialized = true;
 
@@ -145,14 +142,6 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			if(isGameOver()){
 				//end the game here....
 				getView().updateGameState("GAME OVER!", false);
-			}
-
-
-
-			//end turn here???
-			if(MapController.getState() instanceof PlayingState){
-
-				//ServerProxy.getServer().finishTurn(Game.getInstance().getCurrentPlayerInfo().getPlayerIndex());
 			}
 		}
 		//game hasn't started yet
