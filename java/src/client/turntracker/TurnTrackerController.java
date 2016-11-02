@@ -118,6 +118,12 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 			largestArmy = Game.getInstance().getTurnTracker().getLargestArmy();
 			longestRoad = Game.getInstance().getTurnTracker().getLongestRoad();
 			winner = -1;
+			if(longestRoad == -1){
+				System.out.println("LONGEST ROAD = NEGATIVE ONE");
+			}
+			if(largestArmy == -1){
+				System.out.print("LARGEST ARMY = NEGATIVE ONE");
+			}
 
 			List<Player> playersList = Game.getInstance().getPlayersList();
 			for(Player player : playersList){
@@ -133,14 +139,15 @@ public class TurnTrackerController extends Controller implements ITurnTrackerCon
 				}
 
 				//update the player information here
-//				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
-				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), true, true);
+				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), isLargestArmy(index), isLongestRoad(index));
+//				getView().updatePlayer(index, player.getVictoryPoints(), isCurrentTurn(index), true, true);
 			}
 			playersInitialized = true;
 
 			//check to see if the game is over...
 			if(isGameOver()){
 				//end the game here....
+				//need to reset the game here
 				getView().updateGameState("GAME OVER!", false);
 			}
 		}
