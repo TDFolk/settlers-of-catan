@@ -224,8 +224,14 @@ public class MapController extends Controller implements IMapController, Observe
 						totalCards += cards.getWood();
 
 						rob.setNumCards(totalCards);
+						rob.setColor(players.get(j).getPlayerInfo().getColor());
+						rob.setPlayerIndex(players.get(j).getPlayerInfo().getPlayerIndex());
+						rob.setName(players.get(j).getPlayerInfo().getName());
+						rob.setId(players.get(j).getPlayerInfo().getId());
 
-						robPlayerInfoArrayList.add(rob);
+						if(!robPlayerInfoArrayList.contains(rob)) {
+							robPlayerInfoArrayList.add(rob);
+						}
 					}
 				}
 			}
