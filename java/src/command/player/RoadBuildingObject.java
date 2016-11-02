@@ -25,7 +25,7 @@ public class RoadBuildingObject {
                 "  \"spot1\": {\n" +
                 "    \"x\": " + spot1.getHexLoc().getX() + ",\n" +
                 "    \"y\": " + spot1.getHexLoc().getY() +",\n" +
-                "    \"direction\": \"" + MapController.directionToString(spot1.getDir().toString()) + "\n" +
+                "    \"direction\": \"" + MapController.directionToString(spot1.getDir().toString()) + "\"\n" +
                 "  },\n" +
                 "  \"spot2\": {\n" +
                 "    \"x\": " + spot2.getHexLoc().getX() +",\n" +
