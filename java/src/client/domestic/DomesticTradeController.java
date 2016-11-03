@@ -260,34 +260,34 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	public void setFinalOffer() {
 		if (resourcesToReceive.getBrick() > 0) {
-			finalOffer.setBrick(resourcesToReceive.getBrick());
+			finalOffer.setBrick(resourcesToReceive.getBrick() * -1);
 		}
 		if (resourcesToReceive.getOre() > 0) {
-			finalOffer.setOre(resourcesToReceive.getOre());
+			finalOffer.setOre(resourcesToReceive.getOre() * -1);
 		}
 		if (resourcesToReceive.getSheep() > 0) {
-			finalOffer.setSheep(resourcesToReceive.getSheep());
+			finalOffer.setSheep(resourcesToReceive.getSheep() * -1);
 		}
 		if (resourcesToReceive.getWheat() > 0) {
-			finalOffer.setWheat(resourcesToReceive.getWheat());
+			finalOffer.setWheat(resourcesToReceive.getWheat() * -1);
 		}
 		if (resourcesToReceive.getWood() > 0) {
-			finalOffer.setWood(resourcesToReceive.getWood());
+			finalOffer.setWood(resourcesToReceive.getWood() * -1);
 		}
 		if (resourcesToSend.getBrick() > 0) {
-			finalOffer.setBrick(resourcesToSend.getBrick() * -1);
+			finalOffer.setBrick(resourcesToSend.getBrick());
 		}
 		if (resourcesToSend.getOre() > 0) {
-			finalOffer.setOre(resourcesToSend.getOre() * -1);
+			finalOffer.setOre(resourcesToSend.getOre());
 		}
 		if (resourcesToSend.getSheep() > 0) {
-			finalOffer.setSheep(resourcesToSend.getSheep() * -1);
+			finalOffer.setSheep(resourcesToSend.getSheep());
 		}
 		if (resourcesToSend.getWheat() > 0) {
-			finalOffer.setWheat(resourcesToSend.getWheat() * -1);
+			finalOffer.setWheat(resourcesToSend.getWheat());
 		}
 		if (resourcesToSend.getWood() > 0) {
-			finalOffer.setWood(resourcesToSend.getWood() * -1);
+			finalOffer.setWood(resourcesToSend.getWood());
 		}
 	}
 
@@ -331,19 +331,19 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		}
 
 		if (cards.getBrick() < 0) {
-			getAcceptOverlay().addGetResource(ResourceType.BRICK, cards.getBrick());
+			getAcceptOverlay().addGetResource(ResourceType.BRICK, cards.getBrick() * -1);
 		}
 		if (cards.getOre() < 0) {
-			getAcceptOverlay().addGetResource(ResourceType.ORE, cards.getOre());
+			getAcceptOverlay().addGetResource(ResourceType.ORE, cards.getOre() * -1);
 		}
 		if (cards.getSheep() < 0) {
-			getAcceptOverlay().addGetResource(ResourceType.SHEEP, cards.getSheep());
+			getAcceptOverlay().addGetResource(ResourceType.SHEEP, cards.getSheep() * -1);
 		}
 		if (cards.getWheat() < 0) {
-			getAcceptOverlay().addGetResource(ResourceType.WHEAT, cards.getWheat());
+			getAcceptOverlay().addGetResource(ResourceType.WHEAT, cards.getWheat() * -1);
 		}
 		if (cards.getWood() < 0) {
-			getAcceptOverlay().addGetResource(ResourceType.WOOD, cards.getWood());
+			getAcceptOverlay().addGetResource(ResourceType.WOOD, cards.getWood() * -1);
 		}
 	}
 
@@ -410,8 +410,9 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 		ServerProxy.getServer().acceptTrade(currentPlayerIndex, willAccept);
 		getAcceptOverlay().closeModal();
-		accept = false;
 		Game.getInstance().setDomesticTradeInfo(null);
+		accept = false;
+
 	}
 
 	/**
@@ -453,22 +454,26 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					waiting = true;
 					getWaitOverlay().showModal();
 				}
-			}
-		}
-		else {
-			if (Game.getInstance().getPlayer().getPlayerInfo() != null && Game.getInstance().getDomesticTradeInfo() != null) {
-				currentOffer = Game.getInstance().getDomesticTradeInfo();
-				currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
-				if (currentPlayerIndex == currentOffer.getReceiver()) {
-					if(!accept) {
-						setAcceptViewResources();
-						this.acceptOverlay.showModal();
+				else {
+					if (waiting) {
+						getWaitOverlay().closeModal();
 					}
 				}
 			}
 		}
-		if (MapController.getState() instanceof PlayingState && Game.getInstance().getDomesticTradeInfo() == null) {
-			getWaitOverlay().closeModal();
+		else {
+			if (Game.getInstance().getPlayer().getPlayerInfo() != null && Game.getInstance().getDomesticTradeInfo() != null) {
+				if (Game.getInstance().getDomesticTradeInfo().getOffer() != null) {
+					currentOffer = Game.getInstance().getDomesticTradeInfo();
+					currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
+					if (currentPlayerIndex == currentOffer.getReceiver()) {
+						if(!accept) {
+							setAcceptViewResources();
+							this.acceptOverlay.showModal();
+						}
+					}
+				}
+			}
 		}
 	}
 }
