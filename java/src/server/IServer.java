@@ -140,7 +140,7 @@ public interface IServer {
      * @param willAccept Whether or not you accept the offered trade
      * @return if the trade was accepted or not
      */
-    public AcceptTradeObject acceptTrade(int playerIndex, boolean willAccept);
+    public String acceptTrade(int playerIndex, boolean willAccept);
 
     /**
      * Discards the desired cards from the resource hand
@@ -225,7 +225,7 @@ public interface IServer {
      * @param receiver the recipient of the trade offer(playerIndex)
      * @return success of offered trade; was it accepted
      */
-    public OfferTradeObject offerTrade(int playerIndex, ResourceCards offer, int receiver);
+    public String offerTrade(int playerIndex, ResourceCards offer, int receiver);
 
 
     /**

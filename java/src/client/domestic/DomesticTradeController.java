@@ -34,6 +34,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 	private ResourceCards resourcesToSend;
 	private ResourceCards resourcesToReceive;
+	private ResourceCards finalOffer;
 
 	private int playerTradingWith; // Their playerIndex
 	private int currentPlayerIndex;
@@ -69,6 +70,7 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 
 		resourcesToSend = new ResourceCards(0,0,0,0,0);
 		resourcesToReceive = new ResourceCards(0,0,0,0,0);
+		finalOffer = new ResourceCards(0,0,0,0,0);
 		enemyPlayerInfo = new PlayerInfo[3];
 
 		playerTradingWith = -1;
@@ -134,22 +136,18 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		// Whether or not player selection is currently allowed
 		getTradeOverlay().setPlayerSelectionEnabled(true);
 		getTradeOverlay().showModal();
-		canTrade();
 	}
 
 	public boolean canTrade() {
-		if (playerTradingWith != -1 && resourcesToSend.size() != 0 && resourcesToReceive.size() != 0) {
+		if (playerTradingWith != -1 && resourcesToSend.size() > 0 && resourcesToReceive.size() > 0) {
 			getTradeOverlay().setStateMessage("Send Trade Offer");
 			return true;
 		}
-		else if (playerTradingWith == -1){
-			getTradeOverlay().setStateMessage("Select a Player to trade with");
+		else if (playerTradingWith == -1 && resourcesToSend.size() > 0 && resourcesToReceive.size() > 0) {
+			getTradeOverlay().setStateMessage("Select a Player to Trade With");
 			return false;
 		}
-		else {
-			getTradeOverlay().setStateMessage("Send Trade Offer");
-			return false;
-		}
+		return false;
 	}
 
 	@Override
@@ -251,74 +249,113 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 		offered = true;
 		waiting = true;
 
-		ResourceCards finalOffer = new ResourceCards(0,0,0,0,0);
+		setFinalOffer();
 
-
-		OfferTradeObject domesticTrade;
-		domesticTrade = ServerProxy.getServer().offerTrade(currentPlayerIndex, resourcesToSend, playerTradingWith);
-		Game.getInstance().setDomesticTradeInfo(domesticTrade);
-		setAcceptViewResources();
+		ServerProxy.getServer().offerTrade(currentPlayerIndex, finalOffer, playerTradingWith);
 
 		playerTradingWith = -1;
 		resourcesToReceive = new ResourceCards(0,0,0,0,0);
 		resourcesToSend = new ResourceCards(0,0,0,0,0);
 	}
 
+	public void setFinalOffer() {
+		if (resourcesToReceive.getBrick() > 0) {
+			finalOffer.setBrick(resourcesToReceive.getBrick());
+		}
+		if (resourcesToReceive.getOre() > 0) {
+			finalOffer.setOre(resourcesToReceive.getOre());
+		}
+		if (resourcesToReceive.getSheep() > 0) {
+			finalOffer.setSheep(resourcesToReceive.getSheep());
+		}
+		if (resourcesToReceive.getWheat() > 0) {
+			finalOffer.setWheat(resourcesToReceive.getWheat());
+		}
+		if (resourcesToReceive.getWood() > 0) {
+			finalOffer.setWood(resourcesToReceive.getWood());
+		}
+		if (resourcesToSend.getBrick() > 0) {
+			finalOffer.setBrick(resourcesToSend.getBrick() * -1);
+		}
+		if (resourcesToSend.getOre() > 0) {
+			finalOffer.setOre(resourcesToSend.getOre() * -1);
+		}
+		if (resourcesToSend.getSheep() > 0) {
+			finalOffer.setSheep(resourcesToSend.getSheep() * -1);
+		}
+		if (resourcesToSend.getWheat() > 0) {
+			finalOffer.setWheat(resourcesToSend.getWheat() * -1);
+		}
+		if (resourcesToSend.getWood() > 0) {
+			finalOffer.setWood(resourcesToSend.getWood() * -1);
+		}
+	}
+
 	public void setAcceptViewResources() {
 		this.acceptOverlay.reset();
 		accept = true;
-		Player enemyPlayer = Game.getInstance().getPlayersList().get(playerTradingWith);
-		if (resourcesToReceive.getBrick() > 0) {
-			getAcceptOverlay().addGetResource(ResourceType.BRICK, resourcesToReceive.getBrick());
-			if (resourcesToReceive.getBrick() > enemyPlayer.getResourceCards().getBrick()) {
+		//Player enemyPlayer = Game.getInstance().getPlayersList().get(playerTradingWith);
+		Player current = Game.getInstance().getPlayer();
+		OfferTradeObject tradeOffer = Game.getInstance().getDomesticTradeInfo();
+		ResourceCards cards = tradeOffer.getOffer();
+
+		if (cards.getBrick() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.BRICK, cards.getBrick());
+			if (cards.getBrick() > current.getResourceCards().getBrick()) {
 				getAcceptOverlay().setAcceptEnabled(false);
 			}
 		}
-		if (resourcesToReceive.getOre() > 0) {
-			getAcceptOverlay().addGetResource(ResourceType.ORE, resourcesToReceive.getOre());
-			if (resourcesToReceive.getOre() > enemyPlayer.getResourceCards().getOre()) {
+		if (cards.getOre() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.ORE, cards.getOre());
+			if (cards.getOre() > current.getResourceCards().getOre()) {
 				getAcceptOverlay().setAcceptEnabled(false);
 			}
 		}
-		if (resourcesToReceive.getSheep() > 0) {
-			getAcceptOverlay().addGetResource(ResourceType.SHEEP, resourcesToReceive.getSheep());
-			if (resourcesToReceive.getSheep() > enemyPlayer.getResourceCards().getSheep()) {
+		if (cards.getSheep() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.SHEEP, cards.getSheep());
+			if (resourcesToReceive.getSheep() > current.getResourceCards().getSheep()) {
 				getAcceptOverlay().setAcceptEnabled(false);
 			}
 		}
-		if (resourcesToReceive.getWheat() > 0) {
-			getAcceptOverlay().addGetResource(ResourceType.WHEAT, resourcesToReceive.getWheat());
-			if (resourcesToReceive.getWheat() > enemyPlayer.getResourceCards().getWheat()) {
+		if (cards.getWheat() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.WHEAT, cards.getWheat());
+			if (resourcesToReceive.getWheat() > current.getResourceCards().getWheat()) {
 				getAcceptOverlay().setAcceptEnabled(false);
 			}
 		}
-		if (resourcesToReceive.getWood() > 0) {
-			getAcceptOverlay().addGetResource(ResourceType.WOOD, resourcesToReceive.getWood());
-			if (resourcesToReceive.getWood() > enemyPlayer.getResourceCards().getWood()) {
+		if (cards.getWood() > 0) {
+			getAcceptOverlay().addGiveResource(ResourceType.WOOD, cards.getWood());
+			if (resourcesToReceive.getWood() > current.getResourceCards().getWood()) {
 				getAcceptOverlay().setAcceptEnabled(false);
 			}
 		}
-		if (resourcesToSend.getBrick() > 0) {
-			getAcceptOverlay().addGiveResource(ResourceType.BRICK, resourcesToSend.getBrick());
+
+		if (cards.getBrick() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.BRICK, cards.getBrick());
 		}
-		if (resourcesToSend.getOre() > 0) {
-			getAcceptOverlay().addGiveResource(ResourceType.ORE, resourcesToSend.getOre());
+		if (cards.getOre() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.ORE, cards.getOre());
 		}
-		if (resourcesToSend.getSheep() > 0) {
-			getAcceptOverlay().addGiveResource(ResourceType.SHEEP, resourcesToSend.getSheep());
+		if (cards.getSheep() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.SHEEP, cards.getSheep());
 		}
-		if (resourcesToSend.getWheat() > 0) {
-			getAcceptOverlay().addGiveResource(ResourceType.WHEAT, resourcesToSend.getWheat());
+		if (cards.getWheat() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.WHEAT, cards.getWheat());
 		}
-		if (resourcesToSend.getWood() > 0) {
-			getAcceptOverlay().addGiveResource(ResourceType.WOOD, resourcesToSend.getWood());
+		if (cards.getWood() < 0) {
+			getAcceptOverlay().addGetResource(ResourceType.WOOD, cards.getWood());
 		}
 	}
 
 	@Override
 	public void setPlayerToTradeWith(int playerIndex) {
-		playerTradingWith = playerIndex;
-		canTrade();
+		if (resourcesToSend.size() > 0 && resourcesToReceive.size() > 0) {
+			playerTradingWith = playerIndex;
+		}
+		else {
+			getTradeOverlay().setStateMessage("Must Finalize Trade Details Before Selecting A Player");
+		}
+		getTradeOverlay().setTradeEnabled(canTrade());
 	}
 
 	@Override
@@ -371,11 +408,10 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 	@Override
 	public void acceptTrade(boolean willAccept) {
 		currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
-
 		ServerProxy.getServer().acceptTrade(currentPlayerIndex, willAccept);
-
 		getAcceptOverlay().closeModal();
 		accept = false;
+		Game.getInstance().setDomesticTradeInfo(null);
 	}
 
 	/**
@@ -418,12 +454,6 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 					getWaitOverlay().showModal();
 				}
 			}
-			else {
-				if (waiting) {
-					getWaitOverlay().closeModal();
-					waiting = false;
-				}
-			}
 		}
 		else {
 			if (Game.getInstance().getPlayer().getPlayerInfo() != null && Game.getInstance().getDomesticTradeInfo() != null) {
@@ -431,10 +461,14 @@ public class DomesticTradeController extends Controller implements IDomesticTrad
 				currentPlayerIndex = Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex();
 				if (currentPlayerIndex == currentOffer.getReceiver()) {
 					if(!accept) {
+						setAcceptViewResources();
 						this.acceptOverlay.showModal();
 					}
 				}
 			}
+		}
+		if (MapController.getState() instanceof PlayingState && Game.getInstance().getDomesticTradeInfo() == null) {
+			getWaitOverlay().closeModal();
 		}
 	}
 }

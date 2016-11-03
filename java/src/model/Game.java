@@ -49,7 +49,7 @@ public class Game extends Observable {
     private Map map;
     private List<Player> playersList;
     private Player player;
-    private Trade activeTrade; //null if none is ongoing
+    //private Trade activeTrade; //null if none is ongoing
     private TurnTracker turnTracker;
     private Player winner;
 
@@ -122,7 +122,7 @@ public class Game extends Observable {
 
 
         //replace activeTrade
-        this.activeTrade = createActiveTrade(model.getTradeOffer());
+        //this.activeTrade = createActiveTrade(model.getTradeOffer());
 
         //replace turnTracker
         TurnTracker tracker = new TurnTracker(model.getTurnTracker().getStatus(),
@@ -144,6 +144,17 @@ public class Game extends Observable {
 
         //replace winner
         this.versionNumber = model.getVersion();
+
+        //Sets the current Domestic Trade info
+        if (model.getTradeOffer() != null) {
+            ResourceCards myCards = new ResourceCards(model.getTradeOffer().getOffer().getBrick(),
+                    model.getTradeOffer().getOffer().getOre(),
+                    model.getTradeOffer().getOffer().getSheep(),
+                    model.getTradeOffer().getOffer().getWheat(),
+                    model.getTradeOffer().getOffer().getWood());
+            domesticTradeInfo = new OfferTradeObject(model.getTradeOffer().getSender(), myCards, model.getTradeOffer().getReceiver());
+        }
+
 
         // Marks this Observable object as having been changed; the hasChanged method will now return true.
         this.setChanged();
@@ -1155,8 +1166,6 @@ public class Game extends Observable {
 
     public void setDomesticTradeInfo(OfferTradeObject domesticTradeInfo) {
         this.domesticTradeInfo = domesticTradeInfo;
-        this.setChanged();
-        this.notifyObservers();
     }
 
     public AcceptTradeObject getAcceptTrade() {

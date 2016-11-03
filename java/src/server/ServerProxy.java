@@ -468,21 +468,14 @@ public class ServerProxy implements IServer {
      * the trade offer is removed
      */
     @Override
-    public AcceptTradeObject acceptTrade(int playerIndex, boolean willAccept) {
+    public String acceptTrade(int playerIndex, boolean willAccept) {
         String acceptTradeCommand = "/moves/acceptTrade";
         AcceptTradeObject acceptTradeObject = new AcceptTradeObject(playerIndex, willAccept);
         String postData = acceptTradeObject.toJSON();
 
         try{
             //fetch the response body from the server
-            String result = doPostCommand(acceptTradeCommand, postData);
-            if (result == null) {
-                return null;
-            } else {
-                Gson gson = new Gson();
-                AcceptTradeObject response = gson.fromJson(result, AcceptTradeObject.class);
-                return response;
-            }
+            return doPostCommand(acceptTradeCommand, postData);
         }
         catch(ConnectException e){
             e.printStackTrace();
@@ -639,7 +632,7 @@ public class ServerProxy implements IServer {
      * @post the trade is offered to the other player(stored in the server model)
      */
     @Override
-    public OfferTradeObject offerTrade(int playerIndex, ResourceCards offer, int receiver) {
+    public String offerTrade(int playerIndex, ResourceCards offer, int receiver) {
         String offerTradeCommand = "/moves/offerTrade";
         OfferTradeObject offerTradeObject = new OfferTradeObject(playerIndex, offer, receiver);
         String postData = offerTradeObject.toJSON();
@@ -647,6 +640,8 @@ public class ServerProxy implements IServer {
         try {
             //fetch the response body from the server
             String result = doPostCommand(offerTradeCommand, postData);
+            return result;
+            /*
             if (result == null) {
                 return null;
             } else {
@@ -664,6 +659,7 @@ public class ServerProxy implements IServer {
 
                 return trade;
             }
+            */
         }
         catch(ConnectException e){
             e.printStackTrace();

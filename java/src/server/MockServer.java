@@ -228,7 +228,7 @@ public class MockServer implements IServer {
      * the trade offer is removed
      */
     @Override
-    public AcceptTradeObject acceptTrade(int playerIndex, boolean willAccept) {
+    public String acceptTrade(int playerIndex, boolean willAccept) {
 
         return null;
     }
@@ -335,7 +335,7 @@ public class MockServer implements IServer {
      * @post the trade is offered to the other player(stored in the server model)
      */
     @Override
-    public OfferTradeObject offerTrade(int playerIndex, ResourceCards offer, int receiver) {
+    public String offerTrade(int playerIndex, ResourceCards offer, int receiver) {
 
         return null;
         //return jsonModelExample;
