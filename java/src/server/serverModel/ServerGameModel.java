@@ -1,12 +1,12 @@
-package decoder.JsonModels;
+package server.serverModel;
 
-/**
- * Created by bvanc on 9/30/2016.
+import decoder.JsonModels.*;
+
+/**Server side model of the data for every game
+ * Created by bvance on 11/4/2016.
  */
-public class JsonModel {
+public class ServerGameModel {
 
-    public JsonModel() {
-    }
 
     private JsonDeck deck;
     private JsonMap map;
@@ -98,6 +98,13 @@ public class JsonModel {
     public void setTradeOffer(JsonTradeOffer tradeOffer) {
         this.tradeOffer = tradeOffer;
     }
+
+
+    //longest road
+    //largest army
+    public int calculateLongestRoad(){return 0;}
+
+    public int calculateLargestArmy(){return 0;}
 
 
 }

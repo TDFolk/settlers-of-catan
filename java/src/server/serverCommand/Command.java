@@ -16,7 +16,7 @@ public abstract class Command implements Serializable{
 
     /**
      * Constructor which sets its own httpExchange to the one given as its param
-     * @param httpExchange HttpExchange object which will set itself to
+     * @param httpExchange HttpExchange object which will set itself tox
      */
     public Command(HttpExchange httpExchange){
 
