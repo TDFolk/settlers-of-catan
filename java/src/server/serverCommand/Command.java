@@ -76,4 +76,14 @@ public abstract class Command implements Serializable{
      */
     public void deserialize(String string){
     }
+
+
+    /**
+     * This method will handle executing the commands
+     * @param json jsonString that will populate the JsonElement
+     * @return returns a json element from the given jsonString
+     */
+    public JsonElement execute(String json){
+        return null;
+    }
 }
