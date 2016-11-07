@@ -163,56 +163,67 @@ public class ServerGameModel {
      */
     public String discardCards(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the turn being finished
      *
      * @return the entire model of the game in Json string form
      */
     public String finishTurn(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the maritime trade being offered
      *
      * @return the entire model of the game in Json string form
      */
     public String maritimeTrade(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the monopoly card being played
      *
      * @return the entire model of the game in Json string form
      */
     public String monopoly(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the monument card being played
      *
      * @return the entire model of the game in Json string form
      */
     public String monument(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the trade being offered
      *
      * @return the entire model of the game in Json string form
      */
     public String offerTrade(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the road building card being played
      *
      * @return the entire model of the game in Json string form
      */
     public String roadBuilding(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the rob taking place
      *
      * @return the entire model of the game in Json string form
      */
     public String rob(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the roll being rolled
      *
      * @return the entire model of the game in Json string form
      */
     public String roll(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the chat being sent
      *
      * @return the entire model of the game in Json string form
      */
     public String sendChat(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the soldier card being played
      *
      * @return the entire model of the game in Json string form
      */
     public String soldier(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the year of plenty being played
      *
      * @return the entire model of the game in Json string form
      */
