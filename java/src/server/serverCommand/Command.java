@@ -3,6 +3,7 @@ package server.serverCommand;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.HttpExchange;
+import server.IServer;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
@@ -13,6 +14,13 @@ import java.io.Serializable;
  */
 
 public abstract class Command implements Serializable{
+
+    public static IServer serverFacade;
+
+    public static void setServer(IServer server)
+    {
+        serverFacade = server;
+    }
 
     /**
      * Constructor which sets its own httpExchange to the one given as its param
