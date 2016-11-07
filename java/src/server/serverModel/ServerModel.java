@@ -48,11 +48,7 @@ public class ServerModel {
 
     }
 
-    private String getJsonFromModel() {
 
-        return "model";
-
-    }
 
 
 }

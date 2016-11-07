@@ -18,6 +18,15 @@ public class ServerGameModel {
     private JsonTradeOffer tradeOffer;
     private int winner;
     private int version;
+    private int gameID;
+
+    public int getGameID() {
+        return gameID;
+    }
+
+    public void setGameID(int gameID) {
+        this.gameID = gameID;
+    }
 
     public JsonDeck getDeck() {
         return deck;
@@ -106,5 +115,44 @@ public class ServerGameModel {
 
     public int calculateLargestArmy(){return 0;}
 
+    private String getJsonFromModel() {
+
+        return "model";
+
+    }
+
+    public String acceptTrade(){return getJsonFromModel();}
+
+    public String buildCity(){return getJsonFromModel();}
+
+    public String buildRoad(){return getJsonFromModel();}
+
+    public String buildSettlement(){return getJsonFromModel();}
+
+    public String buyDevCard(){return getJsonFromModel();}
+
+    public String discardCards(){return getJsonFromModel();}
+
+    public String finishTurn(){return getJsonFromModel();}
+
+    public String maritimeTrade(){return getJsonFromModel();}
+
+    public String monopoly(){return getJsonFromModel();}
+
+    public String monument(){return getJsonFromModel();}
+
+    public String offerTrade(){return getJsonFromModel();}
+
+    public String roadBuilding(){return getJsonFromModel();}
+
+    public String rob(){return getJsonFromModel();}
+
+    public String roll(){return getJsonFromModel();}
+
+    public String sendChat(){return getJsonFromModel();}
+
+    public String soldier(){return getJsonFromModel();}
+
+    public String yearOfPlenty(){return getJsonFromModel();}
 
 }
