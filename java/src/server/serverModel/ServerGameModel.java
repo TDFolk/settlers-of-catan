@@ -2,7 +2,7 @@ package server.serverModel;
 
 import decoder.JsonModels.*;
 
-/**Server side model of the data for every game
+/**Server side model of the data for each individual game
  * Created by bvance on 11/4/2016.
  */
 public class ServerGameModel {
@@ -109,10 +109,16 @@ public class ServerGameModel {
     }
 
 
-    //longest road
-    //largest army
+    /**
+     * Calculates which user, if any, has achieved the award of longest road
+     * @return player index of winner
+     */
     public int calculateLongestRoad(){return 0;}
 
+    /**
+     * Calculates which user, if any, has achieved the award of largest army
+     * @return player index of winner
+     */
     public int calculateLargestArmy(){return 0;}
 
     private String getJsonFromModel() {
@@ -121,38 +127,95 @@ public class ServerGameModel {
 
     }
 
+    /**changes the data of the model according to the trade accepted
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String acceptTrade(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the city being built
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String buildCity(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the road being built
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String buildRoad(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the settlement being built
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String buildSettlement(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the  dev card being built
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String buyDevCard(){return getJsonFromModel();}
 
+    /**changes the data of the model according to the discard cards
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String discardCards(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String finishTurn(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String maritimeTrade(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String monopoly(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String monument(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String offerTrade(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String roadBuilding(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String rob(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String roll(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String sendChat(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String soldier(){return getJsonFromModel();}
 
+     *
+     * @return the entire model of the game in Json string form
+     */
     public String yearOfPlenty(){return getJsonFromModel();}
 
 }
