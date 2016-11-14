@@ -7,6 +7,8 @@ import client.login.*;
 import client.join.*;
 import client.misc.*;
 import client.base.*;
+import server.ServerFacade;
+import server.serverCommand.Command;
 
 /**
  * Main entry point for the Catan program
@@ -55,6 +57,11 @@ public class Catan extends JFrame
 		SwingUtilities.invokeLater(new Runnable() {
 			public void run()
 			{
+
+				//THIS WAS ADDED BY BRANDON
+				//SETTING THE SERVER FACADE WE WILL BE USING!
+				Command.setServer(new ServerFacade());
+
 				new Catan();
 				
 				PlayerWaitingView playerWaitingView = new PlayerWaitingView();
