@@ -1,5 +1,6 @@
 package server.serverModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -27,12 +28,40 @@ public class ServerModel {
 
     List<ServerGameModel> games;
     Map<String, String> usersNAME_PASS;
+    List<String> loggedInUsers = null;
 
     /**
      * Logs a user into the server if they are already registered
      * @return success of login
      */
-    public boolean userLogin(){return false;}
+    public boolean userLogin(String userName, String passWord)
+    {
+        if(loggedInUsers == null)
+        {
+            loggedInUsers = new ArrayList<>();
+        }
+
+        //check if user registered
+        if(alreadyRegistered(userName))
+        {
+            //is the password the same?
+            if(usersNAME_PASS.get(userName).equals(passWord))
+            {
+                loggedInUsers.add(userName);
+                return true;
+            }
+            else
+            {
+                //wrong password
+                return false;
+
+            }
+
+        }
+
+        return false;
+
+    }
 
     /**Registers a user if they are not already registered
      *
@@ -40,7 +69,18 @@ public class ServerModel {
      * @param password
      * @return success of register
      */
-    public boolean registerUser(String userName, String password){return false;}
+    public boolean registerUser(String userName, String password)
+    {
+        //check if not registered
+        if(!alreadyRegistered(userName))
+        {
+            //if not registered, add to list
+            usersNAME_PASS.put(userName, password);
+            return true;
+        }
+
+        return false;
+    }
 
     /**
      * Lists the possible AI to add to each game
@@ -52,7 +92,12 @@ public class ServerModel {
      * Creates a new game on the server
      * @return success of creation
      */
-    public boolean createGame(){return false;}
+    public boolean createGame(){
+
+        
+        return false;
+
+    }
 
     /**
      * Returns a list of all the current games running on the server
@@ -72,6 +117,16 @@ public class ServerModel {
     }
 
 
+    private boolean alreadyRegistered(String name)
+    {
 
+        if(usersNAME_PASS.containsKey(name))
+        {
+            return true;
+        }
+
+        return false;
+
+    }
 
 }

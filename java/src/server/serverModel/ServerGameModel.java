@@ -1,5 +1,6 @@
 package server.serverModel;
 
+import com.google.gson.Gson;
 import decoder.JsonModels.*;
 
 /**Server side model of the data for each individual game
@@ -122,6 +123,10 @@ public class ServerGameModel {
     public int calculateLargestArmy(){return 0;}
 
     private String getJsonFromModel() {
+
+        Gson gson = new Gson();
+
+        String model = gson.toJson(this);
 
         return "model";
 
