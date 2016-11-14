@@ -15,6 +15,10 @@ import java.io.Serializable;
 
 public abstract class Command implements Serializable{
 
+    protected HttpExchange exchange;
+
+
+
     public static IServer serverFacade;
 
     public static void setServer(IServer server)
@@ -27,7 +31,7 @@ public abstract class Command implements Serializable{
      * @param httpExchange HttpExchange object which will set itself tox
      */
     public Command(HttpExchange httpExchange){
-
+        exchange = httpExchange;
     }
 
     /**
