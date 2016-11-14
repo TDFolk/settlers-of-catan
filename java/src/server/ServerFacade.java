@@ -5,6 +5,7 @@ import command.game.GameListHolder;
 import command.player.AcceptTradeObject;
 import command.player.OfferTradeObject;
 import model.cards_resources.ResourceCards;
+import server.serverModel.ServerModelFacade;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
 import shared.locations.HexLocation;
@@ -14,6 +15,23 @@ import shared.locations.VertexLocation;
  * Created by bvanc on 11/4/2016.
  */
 public class ServerFacade implements IServer {
+
+    private static ServerFacade instance = null;
+
+    private ServerFacade() {
+    }
+
+    public static ServerFacade getInstance() {
+
+        if(instance == null)
+        {
+            instance = new ServerFacade();
+        }
+
+        return instance;
+    }
+
+
     /**
      * Logs the caller in to the server, sets their catan.user HTTP cookie
      *
