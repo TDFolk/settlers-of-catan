@@ -20,8 +20,8 @@ public class MonumentCommand extends Command {
      * @return returns a json element from the given jsonString
      */
     @Override
-    public JsonElement execute(String json) {
-        return super.execute(json);
+    public JsonElement execute() {
+        return super.execute();
     }
 
 }
