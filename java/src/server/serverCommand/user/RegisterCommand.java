@@ -1,6 +1,8 @@
 package server.serverCommand.user;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.internal.Excluder;
 import com.sun.net.httpserver.HttpExchange;
 import server.serverCommand.Command;
 
@@ -13,14 +15,20 @@ public class RegisterCommand extends Command {
         super(httpExchange);
     }
 
-    /**
-     * This method will handle executing the commands
-     *
-     * @param json jsonString that will populate the JsonElement
-     * @return returns a json element from the given jsonString
-     */
     @Override
-    public JsonElement execute(String json) {
-        return super.execute(json);
+    public JsonElement execute() {
+        try {
+//            JsonElement = ;
+//            JsonObject responseObject = ;
+
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            throw e;
+        }
+
+        //return super.execute(json);
+        return null;
     }
 }
