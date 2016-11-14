@@ -26,9 +26,9 @@ public class ServerModel {
         return instance;
     }
 
-    List<ServerGameModel> games;
-    Map<String, String> usersNAME_PASS;
-    List<String> loggedInUsers = null;
+    private List<ServerGameModel> games;
+    private Map<String, String> usersNAME_PASS;
+    private List<String> loggedInUsers = null;
 
     /**
      * Logs a user into the server if they are already registered
@@ -69,7 +69,7 @@ public class ServerModel {
      * @param password
      * @return success of register
      */
-    public boolean registerUser(String userName, String password)
+    public boolean userRegister(String userName, String password)
     {
         //check if not registered
         if(!alreadyRegistered(userName))

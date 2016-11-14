@@ -20,6 +20,16 @@ public class ServerModelFacade {
         return instance;
     }
 
+    public boolean userLogin(String userName, String password)
+    {
+        return ServerModel.getInstance().userLogin(userName, password);
+    }
+
+    public boolean userRegister(String userName, String password)
+    {
+        return ServerModel.getInstance().userRegister(userName, password);
+    }
+
     /**changes the data of the model according to the trade accepted
      *
      * @return the entire model of the game in Json string form
