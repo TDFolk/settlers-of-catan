@@ -10,9 +10,13 @@ import server.serverCommand.Command;
  * Created by jihoon on 11/7/2016.
  */
 public class RegisterCommand extends Command {
+    private String username;
+    private String password;
 
-    public RegisterCommand(HttpExchange httpExchange) {
+    public RegisterCommand(HttpExchange httpExchange, String username, String password) {
         super(httpExchange);
+        this.username = username;
+        this.password = password;
     }
 
     @Override

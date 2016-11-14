@@ -9,8 +9,13 @@ import server.serverCommand.Command;
  */
 public class LoginCommand extends Command {
 
-    public LoginCommand(HttpExchange httpExchange) {
+    private String username;
+    private String password;
+
+    public LoginCommand(HttpExchange httpExchange, String username, String password) {
         super(httpExchange);
+        this.username = username;
+        this.password = password;
     }
 
     @Override
