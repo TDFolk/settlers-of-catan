@@ -2,15 +2,25 @@ package server.serverCommand.moves;
 
 import com.google.gson.JsonElement;
 import com.sun.net.httpserver.HttpExchange;
+
 import server.serverCommand.Command;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class MaritimeTradeCommand extends Command {
+	
+	private int playerIndex;
+	private int ratio;
+	private String inputResource;
+	private String outputResource;
 
-    public MaritimeTradeCommand(HttpExchange httpExchange) {
+    public MaritimeTradeCommand(HttpExchange httpExchange, int playerIndex, int ratio, String inputResource, String outputResource) {
         super(httpExchange);
+        this.playerIndex = playerIndex;
+        this.ratio = ratio;
+        this.inputResource = inputResource;
+        this.outputResource = outputResource;
     }
 
     /**

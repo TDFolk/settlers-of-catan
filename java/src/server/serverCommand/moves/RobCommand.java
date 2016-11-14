@@ -2,15 +2,24 @@ package server.serverCommand.moves;
 
 import com.google.gson.JsonElement;
 import com.sun.net.httpserver.HttpExchange;
+
 import server.serverCommand.Command;
+import shared.locations.HexLocation;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class RobCommand extends Command {
+	
+	private int playerIndex;
+	private int victimIndex;
+	private HexLocation location;
 
-    public RobCommand(HttpExchange httpExchange) {
+    public RobCommand(HttpExchange httpExchange, int playerIndex, int victimIndex, HexLocation location) {
         super(httpExchange);
+        this.playerIndex = playerIndex;
+        this.victimIndex = victimIndex;
+        this.location = location;
     }
 
     /**

@@ -8,9 +8,12 @@ import server.serverCommand.Command;
  * Created by jihoon on 11/7/2016.
  */
 public class BuyDevCardCommand extends Command {
+	
+	private int playerIndex;
 
-    public BuyDevCardCommand(HttpExchange httpExchange) {
+    public BuyDevCardCommand(HttpExchange httpExchange, int playerIndex) {
         super(httpExchange);
+        this.playerIndex = playerIndex;
     }
 
     /**

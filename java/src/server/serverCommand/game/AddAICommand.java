@@ -2,15 +2,19 @@ package server.serverCommand.game;
 
 import com.google.gson.JsonElement;
 import com.sun.net.httpserver.HttpExchange;
+
 import server.serverCommand.Command;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class AddAICommand extends Command {
+	
+	private String AIType;
 
-    public AddAICommand(HttpExchange httpExchange) {
+    public AddAICommand(HttpExchange httpExchange, String AIType) {
         super(httpExchange);
+        this.AIType = AIType;
     }
 
     /**

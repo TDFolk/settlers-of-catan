@@ -2,15 +2,21 @@ package server.serverCommand.games;
 
 import com.google.gson.JsonElement;
 import com.sun.net.httpserver.HttpExchange;
+
 import server.serverCommand.Command;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class JoinCommand extends Command {
+	
+	private int gameID;
+	private String color;
 
-    public JoinCommand(HttpExchange httpExchange) {
+    public JoinCommand(HttpExchange httpExchange, int gameID, String color) {
         super(httpExchange);
+        this.gameID = gameID;
+        this.color = color;
     }
 
     /**

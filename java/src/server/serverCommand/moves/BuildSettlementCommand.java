@@ -2,15 +2,24 @@ package server.serverCommand.moves;
 
 import com.google.gson.JsonElement;
 import com.sun.net.httpserver.HttpExchange;
+
 import server.serverCommand.Command;
+import shared.locations.VertexLocation;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class BuildSettlementCommand extends Command {
+	
+	private int playerIndex;
+	private VertexLocation vertexLocation;
+	private boolean free;
 
-    public BuildSettlementCommand(HttpExchange httpExchange) {
+    public BuildSettlementCommand(HttpExchange httpExchange, int playerIndex, VertexLocation vertexLocation, boolean free) {
         super(httpExchange);
+        this.playerIndex = playerIndex;
+        this.vertexLocation = vertexLocation;
+        this.free = free;
     }
 
     /**

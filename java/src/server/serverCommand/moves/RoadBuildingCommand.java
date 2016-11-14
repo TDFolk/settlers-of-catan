@@ -2,15 +2,24 @@ package server.serverCommand.moves;
 
 import com.google.gson.JsonElement;
 import com.sun.net.httpserver.HttpExchange;
+
 import server.serverCommand.Command;
+import shared.locations.EdgeLocation;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class RoadBuildingCommand extends Command {
+	
+	private int playerIndex;
+	private EdgeLocation spot1;
+	private EdgeLocation spot2;
 
-    public RoadBuildingCommand(HttpExchange httpExchange) {
+    public RoadBuildingCommand(HttpExchange httpExchange, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
         super(httpExchange);
+        this.playerIndex = playerIndex;
+        this.spot1 = spot1;
+        this.spot2 = spot2;
     }
 
     /**

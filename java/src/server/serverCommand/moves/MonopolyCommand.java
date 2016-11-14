@@ -2,15 +2,21 @@ package server.serverCommand.moves;
 
 import com.google.gson.JsonElement;
 import com.sun.net.httpserver.HttpExchange;
+
 import server.serverCommand.Command;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class MonopolyCommand extends Command {
+	
+	private String resource;
+	private int playerIndex;
 
-    public MonopolyCommand(HttpExchange httpExchange) {
+    public MonopolyCommand(HttpExchange httpExchange, String resource, int playerIndex) {
         super(httpExchange);
+        this.resource = resource;
+        this.playerIndex = playerIndex;
     }
 
     /**

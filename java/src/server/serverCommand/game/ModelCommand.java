@@ -8,9 +8,12 @@ import server.serverCommand.Command;
  * Created by jihoon on 11/7/2016.
  */
 public class ModelCommand extends Command {
+	
+	private int versionNumber;
 
-    public ModelCommand(HttpExchange httpExchange) {
+    public ModelCommand(HttpExchange httpExchange, int versionNumber) {
         super(httpExchange);
+        this.versionNumber = versionNumber;
     }
 
     /**

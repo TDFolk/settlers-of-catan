@@ -8,9 +8,12 @@ import server.serverCommand.Command;
  * Created by jihoon on 11/7/2016.
  */
 public class MonumentCommand extends Command {
+	
+	private int playerIndex;
 
-    public MonumentCommand(HttpExchange httpExchange) {
+    public MonumentCommand(HttpExchange httpExchange, int playerIndex) {
         super(httpExchange);
+        this.playerIndex = playerIndex;
     }
 
     /**

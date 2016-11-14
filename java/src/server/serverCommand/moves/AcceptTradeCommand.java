@@ -8,9 +8,14 @@ import server.serverCommand.Command;
  * Created by jihoon on 11/7/2016.
  */
 public class AcceptTradeCommand extends Command {
+	
+	private int playerIndex;
+	private boolean willAccept;
 
-    public AcceptTradeCommand(HttpExchange httpExchange) {
+    public AcceptTradeCommand(HttpExchange httpExchange, int playerIndex, boolean willAccept) {
         super(httpExchange);
+        this.playerIndex = playerIndex;
+        this.willAccept = willAccept;
     }
 
     /**

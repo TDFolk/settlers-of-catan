@@ -8,9 +8,14 @@ import server.serverCommand.Command;
  * Created by jihoon on 11/7/2016.
  */
 public class RollCommand extends Command {
+	
+	private int playerIndex;
+	private int number;
 
-    public RollCommand(HttpExchange httpExchange) {
+    public RollCommand(HttpExchange httpExchange, int playerIndex, int number) {
         super(httpExchange);
+        this.playerIndex = playerIndex;
+        this.number = number;
     }
 
     /**

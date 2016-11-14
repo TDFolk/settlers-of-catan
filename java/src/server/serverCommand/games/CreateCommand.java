@@ -2,15 +2,25 @@ package server.serverCommand.games;
 
 import com.google.gson.JsonElement;
 import com.sun.net.httpserver.HttpExchange;
+
 import server.serverCommand.Command;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class CreateCommand extends Command {
+	
+	private boolean randomTiles;
+	private boolean randomNumbers;
+	private boolean randomPorts;
+	private String gameName;
 
-    public CreateCommand(HttpExchange httpExchange) {
+    public CreateCommand(HttpExchange httpExchange, boolean randomTiles, boolean randomNumbers, boolean randomPorts, String gameName) {
         super(httpExchange);
+        this.randomTiles = randomTiles;
+        this.randomNumbers = randomNumbers;
+        this.randomPorts = randomPorts;
+        this.gameName = gameName;
     }
 
     /**

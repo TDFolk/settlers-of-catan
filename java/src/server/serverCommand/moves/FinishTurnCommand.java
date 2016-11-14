@@ -8,9 +8,12 @@ import server.serverCommand.Command;
  * Created by jihoon on 11/7/2016.
  */
 public class FinishTurnCommand extends Command {
+	
+	private int playerIndex;
 
-    public FinishTurnCommand(HttpExchange httpExchange) {
+    public FinishTurnCommand(HttpExchange httpExchange, int playerIndex) {
         super(httpExchange);
+        this.playerIndex = playerIndex;
     }
 
     /**

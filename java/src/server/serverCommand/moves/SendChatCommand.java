@@ -2,15 +2,21 @@ package server.serverCommand.moves;
 
 import com.google.gson.JsonElement;
 import com.sun.net.httpserver.HttpExchange;
+
 import server.serverCommand.Command;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class SendChatCommand extends Command {
+	
+	private int playerIndex;
+	private String content;
 
-    public SendChatCommand(HttpExchange httpExchange) {
+    public SendChatCommand(HttpExchange httpExchange, int playerIndex, String content) {
         super(httpExchange);
+        this.playerIndex = playerIndex;
+        this.content = content;
     }
 
     /**
