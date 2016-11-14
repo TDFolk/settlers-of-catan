@@ -10,9 +10,39 @@ import java.io.IOException;
  */
 public class ServerHandler implements HttpHandler {
 
+    //protected String root;
+
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
 
+    }
+
+    /*
+    public Handlers(String root){
+        this.root = root;
+    }
+    */
+
+    public String getRequestPath(HttpExchange exchange){
+        return exchange.getRequestURI().getPath().substring(1);
+    }
+
+    public void sendFile(HttpExchange exchange, String filePath){
+
+    }
+
+    public void appendJson(){
+
+    }
+
+    public String getLoginCookie(){
+
+        return null;
+    }
+
+    public String getJoinGameCookie(){
+
+        return null;
     }
 
 
