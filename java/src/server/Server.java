@@ -28,10 +28,10 @@ public class Server {
 
         server.setExecutor(null); //Default executor
 
-        //server.createContext("/user", new ServerHandler());
-        //server.createContext("/game", new ServerHandler());
-        //server.createContext("/games", new ServerHandler());
-        //server.createContext("/moves", new ServerHandler());
+        server.createContext("/user", new ServerHandler());
+        server.createContext("/game", new ServerHandler());
+        server.createContext("/games", new ServerHandler());
+        server.createContext("/moves", new ServerHandler());
 
         // Swagger works when you run our server and go to http://localhost:8081/docs/api/view/index.html
         server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
