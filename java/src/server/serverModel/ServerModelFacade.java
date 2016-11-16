@@ -1,5 +1,7 @@
 package server.serverModel;
 
+import command.game.GameCreateObjectResult;
+
 /**
  * Created by bvanc on 11/7/2016.
  */
@@ -28,6 +30,11 @@ public class ServerModelFacade {
     public boolean userRegister(String userName, String password)
     {
         return ServerModel.getInstance().userRegister(userName, password);
+    }
+
+    public GameCreateObjectResult gameCreate(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String gameName)
+    {
+        return ServerModel.getInstance().gameCreate(randomTiles, randomNumbers, randomPorts, gameName);
     }
 
     /**changes the data of the model according to the trade accepted
@@ -131,5 +138,12 @@ public class ServerModelFacade {
      * @return the entire model of the game in Json string form
      */
     public String yearOfPlenty(){return "model";}
+
+    public String gameModel(int gameID, int versionNumber)
+    {
+
+        return ServerModel.getInstance().gameModel(gameID, versionNumber);
+
+    }
 
 }

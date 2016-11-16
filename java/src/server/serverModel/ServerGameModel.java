@@ -128,8 +128,13 @@ public class ServerGameModel {
 
         String model = gson.toJson(this);
 
-        return "model";
+        return model;
 
+    }
+
+    public String gameModel()
+    {
+        return getJsonFromModel();
     }
 
     /**changes the data of the model according to the trade accepted

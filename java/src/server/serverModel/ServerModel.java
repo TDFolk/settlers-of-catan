@@ -1,5 +1,7 @@
 package server.serverModel;
 
+import command.game.GameCreateObjectResult;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -82,6 +84,15 @@ public class ServerModel {
         return false;
     }
 
+    public GameCreateObjectResult gameCreate(boolean randomTiles,
+                                             boolean randomNumbers,
+                                             boolean randomPorts,
+                                             String gameName) {
+
+        return null;
+
+    }
+
     /**
      * Lists the possible AI to add to each game
      * @return json string of each AI
@@ -128,5 +139,28 @@ public class ServerModel {
         return false;
 
     }
+
+    public String gameModel(int gameID, int versionNumber)
+    {
+        for(ServerGameModel game : games)
+        {
+            if(game.getGameID() == gameID)
+            {
+                if(game.getVersion() != versionNumber)
+                {
+                    return game.gameModel();
+                }
+                else
+                {
+                    return "true";
+                }
+            }
+        }
+
+        String errorMessage = "ERROR. ServerModel.gameModel() No model with ID " + gameID + " found.";
+        System.out.println(errorMessage);
+        return errorMessage;
+    }
+
 
 }

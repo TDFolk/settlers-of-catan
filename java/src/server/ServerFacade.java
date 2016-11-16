@@ -5,6 +5,7 @@ import command.game.GameListHolder;
 import command.player.AcceptTradeObject;
 import command.player.OfferTradeObject;
 import model.cards_resources.ResourceCards;
+import server.serverModel.ServerModel;
 import server.serverModel.ServerModelFacade;
 import shared.definitions.ResourceType;
 import shared.locations.EdgeLocation;
@@ -44,7 +45,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public boolean userLogin(String username, String password) {
-        return false;
+        return ServerModelFacade.getInstance().userLogin(username, password);
     }
 
     /**
@@ -60,7 +61,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public boolean userRegister(String username, String password) {
-        return false;
+        return ServerModelFacade.getInstance().userRegister(username, password);
     }
 
     /**
