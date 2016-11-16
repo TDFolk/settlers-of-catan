@@ -12,7 +12,7 @@ import java.net.InetSocketAddress;
  * Created by Trent on 11/14/2016.
  */
 public class Server {
-    private final int DEFAULT_PORT = 8081;
+    private final int DEFAULT_PORT = 8080;
     private int port;
     private String host;
     private HttpServer server;
@@ -20,7 +20,7 @@ public class Server {
     public void init() {
 
         try {
-            server = HttpServer.create(new InetSocketAddress(DEFAULT_PORT), 0);
+            server = HttpServer.create(new InetSocketAddress(DEFAULT_PORT), 10);
         }
         catch (IOException e) {
             return;
@@ -28,10 +28,10 @@ public class Server {
 
         server.setExecutor(null); //Default executor
 
-        server.createContext("/user", new ServerHandler());
-        server.createContext("/game", new ServerHandler());
-        server.createContext("/games", new ServerHandler());
-        server.createContext("/moves", new ServerHandler());
+        //server.createContext("/user", new ServerHandler());
+        //server.createContext("/game", new ServerHandler());
+        //server.createContext("/games", new ServerHandler());
+        //server.createContext("/moves", new ServerHandler());
 
         server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
         server.createContext("/docs/api/view", new Handlers.BasicFile(""));
