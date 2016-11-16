@@ -2,12 +2,16 @@ package server.serverCommand;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import server.IServer;
 import shared.locations.EdgeLocation;
 import shared.locations.VertexLocation;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.List;
 
 /**The parent class for all commands to be executed on the server side
  * Created by bvanc on 11/4/2016.
@@ -17,7 +21,12 @@ public abstract class Command implements Serializable{
 
     protected HttpExchange exchange;
 
+    protected int gameId;
+    protected int playerId;
+    protected String json;
 
+    protected boolean hasUserCookie = false;
+    protected boolean hasGameCookie = false;
 
     public static IServer serverFacade;
 
@@ -32,13 +41,34 @@ public abstract class Command implements Serializable{
      */
     public Command(HttpExchange httpExchange){
         exchange = httpExchange;
+
+        //... test what this does?
+        String foo = exchange.getRequestMethod();
+
+        //grab the json
+        json = exchange.getRequestBody().toString();
+
+        Headers headers = exchange.getRequestHeaders();
+        List<String> cookies = headers.get("Cookie");
+
+        if(cookies != null) {
+            String catanCookie = cookies.get(cookies.size() - 1);
+            try{
+                parseCookie(catanCookie);
+            }
+            catch(UnsupportedEncodingException e){
+                e.printStackTrace();
+            }
+        }
+
+
     }
 
     /**
      * This method adds a command to the provider
      */
     public void addCommand(){
-
+        
     }
 
     /**
@@ -97,5 +127,34 @@ public abstract class Command implements Serializable{
      */
     public JsonElement execute(){
         return null;
+    }
+
+
+    //parse the freaking cookie
+    private void parseCookie(String cookie) throws UnsupportedEncodingException{
+        String[] params = cookie.split(";");
+
+        for(String string : params){
+            //for catanUser Cookie
+            if(string.contains("catan.user")){
+                String decode = URLDecoder.decode(string, "UTF-8");
+                String idBit = decode.substring(decode.indexOf("playerID"));
+                String playerID = idBit.substring(idBit.indexOf(":") + 1, idBit.indexOf("}"));
+
+                this.playerId = Integer.parseInt(playerID);
+                this.hasUserCookie = true;
+            }
+            //for catanGame Cookie
+            else if(string.contains("catan.game")){
+                String decode = URLDecoder.decode(string, "UTF-8");
+                String gameIdBit = decode.substring(decode.indexOf("=") + 1);
+                gameIdBit = gameIdBit.replace("~Path=/~", "");
+                if(gameIdBit != null && !gameIdBit.equals("") && !gameIdBit.equals("null")) {
+                    this.gameId = Integer.parseInt(gameIdBit);
+                    this.hasGameCookie = true;
+                }
+            }
+        }
+
     }
 }
