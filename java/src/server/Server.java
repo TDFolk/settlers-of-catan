@@ -12,7 +12,7 @@ import java.net.InetSocketAddress;
  * Created by Trent on 11/14/2016.
  */
 public class Server {
-    private final int DEFAULT_PORT = 8080;
+    private final int DEFAULT_PORT = 8081;
     private int port;
     private String host;
     private HttpServer server;
@@ -33,6 +33,7 @@ public class Server {
         //server.createContext("/games", new ServerHandler());
         //server.createContext("/moves", new ServerHandler());
 
+        // Swagger works when you run our server and go to http://localhost:8081/docs/api/view/index.html
         server.createContext("/docs/api/data", new Handlers.JSONAppender(""));
         server.createContext("/docs/api/view", new Handlers.BasicFile(""));
 

@@ -60,7 +60,7 @@ public class Catan extends JFrame
 
 				//THIS WAS ADDED BY BRANDON
 				//SETTING THE SERVER FACADE WE WILL BE USING!
-				Command.setServer(new ServerFacade());
+				//Command.setServer(new ServerFacade());
 
 				new Catan();
 				
