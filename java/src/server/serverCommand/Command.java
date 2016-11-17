@@ -5,12 +5,12 @@ import com.google.gson.JsonObject;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import server.IServer;
-import shared.locations.EdgeLocation;
-import shared.locations.VertexLocation;
+import shared.locations.*;
 
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**The parent class for all commands to be executed on the server side
@@ -68,6 +68,7 @@ public abstract class Command implements Serializable{
      * This method adds a command to the provider
      */
     public void addCommand(){
+        //idk what we do here???
     }
 
     /**
@@ -76,7 +77,12 @@ public abstract class Command implements Serializable{
      * @return returns a vertex location from the given json object
      */
     public VertexLocation fetchVertexLocation(JsonObject jsonObject){
-       return null;
+        int x = jsonObject.get("x").getAsInt();
+        int y = jsonObject.get("y").getAsInt();
+        String direction = jsonObject.get("direction").getAsString();
+        direction = whatDirection(direction);
+        VertexLocation vertexLocation = new VertexLocation(new HexLocation(x, y), VertexDirection.valueOf(direction));
+        return vertexLocation;
     }
 
     /**
@@ -85,24 +91,14 @@ public abstract class Command implements Serializable{
      * @return returns a edge location from the given json object
      */
     public EdgeLocation fetchEdgeLocation(JsonObject jsonObject){
-        return null;
+        int x = jsonObject.get("x").getAsInt();
+        int y = jsonObject.get("y").getAsInt();
+        String direction = jsonObject.get("direction").getAsString();
+        direction = whatDirection(direction);
+        EdgeLocation edgeLocation = new EdgeLocation(new HexLocation(x, y), EdgeDirection.valueOf(direction));
+        return edgeLocation;
     }
 
-    /**
-     * This method sets the game id
-     * @param id the id to set the game to
-     */
-    public void setGameID(int id){
-
-    }
-
-    /**
-     * This method sets the player id
-     * @param id the id to set the player to
-     */
-    public void setPlayerID(int id){
-
-    }
 
     /**
      * This method will handle the serialization of objects using BAOS
@@ -121,13 +117,9 @@ public abstract class Command implements Serializable{
 
 
     /**
-     * This method will handle executing the commands
-     * @return returns a json element from the given jsonString
+     * override this
      */
-    public JsonElement execute(){
-        return null;
-    }
-
+    public abstract JsonElement execute();
 
     //parse the freaking cookie
     private void parseCookie(String cookie) throws UnsupportedEncodingException{
@@ -156,4 +148,56 @@ public abstract class Command implements Serializable{
         }
 
     }
+
+    protected String getLoginCookie(String username, String password, String playerID) throws UnsupportedEncodingException{
+        String cookie = "{\"name\":\"" + username + "\",\"password\":\"" + password + "\",\"playerID\":" + playerID + "}";
+        String encodedCookie = URLEncoder.encode(cookie, "UTF-8");
+        encodedCookie = "catan.user" + encodedCookie + ";Path=/;";
+        return encodedCookie;
+    }
+
+    protected String getJoinGameCookie(String gameID){
+        return "catan.game=" + gameID + ";Path=/;";
+    }
+
+    /**
+     * This method sets the game id
+     * @param id the id to set the game to
+     */
+    public void setGameID(int id){
+        this.gameId = id;
+        this.hasGameCookie = true;
+    }
+
+    /**
+     * This method sets the player id
+     * @param id the id to set the player to
+     */
+    public void setPlayerID(int id){
+        this.playerId = id;
+        this.hasUserCookie = true;
+    }
+
+    private String whatDirection(String direction){
+        switch(direction) {
+            case "N":
+                return "North";
+            case "S":
+                return "South";
+            case "E":
+                return "East";
+            case "W":
+                return "West";
+            case "NE":
+                return "NorthEast";
+            case "SE":
+                return "SouthEast";
+            case "SW":
+                return "SouthWest";
+            case "NW":
+                return "NorthWest";
+        }
+        return null;
+    }
+
 }
