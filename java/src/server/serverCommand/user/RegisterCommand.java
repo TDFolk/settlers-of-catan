@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
 import server.serverCommand.Command;
@@ -63,6 +65,6 @@ public class RegisterCommand extends Command {
         catch (Exception e){
             e.printStackTrace();
         }
-        return null;
+        return new JsonPrimitive("Success");
     }
 }

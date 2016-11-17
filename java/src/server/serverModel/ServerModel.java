@@ -3,6 +3,7 @@ package server.serverModel;
 import command.game.GameCreateObjectResult;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,7 @@ public class ServerModel {
     }
 
     private List<ServerGameModel> games;
-    private Map<String, String> usersNAME_PASS;
+    private Map<String, String> usersNAME_PASS = new HashMap<String, String>();
     private List<String> loggedInUsers = null;
 
     /**

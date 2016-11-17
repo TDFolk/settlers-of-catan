@@ -43,7 +43,7 @@ public class ServerHandler implements HttpHandler {
                     throw new Exception("Invalid Request");
                 }
                 JsonElement response = command.execute();
-                if(response.getClass() == JsonPrimitive.class) {
+                if(response != null && response.getClass() == JsonPrimitive.class) {
                     httpExchange.getResponseHeaders().add("Content-Type", "application/text");
                 }
                 else {
