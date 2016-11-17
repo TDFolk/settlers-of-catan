@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 /**
  * Model for all games running on the server as well as all of the registered users
@@ -13,6 +14,8 @@ import java.util.Map;
  * Created by bvanc on 11/7/2016.
  */
 public class ServerModel {
+
+    private Logger logger = null;
 
     private static ServerModel instance = null;
 
