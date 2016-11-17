@@ -1,6 +1,9 @@
 package server.serverCommand;
 
+import java.io.IOException;
+
 import com.sun.net.httpserver.HttpExchange;
+
 import model.cards_resources.ResourceCards;
 import server.serverCommand.game.AddAICommand;
 import server.serverCommand.game.ListAICommand;
@@ -21,7 +24,7 @@ import shared.locations.*;
 public class CommandFactory {
     private String uri;
 
-    public Command create(HttpExchange exchange) {
+    public Command create(HttpExchange exchange) throws IOException {
         uri = exchange.getRequestURI().toString();
         String[] uri_request = uri.split("/");
         String command_request = uri_request[uri_request.length - 1];

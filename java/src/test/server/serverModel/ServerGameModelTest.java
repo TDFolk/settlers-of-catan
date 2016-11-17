@@ -1,7 +1,8 @@
-package server.serverModel;
+package test.server.serverModel;
 
 import org.junit.Test;
 
+import server.serverModel.ServerGameModel;
 import static org.junit.Assert.*;
 
 /**
@@ -13,7 +14,7 @@ public class ServerGameModelTest {
 
     @Test
     public void gameModel() throws Exception {
-        model = new ServerGameModel();
+        model = new ServerGameModel(0);
 
 
     }

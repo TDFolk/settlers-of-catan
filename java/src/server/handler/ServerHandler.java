@@ -17,7 +17,7 @@ import java.util.logging.Logger;
  */
 public class ServerHandler implements HttpHandler {
 
-    private CommandFactory factory;
+    private CommandFactory factory = new CommandFactory();
     private Logger logger = null;
 
     //constructor
