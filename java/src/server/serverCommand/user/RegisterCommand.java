@@ -47,12 +47,8 @@ public class RegisterCommand extends Command {
 
     @Override
     public JsonElement execute() {
-
-        String requestBody = exchange.getRequestBody().toString();
-        System.out.println(requestBody);
-
         try {
-            boolean response = ServerModelFacade.getInstance().userRegister("", "");
+            boolean response = ServerModelFacade.getInstance().userRegister(username, password);
             if(response){
                 //do something here
                 if(exchange == null){
