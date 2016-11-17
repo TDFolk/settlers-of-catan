@@ -15,12 +15,8 @@ public class MaritimeTradeCommand extends Command {
 	private String inputResource;
 	private String outputResource;
 
-    public MaritimeTradeCommand(HttpExchange httpExchange, int playerIndex, int ratio, String inputResource, String outputResource) {
+    public MaritimeTradeCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.ratio = ratio;
-        this.inputResource = inputResource;
-        this.outputResource = outputResource;
     }
 
     /**

@@ -16,11 +16,8 @@ public class OfferTradeCommand extends Command {
 	private ResourceCards offer;
 	private int receiver;
 
-    public OfferTradeCommand(HttpExchange httpExchange, int playerIndex, ResourceCards offer, int receiver) {
+    public OfferTradeCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.offer = offer;
-        this.receiver = receiver;
     }
 
     /**

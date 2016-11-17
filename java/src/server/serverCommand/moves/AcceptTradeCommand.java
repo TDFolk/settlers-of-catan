@@ -12,10 +12,8 @@ public class AcceptTradeCommand extends Command {
 	private int playerIndex;
 	private boolean willAccept;
 
-    public AcceptTradeCommand(HttpExchange httpExchange, int playerIndex, boolean willAccept) {
+    public AcceptTradeCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.willAccept = willAccept;
     }
 
     /**

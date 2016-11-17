@@ -15,12 +15,8 @@ public class CreateCommand extends Command {
 	private boolean randomPorts;
 	private String gameName;
 
-    public CreateCommand(HttpExchange httpExchange, boolean randomTiles, boolean randomNumbers, boolean randomPorts, String gameName) {
+    public CreateCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.randomTiles = randomTiles;
-        this.randomNumbers = randomNumbers;
-        this.randomPorts = randomPorts;
-        this.gameName = gameName;
     }
 
     /**

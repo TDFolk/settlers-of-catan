@@ -11,9 +11,8 @@ public class BuyDevCardCommand extends Command {
 	
 	private int playerIndex;
 
-    public BuyDevCardCommand(HttpExchange httpExchange, int playerIndex) {
+    public BuyDevCardCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
     }
 
     /**

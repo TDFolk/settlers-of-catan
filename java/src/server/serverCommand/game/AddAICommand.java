@@ -12,9 +12,8 @@ public class AddAICommand extends Command {
 	
 	private String AIType;
 
-    public AddAICommand(HttpExchange httpExchange, String AIType) {
+    public AddAICommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.AIType = AIType;
     }
 
     /**

@@ -15,11 +15,8 @@ public class RobCommand extends Command {
 	private int victimIndex;
 	private HexLocation location;
 
-    public RobCommand(HttpExchange httpExchange, int playerIndex, int victimIndex, HexLocation location) {
+    public RobCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.victimIndex = victimIndex;
-        this.location = location;
     }
 
     /**

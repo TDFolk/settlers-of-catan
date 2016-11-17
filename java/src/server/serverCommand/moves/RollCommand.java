@@ -12,10 +12,8 @@ public class RollCommand extends Command {
 	private int playerIndex;
 	private int number;
 
-    public RollCommand(HttpExchange httpExchange, int playerIndex, int number) {
+    public RollCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.number = number;
     }
 
     /**

@@ -11,9 +11,8 @@ public class ModelCommand extends Command {
 	
 	private int versionNumber;
 
-    public ModelCommand(HttpExchange httpExchange, int versionNumber) {
+    public ModelCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.versionNumber = versionNumber;
     }
 
     /**

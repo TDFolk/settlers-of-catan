@@ -14,10 +14,8 @@ public class BuildCityCommand extends Command {
 	private int playerIndex;
 	private VertexLocation vertexLocation;
 
-    public BuildCityCommand(HttpExchange httpExchange, int playerIndex, VertexLocation vertexLocation) {
+    public BuildCityCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.vertexLocation = vertexLocation;
     }
 
     /**

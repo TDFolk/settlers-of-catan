@@ -15,10 +15,8 @@ public class DiscardCardsCommand extends Command {
 	private int playerIndex;
 	private ResourceCards discardedCards;
 
-    public DiscardCardsCommand(HttpExchange httpExchange, int playerIndex, ResourceCards discardedCards) {
+    public DiscardCardsCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.discardedCards = discardedCards;
     }
 
     /**

@@ -15,11 +15,8 @@ public class BuildRoadCommand extends Command {
 	private EdgeLocation roadLocation;
 	private boolean free;
 
-    public BuildRoadCommand(HttpExchange httpExchange, int playerIndex, EdgeLocation roadLocation, boolean free) {
+    public BuildRoadCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.roadLocation = roadLocation;
-        this.free = free;
     }
 
     /**

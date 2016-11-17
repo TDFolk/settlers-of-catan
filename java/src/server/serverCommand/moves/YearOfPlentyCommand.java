@@ -15,11 +15,8 @@ public class YearOfPlentyCommand extends Command {
 	private ResourceType resource1;
 	private ResourceType resource2;
 
-    public YearOfPlentyCommand(HttpExchange httpExchange, int playerIndex, ResourceType resource1, ResourceType resource2) {
+    public YearOfPlentyCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.resource1 = resource1;
-        this.resource2 = resource2;
     }
 
     /**

@@ -34,54 +34,49 @@ public class CommandFactory {
             case "list":
                 return new ListCommand(exchange);
             case "create":
-                return new CreateCommand(exchange, false, false, false, "");
+                return new CreateCommand(exchange);
             case "join":
-                return new JoinCommand(exchange, 0, "");
+                return new JoinCommand(exchange);
             case "model":
-                return new ModelCommand(exchange, 0);
+                return new ModelCommand(exchange);
             case "addAI":
-                return new AddAICommand(exchange, "");
+                return new AddAICommand(exchange);
             case "listAI":
                 return new ListAICommand(exchange);
             case "sendChat":
-                return new SendChatCommand(exchange, 0, "");
+                return new SendChatCommand(exchange);
             case "rollNumber":
-                return new RollCommand(exchange, 0, 0);
+                return new RollCommand(exchange);
             case "robPlayer":
-                return new RobCommand(exchange, 0, 0, new HexLocation(0, 0));
+                return new RobCommand(exchange);
             case "finishTurn":
-                return new FinishTurnCommand(exchange, 0);
+                return new FinishTurnCommand(exchange);
             case "buyDevCard":
-                return new BuyDevCardCommand(exchange, 0);
+                return new BuyDevCardCommand(exchange);
             case "Year_of_Plenty":
-                return new YearOfPlentyCommand(exchange, 0, ResourceType.BRICK, ResourceType.BRICK);
+                return new YearOfPlentyCommand(exchange);
             case "Road_Building":
-                return new RoadBuildingCommand(exchange, 0, new EdgeLocation(new HexLocation(0, 0),
-                        EdgeDirection.South), new EdgeLocation(new HexLocation(0, 0),
-                        EdgeDirection.South));
+                return new RoadBuildingCommand(exchange);
             case "Soldier":
-                return new SoldierCommand(exchange, 0, 0, new HexLocation(0, 0));
+                return new SoldierCommand(exchange);
             case "Monopoly":
-                return new MonopolyCommand(exchange, "", 0);
+                return new MonopolyCommand(exchange);
             case "Monument":
-                return new MonumentCommand(exchange, 0);
+                return new MonumentCommand(exchange);
             case "buildRoad":
-                return new BuildRoadCommand(exchange, 0, new EdgeLocation(new HexLocation(0, 0),
-                        EdgeDirection.South), false);
+                return new BuildRoadCommand(exchange);
             case "buildSettlement":
-                return new BuildSettlementCommand(exchange, 0, new VertexLocation(new HexLocation(0, 0),
-                        VertexDirection.East), false);
+                return new BuildSettlementCommand(exchange);
             case "buildCity":
-                return new BuildCityCommand(exchange, 0, new VertexLocation(new HexLocation(0, 0),
-                        VertexDirection.East));
+                return new BuildCityCommand(exchange);
             case "offerTrade":
-                return new OfferTradeCommand(exchange, 0, new ResourceCards(0, 0, 0, 0, 0), 0);
+                return new OfferTradeCommand(exchange);
             case "acceptTrade":
-                return new AcceptTradeCommand(exchange, 0, false);
+                return new AcceptTradeCommand(exchange);
             case "martimeTrade":
-                return new MaritimeTradeCommand(exchange, 0, 0, "", "");
+                return new MaritimeTradeCommand(exchange);
             case "discardCards":
-                return new DiscardCardsCommand(exchange, 0, new ResourceCards(0, 0, 0, 0, 0));
+                return new DiscardCardsCommand(exchange);
             default:
                 break;
         }

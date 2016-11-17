@@ -11,9 +11,8 @@ public class FinishTurnCommand extends Command {
 	
 	private int playerIndex;
 
-    public FinishTurnCommand(HttpExchange httpExchange, int playerIndex) {
+    public FinishTurnCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
     }
 
     /**

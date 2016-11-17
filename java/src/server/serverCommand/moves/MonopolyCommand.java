@@ -13,10 +13,8 @@ public class MonopolyCommand extends Command {
 	private String resource;
 	private int playerIndex;
 
-    public MonopolyCommand(HttpExchange httpExchange, String resource, int playerIndex) {
+    public MonopolyCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.resource = resource;
-        this.playerIndex = playerIndex;
     }
 
     /**

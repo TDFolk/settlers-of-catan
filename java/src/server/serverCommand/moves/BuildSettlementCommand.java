@@ -15,11 +15,8 @@ public class BuildSettlementCommand extends Command {
 	private VertexLocation vertexLocation;
 	private boolean free;
 
-    public BuildSettlementCommand(HttpExchange httpExchange, int playerIndex, VertexLocation vertexLocation, boolean free) {
+    public BuildSettlementCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.vertexLocation = vertexLocation;
-        this.free = free;
     }
 
     /**

@@ -13,10 +13,8 @@ public class JoinCommand extends Command {
 	private int gameID;
 	private String color;
 
-    public JoinCommand(HttpExchange httpExchange, int gameID, String color) {
+    public JoinCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.gameID = gameID;
-        this.color = color;
     }
 
     /**

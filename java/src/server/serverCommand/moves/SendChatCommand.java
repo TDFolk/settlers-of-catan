@@ -13,10 +13,8 @@ public class SendChatCommand extends Command {
 	private int playerIndex;
 	private String content;
 
-    public SendChatCommand(HttpExchange httpExchange, int playerIndex, String content) {
+    public SendChatCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.content = content;
     }
 
     /**

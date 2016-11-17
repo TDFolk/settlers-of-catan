@@ -11,9 +11,8 @@ public class MonumentCommand extends Command {
 	
 	private int playerIndex;
 
-    public MonumentCommand(HttpExchange httpExchange, int playerIndex) {
+    public MonumentCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
     }
 
     /**

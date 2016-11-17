@@ -15,11 +15,8 @@ public class RoadBuildingCommand extends Command {
 	private EdgeLocation spot1;
 	private EdgeLocation spot2;
 
-    public RoadBuildingCommand(HttpExchange httpExchange, int playerIndex, EdgeLocation spot1, EdgeLocation spot2) {
+    public RoadBuildingCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.playerIndex = playerIndex;
-        this.spot1 = spot1;
-        this.spot2 = spot2;
     }
 
     /**
