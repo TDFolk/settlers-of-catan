@@ -68,7 +68,6 @@ public abstract class Command implements Serializable{
      * This method adds a command to the provider
      */
     public void addCommand(){
-        
     }
 
     /**
