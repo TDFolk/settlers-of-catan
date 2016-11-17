@@ -28,6 +28,6 @@ public class OfferTradeCommand extends Command {
      */
     @Override
     public JsonElement execute() {
-        return super.execute();
+        return null;
     }
 }

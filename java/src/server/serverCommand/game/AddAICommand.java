@@ -24,6 +24,6 @@ public class AddAICommand extends Command {
      */
     @Override
     public JsonElement execute() {
-        return super.execute();
+        return null;
     }
 }
