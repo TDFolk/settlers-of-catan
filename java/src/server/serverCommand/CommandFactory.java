@@ -28,9 +28,9 @@ public class CommandFactory {
 
         switch (command_request) {
             case "login":
-                return new LoginCommand(exchange, "", "");
+                return new LoginCommand(exchange);
             case "register":
-                return new RegisterCommand(exchange, "", "");
+                return new RegisterCommand(exchange);
             case "list":
                 return new ListCommand(exchange);
             case "create":

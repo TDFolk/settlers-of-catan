@@ -12,10 +12,8 @@ public class LoginCommand extends Command {
     private String username;
     private String password;
 
-    public LoginCommand(HttpExchange httpExchange, String username, String password) {
+    public LoginCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        this.username = username;
-        this.password = password;
     }
 
     @Override
