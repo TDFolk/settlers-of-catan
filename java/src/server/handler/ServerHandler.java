@@ -1,9 +1,11 @@
 package server.handler;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import server.serverCommand.Command;
+import server.serverCommand.CommandFactory;
 
 import java.io.IOException;
 import java.net.HttpURLConnection;
@@ -41,6 +43,20 @@ public class ServerHandler implements HttpHandler {
                     throw new Exception("Invalid Request");
                 }
                 JsonElement response = command.execute();
+                if(response.getClass() == JsonPrimitive.class) {
+                    httpExchange.getResponseHeaders().add("Content-Type", "application/text");
+                }
+                else {
+                    httpExchange.getResponseHeaders().add("Content-Type", "application/text");
+                }
+                String foo = response.toString();
+                if(foo.equals("\"Success\"")) {
+                    foo = "Success";
+                }
+                httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, foo.length());
+                httpExchange.getResponseBody().write(foo.getBytes());
+                httpExchange.getResponseBody().close();
+                httpExchange.close();
 
             }
             catch(Exception e) {
@@ -62,7 +78,5 @@ public class ServerHandler implements HttpHandler {
     public void setLogger(Logger logger){
         this.logger = logger;
     }
-
-
-
+    
 }
