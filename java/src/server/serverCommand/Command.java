@@ -1,5 +1,6 @@
 package server.serverCommand;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.sun.net.httpserver.Headers;
@@ -28,8 +29,9 @@ public abstract class Command implements Serializable{
     protected boolean hasUserCookie = false;
     protected boolean hasGameCookie = false;
 
-    public static IServer serverFacade;
+    public Gson gson = new Gson();
 
+    public static IServer serverFacade;
     public static void setServer(IServer server)
     {
         serverFacade = server;
