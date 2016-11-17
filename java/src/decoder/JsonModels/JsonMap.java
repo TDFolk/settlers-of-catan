@@ -12,6 +12,36 @@ public class JsonMap {
     private JsonPiece ports[];
     private JsonRobber robber;
 
+    public JsonMap()
+    {
+        //TODO finish this......
+
+        this.radius = 3;
+
+        this.robber = new JsonRobber(0, -2);
+    }
+
+    //
+    private JsonPiece[] defaultPorts()
+    {
+        int NUMBER_OF_PORTS = 9;
+        JsonPiece[] ports = new JsonPiece[NUMBER_OF_PORTS];
+
+        //NOT FINISHED. NEEDS TO SET EACH PORT SPECIFICALLY...
+        ports[0] = new JsonPiece();
+        ports[1] = new JsonPiece();
+        ports[2] = new JsonPiece();
+        ports[3] = new JsonPiece();
+        ports[4] = new JsonPiece();
+        ports[5] = new JsonPiece();
+        ports[6] = new JsonPiece();
+        ports[7] = new JsonPiece();
+        ports[8] = new JsonPiece();
+
+        return ports;
+
+    }
+
     public JsonPiece[] getRoads() {
         return roads;
     }

@@ -9,6 +9,13 @@ public class JsonLocation {
     private int y;
     private String direction;
 
+    public JsonLocation(int x, int y, String direction)
+    {
+        this.x = x;
+        this.y = y;
+        this.direction = direction;
+    }
+
     public String getDirection() {
         return direction;
     }

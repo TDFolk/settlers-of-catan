@@ -21,6 +21,21 @@ public class ServerGameModel {
     private int version;
     private int gameID;
 
+    public ServerGameModel(int gameID)
+    {
+        this.deck = new JsonDeck(2, 2, 14, 2, 5);
+
+        //Default Map not being done implemented.....
+        this.map = new JsonMap();
+
+        this.chat = new JsonLog();
+        this.log = new JsonLog();
+        this.bank = new JsonBank(24, 24, 24, 24, 24);
+        this.winner = -1;
+        this.version = 0;
+        this.gameID = gameID;
+    }
+
     public int getGameID() {
         return gameID;
     }

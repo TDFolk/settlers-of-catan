@@ -91,7 +91,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public GameCreateObjectResult gameCreate(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String gameName) {
-        return null;
+        return ServerModelFacade.getInstance().gameCreate(randomTiles, randomNumbers, randomPorts, gameName);
     }
 
     /**

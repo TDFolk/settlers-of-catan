@@ -11,6 +11,15 @@ public class JsonBank {
     private int wheat;
     private int ore;
 
+    public JsonBank(int brick, int wood, int sheep, int wheat, int ore)
+    {
+        this.brick = brick;
+        this.wood = wood;
+        this.sheep = sheep;
+        this.wheat = wheat;
+        this.ore = ore;
+    }
+
     public int getBrick() {
         return brick;
     }

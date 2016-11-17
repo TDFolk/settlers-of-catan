@@ -44,6 +44,16 @@ public class JsonDeck {
         this.monument = monument;
     }
 
+    public JsonDeck(int yearOfPlenty, int monopoly, int soldier, int roadBuilding, int monument)
+    {
+        this.yearOfPlenty = yearOfPlenty;
+        this.monopoly = monopoly;
+        this.soldier = soldier;
+        this.roadBuilding = roadBuilding;
+        this.monument = monument;
+
+    }
+
     private int yearOfPlenty;
     private int monopoly;
     private int soldier;

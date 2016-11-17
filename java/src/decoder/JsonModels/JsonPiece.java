@@ -11,6 +11,16 @@ public class JsonPiece {
     private String direction;
     private JsonLocation location;
 
+    public JsonPiece(){};
+
+    public JsonPiece(String resource, int ratio, int owner, String direction, JsonLocation location)
+    {
+        this.resource = resource;
+        this.ratio = ratio;
+        this.owner = owner;
+        this.direction = direction;
+        this.location = location;
+    }
 
     public String getDirection() {
         return direction;
