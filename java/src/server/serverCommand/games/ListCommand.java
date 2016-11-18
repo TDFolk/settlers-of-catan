@@ -5,8 +5,10 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 import command.game.GameListHolder;
+import server.ServerFacade;
 import server.ServerProxy;
 import server.serverCommand.Command;
+import server.serverModel.ServerModelFacade;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -28,7 +30,7 @@ public class ListCommand extends Command {
      */
     @Override
     public JsonElement execute() {
-        GameListHolder gameListHolder = ServerProxy.getServer().gameList();
+        GameListHolder gameListHolder = ServerFacade.getInstance().gameList();
         return new JsonPrimitive(gson.toJson(gameListHolder));
     }
 }
