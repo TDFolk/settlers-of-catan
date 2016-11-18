@@ -18,3 +18,4 @@ java/dist/catan-client.jar
 *.jar
 java/dist/log.txt, false.lck
 java/dist/log.txt, false
+java/log.txt, false
