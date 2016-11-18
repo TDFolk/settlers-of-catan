@@ -38,6 +38,8 @@ public class CreateCommand extends Command {
      */
     @Override
     public JsonElement execute() {
+        gameCreateObject = gson.fromJson(json, GameCreateObject.class);
+
 
 
         return null;
