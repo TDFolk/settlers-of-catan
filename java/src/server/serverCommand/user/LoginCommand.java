@@ -59,7 +59,7 @@ public class LoginCommand extends Command {
             }
             else {
                 System.out.println("Internal Server Error");
-                //throw new Exception();
+                throw new Exception();
             }
         }
         catch (Exception e){
