@@ -1,33 +1,24 @@
 package server.serverCommand.games;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
 import command.game.GameCreateObject;
 import command.game.GameCreateObjectResult;
+import server.ServerFacade;
 import server.serverCommand.Command;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class CreateCommand extends Command {
-	
-	private boolean randomTiles;
-	private boolean randomNumbers;
-	private boolean randomPorts;
-	private String gameName;
 
     private GameCreateObject gameCreateObject;
 
     public CreateCommand(HttpExchange httpExchange) {
         super(httpExchange);
-
-
-
-
-
-
-
+        gameCreateObject = gson.fromJson(json, GameCreateObject.class);
 
     }
 
@@ -38,10 +29,7 @@ public class CreateCommand extends Command {
      */
     @Override
     public JsonElement execute() {
-        gameCreateObject = gson.fromJson(json, GameCreateObject.class);
-
-
-
-        return null;
+        GameCreateObjectResult gameCreateObjectResult = ServerFacade.getInstance().gameCreate(gameCreateObject.isRandomTiles(), gameCreateObject.isRandomNumbers(), gameCreateObject.isRandomPorts(), gameCreateObject.getName());
+        return new JsonPrimitive(gson.toJson(gameCreateObjectResult));
     }
 }
