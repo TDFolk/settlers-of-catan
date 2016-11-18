@@ -55,8 +55,10 @@ public class RegisterCommand extends Command {
             boolean response = ServerFacade.getInstance().userRegister(username, password);
             if(response){
                 //do something here
+				int id = ServerFacade.getInstance().getUserID(username);
+                String encodedCookie = getLoginCookie(username, password, Integer.toString(id));
+                exchange.getResponseHeaders().add("Set-cookie", encodedCookie);
                 return new JsonPrimitive("Success");
-
             }
             else {
                 System.out.println("Internal Server Error");
