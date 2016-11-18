@@ -24,10 +24,7 @@ public class ServerGameModel {
     public ServerGameModel(int gameID)
     {
         this.deck = new JsonDeck(2, 2, 14, 2, 5);
-
-        //Default Map not being done implemented.....
         this.map = new JsonMap();
-
         this.chat = new JsonLog();
         this.log = new JsonLog();
         this.bank = new JsonBank(24, 24, 24, 24, 24);

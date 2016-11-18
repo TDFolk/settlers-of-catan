@@ -8,6 +8,18 @@ public class JsonHex {
     private JsonLocation location;
     private int number;
 
+    public JsonHex(JsonLocation location)
+    {
+        this.location = location;
+    }
+
+    public JsonHex(String resource, JsonLocation location, int number)
+    {
+        this.resource = resource;
+        this.location = location;
+        this.number = number;
+    }
+
     public int getNumber() {
         return number;
     }

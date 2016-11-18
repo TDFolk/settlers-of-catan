@@ -7,7 +7,7 @@ public class JsonPiece {
 
     private String resource;
     private int ratio;
-    private int owner;
+    private int owner = -1;
     private String direction;
     private JsonLocation location;
 
