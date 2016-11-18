@@ -22,42 +22,41 @@ public class LoginCommand extends Command {
 
     public LoginCommand(HttpExchange httpExchange) throws IOException {
         super(httpExchange);
-        
-        InputStreamReader isr =  new InputStreamReader(httpExchange.getRequestBody(),"utf-8");
-    	BufferedReader br = new BufferedReader(isr);
 
-    	// From now on, the right way of moving from bytes to utf-8 characters:
+        InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+        BufferedReader br = new BufferedReader(isr);
 
-    	int b;
-    	StringBuilder buf = new StringBuilder();
-    	while ((b = br.read()) != -1) {
-    	    buf.append((char) b);
-    	}
+        // From now on, the right way of moving from bytes to utf-8 characters:
 
-    	br.close();
-    	isr.close();
-    	
-    	String[] args = buf.toString().split(",");
-    	username = args[0].split(":")[1].substring(1);
-    	username = username.substring(0, username.indexOf("\""));
-    	password = args[1].split(":")[1].substring(1);
-    	password = password.substring(0, password.indexOf("\""));
-    	
-    	System.out.println("USERNAME: " + username);
-    	System.out.println("PASSWORD: " + password);
+        int b;
+        StringBuilder buf = new StringBuilder();
+        while ((b = br.read()) != -1) {
+            buf.append((char) b);
+        }
+
+        br.close();
+        isr.close();
+
+        String[] args = buf.toString().split(",");
+        username = args[0].split(":")[1].substring(1);
+        username = username.substring(0, username.indexOf("\""));
+        password = args[1].split(":")[1].substring(1);
+        password = password.substring(0, password.indexOf("\""));
+
+        System.out.println("USERNAME: " + username);
+        System.out.println("PASSWORD: " + password);
     }
 
     @Override
-    public JsonElement execute() throws Exception{
+    public JsonElement execute() throws Exception {
 
         boolean response = ServerModelFacade.getInstance().userLogin(username, password);
-        if(response){
+        if (response) {
             //do something here
             ServerProxy.getServer().userLogin(username, password);
             return new JsonPrimitive("Success");
 
-        }
-        else {
+        } else {
             System.out.println("Internal Server Error");
             throw new Exception();
         }
