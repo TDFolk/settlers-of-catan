@@ -49,8 +49,8 @@ public class RegisterCommand extends Command {
     }
 
     @Override
-    public JsonElement execute() {
-        try {
+    public JsonElement execute() throws Exception{
+
             boolean response = ServerModelFacade.getInstance().userRegister(username, password);
             if(response){
                 //do something here
@@ -60,12 +60,8 @@ public class RegisterCommand extends Command {
             }
             else {
                 System.out.println("Internal Server Error");
-                //throw new Exception();
+                throw new Exception();
             }
-        }
-        catch (Exception e){
-            e.printStackTrace();
-        }
-        return null;
+
     }
 }

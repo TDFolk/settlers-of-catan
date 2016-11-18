@@ -48,23 +48,19 @@ public class LoginCommand extends Command {
     }
 
     @Override
-    public JsonElement execute() {
-    	try {
-            boolean response = ServerModelFacade.getInstance().userLogin(username, password);
-            if(response){
-                //do something here
-                ServerProxy.getServer().userLogin(username, password);
-                return new JsonPrimitive("Success");
+    public JsonElement execute() throws Exception{
 
-            }
-            else {
-                System.out.println("Internal Server Error");
-                //throw new Exception();
-            }
+        boolean response = ServerModelFacade.getInstance().userLogin(username, password);
+        if(response){
+            //do something here
+            ServerProxy.getServer().userLogin(username, password);
+            return new JsonPrimitive("Success");
+
         }
-        catch (Exception e){
-            e.printStackTrace();
+        else {
+            System.out.println("Internal Server Error");
+            throw new Exception();
         }
-        return null;
+
     }
 }
