@@ -32,6 +32,12 @@ public class ModelCommand extends Command {
     @Override
     public JsonElement execute() {
         String response = ServerFacade.getInstance().gameModelVersion(versionNumber);
-        return new JsonPrimitive(gson.toJson(response, ServerGameModel.class));
+        if(response == null){
+            return new JsonPrimitive("Invalid");
+        }
+        else {
+
+            return new JsonPrimitive(gson.toJson(response, ServerGameModel.class));
+        }
     }
 }

@@ -30,7 +30,7 @@ public class JoinCommand extends Command {
 
         boolean response = ServerFacade.getInstance().gameJoin(gameJoinObject.getId(), gameJoinObject.getColor());
         if(response){
-            if(hasUserCookie){
+            if(super.hasUserCookie){
                 String encodedCookie = getJoinGameCookie(Integer.toString(gameJoinObject.getId()));
                 exchange.getResponseHeaders().add("Set-cookie", encodedCookie);
                 super.gameId = gameJoinObject.getId();

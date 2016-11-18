@@ -30,7 +30,7 @@ public class CreateCommand extends Command {
     @Override
     public JsonElement execute() throws Exception{
         GameCreateObjectResult gameCreateObjectResult = ServerFacade.getInstance().gameCreate(gameCreateObject.isRandomTiles(), gameCreateObject.isRandomNumbers(), gameCreateObject.isRandomPorts(), gameCreateObject.getName());
-        if(hasUserCookie){
+        if(super.hasUserCookie){
             return new JsonPrimitive(gson.toJson(gameCreateObjectResult));
         }
         else {
