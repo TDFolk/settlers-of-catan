@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
+import server.ServerFacade;
 import server.ServerProxy;
 import server.serverCommand.Command;
 import server.serverModel.ServerModelFacade;
@@ -51,10 +52,9 @@ public class RegisterCommand extends Command {
     @Override
     public JsonElement execute() throws Exception{
 
-            boolean response = ServerModelFacade.getInstance().userRegister(username, password);
+            boolean response = ServerFacade.getInstance().userRegister(username, password);
             if(response){
                 //do something here
-                ServerProxy.getServer().userRegister(username, password);
                 return new JsonPrimitive("Success");
 
             }

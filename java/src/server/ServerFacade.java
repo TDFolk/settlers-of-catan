@@ -74,7 +74,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public GameListHolder gameList() {
-        return null;
+        return ServerModelFacade.getInstance().gameList();
     }
 
     /**

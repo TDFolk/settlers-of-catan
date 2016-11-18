@@ -16,6 +16,7 @@ public class JsonMap {
     {
         //TODO finish this......
 
+
         this.radius = 3;
 
         this.robber = new JsonRobber(0, -2);

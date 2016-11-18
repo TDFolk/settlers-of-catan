@@ -8,6 +8,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
+import server.ServerFacade;
 import server.ServerProxy;
 import server.serverCommand.Command;
 import server.serverModel.ServerModelFacade;
@@ -50,10 +51,9 @@ public class LoginCommand extends Command {
     @Override
     public JsonElement execute() throws Exception{
 
-        boolean response = ServerModelFacade.getInstance().userLogin(username, password);
+        boolean response = ServerFacade.getInstance().userLogin(username, password);
         if(response){
             //do something here
-            ServerProxy.getServer().userLogin(username, password);
             return new JsonPrimitive("Success");
 
         }

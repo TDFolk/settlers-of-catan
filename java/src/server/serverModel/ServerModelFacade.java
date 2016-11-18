@@ -1,6 +1,7 @@
 package server.serverModel;
 
 import command.game.GameCreateObjectResult;
+import command.game.GameListHolder;
 
 /**
  * Created by bvanc on 11/7/2016.
@@ -146,4 +147,9 @@ public class ServerModelFacade {
 
     }
 
+    public GameListHolder gameList() {
+
+        return ServerModel.getInstance().gameList();
+
+    }
 }

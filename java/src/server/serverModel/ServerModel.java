@@ -1,6 +1,7 @@
 package server.serverModel;
 
 import command.game.GameCreateObjectResult;
+import command.game.GameListHolder;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -167,4 +168,10 @@ public class ServerModel {
     }
 
 
+    public GameListHolder gameList() {
+
+        //TODO IMPLEMENT THIS METHOD
+        return new GameListHolder();
+
+    }
 }
