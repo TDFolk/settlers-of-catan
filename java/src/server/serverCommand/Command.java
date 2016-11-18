@@ -121,7 +121,7 @@ public abstract class Command implements Serializable{
     /**
      * override this
      */
-    public abstract JsonElement execute();
+    public abstract JsonElement execute() throws Exception;
 
     //parse the freaking cookie
     private void parseCookie(String cookie) throws UnsupportedEncodingException{
