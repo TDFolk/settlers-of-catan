@@ -9,6 +9,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
+import server.ServerProxy;
 import server.serverCommand.Command;
 import server.serverModel.ServerModelFacade;
 
@@ -53,18 +54,18 @@ public class RegisterCommand extends Command {
             boolean response = ServerModelFacade.getInstance().userRegister(username, password);
             if(response){
                 //do something here
-                if(exchange == null){
-                    //do something else
-                }
+                ServerProxy.getServer().userRegister(username, password);
+                return new JsonPrimitive("Success");
+
             }
             else {
                 System.out.println("Internal Server Error");
-                throw new Exception();
+                //throw new Exception();
             }
         }
         catch (Exception e){
             e.printStackTrace();
         }
-        return new JsonPrimitive("Success");
+        return null;
     }
 }
