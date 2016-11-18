@@ -58,6 +58,7 @@ public class RegisterCommand extends Command {
 				int id = ServerFacade.getInstance().getUserID(username);
                 String encodedCookie = getLoginCookie(username, password, Integer.toString(id));
                 exchange.getResponseHeaders().add("Set-cookie", encodedCookie);
+				super.hasUserCookie = true;
                 return new JsonPrimitive("Success");
             }
             else {

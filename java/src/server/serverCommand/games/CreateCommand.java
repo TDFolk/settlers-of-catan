@@ -28,8 +28,14 @@ public class CreateCommand extends Command {
      * @return returns a json element from the given jsonString
      */
     @Override
-    public JsonElement execute() {
+    public JsonElement execute() throws Exception{
         GameCreateObjectResult gameCreateObjectResult = ServerFacade.getInstance().gameCreate(gameCreateObject.isRandomTiles(), gameCreateObject.isRandomNumbers(), gameCreateObject.isRandomPorts(), gameCreateObject.getName());
-        return new JsonPrimitive(gson.toJson(gameCreateObjectResult));
+        if(hasUserCookie){
+            return new JsonPrimitive(gson.toJson(gameCreateObjectResult));
+        }
+        else {
+            System.out.println("Need a user cookie before calling this command");
+            throw new Exception();
+        }
     }
 }

@@ -63,6 +63,7 @@ public class LoginCommand extends Command {
             int id = ServerFacade.getInstance().getUserID(loginObject.getUsername());
             String encodedCookie = getLoginCookie(loginObject.getUsername(), loginObject.getPassword(), Integer.toString(id));
             exchange.getResponseHeaders().add("Set-cookie", encodedCookie);
+            super.hasUserCookie = true;
             return new JsonPrimitive("Success");
 
         }
