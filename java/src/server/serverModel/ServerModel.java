@@ -3,10 +3,7 @@ package server.serverModel;
 import command.game.GameCreateObjectResult;
 import command.game.GameListHolder;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.logging.Logger;
 
 /**
@@ -34,7 +31,8 @@ public class ServerModel {
     }
 
     private List<ServerGameModel> games;
-    private Map<String, String> usersNAME_PASS = new HashMap<String, String>();
+    private Map<String, String> usersNAME_PASS = new TreeMap<>();
+    private ArrayList<String> registeredUsers = new ArrayList<>();
     private List<String> loggedInUsers = null;
 
     /**
@@ -83,10 +81,25 @@ public class ServerModel {
         {
             //if not registered, add to list
             usersNAME_PASS.put(userName, password);
+            registeredUsers.add(userName);
             return true;
         }
 
         return false;
+    }
+
+    public int getUserID(String userName)
+    {
+        for(int i = 0; i < registeredUsers.size(); i++)
+        {
+            if(registeredUsers.get(i).equals(userName))
+            {
+                return i;
+            }
+        }
+
+        return -1;
+
     }
 
     public GameCreateObjectResult gameCreate(boolean randomTiles,

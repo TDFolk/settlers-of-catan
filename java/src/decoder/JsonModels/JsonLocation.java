@@ -16,6 +16,12 @@ public class JsonLocation {
         this.direction = direction;
     }
 
+    public JsonLocation(int x, int y)
+    {
+        this.x = x;
+        this.y = y;
+    }
+
     public String getDirection() {
         return direction;
     }

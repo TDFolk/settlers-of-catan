@@ -423,4 +423,9 @@ public class ServerFacade implements IServer {
     public String monument(int playerIndex) {
         return null;
     }
+
+    public int getUserID(String userName)
+    {
+        return ServerModelFacade.getInstance().getUserID(userName);
+    }
 }

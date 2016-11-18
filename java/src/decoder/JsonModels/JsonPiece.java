@@ -13,11 +13,10 @@ public class JsonPiece {
 
     public JsonPiece(){};
 
-    public JsonPiece(String resource, int ratio, int owner, String direction, JsonLocation location)
+    public JsonPiece(String resource, int ratio, String direction, JsonLocation location)
     {
         this.resource = resource;
         this.ratio = ratio;
-        this.owner = owner;
         this.direction = direction;
         this.location = location;
     }

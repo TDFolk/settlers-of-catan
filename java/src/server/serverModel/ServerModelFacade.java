@@ -152,4 +152,10 @@ public class ServerModelFacade {
         return ServerModel.getInstance().gameList();
 
     }
+
+    public int getUserID(String userName) {
+
+        return ServerModel.getInstance().getUserID(userName);
+
+    }
 }
