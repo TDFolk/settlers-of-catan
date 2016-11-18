@@ -1,28 +1,37 @@
 package server.serverCommand.game;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
+import server.ServerFacade;
 import server.serverCommand.Command;
+import server.serverModel.ServerGameModel;
 
 /**
  * Created by jihoon on 11/7/2016.
  */
 public class ModelCommand extends Command {
 	
-	private int versionNumber;
+	private int versionNumber = 0;
 
     public ModelCommand(HttpExchange httpExchange) {
         super(httpExchange);
+
+        String url = exchange.getRequestURI().toString();
+        String[] split = url.split("/");
+        String model = split[split.length - 1];
+        String[] split2 = model.split("=");
+        versionNumber = Integer.parseInt(split2[split2.length -1]);
     }
 
     /**
      * This method will handle executing the commands
      *
-     * @param json jsonString that will populate the JsonElement
      * @return returns a json element from the given jsonString
      */
     @Override
     public JsonElement execute() {
-        return null;
+        String response = ServerFacade.getInstance().gameModelVersion(versionNumber);
+        return new JsonPrimitive(gson.toJson(response, ServerGameModel.class));
     }
 }
