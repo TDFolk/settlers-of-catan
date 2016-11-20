@@ -1,9 +1,15 @@
 package server.serverCommand.moves;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
+import command.player.BuildCityObject;
+import server.ServerFacade;
 import server.serverCommand.Command;
+import server.serverModel.ServerGameModel;
 import shared.locations.VertexLocation;
 
 /**
@@ -11,11 +17,23 @@ import shared.locations.VertexLocation;
  */
 public class BuildCityCommand extends Command {
 	
-	private int playerIndex;
-	private VertexLocation vertexLocation;
+	private BuildCityObject buildCityObject;
+    private int playerIndex;
+    private VertexLocation vertexLocation;
 
     public BuildCityCommand(HttpExchange httpExchange) {
         super(httpExchange);
+        // In order to create the object it will need to have the proper json from getRequestBody().toString();
+        // Do we need to check for cookies here?
+        buildCityObject = gson.fromJson(json, BuildCityObject.class);
+
+        // Not sure if this is any different from above...
+        // If it is then we can do the others like this
+        /*
+        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+        playerIndex = jsonObject.get("playerIndex").getAsInt();
+        vertexLocation = fetchVertexLocation(jsonObject.get("vertexLocation").getAsJsonObject());
+        */
     }
 
     /**
@@ -25,6 +43,20 @@ public class BuildCityCommand extends Command {
      */
     @Override
     public JsonElement execute() {
-        return null;
+        if(super.hasGameCookie && super.hasUserCookie){
+            String response = ServerFacade.getInstance().buildCity(buildCityObject.getPlayerIndex(), buildCityObject.getVertexLocation());
+            // The second way from above
+            //String response = ServerFacade.getInstance().buildCity(playerIndex, vertexLocation);
+            if(response == null){
+                return new JsonPrimitive("Invalid");
+            }
+            else {
+                // Returns the client model JSON (identical to /game/model)
+                return new JsonPrimitive(gson.toJson(response, ServerGameModel.class));
+            }
+        }
+        else {
+            return new JsonPrimitive("catan.game and/or catan.user cookies are missing");
+        }
     }
 }

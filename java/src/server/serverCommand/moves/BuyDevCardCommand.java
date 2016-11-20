@@ -1,8 +1,12 @@
 package server.serverCommand.moves;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
+import command.player.BuyDevCardObject;
+import server.ServerFacade;
 import server.serverCommand.Command;
+import server.serverModel.ServerGameModel;
 
 /**
  * Created by jihoon on 11/7/2016.
@@ -10,9 +14,11 @@ import server.serverCommand.Command;
 public class BuyDevCardCommand extends Command {
 	
 	private int playerIndex;
+    private BuyDevCardObject buyDevCardObject;
 
     public BuyDevCardCommand(HttpExchange httpExchange) {
         super(httpExchange);
+        buyDevCardObject = gson.fromJson(json, BuyDevCardObject.class);
     }
 
     /**
@@ -23,6 +29,19 @@ public class BuyDevCardCommand extends Command {
      */
     @Override
     public JsonElement execute() {
-        return null;
+        if(super.hasGameCookie && super.hasUserCookie){
+            String response = ServerFacade.getInstance().buyDevCard(buyDevCardObject.getPlayerIndex());
+
+            if(response == null){
+                return new JsonPrimitive("Invalid");
+            }
+            else {
+                // Returns the client model JSON (identical to /game/model)
+                return new JsonPrimitive(gson.toJson(response, ServerGameModel.class));
+            }
+        }
+        else {
+            return new JsonPrimitive("catan.game and/or catan.user cookies are missing");
+        }
     }
 }
