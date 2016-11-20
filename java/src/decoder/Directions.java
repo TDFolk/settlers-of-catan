@@ -19,7 +19,7 @@ public enum Directions {
         NORTH_EAST.direction = "NE";
     }
 
-    public String getJavaColor()
+    public String getDirection()
     {
         return direction;
     }

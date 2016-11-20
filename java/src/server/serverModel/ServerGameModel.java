@@ -27,6 +27,7 @@ public class ServerGameModel {
         this.map = new JsonMap();
         this.chat = new JsonLog();
         this.log = new JsonLog();
+        this.players = new JsonPlayer[0];
         this.bank = new JsonBank(24, 24, 24, 24, 24);
         this.winner = -1;
         this.version = 0;

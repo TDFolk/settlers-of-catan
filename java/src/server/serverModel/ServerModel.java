@@ -128,11 +128,6 @@ public class ServerModel {
 
     }
 
-    /**
-     * Returns a list of all the current games running on the server
-     * @return Json string of each game Id, ane of , and list of players within
-     */
-    public String listGames(){return listGamesJSON();}
 
     private String listGamesJSON() {
 
@@ -184,7 +179,9 @@ public class ServerModel {
     public GameListHolder gameList() {
 
         //TODO IMPLEMENT THIS METHOD
-        return new GameListHolder();
+        GameListHolder gameList;
+
+        return null;
 
     }
 }

@@ -2,6 +2,7 @@ package decoder.JsonModels;
 
 import decoder.Directions;
 
+
 /**
  * Created by bvanc on 9/30/2016.
  */
@@ -17,8 +18,11 @@ public class JsonMap {
 
     public JsonMap()
     {
-        hexes = defaultHexes();
 
+        hexes = defaultHexes();
+        roads = new JsonPiece[0];
+        cities = new JsonPiece[0];
+        settlements = new JsonPiece[0];
         ports = defaultPorts();
 
         this.radius = 3;
@@ -32,31 +36,31 @@ public class JsonMap {
         JsonPiece[] ports = new JsonPiece[NUMBER_OF_PORTS];
 
         JsonLocation p0 = new JsonLocation(1, -3);
-        ports[0] = new JsonPiece("ore", 2, Directions.SOUTH.toString(), p0);
+        ports[0] = new JsonPiece("ore", 2, Directions.SOUTH.getDirection(), p0);
 
         JsonLocation p1 = new JsonLocation(2, 1);
-        ports[1] = new JsonPiece(null, 3, Directions.NORTH_WEST.toString(), p1);
+        ports[1] = new JsonPiece(null, 3, Directions.NORTH_WEST.getDirection(), p1);
 
         JsonLocation p2 = new JsonLocation(-2, 3);
-        ports[2] = new JsonPiece("brick", 2, Directions.NORTH_EAST.toString(), p2);
+        ports[2] = new JsonPiece("brick", 2, Directions.NORTH_EAST.getDirection(), p2);
 
         JsonLocation p3 = new JsonLocation(0, 3);
-        ports[3] = new JsonPiece(null, 3, Directions.NORTH.toString(), p3);
+        ports[3] = new JsonPiece(null, 3, Directions.NORTH.getDirection(), p3);
 
         JsonLocation p4 = new JsonLocation(-3, 2);
-        ports[4] = new JsonPiece("wood", 2, Directions.NORTH_EAST.toString(), p4);
+        ports[4] = new JsonPiece("wood", 2, Directions.NORTH_EAST.getDirection(), p4);
 
         JsonLocation p5 = new JsonLocation(-3, 0);
-        ports[5] = new JsonPiece(null, 3, Directions.SOUTH_EAST.toString(), p5);
+        ports[5] = new JsonPiece(null, 3, Directions.SOUTH_EAST.getDirection(), p5);
 
         JsonLocation p6 = new JsonLocation(3, -1);
-        ports[6] = new JsonPiece("sheep", 2, Directions.NORTH_WEST.toString(), p6);
+        ports[6] = new JsonPiece("sheep", 2, Directions.NORTH_WEST.getDirection(), p6);
 
         JsonLocation p7 = new JsonLocation(-1, -2);
-        ports[7] = new JsonPiece("wheat", 2, Directions.SOUTH.toString(), p7);
+        ports[7] = new JsonPiece("wheat", 2, Directions.SOUTH.getDirection(), p7);
 
         JsonLocation p8 = new JsonLocation(3, -3);
-        ports[8] = new JsonPiece(null, 3, Directions.SOUTH_WEST.toString(), p8);
+        ports[8] = new JsonPiece(null, 3, Directions.SOUTH_WEST.getDirection(), p8);
 
         return ports;
 
