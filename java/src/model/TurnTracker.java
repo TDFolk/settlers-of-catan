@@ -10,10 +10,10 @@ public class TurnTracker {
 	/**
 	 * The turn order of the players in the game
 	 */
-	private int currentTurn = 0;
-	private int longestRoad = -1;
-	private int largestArmy = -1;
-	private String status = "FirstRound";
+	private int currentTurn;
+	private int longestRoad;
+	private int largestArmy;
+	private String status;
 
 	/**
 	 * Constructs a new TurnTracker with no players
