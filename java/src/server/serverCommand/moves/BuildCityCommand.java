@@ -48,7 +48,7 @@ public class BuildCityCommand extends Command {
         if(super.hasGameCookie && super.hasUserCookie){
 
             JsonMap jsonMap = ServerModel.getInstance().getGame(super.gameId).getMap();
-            ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(jsonMap.getCities(), new JsonPiece(null, 0, buildCityObject.getVertexLocation().getDir().toString(),
+            jsonMap.addToArray(jsonMap.getCities(), new JsonPiece(null, 0, buildCityObject.getVertexLocation().getDir().toString(),
                     new JsonLocation(buildCityObject.getVertexLocation().getHexLoc().getX(), buildCityObject.getVertexLocation().getHexLoc().getY())));
 
             ServerModel.getInstance().getGame(super.gameId).incrementVersion();
