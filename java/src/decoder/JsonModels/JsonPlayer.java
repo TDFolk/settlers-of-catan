@@ -21,6 +21,26 @@ public class JsonPlayer {
     private String name;
     private String color;
 
+    public JsonPlayer(String color, String name, int id, int index){
+        this.resources = new JsonResource(0, 0, 0, 0, 0);
+        this.oldDevCards = new JsonDevCard(0, 0, 0, 0, 0);
+        this.newDevCards = new JsonDevCard(0, 0, 0, 0, 0);
+        this.roads = 15;
+        this.cities = 4;
+        this.settlements = 5;
+        this.soldiers = 0;
+        this.victoryPoints = 0;
+        this.monuments = 0;
+        this.playedDevCard = false;
+        this.discarded = false;
+        this.playerID = id;
+        this.playerIndex = index;
+        this.name = name;
+        this.color = color;
+
+
+    }
+
     public JsonResource getResources() {
         return resources;
     }
