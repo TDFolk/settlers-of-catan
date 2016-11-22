@@ -184,7 +184,7 @@ public class ServerGameModel {
         }
 
         JsonPiece roadPiece = new JsonPiece(null, 0, direction, new JsonLocation(roadLocation.getHexLoc().getX(), roadLocation.getHexLoc().getY()));
-        map.addToArray(map.getRoads(), roadPiece);
+        //map.addToArray(map.getRoads(), roadPiece);
 
         return getJsonFromModel();
     }
