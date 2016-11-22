@@ -49,4 +49,5 @@ public class JsonTurnTracker {
     public void setLargestArmy(int largestArmy) {
         this.largestArmy = largestArmy;
     }
+
 }

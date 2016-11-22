@@ -5,9 +5,11 @@ import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
 import command.player.BuildRoadObject;
+import decoder.JsonModels.JsonMap;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
+import server.serverModel.ServerModel;
 import shared.locations.EdgeLocation;
 
 /**
@@ -34,8 +36,12 @@ public class BuildRoadCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            String response = ServerFacade.getInstance().buildRoad(buildRoadObject.getPlayerIndex(),
-                                            buildRoadObject.getRoadLocation(), buildRoadObject.isFree());
+            ServerGameModel game = ServerModel.getInstance().getGame(gameId);
+            String direction = whatDirection(buildRoadObject.getRoadLocation().getDir().toString());
+            JsonMap map = game.getMap();
+            String response = game.buildRoad(buildRoadObject.getPlayerIndex(), buildRoadObject.getRoadLocation(),
+                    buildRoadObject.isFree(), direction, map);
+            game.incrementVersion();
 
             if(response == null){
                 return new JsonPrimitive("Invalid");

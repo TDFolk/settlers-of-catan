@@ -1,9 +1,14 @@
 package server.serverCommand.game;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
+import command.game.GameAddAIObject;
+import server.ServerFacade;
 import server.serverCommand.Command;
+import server.serverModel.ServerGameModel;
+import server.serverModel.ServerModel;
 
 /**
  * Created by jihoon on 11/7/2016.
@@ -11,9 +16,11 @@ import server.serverCommand.Command;
 public class AddAICommand extends Command {
 	
 	private String AIType;
+    private GameAddAIObject gameAddAIObject;
 
     public AddAICommand(HttpExchange httpExchange) {
         super(httpExchange);
+        gameAddAIObject = gson.fromJson(json, GameAddAIObject.class);
     }
 
     /**
@@ -24,6 +31,9 @@ public class AddAICommand extends Command {
      */
     @Override
     public JsonElement execute() {
-        return null;
+        //ServerGameModel game = ServerModel.getInstance().getGame(gameId);
+        //game.addAI();
+        //game.incrementVersion();
+        return new JsonPrimitive("Success");
     }
 }

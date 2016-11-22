@@ -160,4 +160,14 @@ public class JsonPlayer {
     public void setColor(String color) {
         this.color = color;
     }
+
+    public void buyRoad() {
+        resources.setBrick(resources.getBrick() - 1);
+        resources.setWood(resources.getWood() - 1);
+        roads--;
+    }
+
+    public void decrementRoadTotal() {
+        roads--;
+    }
 }

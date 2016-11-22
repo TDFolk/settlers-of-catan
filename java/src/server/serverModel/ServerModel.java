@@ -1,9 +1,6 @@
 package server.serverModel;
 
-import command.game.GameCreateObject;
-import command.game.GameCreateObjectResult;
-import command.game.GameListHolder;
-import command.game.GameListObject;
+import command.game.*;
 import command.player.PlayerObject;
 import decoder.JsonModels.JsonPlayer;
 import shared.definitions.CatanColor;
@@ -357,6 +354,12 @@ public class ServerModel {
             }
         }
         return null;
+    }
+
+    public boolean gameAddAI(String AIType) {
+        GameAddAIObject aiObject = new GameAddAIObject(AIType);
+
+        return true;
     }
 
 }

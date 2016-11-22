@@ -1,6 +1,7 @@
 package server.serverCommand.game;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 import server.serverCommand.Command;
 
@@ -21,6 +22,6 @@ public class ListAICommand extends Command {
      */
     @Override
     public JsonElement execute() {
-        return null;
+        return new JsonPrimitive("LARGEST_ARMY");
     }
 }

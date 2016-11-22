@@ -1,5 +1,6 @@
 package server.serverModel;
 
+import command.game.GameAddAIObject;
 import command.game.GameCreateObjectResult;
 import command.game.GameListHolder;
 
@@ -36,6 +37,10 @@ public class ServerModelFacade {
     public GameCreateObjectResult gameCreate(boolean randomTiles, boolean randomNumbers, boolean randomPorts, String gameName)
     {
         return ServerModel.getInstance().gameCreate(randomTiles, randomNumbers, randomPorts, gameName);
+    }
+
+    public boolean gameAddAI(String AIType) {
+        return ServerModel.getInstance().gameAddAI(AIType);
     }
 
     /**changes the data of the model according to the trade accepted

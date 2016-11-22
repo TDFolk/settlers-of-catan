@@ -1,5 +1,6 @@
 package server;
 
+import command.game.GameAddAIObject;
 import command.game.GameCreateObjectResult;
 import command.game.GameListHolder;
 import command.player.AcceptTradeObject;
@@ -179,7 +180,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public boolean gameAddAI(String AIType) {
-        return false;
+        return ServerModelFacade.getInstance().gameAddAI(AIType);
     }
 
     /**

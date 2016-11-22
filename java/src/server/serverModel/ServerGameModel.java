@@ -2,6 +2,10 @@ package server.serverModel;
 
 import com.google.gson.Gson;
 import decoder.JsonModels.*;
+import model.Facade;
+import model.Game;
+import shared.definitions.CatanColor;
+import shared.locations.EdgeLocation;
 
 /**Server side model of the data for each individual game
  * Created by bvance on 11/4/2016.
@@ -156,6 +160,11 @@ public class ServerGameModel {
      */
     public String acceptTrade(){return getJsonFromModel();}
 
+    public String addAI() {
+        //addPlayer("brown", "Foo", 17);
+        return getJsonFromModel();
+    }
+
     /**changes the data of the model according to the city being built
      *
      * @return the entire model of the game in Json string form
@@ -166,15 +175,25 @@ public class ServerGameModel {
      *
      * @return the entire model of the game in Json string form
      */
-    public String buildRoad(){return getJsonFromModel();}
+    public String buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free, String direction, JsonMap map) {
+        if (!free) {
+            players[playerIndex].buyRoad();
+        }
+        else {
+            players[playerIndex].decrementRoadTotal();
+        }
+
+        JsonPiece roadPiece = new JsonPiece(null, 0, direction, new JsonLocation(roadLocation.getHexLoc().getX(), roadLocation.getHexLoc().getY()));
+        map.addToArray(map.getRoads(), roadPiece);
+
+        return getJsonFromModel();
+    }
 
     /**changes the data of the model according to the settlement being built
      *
      * @return the entire model of the game in Json string form
      */
-    public String buildSettlement(){
-
-        return getJsonFromModel();}
+    public String buildSettlement(){return getJsonFromModel();}
 
     /**changes the data of the model according to the  dev card being built
      *
