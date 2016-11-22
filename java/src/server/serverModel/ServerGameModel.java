@@ -275,4 +275,9 @@ public class ServerGameModel {
         return false;
 
     }
+
+    public void incrementVersion()
+    {
+        this.version++;
+    }
 }
