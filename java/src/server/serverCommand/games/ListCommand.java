@@ -31,6 +31,7 @@ public class ListCommand extends Command {
     @Override
     public JsonElement execute() {
         GameListHolder gameListHolder = ServerFacade.getInstance().gameList();
-        return new JsonPrimitive(gson.toJson(gameListHolder));
+        JsonElement element = new JsonPrimitive(gson.toJson(gameListHolder.getGameListObjects()));
+        return element;
     }
 }

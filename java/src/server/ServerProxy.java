@@ -151,6 +151,11 @@ public class ServerProxy implements IServer {
         try{
             String result = doGetCommand(gameListCommand);
 
+            result = result.replaceAll("\\\\", "");
+            result = result.replaceAll("\"\\[", "[");
+            result = result.replaceAll("\\]\"", "]");
+            result = result.replaceAll("null", "{}");
+
             JsonParser parser = new JsonParser();
             JsonArray resultObject = parser.parse(result).getAsJsonArray();
 
@@ -165,7 +170,7 @@ public class ServerProxy implements IServer {
                     ArrayList<PlayerInfo> players = new ArrayList<>();
                     for (PlayerInfo p : gameInfos[i].getPlayers())
                     {
-                        if(!p.getName().equals(""))//changed from using teh ID to the Index. -1 ID is allowed
+                        if(!p.getName().equals(""))//changed from using the ID to the Index. -1 ID is allowed
                         {
                             players.add(p);
                         }

@@ -1,7 +1,12 @@
 package server.serverModel;
 
+import command.game.GameCreateObject;
 import command.game.GameCreateObjectResult;
 import command.game.GameListHolder;
+import command.game.GameListObject;
+import command.player.PlayerObject;
+import decoder.JsonModels.JsonPlayer;
+import shared.definitions.CatanColor;
 
 import java.util.*;
 import java.util.logging.Logger;
@@ -18,6 +23,24 @@ public class ServerModel {
     private static ServerModel instance = null;
 
     private ServerModel() {
+
+        games = new TreeMap<>();
+
+        String defaultTitle = "DEFAULT GAME, YO!";
+        String defaultTitle2 = "DEFAULT GAME, DAWG!";
+
+        ServerGameModel defaultGame = new ServerGameModel(100);
+        ServerGameModel defaultGame2 = new ServerGameModel(101);
+
+        defaultGame.setPlayers(new JsonPlayer[4]);
+        defaultGame2.setPlayers(new JsonPlayer[4]);
+
+        games.put(defaultTitle, defaultGame);
+        games.put(defaultTitle2, defaultGame2);
+
+
+
+
     }
 
     public static ServerModel getInstance() {
@@ -29,8 +52,8 @@ public class ServerModel {
 
         return instance;
     }
-
-    private List<ServerGameModel> games;
+    private static int game_ID = 0;
+    private Map<String, ServerGameModel> games;
     private Map<String, String> usersNAME_PASS = new TreeMap<>();
     private ArrayList<String> registeredUsers = new ArrayList<>();
     private List<String> loggedInUsers = null;
@@ -107,7 +130,16 @@ public class ServerModel {
                                              boolean randomPorts,
                                              String gameName) {
 
-        return null;
+        GameCreateObjectResult result = new GameCreateObjectResult();
+        result.setId(game_ID);
+        result.setTitle(gameName);
+        result.setPlayers(new PlayerObject[4]);
+
+        ServerGameModel newGame = new ServerGameModel(game_ID);
+        game_ID++;
+        games.put(gameName, newGame);
+
+        return result;
 
     }
 
@@ -155,13 +187,13 @@ public class ServerModel {
 
     public String gameModel(int gameID, int versionNumber)
     {
-        for(ServerGameModel game : games)
+        for(Map.Entry<String, ServerGameModel> game : games.entrySet())
         {
-            if(game.getGameID() == gameID)
+            if(game.getValue().getGameID() == gameID)
             {
-                if(game.getVersion() != versionNumber)
+                if(game.getValue().getVersion() != versionNumber)
                 {
-                    return game.gameModel();
+                    return game.getValue().gameModel();
                 }
                 else
                 {
@@ -176,12 +208,114 @@ public class ServerModel {
     }
 
 
+    /* Json Array
+                [{"title":"Default Game",
+                "id":0,
+                "players":[{"color":"orange","name":"Sam","id":0},
+                    {"color":"blue","name":"Brooke","id":1},
+                    {"color":"red","name":"Pete","id":10},
+                    {"color":"green","name":"Mark","id":11}]},
+
+                 {"title":"AI Game",
+                 "id":1,
+                 "players":[{"color":"orange","name":"Pete","id":10},
+                    {"color":"white","name":"Squall","id":-2},
+                    {"color":"purple","name":"Miguel","id":-3},
+                    {"color":"puce","name":"Ken","id":-4}]},
+
+                 {"title":"Empty Game",
+                 "id":2,
+                 "players":[{"color":"orange","name":"Sam","id":0},
+                    {"color":"blue","name":"Brooke","id":1},
+                    {"color":"red","name":"Pete","id":10},
+                    {"color":"green","name":"Mark","id":11}]},
+                 {"title":"RoblocksSSSS",
+                 "id":3,
+                 "players":[{"color":"blue","name":"aaa","id":12}
+                            ,{},{},{}]}]
+                */
+
     public GameListHolder gameList() {
 
-        //TODO IMPLEMENT THIS METHOD
-        GameListHolder gameList;
+        //Object that holds the list of gameListObjects
+        GameListHolder gameListHold = new GameListHolder();
 
-        return null;
+        ArrayList<GameListObject> gameListObjects = new ArrayList<>();
+
+        for(Map.Entry<String, ServerGameModel> game : games.entrySet()) {
+
+
+            GameListObject gameList = new GameListObject();
+
+            String currentGameTitle = game.getKey();
+            ServerGameModel currentGame = game.getValue();
+
+            int id = currentGame.getGameID();
+
+            JsonPlayer[] players = currentGame.getPlayers();
+
+            gameList.setId(id);
+            gameList.setTitle(currentGameTitle);
+
+            PlayerObject[] playerList = new PlayerObject[4];
+
+            for (int i = 0; i < players.length; i++) {
+
+                PlayerObject player = null;
+
+                if(players[i] != null) {
+                    CatanColor color = null;
+                    switch (players[i].getColor()) {
+                        //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+
+                        case "red":
+                            color = CatanColor.RED;
+                            break;
+                        case "orange":
+                            color = CatanColor.ORANGE;
+                            break;
+                        case "yellow":
+                            color = CatanColor.YELLOW;
+                            break;
+                        case "blue":
+                            color = CatanColor.BLUE;
+                            break;
+                        case "green":
+                            color = CatanColor.GREEN;
+                            break;
+                        case "purple":
+                            color = CatanColor.PURPLE;
+                            break;
+                        case "puce":
+                            color = CatanColor.PUCE;
+                            break;
+                        case "white":
+                            color = CatanColor.WHITE;
+                            break;
+                        case "brown":
+                            color = CatanColor.BROWN;
+                            break;
+                        default:
+                            color = CatanColor.BLUE;
+
+                    }
+
+                    player = new PlayerObject(color, players[i].getName(), players[i].getPlayerID());
+
+                    playerList[i] = player;
+
+                }
+
+                gameList.setPlayers(playerList);
+            }
+
+            gameListObjects.add(gameList);
+
+        }
+
+        gameListHold.setGameListObjects(gameListObjects.toArray(new GameListObject[0]));
+
+        return gameListHold;
 
     }
 }

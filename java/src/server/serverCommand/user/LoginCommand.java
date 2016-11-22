@@ -20,19 +20,20 @@ import server.serverModel.ServerModelFacade;
  */
 public class LoginCommand extends Command {
 
-//    private String username;
-//    private String password;
+    private String username;
+    private String password;
     private LoginObject loginObject;
 
     public LoginCommand(HttpExchange httpExchange) throws IOException {
         super(httpExchange);
         loginObject = gson.fromJson(json, LoginObject.class);
+
         
 //        InputStreamReader isr =  new InputStreamReader(httpExchange.getRequestBody(),"utf-8");
 //    	BufferedReader br = new BufferedReader(isr);
-//
-//    	// From now on, the right way of moving from bytes to utf-8 characters:
-//
+
+    	// From now on, the right way of moving from bytes to utf-8 characters:
+
 //    	int b;
 //    	StringBuilder buf = new StringBuilder();
 //    	while ((b = br.read()) != -1) {
@@ -47,9 +48,12 @@ public class LoginCommand extends Command {
 //    	username = username.substring(0, username.indexOf("\""));
 //    	password = args[1].split(":")[1].substring(1);
 //    	password = password.substring(0, password.indexOf("\""));
-//
-//    	System.out.println("USERNAME: " + username);
-//    	System.out.println("PASSWORD: " + password);
+
+        username = loginObject.getUsername();
+        password = loginObject.getPassword();
+
+        System.out.println("USERNAME: " + username);
+    	System.out.println("PASSWORD: " + password);
     }
 
     @Override
@@ -60,8 +64,8 @@ public class LoginCommand extends Command {
 
         if(response){
             //do something here
-            int id = ServerFacade.getInstance().getUserID(loginObject.getUsername());
-            String encodedCookie = getLoginCookie(loginObject.getUsername(), loginObject.getPassword(), Integer.toString(id));
+            int id = ServerFacade.getInstance().getUserID(username);
+            String encodedCookie = getLoginCookie(username, password, Integer.toString(id));
             exchange.getResponseHeaders().add("Set-cookie", encodedCookie);
             super.hasUserCookie = true;
             return new JsonPrimitive("Success");

@@ -53,6 +53,14 @@ public class ServerHandler implements HttpHandler {
                 if(foo.equals("\"Success\"")) {
                     foo = "Success";
                 }
+
+                foo = foo.replaceAll("\\\\", "");
+                foo = foo.replaceAll("\"\\[", "[");
+                foo = foo.replaceAll("\\]\"", "]");
+                foo = foo.replaceAll("\"\\{", "{");
+                foo = foo.replaceAll("\\}\"", "}");
+                foo = foo.replaceAll("null", "{}");
+
                 httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, foo.length());
                 httpExchange.getResponseBody().write(foo.getBytes());
                 httpExchange.getResponseBody().close();

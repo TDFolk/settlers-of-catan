@@ -8,8 +8,7 @@ import com.sun.net.httpserver.HttpExchange;
 import server.IServer;
 import shared.locations.*;
 
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.List;
@@ -48,7 +47,31 @@ public abstract class Command implements Serializable{
         String foo = exchange.getRequestMethod();
 
         //grab the json
-        json = exchange.getRequestBody().toString();
+        //json = exchange.getRequestBody().toString();
+        try {
+
+            InputStreamReader isr = new InputStreamReader(httpExchange.getRequestBody(), "utf-8");
+            BufferedReader br = new BufferedReader(isr);
+
+            // From now on, the right way of moving from bytes to utf-8 characters:
+
+            int b;
+            StringBuilder buf = new StringBuilder();
+            while ((b = br.read()) != -1) {
+                buf.append((char) b);
+            }
+
+            br.close();
+            isr.close();
+
+            json = buf.toString();
+
+        }catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+
+
 
         Headers headers = exchange.getRequestHeaders();
         List<String> cookies = headers.get("Cookie");
