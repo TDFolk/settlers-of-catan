@@ -34,7 +34,7 @@ public class AcceptTradeCommand extends Command {
                 return new JsonPrimitive("Invalid");
             }
             else {
-                return new JsonPrimitive(gson.toJson(response, ServerGameModel.class));
+                return new JsonPrimitive(response);
             }
         }
         else {

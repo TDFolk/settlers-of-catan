@@ -52,7 +52,7 @@ public class BuildCityCommand extends Command {
             }
             else {
                 // Returns the client model JSON (identical to /game/model)
-                return new JsonPrimitive(gson.toJson(response, ServerGameModel.class));
+                return new JsonPrimitive(response);
             }
         }
         else {

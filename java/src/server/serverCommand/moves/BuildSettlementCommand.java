@@ -15,10 +15,7 @@ import shared.locations.VertexLocation;
  * jihoon on 11/7/2016.
  */
 public class BuildSettlementCommand extends Command {
-	
-	private int playerIndex;
-	private VertexLocation vertexLocation;
-	private boolean free;
+
     private BuildSettlementObject buildSettlementObject;
 
     public BuildSettlementCommand(HttpExchange httpExchange) {
@@ -29,7 +26,6 @@ public class BuildSettlementCommand extends Command {
     /**
      * This method will handle executing the commands
      *
-     * @param json jsonString that will populate the JsonElement
      * @return returns a json element from the given jsonString
      */
     @Override
@@ -43,7 +39,7 @@ public class BuildSettlementCommand extends Command {
             }
             else {
                 // Returns the client model JSON (identical to /game/model)
-                return new JsonPrimitive(gson.toJson(response, ServerGameModel.class));
+                return new JsonPrimitive(response);
             }
         }
         else {
