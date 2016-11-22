@@ -5,9 +5,12 @@ import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
 import command.player.BuildSettlementObject;
+import decoder.JsonModels.JsonLocation;
+import decoder.JsonModels.JsonPiece;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
+import server.serverModel.ServerModel;
 import shared.locations.VertexLocation;
 
 /**
@@ -31,9 +34,19 @@ public class BuildSettlementCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            String response = ServerFacade.getInstance().buildSettlement(buildSettlementObject.getPlayerIndex(),
-                                                    buildSettlementObject.getVertexLocation(),
-                                                    buildSettlementObject.isFree());
+//            String response = ServerFacade.getInstance().buildSettlement(buildSettlementObject.getPlayerIndex(),
+//                                                    buildSettlementObject.getVertexLocation(),
+//                                                    buildSettlementObject.isFree());
+
+            ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
+                    ServerModel.getInstance().getGame(super.gameId).getMap().getSettlements(),
+                    new JsonPiece(null, 0, null, new JsonLocation(buildSettlementObject.getVertexLocation().getHexLoc().getX(),
+                            buildSettlementObject.getVertexLocation().getHexLoc().getY(),
+                            buildSettlementObject.getVertexLocation().getDir().toString())));
+
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
+            String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
+
             if(response == null){
                 return new JsonPrimitive("Invalid");
             }
