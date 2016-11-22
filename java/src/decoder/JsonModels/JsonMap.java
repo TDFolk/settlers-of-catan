@@ -25,7 +25,7 @@ public class JsonMap {
             newArray[i] = arrayToIncrement[i];
         }
 
-        newArray[arrayToIncrement.length - 1] = newPiece;
+        newArray[arrayToIncrement.length] = newPiece;
 
         return newArray;
 
