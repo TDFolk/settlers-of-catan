@@ -31,6 +31,7 @@ public class ServerGameModel {
         this.winner = -1;
         this.version = 0;
         this.gameID = gameID;
+        this.turnTracker = new JsonTurnTracker();
     }
 
     public int getGameID() {

@@ -59,7 +59,16 @@ public class ServerHandler implements HttpHandler {
                 foo = foo.replaceAll("\\]\"", "]");
                 foo = foo.replaceAll("\"\\{", "{");
                 foo = foo.replaceAll("\\}\"", "}");
-                foo = foo.replaceAll("null", "{}");
+                foo = foo.replaceAll("ORANGE", "orange");
+                foo = foo.replaceAll("WHITE", "white");
+                foo = foo.replaceAll("PUCE", "puce");
+                foo = foo.replaceAll("RED", "red");
+                foo = foo.replaceAll("YELLOW", "yellow");
+                foo = foo.replaceAll("BLUE", "blue");
+                foo = foo.replaceAll("GREEN", "green");
+                foo = foo.replaceAll("PURPLE", "purple");
+                foo = foo.replaceAll("BROWN", "brown");
+
 
                 httpExchange.sendResponseHeaders(HttpURLConnection.HTTP_OK, foo.length());
                 httpExchange.getResponseBody().write(foo.getBytes());

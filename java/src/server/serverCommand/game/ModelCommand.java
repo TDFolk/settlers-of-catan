@@ -37,7 +37,7 @@ public class ModelCommand extends Command {
         }
         else {
 
-            return new JsonPrimitive(gson.toJson(response, ServerGameModel.class));
+            return new JsonPrimitive(response);
         }
     }
 }

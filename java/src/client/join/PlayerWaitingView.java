@@ -91,6 +91,8 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		aiPanel.add(aiButtonPanel);
 		
 		aiPanel.add(Box.createRigidArea(new Dimension(0, 10)));
+
+		addAiButton.setEnabled(false);
 		
 		//add the AI panel
 		this.add(aiPanel, BorderLayout.SOUTH);
@@ -122,6 +124,7 @@ public class PlayerWaitingView extends OverlayView implements IPlayerWaitingView
 		else{
 			labelText = ("Waiting for Players: Need " + (NUMBER_OF_PLAYERS-value.length) + " more");
 			addAiButton.setEnabled(true);
+			addAiButton.setEnabled(false);
 		}
 		
 		label.setText(labelText);

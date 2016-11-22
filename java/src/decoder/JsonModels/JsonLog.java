@@ -7,6 +7,11 @@ public class JsonLog {
 
     private JsonLine lines[];
 
+    public JsonLog()
+    {
+        lines = new JsonLine[0];
+    }
+
     public JsonLine[] getLines() {
         return lines;
     }

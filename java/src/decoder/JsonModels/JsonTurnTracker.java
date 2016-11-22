@@ -10,6 +10,14 @@ public class JsonTurnTracker {
     private int longestRoad;
     private int largestArmy;
 
+    public JsonTurnTracker()
+    {
+        this.status = "FirstRound";
+        this.currentTurn = 0;
+        this.longestRoad = -1;
+        this.largestArmy = -1;
+    }
+
     public String getStatus() {
         return status;
     }
