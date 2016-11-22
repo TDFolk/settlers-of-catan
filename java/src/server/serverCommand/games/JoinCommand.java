@@ -34,6 +34,7 @@ public class JoinCommand extends Command {
             if(super.hasUserCookie){
                 String encodedCookie = getJoinGameCookie(Integer.toString(gameJoinObject.getId()));
                 exchange.getResponseHeaders().add("Set-cookie", encodedCookie);
+                //exchange.getResponseHeaders().add("Cookie:", "catan.user=%7B&22" + name + "%22%3A%22" + Sam + "%22%2C%22" + password + "%");
                 super.gameId = gameJoinObject.getId();
                 super.hasGameCookie = true;
                 return new JsonPrimitive("Success");
