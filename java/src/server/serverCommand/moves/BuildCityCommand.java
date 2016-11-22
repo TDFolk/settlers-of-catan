@@ -7,9 +7,13 @@ import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
 import command.player.BuildCityObject;
+import decoder.JsonModels.JsonLocation;
+import decoder.JsonModels.JsonMap;
+import decoder.JsonModels.JsonPiece;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
+import server.serverModel.ServerModel;
 import shared.locations.VertexLocation;
 
 /**
@@ -18,8 +22,6 @@ import shared.locations.VertexLocation;
 public class BuildCityCommand extends Command {
 	
 	private BuildCityObject buildCityObject;
-    private int playerIndex;
-    private VertexLocation vertexLocation;
 
     public BuildCityCommand(HttpExchange httpExchange) {
         super(httpExchange);
@@ -44,7 +46,15 @@ public class BuildCityCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            String response = ServerFacade.getInstance().buildCity(buildCityObject.getPlayerIndex(), buildCityObject.getVertexLocation());
+
+            JsonMap jsonMap = ServerModel.getInstance().getGame(super.gameId).getMap();
+            ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(jsonMap.getCities(), new JsonPiece(null, 0, buildCityObject.getVertexLocation().getDir().toString(),
+                    new JsonLocation(buildCityObject.getVertexLocation().getHexLoc().getX(), buildCityObject.getVertexLocation().getHexLoc().getY())));
+
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
+            String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
+
+            //String response = ServerFacade.getInstance().buildCity(buildCityObject.getPlayerIndex(), buildCityObject.getVertexLocation());
             // The second way from above
             //String response = ServerFacade.getInstance().buildCity(playerIndex, vertexLocation);
             if(response == null){
