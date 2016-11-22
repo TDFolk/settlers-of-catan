@@ -23,6 +23,7 @@ public class BuildSettlementCommand extends Command {
 
     public BuildSettlementCommand(HttpExchange httpExchange) {
         super(httpExchange);
+
         buildSettlementObject = gson.fromJson(json, BuildSettlementObject.class);
     }
 

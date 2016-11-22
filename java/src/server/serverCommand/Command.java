@@ -203,7 +203,7 @@ public abstract class Command implements Serializable{
         this.hasUserCookie = true;
     }
 
-    private String whatDirection(String direction){
+    protected String whatDirection(String direction){
         switch(direction) {
             case "N":
                 return "North";
