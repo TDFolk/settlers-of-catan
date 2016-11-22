@@ -49,7 +49,7 @@ public class BuildCityCommand extends Command {
 
             JsonMap jsonMap = ServerModel.getInstance().getGame(super.gameId).getMap();
             jsonMap.addToArray(jsonMap.getCities(), new JsonPiece(null, 0,
-                    buildCityObject.getVertexLocation().getDir().toString(),
+                    super.getDirection(buildCityObject.getVertexLocation().getDir().toString()),
                     new JsonLocation(buildCityObject.getVertexLocation().getHexLoc().getX(),
                             buildCityObject.getVertexLocation().getHexLoc().getY())));
 

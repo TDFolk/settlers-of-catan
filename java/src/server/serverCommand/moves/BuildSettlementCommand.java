@@ -40,7 +40,8 @@ public class BuildSettlementCommand extends Command {
 
             ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
                     ServerModel.getInstance().getGame(super.gameId).getMap().getSettlements(),
-                    new JsonPiece(null, 0, buildSettlementObject.getVertexLocation().getDir().toString(),
+                    new JsonPiece(null, 0,
+                            super.getDirection(buildSettlementObject.getVertexLocation().getDir().toString()),
                             new JsonLocation(buildSettlementObject.getVertexLocation().getHexLoc().getX(),
                             buildSettlementObject.getVertexLocation().getHexLoc().getY())));
 

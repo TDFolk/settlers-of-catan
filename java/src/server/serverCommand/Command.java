@@ -225,4 +225,42 @@ public abstract class Command implements Serializable{
         return null;
     }
 
+    protected String getDirection(String direction) {
+        String returnString = "";
+        switch (direction) {
+
+            case "North":
+                returnString = "N";
+                break;
+
+            case "West":
+                returnString = "W";
+                break;
+
+            case "South":
+                returnString = "S";
+                break;
+
+            case "East":
+                returnString = "E";
+                break;
+
+            case "NorthEast":
+                returnString = "NE";
+                break;
+
+            case "NorthWest":
+                returnString = "NW";
+                break;
+
+            case "SouthEast":
+                returnString = "SE";
+                break;
+
+            case "SouthWest":
+                returnString = "SW";
+                break;
+        }
+        return returnString;
+    }
 }
