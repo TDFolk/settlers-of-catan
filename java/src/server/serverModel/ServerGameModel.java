@@ -135,7 +135,7 @@ public class ServerGameModel {
      */
     public int calculateLargestArmy(){return 0;}
 
-    private String getJsonFromModel() {
+    public String getJsonFromModel() {
 
         Gson gson = new Gson();
 
