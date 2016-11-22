@@ -147,7 +147,11 @@ public class ServerFacade implements IServer {
      */
     @Override
     public String gameModelVersion(int versionNumber) {
-        return null;
+        return "DONT USE!";
+    }
+
+    public String gameModel(int versionNumber, int gameID) {
+        return ServerModelFacade.getInstance().gameModel(versionNumber, gameID);
     }
 
     /**

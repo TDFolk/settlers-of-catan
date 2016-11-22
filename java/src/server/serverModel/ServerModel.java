@@ -186,7 +186,7 @@ public class ServerModel {
 
     }
 
-    public String gameModel(int gameID, int versionNumber)
+    public String gameModel(int versionNumber, int gameID)
     {
         for(Map.Entry<String, ServerGameModel> game : games.entrySet())
         {

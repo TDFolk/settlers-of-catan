@@ -140,10 +140,10 @@ public class ServerModelFacade {
      */
     public String yearOfPlenty(){return "model";}
 
-    public String gameModel(int gameID, int versionNumber)
+    public String gameModel(int versionNumber, int gameID)
     {
 
-        return ServerModel.getInstance().gameModel(gameID, versionNumber);
+        return ServerModel.getInstance().gameModel(versionNumber, gameID);
 
     }
 

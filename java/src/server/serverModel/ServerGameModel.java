@@ -8,7 +8,6 @@ import decoder.JsonModels.*;
  */
 public class ServerGameModel {
 
-
     private JsonDeck deck;
     private JsonMap map;
     private JsonPlayer players[];
@@ -27,7 +26,7 @@ public class ServerGameModel {
         this.map = new JsonMap();
         this.chat = new JsonLog();
         this.log = new JsonLog();
-        this.players = new JsonPlayer[0];
+        this.players = new JsonPlayer[4];
         this.bank = new JsonBank(24, 24, 24, 24, 24);
         this.winner = -1;
         this.version = 0;
@@ -254,19 +253,23 @@ public class ServerGameModel {
 
     public boolean addPlayer(String color, String name, int ID) {
 
-        JsonPlayer newPlayer = new JsonPlayer();
-        newPlayer.setColor(color);
-        //newPlayer.
 
         for(int i = 0; i < players.length; i++)
         {
+            JsonPlayer newPlayer = new JsonPlayer(color, name, ID, i);
+
             if (players[i] == null)
             {
 
-                players[i] =
+                players[i] = newPlayer;
+
+                this.version++;
+                return true;
 
             }
         }
+
+        return false;
 
     }
 }

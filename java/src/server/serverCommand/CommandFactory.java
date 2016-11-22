@@ -29,6 +29,11 @@ public class CommandFactory {
         String[] uri_request = uri.split("/");
         String command_request = uri_request[uri_request.length - 1];
 
+        if(command_request.contains("model"))
+        {
+            command_request = "model";
+        }
+
         switch (command_request) {
             case "login":
                 return new LoginCommand(exchange);
