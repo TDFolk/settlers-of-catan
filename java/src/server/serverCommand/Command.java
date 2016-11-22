@@ -225,6 +225,24 @@ public abstract class Command implements Serializable{
         return null;
     }
 
+    protected VertexDirection vertexDirection(String direction){
+        switch(direction) {
+            case "NE":
+                return VertexDirection.NorthEast;
+            case "SE":
+                return VertexDirection.SouthEast;
+            case "NW":
+                return VertexDirection.NorthWest;
+            case "W":
+                return VertexDirection.West;
+            case "E":
+                return VertexDirection.East;
+            case "SW":
+                return VertexDirection.SouthWest;
+        }
+        return null;
+    }
+
     protected String getDirection(String direction) {
         String returnString = "";
         switch (direction) {
