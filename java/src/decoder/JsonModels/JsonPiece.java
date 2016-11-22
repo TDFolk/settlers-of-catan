@@ -1,7 +1,7 @@
 package decoder.JsonModels;
 
 /**
- * Created by bvanc on 9/30/2016.
+ * Created by bvance on 9/30/2016.
  */
 public class JsonPiece {
 

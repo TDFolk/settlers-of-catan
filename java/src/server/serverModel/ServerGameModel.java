@@ -172,7 +172,9 @@ public class ServerGameModel {
      *
      * @return the entire model of the game in Json string form
      */
-    public String buildSettlement(){return getJsonFromModel();}
+    public String buildSettlement(){
+
+        return getJsonFromModel();}
 
     /**changes the data of the model according to the  dev card being built
      *
