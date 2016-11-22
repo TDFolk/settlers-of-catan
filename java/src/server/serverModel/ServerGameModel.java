@@ -252,4 +252,21 @@ public class ServerGameModel {
      */
     public String yearOfPlenty(){return getJsonFromModel();}
 
+    public boolean addPlayer(String color, String name, int ID) {
+
+        JsonPlayer newPlayer = new JsonPlayer();
+        newPlayer.setColor(color);
+        //newPlayer.
+
+        for(int i = 0; i < players.length; i++)
+        {
+            if (players[i] == null)
+            {
+
+                players[i] =
+
+            }
+        }
+
+    }
 }

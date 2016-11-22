@@ -111,6 +111,26 @@ public class ServerFacade implements IServer {
     @Override
     public boolean gameJoin(int gameID, String color) {
         return false;
+        //dont use this...
+    }
+
+    /**
+     * Adds the player to the specified game and sets their catan.game cookie
+     *
+     * @param gameID unique identifier for a particular game
+     * @param color  player color
+     * @return success of joining the game
+     * @pre valid catan.user HTTP cookie
+     * may join game: already in the game OR there is space in the game to add a new player
+     * specified game ID is valid
+     * specified color is valid
+     * @post if successful, server returns 200 HTTP success response, player is in game with specified color
+     * server response includes the "Set-cookie" response header settings the catan.game HTTP cookie
+     * if invalid, returns a 400 HTTP response with an error message
+     */
+
+    public boolean joinGame(int gameID, String color, int playerID) {
+        return ServerModelFacade.getInstance().joinGame(gameID, color, playerID);
     }
 
     /**
@@ -428,4 +448,5 @@ public class ServerFacade implements IServer {
     {
         return ServerModelFacade.getInstance().getUserID(userName);
     }
+
 }

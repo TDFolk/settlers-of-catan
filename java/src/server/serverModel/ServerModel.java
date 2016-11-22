@@ -125,6 +125,7 @@ public class ServerModel {
 
     }
 
+
     public GameCreateObjectResult gameCreate(boolean randomTiles,
                                              boolean randomNumbers,
                                              boolean randomPorts,
@@ -206,34 +207,6 @@ public class ServerModel {
         System.out.println(errorMessage);
         return errorMessage;
     }
-
-
-    /* Json Array
-                [{"title":"Default Game",
-                "id":0,
-                "players":[{"color":"orange","name":"Sam","id":0},
-                    {"color":"blue","name":"Brooke","id":1},
-                    {"color":"red","name":"Pete","id":10},
-                    {"color":"green","name":"Mark","id":11}]},
-
-                 {"title":"AI Game",
-                 "id":1,
-                 "players":[{"color":"orange","name":"Pete","id":10},
-                    {"color":"white","name":"Squall","id":-2},
-                    {"color":"purple","name":"Miguel","id":-3},
-                    {"color":"puce","name":"Ken","id":-4}]},
-
-                 {"title":"Empty Game",
-                 "id":2,
-                 "players":[{"color":"orange","name":"Sam","id":0},
-                    {"color":"blue","name":"Brooke","id":1},
-                    {"color":"red","name":"Pete","id":10},
-                    {"color":"green","name":"Mark","id":11}]},
-                 {"title":"RoblocksSSSS",
-                 "id":3,
-                 "players":[{"color":"blue","name":"aaa","id":12}
-                            ,{},{},{}]}]
-                */
 
     public GameListHolder gameList() {
 
@@ -318,4 +291,59 @@ public class ServerModel {
         return gameListHold;
 
     }
+
+    public boolean joinGame(int gameID, String color, int playerID) {
+
+        for(Map.Entry<String, ServerGameModel> game : games.entrySet())
+        {
+            if(gameID == game.getValue().getGameID())
+            {
+                return game.getValue().addPlayer(color, registeredUsers.get(playerID), playerID);
+            }
+        }
+
+        return false;
+    }
+
+    public static CatanColor getCatanColor(String color2) {
+        CatanColor color = null;
+        switch (color2) {
+            //RED, ORANGE, YELLOW, BLUE, GREEN, PURPLE, PUCE, WHITE, BROWN;
+
+            case "red":
+                color = CatanColor.RED;
+                break;
+            case "orange":
+                color = CatanColor.ORANGE;
+                break;
+            case "yellow":
+                color = CatanColor.YELLOW;
+                break;
+            case "blue":
+                color = CatanColor.BLUE;
+                break;
+            case "green":
+                color = CatanColor.GREEN;
+                break;
+            case "purple":
+                color = CatanColor.PURPLE;
+                break;
+            case "puce":
+                color = CatanColor.PUCE;
+                break;
+            case "white":
+                color = CatanColor.WHITE;
+                break;
+            case "brown":
+                color = CatanColor.BROWN;
+                break;
+            default:
+                color = CatanColor.BLUE;
+
+        }
+
+        return color;
+
+    }
+
 }

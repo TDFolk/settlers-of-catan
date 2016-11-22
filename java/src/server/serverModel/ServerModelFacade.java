@@ -158,4 +158,9 @@ public class ServerModelFacade {
         return ServerModel.getInstance().getUserID(userName);
 
     }
+
+    public boolean joinGame(int gameID, String color, int playerID) {
+
+        return ServerModel.getInstance().joinGame(gameID, color, playerID);
+    }
 }

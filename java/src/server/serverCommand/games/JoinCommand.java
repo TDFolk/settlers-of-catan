@@ -28,8 +28,8 @@ public class JoinCommand extends Command {
     @Override
     public JsonElement execute() throws Exception{
 
+        boolean response = ServerFacade.getInstance().joinGame(gameJoinObject.getId(), gameJoinObject.getColor(), super.playerId);
 
-        boolean response = ServerFacade.getInstance().gameJoin(gameJoinObject.getId(), gameJoinObject.getColor());
         if(response){
             if(super.hasUserCookie){
                 String encodedCookie = getJoinGameCookie(Integer.toString(gameJoinObject.getId()));
