@@ -36,6 +36,12 @@ public class BuildCityCommand extends Command {
         playerIndex = jsonObject.get("playerIndex").getAsInt();
         vertexLocation = fetchVertexLocation(jsonObject.get("vertexLocation").getAsJsonObject());
         */
+
+
+
+        //"x":
+        //"y":
+//        "direction": "
     }
 
     /**
