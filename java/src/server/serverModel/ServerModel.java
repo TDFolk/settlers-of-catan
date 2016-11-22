@@ -346,4 +346,17 @@ public class ServerModel {
 
     }
 
+    public ServerGameModel getGame(int gameID)
+    {
+
+        for(Map.Entry<String, ServerGameModel> game : games.entrySet())
+        {
+            if(gameID == game.getValue().getGameID())
+            {
+               return game.getValue();
+            }
+        }
+        return null;
+    }
+
 }
