@@ -61,7 +61,7 @@ public class BuildSettlementCommand extends Command {
 
             ServerModel.getInstance().getGame(super.gameId).getMap().setSettlements(ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
                     ServerModel.getInstance().getGame(super.gameId).getMap().getSettlements(),
-                    new JsonPiece(null, 0, vertexDirection.toString(), new JsonLocation(x, y)),
+                    new JsonPiece(null, 0, vertexDirection.toString(), new JsonLocation(x, y, vertexDirection.toString())),
                     buildSettlementObject.getPlayerIndex()));
 
             ServerModel.getInstance().getGame(super.gameId).incrementVersion();
