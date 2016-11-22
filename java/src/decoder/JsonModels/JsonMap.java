@@ -16,8 +16,9 @@ public class JsonMap {
     private JsonPiece ports[];
     private JsonRobber robber;
 
-    public JsonPiece[] addToArray( JsonPiece[] arrayToIncrement, JsonPiece newPiece)
+    public JsonPiece[] addToArray( JsonPiece[] arrayToIncrement, JsonPiece newPiece, int playerIndex)
     {
+        newPiece.setOwner(playerIndex);
         JsonPiece[] newArray = new JsonPiece[arrayToIncrement.length + 1];
 
         for (int i = 0; i < arrayToIncrement.length; i++)
