@@ -175,17 +175,7 @@ public class ServerGameModel {
      *
      * @return the entire model of the game in Json string form
      */
-    public String buildRoad(int playerIndex, EdgeLocation roadLocation, boolean free, String direction, JsonMap map) {
-        if (!free) {
-            players[playerIndex].buyRoad();
-        }
-        else {
-            players[playerIndex].decrementRoadTotal();
-        }
-
-        JsonPiece roadPiece = new JsonPiece(null, 0, direction, new JsonLocation(roadLocation.getHexLoc().getX(), roadLocation.getHexLoc().getY()));
-        //map.addToArray(map.getRoads(), roadPiece);
-
+    public String buildRoad() {
         return getJsonFromModel();
     }
 

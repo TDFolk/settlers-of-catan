@@ -29,7 +29,6 @@ public class JsonPiece {
         this.direction = direction;
     }
 
-
     public String getResource() {
         return resource;
     }

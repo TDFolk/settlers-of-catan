@@ -1,15 +1,20 @@
 package server.serverCommand.moves;
 
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
 import command.player.BuildRoadObject;
+import decoder.JsonModels.JsonLocation;
 import decoder.JsonModels.JsonMap;
+import decoder.JsonModels.JsonPiece;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
 import server.serverModel.ServerModel;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
 
 /**
@@ -21,10 +26,21 @@ public class BuildRoadCommand extends Command {
 	private EdgeLocation roadLocation;
 	private boolean free;
     private BuildRoadObject buildRoadObject;
+    private EdgeDirection edgeDirection;
+    private int x;
+    private int y;
 
     public BuildRoadCommand(HttpExchange httpExchange) {
         super(httpExchange);
+        json = json.replaceAll("\\n", "");
         buildRoadObject = gson.fromJson(json, BuildRoadObject.class);
+
+        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+        roadLocation = fetchEdgeLocation(jsonObject.get("edgeLocation").getAsJsonObject());
+
+        edgeDirection = roadLocation.getDir();
+        x = roadLocation.getHexLoc().getX();
+        y = roadLocation.getHexLoc().getY();
     }
 
     /**
@@ -36,12 +52,8 @@ public class BuildRoadCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            ServerGameModel game = ServerModel.getInstance().getGame(gameId);
-            String direction = whatDirection(buildRoadObject.getRoadLocation().getDir().toString());
-            JsonMap map = game.getMap();
-            String response = game.buildRoad(buildRoadObject.getPlayerIndex(), buildRoadObject.getRoadLocation(),
-                    buildRoadObject.isFree(), direction, map);
-            game.incrementVersion();
+            // isFree needs to be handled.. decrementResources if not free in ServerGameModel
+            String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){
                 return new JsonPrimitive("Invalid");
