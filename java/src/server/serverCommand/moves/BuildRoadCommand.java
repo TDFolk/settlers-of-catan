@@ -53,6 +53,12 @@ public class BuildRoadCommand extends Command {
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
             // isFree needs to be handled.. decrementResources if not free in ServerGameModel
+            ServerModel.getInstance().getGame(super.gameId).getMap().setRoads(ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
+                    ServerModel.getInstance().getGame(super.gameId).getMap().getRoads(),
+                    new JsonPiece(null, 0, edgeDirection.toString(), new JsonLocation(x, y, edgeDirection.toString())),
+                    buildRoadObject.getPlayerIndex()));
+
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){
