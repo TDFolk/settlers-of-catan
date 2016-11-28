@@ -5,7 +5,7 @@ import persistence.dao.*;
 /**
  * Created by jihoon on 11/28/2016.
  */
-public class SQLProvider implements IProvider {
+public class SQLProvider extends IProvider {
     ICommandDAO commandDAO;
     IGameDAO gameDAO;
     IUserDAO userDAO;
@@ -39,21 +39,4 @@ public class SQLProvider implements IProvider {
     public void clearData() {
 
     }
-
-    /**
-     * Gets an instance of the user DAO from plugin
-     */
-    @Override
-    public void getUserDAO() {
-
-    }
-
-    /**
-     * Gets an instance of the game DAO from plugin
-     */
-    @Override
-    public void getGameDAO() {
-
-    }
-
 }
