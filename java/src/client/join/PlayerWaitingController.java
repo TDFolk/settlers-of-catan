@@ -90,7 +90,16 @@ public class PlayerWaitingController extends Controller implements IPlayerWaitin
 				//MapController.setState(new FirstRoundState());
 				//game is starting now!!!!
 				//MapController.setGameStarted(true);
-
+				if (Game.getInstance().getPlayer().getPlayerInfo().getPlayerIndex() == 3) {
+					String currentModel = ServerProxy.getServer().gameModelVersion(Facade.getInstance().getVersionNumber());
+					if (currentModel != null) {
+						if (!currentModel.equals("\"true\"")) {
+							System.out.println("Updating Model");
+							Facade.getInstance().replaceModel(currentModel);
+							//Facade.getInstance().incrementVersionNumber();
+						}
+					}
+				}
 				getView().closeModal();
 			}
 			else {
