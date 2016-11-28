@@ -1,9 +1,21 @@
 package persistence.provider;
 
+import persistence.dao.*;
+
 /**
  * Created by jihoon on 11/28/2016.
  */
 public class NonRelationalProvider implements IProvider {
+    ICommandDAO commandDAO;
+    IGameDAO gameDAO;
+    IUserDAO userDAO;
+
+    NonRelationalProvider() {
+        commandDAO = new NonRelationalCommandDAO();
+        gameDAO = new NonRelationalGameDAO();
+        userDAO = new NonRelationalUserDAO();
+    }
+
 
     /**
      * Starts a transaction
