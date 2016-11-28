@@ -15,7 +15,7 @@ public interface ICommandDAO {
 
     /**
      * add a new command to save
-     * @param command name of command to save
+     * @param command serialize form of command to save
      * @param gameID id of game to save to
      */
     public void addCommand(String command, int gameID);
