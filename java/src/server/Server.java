@@ -1,6 +1,8 @@
 package server;
 
 import com.sun.net.httpserver.HttpServer;
+import persistence.provider.IProvider;
+import persistence.provider.SQLProvider;
 import server.handler.Handlers;
 import server.handler.ServerHandler;
 
@@ -67,11 +69,16 @@ public class Server {
         // Swagger works when you run our server and go to http://localhost:8081/docs/api/view/index.html
 
 
-
-
-
-
         server.start();
+    }
+
+
+    /**
+     * instantiate plugin Persistence Provider object
+     * @return
+     */
+    public IProvider initPlugin() {
+        return new SQLProvider();
     }
 
     public static void main(String[] args) {
