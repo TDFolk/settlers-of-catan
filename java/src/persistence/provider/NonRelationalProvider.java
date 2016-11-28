@@ -10,7 +10,7 @@ public class NonRelationalProvider extends IProvider {
     IGameDAO gameDAO;
     IUserDAO userDAO;
 
-    NonRelationalProvider() {
+    public NonRelationalProvider() {
         commandDAO = new NonRelationalCommandDAO();
         gameDAO = new NonRelationalGameDAO();
         userDAO = new NonRelationalUserDAO();
@@ -21,7 +21,7 @@ public class NonRelationalProvider extends IProvider {
      */
     @Override
     public void startTransaction() {
-        
+
     }
 
     /**
