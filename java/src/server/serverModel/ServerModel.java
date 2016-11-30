@@ -364,7 +364,7 @@ public class ServerModel {
 
     public String finishTurn(int gameID) {
 
-        getGame(gameID).finishTurn();
+        return getGame(gameID).finishTurn();
 
     }
 }
