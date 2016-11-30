@@ -29,7 +29,7 @@ public class FinishTurnCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            String response = ServerFacade.getInstance().finishTurn(finishTurnObject.getPlayerIndex());
+            String response = ServerFacade.getInstance().finishTurn(super.gameId);
 
             if(response == null){
                 return new JsonPrimitive("Invalid");

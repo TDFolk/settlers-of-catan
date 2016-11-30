@@ -240,7 +240,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public String rollNumber(int playerIndex, int number) {
-        return null;
+        return ServerModel.getInstance().rollNumber(playerIndex, number);
     }
 
     /**
@@ -346,14 +346,14 @@ public class ServerFacade implements IServer {
     }
 
     /**
-     * @param playerIndex
+     * @param gameID
      * @pre None(except the preconditions for the 'Playing' section)
      * @post The cards in your new dev card hand have been transferred to your old dev card hand;
      * it is the next player's turn
      */
     @Override
-    public String finishTurn(int playerIndex) {
-        return ServerModel.getInstance().finishTurn();
+    public String finishTurn(int gameID) {
+        return ServerModel.getInstance().finishTurn(gameID);
     }
 
     /**

@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import decoder.JsonModels.*;
 import model.Facade;
 import model.Game;
+import model.map.Hex;
 import shared.definitions.CatanColor;
 import shared.locations.EdgeLocation;
 
@@ -274,7 +275,41 @@ public class ServerGameModel {
      *
      * @return the entire model of the game in Json string form
      */
-    public String roll(){return getJsonFromModel();}
+    public String roll(int numberRolled){
+
+        if(numberRolled == 7)
+        {
+            turnTracker.beginDiscardingState();
+        }
+        else
+        {
+            //logic for rewarding resources
+            for(JsonHex hex : map.getHexes())
+            {
+                if(hex.getNumber() == numberRolled)
+                {
+                    //check each vertex around this hex and reward those players the resource of the hex
+                    for(JsonPiece piece : map.getSettlements())
+                    {
+                        if(piece.getLocation() == hex.getLocation())
+                        {
+
+                        }
+                    }
+
+                    for(JsonPiece piece : map.getCities())
+                    {
+
+                    }
+                }
+
+                turnTracker.beginPlayingState();
+            }
+        }
+
+        return getJsonFromModel();
+
+    }
 
     /**changes the data of the model according to the chat being sent
      *

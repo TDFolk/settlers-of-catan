@@ -367,4 +367,8 @@ public class ServerModel {
         return getGame(gameID).finishTurn();
 
     }
+
+    public String rollNumber(int gameID, int number) {
+        return getGame(gameID).roll();
+    }
 }
