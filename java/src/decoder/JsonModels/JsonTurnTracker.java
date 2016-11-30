@@ -50,4 +50,40 @@ public class JsonTurnTracker {
         this.largestArmy = largestArmy;
     }
 
+    public void incrementTurn()
+    {
+        this.currentTurn++;
+        this.currentTurn = this.currentTurn % 4;
+    }
+
+    public void decrementTurn()
+    {
+        this.currentTurn--;
+    }
+
+    public void beginSecondRound()
+    {
+        this.status = "SecondRound";
+    }
+
+    public void beginRollingState()
+    {
+        this.status = "Rolling";
+    }
+
+    public void beginRobbingState()
+    {
+        this.status = "Robbing";
+    }
+
+    public void beginPlayingState()
+    {
+        this.status = "Playing";
+    }
+
+    public void beginDiscardingState()
+    {
+        this.status = "Discarding";
+    }
+
 }
