@@ -36,7 +36,7 @@ public class BuildRoadCommand extends Command {
         buildRoadObject = gson.fromJson(json, BuildRoadObject.class);
 
         JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
-        roadLocation = fetchEdgeLocation(jsonObject.get("edgeLocation").getAsJsonObject());
+        roadLocation = fetchEdgeLocation(jsonObject.get("roadLocation").getAsJsonObject());
 
         edgeDirection = roadLocation.getDir();
         x = roadLocation.getHexLoc().getX();
@@ -52,7 +52,7 @@ public class BuildRoadCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            // isFree needs to be handled.. decrementResources if not free in ServerGameModel
+            // TODO isFree needs to be handled.. decrementResources if not free in ServerGameModel
             ServerModel.getInstance().getGame(super.gameId).getMap().setRoads(ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
                     ServerModel.getInstance().getGame(super.gameId).getMap().getRoads(),
                     new JsonPiece(null, 0, edgeDirection.toString(), new JsonLocation(x, y, edgeDirection.toString())),

@@ -558,6 +558,24 @@ public class Game extends Observable {
                     case "SW":
                         dir = EdgeDirection.SouthWest;
                         break;
+                    case "North":
+                        dir = EdgeDirection.North;
+                        break;
+                    case "NorthWest":
+                        dir = EdgeDirection.NorthWest;
+                        break;
+                    case "NorthEast":
+                        dir = EdgeDirection.NorthEast;
+                        break;
+                    case "South":
+                        dir = EdgeDirection.South;
+                        break;
+                    case "SouthEast":
+                        dir = EdgeDirection.SouthEast;
+                        break;
+                    case "SouthWest":
+                        dir = EdgeDirection.SouthWest;
+                        break;
                     default:
                         dir = EdgeDirection.NorthEast;
 
@@ -818,6 +836,24 @@ public class Game extends Observable {
                         dir = VertexDirection.SouthEast;
                         break;
                     case "SW":
+                        dir = VertexDirection.SouthWest;
+                        break;
+                    case "West":
+                        dir = VertexDirection.West;
+                        break;
+                    case "NorthWest":
+                        dir = VertexDirection.NorthWest;
+                        break;
+                    case "NorthEast":
+                        dir = VertexDirection.NorthEast;
+                        break;
+                    case "East":
+                        dir = VertexDirection.East;
+                        break;
+                    case "SouthEast":
+                        dir = VertexDirection.SouthEast;
+                        break;
+                    case "SouthWest":
                         dir = VertexDirection.SouthWest;
                         break;
                     default:
