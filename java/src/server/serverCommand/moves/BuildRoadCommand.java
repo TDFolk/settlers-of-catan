@@ -23,9 +23,9 @@ import shared.locations.EdgeLocation;
  */
 public class BuildRoadCommand extends Command {
 	
-	private int playerIndex;
+	//private int playerIndex;
 	private EdgeLocation roadLocation;
-	private boolean free;
+	//private boolean free;
     private BuildRoadObject buildRoadObject;
     private EdgeDirection edgeDirection;
     private int x;
@@ -53,10 +53,12 @@ public class BuildRoadCommand extends Command {
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
             if (buildRoadObject.isFree()) {
-                ServerModel.getInstance().getGame(super.gameId).getPlayers()[playerIndex].decrementRoadTotal();
+                //changed playerIndex to buildRoadObject.getPlayerIndex()
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[buildRoadObject.getPlayerIndex()].decrementRoadTotal();
             }
             else {
-                ServerModel.getInstance().getGame(super.gameId).getPlayers()[playerIndex].buyRoad();
+                //changed playerIndex to buildRoadObject.getPlayerIndex()
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[buildRoadObject.getPlayerIndex()].buyRoad();
             }
 
             ServerModel.getInstance().getGame(super.gameId).getMap().setRoads(ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
