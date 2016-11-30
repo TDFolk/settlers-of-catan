@@ -19,14 +19,15 @@ public class JsonMap {
     public JsonPiece[] addToArray( JsonPiece[] arrayToIncrement, JsonPiece newPiece, int playerIndex)
     {
         newPiece.setOwner(playerIndex);
-        JsonPiece[] newArray = new JsonPiece[arrayToIncrement.length + 1];
+        int newSize = arrayToIncrement.length + 1;
+        JsonPiece[] newArray = new JsonPiece[newSize];
 
         for (int i = 0; i < arrayToIncrement.length; i++)
         {
             newArray[i] = arrayToIncrement[i];
         }
 
-        newArray[arrayToIncrement.length] = newPiece;
+        newArray[newSize - 1] = newPiece;
 
         return newArray;
 
