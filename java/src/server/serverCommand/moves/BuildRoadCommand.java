@@ -10,6 +10,7 @@ import command.player.BuildRoadObject;
 import decoder.JsonModels.JsonLocation;
 import decoder.JsonModels.JsonMap;
 import decoder.JsonModels.JsonPiece;
+import server.Server;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
@@ -46,13 +47,18 @@ public class BuildRoadCommand extends Command {
     /**
      * This method will handle executing the commands
      *
-     * @param json jsonString that will populate the JsonElement
      * @return returns a json element from the given jsonString
      */
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            // TODO isFree needs to be handled.. decrementResources if not free in ServerGameModel
+            if (buildRoadObject.isFree()) {
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[playerIndex].decrementRoadTotal();
+            }
+            else {
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[playerIndex].buyRoad();
+            }
+
             ServerModel.getInstance().getGame(super.gameId).getMap().setRoads(ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
                     ServerModel.getInstance().getGame(super.gameId).getMap().getRoads(),
                     new JsonPiece(null, 0, edgeDirection.toString(), new JsonLocation(x, y, edgeDirection.toString())),
