@@ -201,7 +201,38 @@ public class ServerGameModel {
      *
      * @return the entire model of the game in Json string form
      */
-    public String finishTurn(){return getJsonFromModel();}
+    public String finishTurn(){
+
+        if(this.turnTracker.getStatus().equals("FirstRound"))
+        {
+            if(turnTracker.getCurrentTurn() == 3)
+            {
+                turnTracker.beginSecondRound();
+            }
+            else
+            {
+                turnTracker.incrementTurn();
+            }
+        }
+        else if(this.turnTracker.getStatus().equals("SecondRound"))
+        {
+            if(turnTracker.getCurrentTurn() == 0)
+            {
+                turnTracker.beginRollingState();
+            }
+            else
+            {
+                turnTracker.decrementTurn();
+            }
+        }
+        else
+        {
+            turnTracker.incrementTurn();
+            turnTracker.beginRollingState();
+        }
+
+        return getJsonFromModel();
+    }
 
     /**changes the data of the model according to the maritime trade being offered
      *

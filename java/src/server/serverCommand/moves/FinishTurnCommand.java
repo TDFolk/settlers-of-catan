@@ -24,7 +24,6 @@ public class FinishTurnCommand extends Command {
     /**
      * This method will handle executing the commands
      *
-     * @param json jsonString that will populate the JsonElement
      * @return returns a json element from the given jsonString
      */
     @Override
@@ -38,10 +37,12 @@ public class FinishTurnCommand extends Command {
             else {
                 // Returns the client model JSON (identical to /game/model)
                 return new JsonPrimitive(response);
+
             }
         }
         else {
             return new JsonPrimitive("catan.game and/or catan.user cookies are missing");
         }
     }
+
 }

@@ -362,4 +362,9 @@ public class ServerModel {
         return true;
     }
 
+    public String finishTurn(int gameID) {
+
+        getGame(gameID).finishTurn();
+
+    }
 }

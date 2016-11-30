@@ -353,7 +353,7 @@ public class ServerFacade implements IServer {
      */
     @Override
     public String finishTurn(int playerIndex) {
-        return null;
+        return ServerModel.getInstance().finishTurn();
     }
 
     /**
