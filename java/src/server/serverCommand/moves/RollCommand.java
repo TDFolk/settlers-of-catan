@@ -31,7 +31,7 @@ public class RollCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            String response = ServerFacade.getInstance().rollNumber(rollNumberObject.getPlayerIndex(),
+            String response = ServerFacade.getInstance().rollNumber(super.gameId,
                                                     rollNumberObject.getNumber());
 
             if(response == null){
