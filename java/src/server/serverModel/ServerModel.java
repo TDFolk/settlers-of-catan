@@ -369,6 +369,6 @@ public class ServerModel {
     }
 
     public String rollNumber(int gameID, int number) {
-        return getGame(gameID).roll();
+        return getGame(gameID).roll(number);
     }
 }
