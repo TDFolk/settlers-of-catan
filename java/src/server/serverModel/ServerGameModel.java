@@ -210,31 +210,31 @@ public class ServerGameModel {
 
         if(this.turnTracker.getStatus().equals("FirstRound"))
         {
-            if(turnTracker.getCurrentTurn() == 3)
-            {
-                turnTracker.beginSecondRound();
-            }
-            else
-            {
+//            if(turnTracker.getCurrentTurn() == 3)
+//            {
+//                turnTracker.beginSecondRound();
+//            }
+//            else
+//            {
                 turnTracker.incrementTurn();
-            }
+//            }
         }
-        else if(this.turnTracker.getStatus().equals("SecondRound"))
-        {
-            if(turnTracker.getCurrentTurn() == 0)
-            {
-                turnTracker.beginRollingState();
-            }
-            else
-            {
-                turnTracker.decrementTurn();
-            }
-        }
-        else
-        {
-            turnTracker.incrementTurn();
-            turnTracker.beginRollingState();
-        }
+//        else if(this.turnTracker.getStatus().equals("SecondRound"))
+//        {
+//            if(turnTracker.getCurrentTurn() == 0)
+//            {
+//                turnTracker.beginRollingState();
+//            }
+//            else
+//            {
+//                turnTracker.decrementTurn();
+//            }
+//        }
+//        else
+//        {
+//            turnTracker.incrementTurn();
+//            turnTracker.beginRollingState();
+//        }
 
         incrementVersion();
 
