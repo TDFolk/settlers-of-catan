@@ -146,9 +146,9 @@ public class ServerGameModel {
 
         String model = gson.toJson(this);
 
-//        model = model.split(",\"gameID\":")[0];
-//
-//        model = model + "}";
+        model = model.split(",\"gameID\":")[0];
+
+        model = model + "}";
 
         return model;
 
