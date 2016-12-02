@@ -62,7 +62,6 @@ public class BuildCityCommand extends Command {
                     buildCityObject.getPlayerIndex()));
 
 
-            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             //TODO: INCREMENT POINTS HERE; ERASE SETTLEMENT FROM SETTLEMENTS ARRAY???
@@ -73,6 +72,7 @@ public class BuildCityCommand extends Command {
             }
             else {
                 // Returns the client model JSON (identical to /game/model)
+                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }

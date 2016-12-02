@@ -67,7 +67,6 @@ public class BuildSettlementCommand extends Command {
                     new JsonPiece(null, 0, vertexDirection.toString(), new JsonLocation(x, y, vertexDirection.toString())),
                     buildSettlementObject.getPlayerIndex()));
 
-            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
 
@@ -80,6 +79,7 @@ public class BuildSettlementCommand extends Command {
             }
             else {
                 // Returns the client model JSON (identical to /game/model)
+                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }
