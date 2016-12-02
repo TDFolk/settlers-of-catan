@@ -55,9 +55,12 @@ public class BuildSettlementCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-//            String response = ServerFacade.getInstance().buildSettlement(buildSettlementObject.getPlayerIndex(),
-//                                                    buildSettlementObject.getVertexLocation(),
-//                                                    buildSettlementObject.isFree());
+            if(buildSettlementObject.isFree()){
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[buildSettlementObject.getPlayerIndex()].decrementSettlement();
+            }
+            else {
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[buildSettlementObject.getPlayerIndex()].buySettlement();
+            }
 
             ServerModel.getInstance().getGame(super.gameId).getMap().setSettlements(ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
                     ServerModel.getInstance().getGame(super.gameId).getMap().getSettlements(),
@@ -66,6 +69,11 @@ public class BuildSettlementCommand extends Command {
 
             ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
+
+
+            //increment points here????
+            ServerModel.getInstance().getGame(super.gameId).getPlayers()[buildSettlementObject.getPlayerIndex()].incrementPoints();
+
 
             if(response == null){
                 return new JsonPrimitive("Invalid");

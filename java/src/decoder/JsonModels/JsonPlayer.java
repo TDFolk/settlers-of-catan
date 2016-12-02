@@ -170,4 +170,27 @@ public class JsonPlayer {
     public void decrementRoadTotal() {
         roads--;
     }
+
+    public void buySettlement() {
+        resources.setBrick(resources.getBrick() - 1);
+        resources.setSheep(resources.getSheep() - 1);
+        resources.setWood(resources.getWood() - 1);
+        resources.setWheat(resources.getWheat() - 1);
+        settlements--;
+    }
+
+    public void decrementSettlement() {
+        settlements--;
+    }
+
+    public void buyCity() {
+        resources.setWheat(resources.getWheat() - 2);
+        resources.setOre(resources.getOre() - 3);
+        cities--;
+        settlements++;
+    }
+
+    public void incrementPoints(){
+        victoryPoints++;
+    }
 }

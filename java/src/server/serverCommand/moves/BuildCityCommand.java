@@ -14,6 +14,7 @@ import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
 import server.serverModel.ServerModel;
+import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
 /**
@@ -22,26 +23,25 @@ import shared.locations.VertexLocation;
 public class BuildCityCommand extends Command {
 	
 	private BuildCityObject buildCityObject;
+    private VertexLocation vertexLocation;
+    private VertexDirection vertexDirection;
+    private int x;
+    private int y;
 
     public BuildCityCommand(HttpExchange httpExchange) {
         super(httpExchange);
-        // In order to create the object it will need to have the proper json from getRequestBody().toString();
-        // Do we need to check for cookies here?
+
+        json = json.replaceAll("\\n", "");
+
         buildCityObject = gson.fromJson(json, BuildCityObject.class);
 
-        // Not sure if this is any different from above...
-        // If it is then we can do the others like this
-        /*
         JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
-        playerIndex = jsonObject.get("playerIndex").getAsInt();
         vertexLocation = fetchVertexLocation(jsonObject.get("vertexLocation").getAsJsonObject());
-        */
 
+        vertexDirection = vertexLocation.getDir();
+        x = vertexLocation.getHexLoc().getX();
+        y = vertexLocation.getHexLoc().getY();
 
-
-        //"x":
-        //"y":
-//        "direction": "
     }
 
     /**
@@ -53,18 +53,21 @@ public class BuildCityCommand extends Command {
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
 
-            JsonMap jsonMap = ServerModel.getInstance().getGame(super.gameId).getMap();
-            //jsonMap.addToArray(jsonMap.getCities(), new JsonPiece(null, 0,
-            //        super.whatDirection(buildCityObject.getVertexLocation().getDir().toString()),
-            //        new JsonLocation(buildCityObject.getVertexLocation().getHexLoc().getX(),
-            //                buildCityObject.getVertexLocation().getHexLoc().getY())));
+            //decrement the resources required to buy a city
+            ServerModel.getInstance().getGame(super.gameId).getPlayers()[buildCityObject.getPlayerIndex()].buyCity();
+
+            ServerModel.getInstance().getGame(super.gameId).getMap().setCities(ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
+                    ServerModel.getInstance().getGame(super.gameId).getMap().getCities(),
+                    new JsonPiece(null, 0, vertexDirection.toString(), new JsonLocation(x, y, vertexDirection.toString())),
+                    buildCityObject.getPlayerIndex()));
+
 
             ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
-            //String response = ServerFacade.getInstance().buildCity(buildCityObject.getPlayerIndex(), buildCityObject.getVertexLocation());
-            // The second way from above
-            //String response = ServerFacade.getInstance().buildCity(playerIndex, vertexLocation);
+            //TODO: INCREMENT POINTS HERE; ERASE SETTLEMENT FROM SETTLEMENTS ARRAY???
+
+
             if(response == null){
                 return new JsonPrimitive("Invalid");
             }
