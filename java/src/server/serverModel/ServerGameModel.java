@@ -346,8 +346,6 @@ public class ServerGameModel {
             {
 
                 players[i] = newPlayer;
-
-                this.version++;
                 return true;
 
             }
