@@ -236,6 +236,8 @@ public class ServerGameModel {
             turnTracker.beginRollingState();
         }
 
+        incrementVersion();
+
         return getJsonFromModel();
     }
 
