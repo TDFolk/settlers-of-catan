@@ -12,9 +12,7 @@ import server.serverModel.ServerGameModel;
  * Created by jihoon on 11/7/2016.
  */
 public class RollCommand extends Command {
-	
-	private int playerIndex;
-	private int number;
+
     private RollNumberObject rollNumberObject;
 
     public RollCommand(HttpExchange httpExchange) {
@@ -25,7 +23,6 @@ public class RollCommand extends Command {
     /**
      * This method will handle executing the commands
      *
-     * @param json jsonString that will populate the JsonElement
      * @return returns a json element from the given jsonString
      */
     @Override

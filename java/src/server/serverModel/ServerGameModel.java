@@ -307,8 +307,8 @@ public class ServerGameModel {
                     }
                 }
 
-                turnTracker.beginPlayingState();
             }
+            turnTracker.beginPlayingState();
         }
 
         return getJsonFromModel();
