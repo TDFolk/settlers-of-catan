@@ -408,7 +408,7 @@ public class MapController extends Controller implements IMapController, Observe
 
 				//check if we've done the second round of the game
 				if (!secondRoundDone) {
-					checkBuildingList();
+					//checkBuildingList();
 					state = new SecondRoundState();
 					if(settlementList.size() == 1){
 						getView().startDrop(PieceType.SETTLEMENT, Game.getInstance().getCurrentPlayerInfo().getColor(), false);
