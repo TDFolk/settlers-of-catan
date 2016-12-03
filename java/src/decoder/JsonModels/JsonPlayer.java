@@ -193,4 +193,12 @@ public class JsonPlayer {
     public void incrementPoints(){
         victoryPoints++;
     }
+
+    public void addResources(JsonResource resourcesToAdd) {
+        resources.setBrick(resources.getBrick() + resourcesToAdd.getBrick());
+        resources.setOre(resources.getOre() + resourcesToAdd.getOre());
+        resources.setSheep(resources.getSheep() + resourcesToAdd.getSheep());
+        resources.setWheat(resources.getWheat() + resourcesToAdd.getWheat());
+        resources.setWood(resources.getWood() + resourcesToAdd.getWood());
+    }
 }

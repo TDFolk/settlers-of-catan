@@ -1,6 +1,7 @@
 package decoder.JsonModels;
 
 import decoder.Directions;
+import shared.definitions.HexType;
 
 
 /**
@@ -149,6 +150,12 @@ public class JsonMap {
 
         return hexes;
     }
+
+//    public HexType[] secondRoundResourceHexes() {
+//        if (settlements[1] != null) {
+//
+//        }
+//    }
 
     public JsonPiece[] getRoads() {
         return roads;
