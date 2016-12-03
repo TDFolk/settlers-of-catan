@@ -289,32 +289,39 @@ public class ServerGameModel {
         }
         else
         {
-            //logic for rewarding resources
-            for(JsonHex hex : map.getHexes())
-            {
-                if(hex.getNumber() == numberRolled)
-                {
-                    //check each vertex around this hex and reward those players the resource of the hex
-                    for(JsonPiece piece : map.getSettlements())
-                    {
-                        if(piece.getLocation() == hex.getLocation())
-                        {
 
-                        }
-                    }
+            rewardResources(numberRolled);
 
-                    for(JsonPiece piece : map.getCities())
-                    {
-
-                    }
-                }
-
-            }
             turnTracker.beginPlayingState();
         }
 
         return getJsonFromModel();
 
+    }
+
+    private void rewardResources(int numberRolled)
+    {
+        //logic for rewarding resources
+        for(JsonHex hex : map.getHexes())
+        {
+            if(hex.getNumber() == numberRolled)
+            {
+                //check each vertex around this hex and reward those players the resource of the hex
+                for(JsonPiece piece : map.getSettlements())
+                {
+                    if(piece.getLocation() == hex.getLocation())
+                    {
+
+                    }
+                }
+
+                for(JsonPiece piece : map.getCities())
+                {
+
+                }
+            }
+
+        }
     }
 
     /**changes the data of the model according to the chat being sent
