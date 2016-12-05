@@ -110,7 +110,7 @@ public class BuildRoadCommand extends Command {
 
         if(mostRoads >= 5)
         {
-            ServerModel.getInstance().getGame(super.gameId).getTurnTracker().setLongestRoad(winner);
+            ServerModel.getInstance().getGame(super.gameId).newLongestRoad(winner);
         }
     }
 

@@ -457,4 +457,24 @@ public class ServerGameModel {
     {
         chat.addLine(message,source);
     }
+
+    public void newLongestRoad(int winner) {
+
+        if(turnTracker.getLargestArmy() != winner) {
+
+
+            int currentWinner = turnTracker.getLongestRoad();
+
+            if (currentWinner != -1) {
+                players[currentWinner].setVictoryPoints(players[currentWinner].getVictoryPoints() - 2);
+
+            }
+
+            turnTracker.setLongestRoad(winner);
+
+            players[currentWinner].incrementPoints();
+            players[currentWinner].incrementPoints();
+        }
+
+    }
 }
