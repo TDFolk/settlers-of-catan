@@ -72,19 +72,11 @@ public class BuildSettlementCommand extends Command {
                     buildSettlementObject.getPlayerIndex()));
 
             if (game.getTurnTracker().getStatus().equals("SecondRound")) {
+                // May want to store these in JsonPiece as well
                 HexLocation hexLocation = vertexLocation.getNormalizedLocation().getHexLoc();
-                game.addResourceFromHexType(game.getMap().getHexType(hexLocation), buildSettlementObject.getPlayerIndex());
+                VertexDirection vertexDirection = vertexLocation.getNormalizedLocation().getDir();
 
-                game.addResourceFromHexType(game.getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.North)), buildSettlementObject.getPlayerIndex());
-
-                switch(vertexLocation.getNormalizedLocation().getDir()) {
-                    case NorthEast:
-                        game.addResourceFromHexType(game.getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthEast)), buildSettlementObject.getPlayerIndex());
-                        break;
-                    case NorthWest:
-                        game.addResourceFromHexType(game.getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthWest)), buildSettlementObject.getPlayerIndex());
-                        break;
-                }
+                game.grabProperResources(hexLocation, buildSettlementObject.getPlayerIndex(), vertexDirection, false);
             }
 
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();

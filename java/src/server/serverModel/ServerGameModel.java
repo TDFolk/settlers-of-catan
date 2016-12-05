@@ -7,7 +7,10 @@ import model.Game;
 import model.map.Hex;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
+import shared.locations.EdgeDirection;
 import shared.locations.EdgeLocation;
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
 
 /**Server side model of the data for each individual game
  * Created by bvance on 11/4/2016.
@@ -325,22 +328,44 @@ public class ServerGameModel {
         }
     }
 
-    public void addResourceFromHexType(HexType hexType, int currPlayer) {
+    public void grabProperResources(HexLocation hexLocation, int currPlayer, VertexDirection vertexDirection, boolean isCity) {
+        addResourceFromHexType(getMap().getHexType(hexLocation), currPlayer, isCity);
+
+        addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.North)), currPlayer, isCity);
+
+        switch(vertexDirection) {
+            case NorthEast:
+                addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthEast)), currPlayer, isCity);
+                break;
+            case NorthWest:
+                addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthWest)), currPlayer, isCity);
+                break;
+        }
+    }
+
+    public void addResourceFromHexType(HexType hexType, int currPlayer, boolean isCity) {
+        int amount;
+        if (isCity) {
+            amount = 2;
+        }
+        else {
+            amount = 1;
+        }
         switch (hexType) {
             case BRICK:
-                players[currPlayer].addResources(new JsonResource(1, 0, 0, 0, 0));
+                players[currPlayer].addResources(new JsonResource(amount, 0, 0, 0, 0));
                 break;
             case ORE:
-                players[currPlayer].addResources(new JsonResource(0, 0, 0, 0, 1));
+                players[currPlayer].addResources(new JsonResource(0, 0, 0, 0, amount));
                 break;
             case SHEEP:
-                players[currPlayer].addResources(new JsonResource(0, 0, 1, 0, 0));
+                players[currPlayer].addResources(new JsonResource(0, 0, amount, 0, 0));
                 break;
             case WHEAT:
-                players[currPlayer].addResources(new JsonResource(0, 0, 0, 1, 0));
+                players[currPlayer].addResources(new JsonResource(0, 0, 0, amount, 0));
                 break;
             case WOOD:
-                players[currPlayer].addResources(new JsonResource(0, 1, 0, 0, 0));
+                players[currPlayer].addResources(new JsonResource(0, amount, 0, 0, 0));
                 break;
             default:
                 players[currPlayer].addResources(new JsonResource(0, 0, 0, 0, 0));
