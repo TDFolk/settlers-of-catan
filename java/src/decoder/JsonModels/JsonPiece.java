@@ -1,5 +1,8 @@
 package decoder.JsonModels;
 
+import shared.locations.HexLocation;
+import shared.locations.VertexDirection;
+
 /**
  * Created by bvance on 9/30/2016.
  */
@@ -10,6 +13,8 @@ public class JsonPiece {
     private int owner = -1;
     private String direction;
     private JsonLocation location;
+    private HexLocation hexLocation;
+    private VertexDirection vertexDirection;
 
     public JsonPiece(){};
 
@@ -19,6 +24,13 @@ public class JsonPiece {
         this.ratio = ratio;
         this.direction = direction;
         this.location = location;
+    }
+
+    public JsonPiece(String direction, JsonLocation location, HexLocation hexLocation, VertexDirection vertexDirection) {
+        this.direction = direction;
+        this.location = location;
+        this.hexLocation = hexLocation;
+        this.vertexDirection = vertexDirection;
     }
 
     public String getDirection() {
@@ -59,5 +71,13 @@ public class JsonPiece {
 
     public void setLocation(JsonLocation location) {
         this.location = location;
+    }
+
+    public HexLocation getHexLocation() {
+        return hexLocation;
+    }
+
+    public VertexDirection getVertexDirection() {
+        return vertexDirection;
     }
 }

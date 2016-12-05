@@ -299,6 +299,7 @@ public class ServerGameModel {
             turnTracker.beginPlayingState();
         }
 
+        this.incrementVersion();
         return getJsonFromModel();
 
     }
@@ -313,37 +314,56 @@ public class ServerGameModel {
                 //check each vertex around this hex and reward those players the resource of the hex
                 for(JsonPiece piece : map.getSettlements())
                 {
-                    if(piece.getLocation() == hex.getLocation())
-                    {
-
+                    if (piece.getLocation().getX() == hex.getLocation().getX() &&
+                            piece.getLocation().getY() == hex.getLocation().getY()) {
+                        grabProperResources(piece.getHexLocation(), piece.getOwner(), piece.getVertexDirection(), false, true);
                     }
                 }
 
                 for(JsonPiece piece : map.getCities())
                 {
-
+                    if(piece.getLocation().getX() == hex.getLocation().getX() &&
+                            piece.getLocation().getY() == hex.getLocation().getY()) {
+                        grabProperResources(piece.getHexLocation(), piece.getOwner(), piece.getVertexDirection(), true, true);
+                    }
                 }
             }
 
         }
     }
 
-    public void grabProperResources(HexLocation hexLocation, int currPlayer, VertexDirection vertexDirection, boolean isCity) {
-        addResourceFromHexType(getMap().getHexType(hexLocation), currPlayer, isCity);
+    public void grabProperResources(HexLocation hexLocation, int currPlayer, VertexDirection vertexDirection, boolean isCity, boolean isRoll) {
+        if (addResourceFromHexType(getMap().getHexType(hexLocation), currPlayer, isCity)) {
+            if (isRoll) {
+                return;
+            }
+        }
 
-        addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.North)), currPlayer, isCity);
+        if (addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.North)), currPlayer, isCity)) {
+            if (isRoll) {
+                return;
+            }
+        }
 
         switch(vertexDirection) {
             case NorthEast:
-                addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthEast)), currPlayer, isCity);
+                if (addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthEast)), currPlayer, isCity)) {
+                    if (isRoll) {
+                        return;
+                    }
+                }
                 break;
             case NorthWest:
-                addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthWest)), currPlayer, isCity);
+                if (addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthWest)), currPlayer, isCity)) {
+                    if (isRoll) {
+                        return;
+                    }
+                }
                 break;
         }
     }
 
-    public void addResourceFromHexType(HexType hexType, int currPlayer, boolean isCity) {
+    public boolean addResourceFromHexType(HexType hexType, int currPlayer, boolean isCity) {
         int amount;
         if (isCity) {
             amount = 2;
@@ -354,22 +374,22 @@ public class ServerGameModel {
         switch (hexType) {
             case BRICK:
                 players[currPlayer].addResources(new JsonResource(amount, 0, 0, 0, 0));
-                break;
+                return true;
             case ORE:
                 players[currPlayer].addResources(new JsonResource(0, 0, 0, 0, amount));
-                break;
+                return true;
             case SHEEP:
                 players[currPlayer].addResources(new JsonResource(0, 0, amount, 0, 0));
-                break;
+                return true;
             case WHEAT:
                 players[currPlayer].addResources(new JsonResource(0, 0, 0, amount, 0));
-                break;
+                return true;
             case WOOD:
                 players[currPlayer].addResources(new JsonResource(0, amount, 0, 0, 0));
-                break;
+                return true;
             default:
                 players[currPlayer].addResources(new JsonResource(0, 0, 0, 0, 0));
-                break;
+                return false;
         }
     }
 

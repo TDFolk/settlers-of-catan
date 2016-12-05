@@ -59,6 +59,9 @@ public class BuildSettlementCommand extends Command {
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
             ServerGameModel game = ServerModel.getInstance().getGame(super.gameId);
+            HexLocation hexLocation = vertexLocation.getNormalizedLocation().getHexLoc();
+            VertexDirection vertexDirection = vertexLocation.getNormalizedLocation().getDir();
+
             if(buildSettlementObject.isFree()){
                 game.getPlayers()[buildSettlementObject.getPlayerIndex()].decrementSettlement();
             }
@@ -68,15 +71,11 @@ public class BuildSettlementCommand extends Command {
 
             game.getMap().setSettlements(game.getMap().addToArray(
                     game.getMap().getSettlements(),
-                    new JsonPiece(null, 0, vertexDirection.toString(), new JsonLocation(x, y, vertexDirection.toString())),
+                    new JsonPiece(vertexDirection.toString(), new JsonLocation(x, y, vertexDirection.toString()), hexLocation, vertexDirection),
                     buildSettlementObject.getPlayerIndex()));
 
             if (game.getTurnTracker().getStatus().equals("SecondRound")) {
-                // May want to store these in JsonPiece as well
-                HexLocation hexLocation = vertexLocation.getNormalizedLocation().getHexLoc();
-                VertexDirection vertexDirection = vertexLocation.getNormalizedLocation().getDir();
-
-                game.grabProperResources(hexLocation, buildSettlementObject.getPlayerIndex(), vertexDirection, false);
+                game.grabProperResources(hexLocation, buildSettlementObject.getPlayerIndex(), vertexDirection, false, false);
             }
 
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
