@@ -6,6 +6,7 @@ import model.Facade;
 import model.Game;
 import model.map.Hex;
 import shared.definitions.CatanColor;
+import shared.definitions.HexType;
 import shared.locations.EdgeLocation;
 
 /**Server side model of the data for each individual game
@@ -321,6 +322,29 @@ public class ServerGameModel {
                 }
             }
 
+        }
+    }
+
+    public void addResourceFromHexType(HexType hexType, int currPlayer) {
+        switch (hexType) {
+            case BRICK:
+                players[currPlayer].addResources(new JsonResource(1, 0, 0, 0, 0));
+                break;
+            case ORE:
+                players[currPlayer].addResources(new JsonResource(0, 0, 0, 0, 1));
+                break;
+            case SHEEP:
+                players[currPlayer].addResources(new JsonResource(0, 0, 1, 0, 0));
+                break;
+            case WHEAT:
+                players[currPlayer].addResources(new JsonResource(0, 0, 0, 1, 0));
+                break;
+            case WOOD:
+                players[currPlayer].addResources(new JsonResource(0, 1, 0, 0, 0));
+                break;
+            default:
+                players[currPlayer].addResources(new JsonResource(0, 0, 0, 0, 0));
+                break;
         }
     }
 

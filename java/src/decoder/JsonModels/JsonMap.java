@@ -2,6 +2,7 @@ package decoder.JsonModels;
 
 import decoder.Directions;
 import shared.definitions.HexType;
+import shared.locations.HexLocation;
 
 
 /**
@@ -151,11 +152,38 @@ public class JsonMap {
         return hexes;
     }
 
-//    public HexType[] secondRoundResourceHexes() {
-//        if (settlements[1] != null) {
-//
-//        }
-//    }
+    public HexType getHexType(HexLocation hexLocation) {
+        for (int i = 0; i < defaultHexes().length; i++) {
+            if (hexLocation.getX() == defaultHexes()[i].getLocation().getX() &&
+                    hexLocation.getY() == defaultHexes()[i].getLocation().getY()) {
+                if (defaultHexes()[i].getResource() != null) {
+                    return stringToHexType(defaultHexes()[i].getResource());
+                }
+            }
+        }
+        return HexType.WATER; // This will end up adding no resources.. hardcode approach
+    }
+
+    private HexType stringToHexType(String resource) {
+        switch(resource) {
+            case "brick":
+                return HexType.BRICK;
+            case "ore":
+                return  HexType.ORE;
+            case "sheep":
+                return HexType.SHEEP;
+            case "wheat":
+                return HexType.WHEAT;
+            case "wood":
+                return HexType.WOOD;
+            case "water":
+                return HexType.WATER;
+            case "desert":
+                return HexType.DESERT;
+            default:
+                return HexType.WATER; // This will end up adding no resources.
+        }
+    }
 
     public JsonPiece[] getRoads() {
         return roads;

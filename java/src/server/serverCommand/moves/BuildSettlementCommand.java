@@ -9,10 +9,13 @@ import com.sun.net.httpserver.HttpExchange;
 import command.player.BuildSettlementObject;
 import decoder.JsonModels.JsonLocation;
 import decoder.JsonModels.JsonPiece;
+import model.Game;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
 import server.serverModel.ServerModel;
+import shared.locations.EdgeDirection;
+import shared.locations.HexLocation;
 import shared.locations.VertexDirection;
 import shared.locations.VertexLocation;
 
@@ -55,17 +58,34 @@ public class BuildSettlementCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
+            ServerGameModel game = ServerModel.getInstance().getGame(super.gameId);
             if(buildSettlementObject.isFree()){
-                ServerModel.getInstance().getGame(super.gameId).getPlayers()[buildSettlementObject.getPlayerIndex()].decrementSettlement();
+                game.getPlayers()[buildSettlementObject.getPlayerIndex()].decrementSettlement();
             }
             else {
-                ServerModel.getInstance().getGame(super.gameId).getPlayers()[buildSettlementObject.getPlayerIndex()].buySettlement();
+                game.getPlayers()[buildSettlementObject.getPlayerIndex()].buySettlement();
             }
 
-            ServerModel.getInstance().getGame(super.gameId).getMap().setSettlements(ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
-                    ServerModel.getInstance().getGame(super.gameId).getMap().getSettlements(),
+            game.getMap().setSettlements(game.getMap().addToArray(
+                    game.getMap().getSettlements(),
                     new JsonPiece(null, 0, vertexDirection.toString(), new JsonLocation(x, y, vertexDirection.toString())),
                     buildSettlementObject.getPlayerIndex()));
+
+            if (game.getTurnTracker().getStatus().equals("SecondRound")) {
+                HexLocation hexLocation = vertexLocation.getNormalizedLocation().getHexLoc();
+                game.addResourceFromHexType(game.getMap().getHexType(hexLocation), buildSettlementObject.getPlayerIndex());
+
+                game.addResourceFromHexType(game.getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.North)), buildSettlementObject.getPlayerIndex());
+
+                switch(vertexLocation.getNormalizedLocation().getDir()) {
+                    case NorthEast:
+                        game.addResourceFromHexType(game.getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthEast)), buildSettlementObject.getPlayerIndex());
+                        break;
+                    case NorthWest:
+                        game.addResourceFromHexType(game.getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthWest)), buildSettlementObject.getPlayerIndex());
+                        break;
+                }
+            }
 
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
