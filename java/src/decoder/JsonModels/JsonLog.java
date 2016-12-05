@@ -19,4 +19,11 @@ public class JsonLog {
     public void setLines(JsonLine[] lines) {
         this.lines = lines;
     }
+
+    public void addLine(String message, String source)
+    {
+        int lastIndex = lines.length;
+        lines = new JsonLine[lastIndex + 1];
+        lines[lastIndex] = new JsonLine(message, source);
+    }
 }
