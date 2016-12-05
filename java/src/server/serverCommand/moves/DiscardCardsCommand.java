@@ -27,6 +27,10 @@ public class DiscardCardsCommand extends Command {
 
 
         //TODO: NEEDS WORK AFTER ROLLING STARTS WORKING
+        //check what the json contains.. and check the object as well
+
+        String test = json;
+        String test2 = json;
     }
 
     /**

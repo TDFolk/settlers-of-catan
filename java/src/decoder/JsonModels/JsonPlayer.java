@@ -201,4 +201,20 @@ public class JsonPlayer {
         resources.setWheat(resources.getWheat() + resourcesToAdd.getWheat());
         resources.setWood(resources.getWood() + resourcesToAdd.getWood());
     }
+
+    public boolean checkResourceAmount(){
+        int amount = 0;
+        amount += resources.getBrick();
+        amount += resources.getOre();
+        amount += resources.getSheep();
+        amount += resources.getWheat();
+        amount += resources.getWood();
+
+        if(amount >= 7){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

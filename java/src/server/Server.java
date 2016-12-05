@@ -47,6 +47,7 @@ public class Server {
             initLogger();
             logger.info("Initializing Server");
             server = HttpServer.create(new InetSocketAddress(DEFAULT_PORT), 10);
+            logger.info("Done");
         }
         catch (IOException e) {
             logger.log(Level.SEVERE, e.getMessage(), e);
