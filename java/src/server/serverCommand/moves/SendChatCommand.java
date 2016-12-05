@@ -44,6 +44,8 @@ public class SendChatCommand extends Command {
             }
             else {
                 // Returns the client model JSON (identical to /game/model)
+                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
+
                 return new JsonPrimitive(response);
             }
         }
