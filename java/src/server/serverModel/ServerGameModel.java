@@ -460,7 +460,7 @@ public class ServerGameModel {
 
     public void newLongestRoad(int winner) {
 
-        if(turnTracker.getLargestArmy() != winner) {
+        if(turnTracker.getLongestRoad() != winner) {
 
 
             int currentWinner = turnTracker.getLongestRoad();
@@ -472,9 +472,28 @@ public class ServerGameModel {
 
             turnTracker.setLongestRoad(winner);
 
-            players[currentWinner].incrementPoints();
-            players[currentWinner].incrementPoints();
+            players[winner].incrementPoints();
+            players[winner].incrementPoints();
         }
 
+    }
+
+    public void newLargestArmy(int winner)
+    {
+        if(turnTracker.getLargestArmy() != winner) {
+
+
+            int currentWinner = turnTracker.getLargestArmy();
+
+            if (currentWinner != -1) {
+                players[currentWinner].setVictoryPoints(players[currentWinner].getVictoryPoints() - 2);
+
+            }
+
+            turnTracker.setLongestRoad(winner);
+
+            players[winner].incrementPoints();
+            players[winner].incrementPoints();
+        }
     }
 }
