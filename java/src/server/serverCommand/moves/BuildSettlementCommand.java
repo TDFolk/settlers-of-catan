@@ -75,7 +75,7 @@ public class BuildSettlementCommand extends Command {
                     buildSettlementObject.getPlayerIndex()));
 
             if (game.getTurnTracker().getStatus().equals("SecondRound")) {
-                game.grabProperResources(hexLocation, buildSettlementObject.getPlayerIndex(), vertexDirection, false, false);
+                game.grabProperResources(hexLocation, buildSettlementObject.getPlayerIndex(), vertexDirection, false);
             }
 
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();

@@ -323,52 +323,54 @@ public class ServerGameModel {
                 //check each vertex around this hex and reward those players the resource of the hex
                 for(JsonPiece piece : map.getSettlements())
                 {
-                    if () {
-
-
-
+                    if (piece.getHexLocation().getX() == hex.getLocation().getX() &&
+                            piece.getHexLocation().getY() == hex.getLocation().getY()) {
                         addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), false);
+                    }
+                    else if (piece.getHexLocation().getNeighborLoc(EdgeDirection.North).getX() == hex.getLocation().getX() &&
+                            piece.getHexLocation().getNeighborLoc(EdgeDirection.North).getY() == hex.getLocation().getY()) {
+                        addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), false);
+                    }
+                    else {
+                        switch(piece.getVertexDirection()) {
+                            case NorthEast:
+                                if (piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthEast).getX() == hex.getLocation().getX() &&
+                                        piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthEast).getY() == hex.getLocation().getY()) {
+                                    addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), false);
+                                }
+                                break;
+                            case NorthWest:
+                                if (piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthWest).getX() == hex.getLocation().getX() &&
+                                        piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthWest).getY() == hex.getLocation().getY()) {
+                                    addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), false);
+                                }
+                                break;
+                        }
                     }
                 }
 
                 for(JsonPiece piece : map.getCities())
                 {
-                    if () {
-
-                    }
+                    
                 }
             }
 
         }
     }
 
-    public void grabProperResources(HexLocation hexLocation, int currPlayer, VertexDirection vertexDirection, boolean isCity, boolean isRoll) {
-        if (addResourceFromHexType(getMap().getHexType(hexLocation), currPlayer, isCity)) {
-            if (isRoll) {
-                return;
-            }
-        }
+    public void grabProperResources(HexLocation hexLocation, int currPlayer, VertexDirection vertexDirection, boolean isCity) {
+        addResourceFromHexType(getMap().getHexType(hexLocation), currPlayer, isCity);
 
-        if (addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.North)), currPlayer, isCity)) {
-            if (isRoll) {
-                return;
-            }
-        }
+
+        addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.North)), currPlayer, isCity);
+
 
         switch(vertexDirection) {
             case NorthEast:
-                if (addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthEast)), currPlayer, isCity)) {
-                    if (isRoll) {
-                        return;
-                    }
-                }
+                addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthEast)), currPlayer, isCity);
                 break;
             case NorthWest:
-                if (addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthWest)), currPlayer, isCity)) {
-                    if (isRoll) {
-                        return;
-                    }
-                }
+                addResourceFromHexType(getMap().getHexType(hexLocation.getNeighborLoc(EdgeDirection.NorthWest)), currPlayer, isCity);
                 break;
         }
     }
