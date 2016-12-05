@@ -299,16 +299,8 @@ public class ServerGameModel {
             turnTracker.beginPlayingState();
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         this.incrementVersion();
-=======
-
->>>>>>> origin/master
-=======
->>>>>>> 06ff2dbd534a678a0fe5a2957f8487997afdd7b0
         return getJsonFromModel();
-
     }
 
     private void rewardResources(int numberRolled)
