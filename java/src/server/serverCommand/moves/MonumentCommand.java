@@ -24,12 +24,15 @@ public class MonumentCommand extends Command {
     /**
      * This method will handle executing the commands
      *
-     * @param json jsonString that will populate the JsonElement
      * @return returns a json element from the given jsonString
      */
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
+
+            if()
+
+
             String response = ServerFacade.getInstance().monument(monumentObject.getPlayerIndex());
 
             if(response == null){

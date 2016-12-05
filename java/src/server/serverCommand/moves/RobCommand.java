@@ -59,6 +59,7 @@ public class RobCommand extends Command {
                 return new JsonPrimitive("Invalid");
             }
             else {
+                ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginPlayingState();
                 ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
