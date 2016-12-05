@@ -10,6 +10,7 @@ import command.player.BuildRoadObject;
 import decoder.JsonModels.JsonLocation;
 import decoder.JsonModels.JsonMap;
 import decoder.JsonModels.JsonPiece;
+import decoder.JsonModels.JsonPlayer;
 import server.Server;
 import server.ServerFacade;
 import server.serverCommand.Command;
@@ -86,4 +87,31 @@ public class BuildRoadCommand extends Command {
             return new JsonPrimitive("catan.game and/or catan.user cookies are missing");
         }
     }
+
+    private void calculateMostRoads()
+    {
+        int STARTING_ROADS = 15;
+
+        JsonPlayer[] players = ServerModel.getInstance().getGame(super.gameId).getPlayers();
+
+        int winner = -1;
+
+        int mostRoads = 0;
+
+        for(int i = 0; i < players.length; i++)
+        {
+            int curPlayerRoads = STARTING_ROADS - players[i].getRoads();
+            if( curPlayerRoads > mostRoads)
+            {
+                mostRoads = curPlayerRoads;
+                winner = i;
+            }
+        }
+
+        if(mostRoads >= 5)
+        {
+            ServerModel.getInstance().getGame(super.gameId).getTurnTracker().setLongestRoad(winner);
+        }
+    }
+
 }

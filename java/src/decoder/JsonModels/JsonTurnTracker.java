@@ -40,6 +40,8 @@ public class JsonTurnTracker {
 
     public void setLongestRoad(int longestRoad) {
         this.longestRoad = longestRoad;
+
+
     }
 
     public int getLargestArmy() {
