@@ -300,10 +300,13 @@ public class ServerGameModel {
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         this.incrementVersion();
 =======
 
 >>>>>>> origin/master
+=======
+>>>>>>> 06ff2dbd534a678a0fe5a2957f8487997afdd7b0
         return getJsonFromModel();
 
     }
@@ -332,6 +335,7 @@ public class ServerGameModel {
                     }
                 }
             }
+
         }
     }
 
@@ -439,13 +443,5 @@ public class ServerGameModel {
         this.version++;
     }
 
-    public void addLog(String message, String source)
-    {
-        log.addLine(message,source);
-    }
-
-    public void addMessage(String message, String source)
-    {
-        chat.addLine(message,source);
-    }
+ 
 }
