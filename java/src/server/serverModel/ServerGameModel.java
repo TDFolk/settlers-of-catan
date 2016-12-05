@@ -313,17 +313,18 @@ public class ServerGameModel {
                 //check each vertex around this hex and reward those players the resource of the hex
                 for(JsonPiece piece : map.getSettlements())
                 {
-                    if (piece.getLocation().getX() == hex.getLocation().getX() &&
-                            piece.getLocation().getY() == hex.getLocation().getY()) {
-                        grabProperResources(piece.getHexLocation(), piece.getOwner(), piece.getVertexDirection(), false, true);
+                    if () {
+
+
+
+                        addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), false);
                     }
                 }
 
                 for(JsonPiece piece : map.getCities())
                 {
-                    if(piece.getLocation().getX() == hex.getLocation().getX() &&
-                            piece.getLocation().getY() == hex.getLocation().getY()) {
-                        grabProperResources(piece.getHexLocation(), piece.getOwner(), piece.getVertexDirection(), true, true);
+                    if () {
+
                     }
                 }
             }

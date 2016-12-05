@@ -164,7 +164,7 @@ public class JsonMap {
         return HexType.WATER; // This will end up adding no resources.. hardcode approach
     }
 
-    private HexType stringToHexType(String resource) {
+    public HexType stringToHexType(String resource) {
         switch(resource) {
             case "brick":
                 return HexType.BRICK;
