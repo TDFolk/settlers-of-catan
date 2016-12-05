@@ -289,11 +289,21 @@ public class ServerGameModel {
 
         if(numberRolled == 7)
         {
-            turnTracker.beginDiscardingState();
+            int cont = 0;
+            for(int i = 0; i < 4; i++){
+                if(getPlayers()[i].checkResourceAmount()){
+                    cont++;
+                }
+            }
+            if(cont == 0){
+                turnTracker.beginRobbingState();
+            }
+            else{
+                turnTracker.beginDiscardingState();
+            }
         }
         else
         {
-
             rewardResources(numberRolled);
 
             turnTracker.beginPlayingState();
