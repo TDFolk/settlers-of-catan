@@ -192,8 +192,13 @@ public class ServerFacade implements IServer {
      * @post The chat contains your message at the end
      */
     @Override
-    public String sendChat(int playerIndex, String content) {
+    public String sendChat(int playerIndex, String content)
+    {
         return null;
+    }
+
+    public String sendChat(String userName, int gameID, String content) {
+        return ServerModel.getInstance().sendChat(userName, gameID, content);
     }
 
     /**

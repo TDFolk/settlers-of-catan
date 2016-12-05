@@ -8,6 +8,7 @@ import command.player.SendChatObject;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
+import server.serverModel.ServerModel;
 
 /**
  * Created by jihoon on 11/7/2016.
@@ -31,8 +32,11 @@ public class SendChatCommand extends Command {
      */
     @Override
     public JsonElement execute() {
+
+        String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
+
         if(super.hasGameCookie && super.hasUserCookie){
-            String response = ServerFacade.getInstance().sendChat(sendChatObject.getPlayerIndex(),
+            String response = ServerFacade.getInstance().sendChat(userName, super.gameId,
                                                     sendChatObject.getContent());
 
             if(response == null){

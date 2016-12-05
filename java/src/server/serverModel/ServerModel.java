@@ -376,4 +376,10 @@ public class ServerModel {
     {
         return registeredUsers.get(ID);
     }
+
+    public String sendChat(String userName, int gameID, String content) {
+        getGame(gameID).addMessage(content, userName);
+        return getGame(gameID).getJsonFromModel();
+
+    }
 }
