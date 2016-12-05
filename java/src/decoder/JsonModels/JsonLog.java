@@ -23,7 +23,16 @@ public class JsonLog {
     public void addLine(String message, String source)
     {
         int lastIndex = lines.length;
-        lines = new JsonLine[lastIndex + 1];
-        lines[lastIndex] = new JsonLine(message, source);
+        JsonLine[] newlines = new JsonLine[lastIndex + 1];
+
+        for(int i = 0; i < lines.length; i++)
+        {
+            newlines[i] = lines[i];
+        }
+
+        newlines[lastIndex] = new JsonLine(message, source);
+
+        lines = newlines;
+
     }
 }
