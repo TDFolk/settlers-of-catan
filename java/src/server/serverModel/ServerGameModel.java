@@ -420,4 +420,9 @@ public class ServerGameModel {
     {
         log.addLine(message,source);
     }
+
+    public void addMessage(String message, String source)
+    {
+        chat.addLine(message,source);
+    }
 }
