@@ -124,6 +124,12 @@ public abstract class Command implements Serializable{
         return edgeLocation;
     }
 
+    public HexLocation fetchHexLocation(JsonObject jsonObject){
+        int x = jsonObject.get("x").getAsInt();
+        int y = jsonObject.get("y").getAsInt();
+        HexLocation hexLocation = new HexLocation(x, y);
+        return hexLocation;
+    }
 
     /**
      * This method will handle the serialization of objects using BAOS

@@ -240,4 +240,12 @@ public class JsonMap {
     public void setHexes(JsonHex[] hexes) {
         this.hexes = hexes;
     }
+
+    public void changeRobberLocation(HexLocation hexLocation){
+        int x = hexLocation.getX();
+        int y = hexLocation.getY();
+
+        this.robber.setX(x);
+        this.robber.setY(y);
+    }
 }

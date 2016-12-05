@@ -10,6 +10,7 @@ import com.sun.net.httpserver.HttpExchange;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
+import server.serverModel.ServerModel;
 
 /**
  * Created by jihoon on 11/7/2016.
@@ -23,25 +24,38 @@ public class DiscardCardsCommand extends Command {
     public DiscardCardsCommand(HttpExchange httpExchange) {
         super(httpExchange);
         discardCardsObject = gson.fromJson(json, DiscardCardsObject.class);
+
+
+        //TODO: NEEDS WORK AFTER ROLLING STARTS WORKING
     }
 
     /**
      * This method will handle executing the commands
      *
-     * @param json jsonString that will populate the JsonElement
      * @return returns a json element from the given jsonString
      */
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            String response = ServerFacade.getInstance().discardCards(discardCardsObject.getPlayerIndex(),
-                                                        discardCardsObject.getDiscardedCards());
+
+            //decrement the player resource list with the discarded cards resource
+
+
+
+//            String response = ServerFacade.getInstance().discardCards(discardCardsObject.getPlayerIndex(),
+//                                                        discardCardsObject.getDiscardedCards());
+
+            String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
+
 
             if(response == null){
                 return new JsonPrimitive("Invalid");
             }
             else {
-                // Returns the client model JSON (identical to /game/model)
+                //start the robbing state after the discarding state
+                ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginRobbingState();
+
+                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }

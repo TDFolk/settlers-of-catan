@@ -7,6 +7,7 @@ import command.player.RollNumberObject;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
+import server.serverModel.ServerModel;
 
 /**
  * Created by jihoon on 11/7/2016.
@@ -35,6 +36,11 @@ public class RollCommand extends Command {
                 return new JsonPrimitive("Invalid");
             }
             else {
+
+                String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
+                String historyMessage = userName + " rolled a " + rollNumberObject.getNumber();
+                ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
+
                 // Returns the client model JSON (identical to /game/model)
                 return new JsonPrimitive(response);
             }

@@ -8,6 +8,12 @@ public class JsonLine {
     private String message;
     private String source;
 
+    public JsonLine(String message, String source)
+    {
+        this.message = message;
+        this.source = source;
+    }
+
     public String getMessage() {
         return message;
     }

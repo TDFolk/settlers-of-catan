@@ -299,7 +299,11 @@ public class ServerGameModel {
             turnTracker.beginPlayingState();
         }
 
+<<<<<<< HEAD
         this.incrementVersion();
+=======
+
+>>>>>>> origin/master
         return getJsonFromModel();
 
     }
@@ -328,7 +332,6 @@ public class ServerGameModel {
                     }
                 }
             }
-
         }
     }
 
@@ -434,5 +437,15 @@ public class ServerGameModel {
     public void incrementVersion()
     {
         this.version++;
+    }
+
+    public void addLog(String message, String source)
+    {
+        log.addLine(message,source);
+    }
+
+    public void addMessage(String message, String source)
+    {
+        chat.addLine(message,source);
     }
 }
