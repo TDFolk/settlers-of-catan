@@ -371,4 +371,9 @@ public class ServerModel {
     public String rollNumber(int gameID, int number) {
         return getGame(gameID).roll(number);
     }
+
+    public String getUsernameFromID(int ID)
+    {
+        return registeredUsers.get(ID);
+    }
 }

@@ -90,6 +90,10 @@ public class BuildSettlementCommand extends Command {
                 return new JsonPrimitive("Invalid");
             }
             else {
+                String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
+                String historyMessage = userName + " has built a settlement";
+                ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
+
                 // Returns the client model JSON (identical to /game/model)
                 ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);

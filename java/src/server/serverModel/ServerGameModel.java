@@ -299,6 +299,7 @@ public class ServerGameModel {
             turnTracker.beginPlayingState();
         }
 
+
         return getJsonFromModel();
 
     }
