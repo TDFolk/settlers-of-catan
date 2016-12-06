@@ -1,5 +1,7 @@
 package decoder.JsonModels;
 
+import model.cards_resources.ResourceCards;
+
 /**
  * Created by bvanc on 10/25/2016.
  */
@@ -7,6 +9,13 @@ public class JsonTradeOffer {
     private int sender;
     private int receiver;
     private JsonResource offer;
+
+    public JsonTradeOffer(int sender, ResourceCards offer, int receiver)
+    {
+        this.sender = sender;
+        this.offer = new JsonResource(offer.getBrick(), offer.getWood(), offer.getSheep(), offer.getWheat(), offer.getOre());
+        this.receiver = receiver;
+    }
 
     public int getSender() {
         return sender;

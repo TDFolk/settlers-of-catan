@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import decoder.JsonModels.*;
 import model.Facade;
 import model.Game;
+import model.cards_resources.ResourceCards;
 import model.map.Hex;
 import shared.definitions.CatanColor;
 import shared.definitions.HexType;
@@ -167,7 +168,29 @@ public class ServerGameModel {
      *
      * @return the entire model of the game in Json string form
      */
-    public String acceptTrade(){return getJsonFromModel();}
+    public String acceptTrade(boolean willAccept){
+
+        if(willAccept)
+        {
+            //exchange the resources from each player
+
+            //sender
+            JsonResource senderResult = new JsonResource(players[tradeOffer.getSender()].getResources(), tradeOffer.getOffer(), true);
+            players[tradeOffer.getSender()].setResources(senderResult);
+
+            //receiver
+            JsonResource receiverResult = new JsonResource(players[tradeOffer.getSender()].getResources(), tradeOffer.getOffer(), false);
+            players[tradeOffer.getReceiver()].setResources(receiverResult);
+
+            tradeOffer = null;
+        }
+        else
+        {
+            tradeOffer = null;
+        }
+
+        return getJsonFromModel();
+    }
 
     public String addAI() {
         //addPlayer("brown", "Foo", 17);
@@ -267,7 +290,13 @@ public class ServerGameModel {
      *
      * @return the entire model of the game in Json string form
      */
-    public String offerTrade(){return getJsonFromModel();}
+    public String offerTrade(int playerIndex, ResourceCards offer, int receiver){
+
+        JsonTradeOffer newTrade = new JsonTradeOffer(playerIndex, offer, receiver);
+
+        return getJsonFromModel();
+
+    }
 
     /**changes the data of the model according to the road building card being played
      *

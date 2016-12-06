@@ -28,7 +28,7 @@ public class AcceptTradeCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            String response = ServerFacade.getInstance().acceptTrade(acceptTradeObject.getPlayerIndex(), acceptTradeObject.isWillAccept());
+            String response = ServerFacade.getInstance().acceptTrade(super.gameId, acceptTradeObject.getPlayerIndex(), acceptTradeObject.isWillAccept());
 
             if(response == null){
                 return new JsonPrimitive("Invalid");

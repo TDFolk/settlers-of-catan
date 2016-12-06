@@ -35,7 +35,7 @@ public class OfferTradeCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            String response = ServerFacade.getInstance().offerTrade(offerTradeObject.getPlayerIndex(),
+            String response = ServerFacade.getInstance().offerTrade(super.gameId, offerTradeObject.getPlayerIndex(),
                                                         offerTradeObject.getOffer(), offerTradeObject.getReceiver());
 
             if(response == null){
