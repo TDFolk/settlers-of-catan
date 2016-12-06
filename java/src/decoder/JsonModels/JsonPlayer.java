@@ -1,5 +1,8 @@
 package decoder.JsonModels;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by bvanc on 10/3/2016.
  */
@@ -216,5 +219,25 @@ public class JsonPlayer {
         else {
             return false;
         }
+    }
+
+    public List<String> getRobList(){
+        List<String> robList = new ArrayList<>();
+        if(resources.getBrick() > 0){
+            robList.add("brick");
+        }
+        if(resources.getOre() > 0) {
+            robList.add("ore");
+        }
+        if(resources.getSheep() > 0){
+            robList.add("sheep");
+        }
+        if(resources.getWheat() > 0){
+            robList.add("wheat");
+        }
+        if(resources.getWood() > 0){
+            robList.add("wood");
+        }
+        return robList;
     }
 }

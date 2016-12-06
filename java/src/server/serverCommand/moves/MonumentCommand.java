@@ -7,6 +7,7 @@ import command.player.MonumentObject;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
+import server.serverModel.ServerModel;
 
 /**
  * Created by jihoon on 11/7/2016.
@@ -30,15 +31,20 @@ public class MonumentCommand extends Command {
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
 
-            if()
+            int victoryPoints = ServerModel.getInstance().getGame(super.gameId).getPlayers()[monumentObject.getPlayerIndex()].getVictoryPoints();
+            int monuments = ServerModel.getInstance().getGame(super.gameId).getPlayers()[monumentObject.getPlayerIndex()].getMonuments();
 
+            if(victoryPoints + monuments >= 10){
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[monumentObject.getPlayerIndex()].setVictoryPoints(10);
+            }
 
-            String response = ServerFacade.getInstance().monument(monumentObject.getPlayerIndex());
+            String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){
                 return new JsonPrimitive("Invalid");
             }
             else {
+                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }
