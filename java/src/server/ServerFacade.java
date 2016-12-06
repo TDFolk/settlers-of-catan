@@ -217,10 +217,6 @@ public class ServerFacade implements IServer {
         return null;
     }
 
-    public String acceptTrade(int gameId, int playerIndex, boolean willAccept) {
-        return ServerModel.getInstance().getGame(gameId).acceptTrade(willAccept);
-    }
-
     /**
      * Discards the desired cards from the resource hand
      *
@@ -316,13 +312,14 @@ public class ServerFacade implements IServer {
      * @post the trade is offered to the other player(stored in the server model)
      */
     @Override
-    public String offerTrade(int playerIndex, ResourceCards offer, int receiver) {
+      public String offerTrade(int playerIndex, ResourceCards offer, int receiver) {
         return null;
     }
 
-    public String offerTrade(int gameID, int playerIndex, ResourceCards offer, int receiver) {
-        return ServerModel.getInstance().getGame(gameID).offerTrade(playerIndex, offer, receiver);
+    public String offerTrade(int gameId, int playerIndex, ResourceCards offer, int receiver) {
+        return ServerModel.getInstance().getGame(gameId).offerTrade(playerIndex, offer, receiver);
     }
+
 
     /**
      * Trades with a port

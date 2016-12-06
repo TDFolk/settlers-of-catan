@@ -294,6 +294,8 @@ public class ServerGameModel {
 
         JsonTradeOffer newTrade = new JsonTradeOffer(playerIndex, offer, receiver);
 
+        tradeOffer = newTrade;
+
         return getJsonFromModel();
 
     }
