@@ -52,25 +52,25 @@ public class BuildCityCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
+            ServerGameModel game = ServerModel.getInstance().getGame(super.gameId);
 
             //decrement the resources required to buy a city
             ServerModel.getInstance().getGame(super.gameId).getPlayers()[buildCityObject.getPlayerIndex()].buyCity();
 
-            ServerModel.getInstance().getGame(super.gameId).getMap().setCities(ServerModel.getInstance().getGame(super.gameId).getMap().addToArray(
-                    ServerModel.getInstance().getGame(super.gameId).getMap().getCities(),
-                    new JsonPiece(null, 0, vertexDirection.toString(), new JsonLocation(x, y, vertexDirection.toString())),
-                    buildCityObject.getPlayerIndex()));
-
-
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             //TODO: INCREMENT POINTS HERE; ERASE SETTLEMENT FROM SETTLEMENTS ARRAY???
-
+            JsonPiece city = new JsonPiece(null, 0, vertexDirection.toString(), new JsonLocation(x, y, vertexDirection.toString()));
+            game.getMap().citySettlementSwap(city, buildCityObject.getPlayerIndex());
 
             if(response == null){
                 return new JsonPrimitive("Invalid");
             }
             else {
+                String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
+                String historyMessage = userName + " has built a city";
+                ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
+
                 // Returns the client model JSON (identical to /game/model)
                 ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);

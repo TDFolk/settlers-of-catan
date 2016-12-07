@@ -4,6 +4,9 @@ import decoder.Directions;
 import shared.definitions.HexType;
 import shared.locations.HexLocation;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 
 /**
  * Created by bvanc on 9/30/2016.
@@ -33,6 +36,27 @@ public class JsonMap {
 
         return newArray;
 
+    }
+
+    public void citySettlementSwap(JsonPiece city, int playerIndex) {
+        int settlementIndex = 0;
+        for (int i = 0; i < settlements.length; i++) {
+            if (settlements[i].getLocation().getX() == city.getLocation().getX() &&
+                    settlements[i].getLocation().getY() == city.getLocation().getY() &&
+                    settlements[i].getOwner() == playerIndex) {
+                settlementIndex = i;
+            }
+        }
+
+        ArrayList<JsonPiece> settlementArrayList = new ArrayList<>(Arrays.asList(settlements));
+        settlementArrayList.remove(settlementIndex);
+
+        JsonPiece[] newSettlements = new JsonPiece[settlementArrayList.size()];
+        newSettlements = settlementArrayList.toArray(newSettlements);
+
+        this.settlements = newSettlements;
+
+        addToArray(this.cities, city, playerIndex);
     }
 
     public JsonMap()

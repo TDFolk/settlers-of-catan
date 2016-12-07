@@ -432,7 +432,30 @@ public class ServerGameModel {
 
                 for(JsonPiece piece : map.getCities())
                 {
-                    
+                    if (piece.getHexLocation().getX() == hex.getLocation().getX() &&
+                            piece.getHexLocation().getY() == hex.getLocation().getY()) {
+                        addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), true);
+                    }
+                    else if (piece.getHexLocation().getNeighborLoc(EdgeDirection.North).getX() == hex.getLocation().getX() &&
+                            piece.getHexLocation().getNeighborLoc(EdgeDirection.North).getY() == hex.getLocation().getY()) {
+                        addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), true);
+                    }
+                    else {
+                        switch(piece.getVertexDirection()) {
+                            case NorthEast:
+                                if (piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthEast).getX() == hex.getLocation().getX() &&
+                                        piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthEast).getY() == hex.getLocation().getY()) {
+                                    addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), true);
+                                }
+                                break;
+                            case NorthWest:
+                                if (piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthWest).getX() == hex.getLocation().getX() &&
+                                        piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthWest).getY() == hex.getLocation().getY()) {
+                                    addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), true);
+                                }
+                                break;
+                        }
+                    }
                 }
             }
 
