@@ -251,4 +251,24 @@ public class JsonPlayer {
     public void incrementPlayedSoldiers(){
         playedSoldiers++;
     }
+
+    public void decrementBrick(){
+        resources.setBrick(resources.getBrick() - 1);
+    }
+
+    public void decrementWood(){
+        resources.setWood(resources.getWood() - 1);
+    }
+
+    public void decrementSheep(){
+        resources.setSheep(resources.getSheep() - 1);
+    }
+
+    public void decrementOre(){
+        resources.setOre(resources.getOre() - 1);
+    }
+
+    public void decrementWheat(){
+        resources.setWheat(resources.getWheat() - 1);
+    }
 }

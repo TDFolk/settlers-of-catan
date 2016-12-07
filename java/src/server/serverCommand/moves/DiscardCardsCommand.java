@@ -1,5 +1,7 @@
 package server.serverCommand.moves;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import com.google.gson.JsonPrimitive;
 import command.player.DiscardCardsObject;
 import model.cards_resources.ResourceCards;
@@ -17,20 +19,26 @@ import server.serverModel.ServerModel;
  */
 public class DiscardCardsCommand extends Command {
 	
-	private int playerIndex;
-	private ResourceCards discardedCards;
+//	private int playerIndex;
+//	private ResourceCards discardedCards;
     private DiscardCardsObject discardCardsObject;
+    private int brick;
+    private int wood;
+    private int ore;
+    private int sheep;
+    private int wheat;
 
     public DiscardCardsCommand(HttpExchange httpExchange) {
         super(httpExchange);
         discardCardsObject = gson.fromJson(json, DiscardCardsObject.class);
 
-
-        //TODO: NEEDS WORK AFTER ROLLING STARTS WORKING
-        //check what the json contains.. and check the object as well
-
-        String test = json;
-        String test2 = json;
+        JsonObject jsonObject = new JsonParser().parse(json).getAsJsonObject();
+        JsonObject discardedCards = jsonObject.get("discardedCards").getAsJsonObject();
+        brick = discardedCards.get("brick").getAsInt();
+        wood = discardedCards.get("wood").getAsInt();
+        ore = discardedCards.get("ore").getAsInt();
+        sheep = discardedCards.get("sheep").getAsInt();
+        wheat = discardedCards.get("wheat").getAsInt();
     }
 
     /**
@@ -42,12 +50,29 @@ public class DiscardCardsCommand extends Command {
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
 
-            //decrement the player resource list with the discarded cards resource
+            for(int i = 0; i < brick; i++){
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[discardCardsObject.getPlayerIndex()].decrementBrick();
+            }
 
+            for(int i = 0; i < wood; i++){
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[discardCardsObject.getPlayerIndex()].decrementWood();
 
+            }
 
-//            String response = ServerFacade.getInstance().discardCards(discardCardsObject.getPlayerIndex(),
-//                                                        discardCardsObject.getDiscardedCards());
+            for(int i = 0; i < ore; i++){
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[discardCardsObject.getPlayerIndex()].decrementOre();
+
+            }
+
+            for(int i = 0; i < sheep; i++){
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[discardCardsObject.getPlayerIndex()].decrementSheep();
+
+            }
+
+            for(int i = 0; i < wheat; i++){
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[discardCardsObject.getPlayerIndex()].decrementWheat();
+
+            }
 
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
