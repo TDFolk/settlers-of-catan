@@ -189,6 +189,7 @@ public class ServerGameModel {
             tradeOffer = null;
         }
 
+        incrementVersion();
         return getJsonFromModel();
     }
 
