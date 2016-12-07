@@ -382,4 +382,9 @@ public class ServerModel {
         return getGame(gameID).getJsonFromModel();
 
     }
+
+    public String maritimeTrade(int gameID, int playerIndex, int ratio, String inputResource, String outputResource)
+    {
+        return getGame(gameID).maritimeTrade(playerIndex, ratio, inputResource, outputResource);
+    }
 }

@@ -34,7 +34,7 @@ public class MaritimeTradeCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
-            String response = ServerFacade.getInstance().maritimeTrade(maritimeTradeObject.getPlayerIndex(),
+            String response = ServerFacade.getInstance().maritimeTrade(super.gameId, maritimeTradeObject.getPlayerIndex(),
                                                     maritimeTradeObject.getRatio(), maritimeTradeObject.getInputResource(),
                                                     maritimeTradeObject.getOutputResource());
 

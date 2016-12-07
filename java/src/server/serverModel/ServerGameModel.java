@@ -271,8 +271,58 @@ public class ServerGameModel {
     /**changes the data of the model according to the maritime trade being offered
      *
      * @return the entire model of the game in Json string form
+     * @param playerIndex
+     * @param ratio
+     * @param inputResource
+     * @param outputResource
      */
-    public String maritimeTrade(){return getJsonFromModel();}
+    public String maritimeTrade(int playerIndex, int ratio, String inputResource, String outputResource)
+    {
+
+        JsonResource currentResources = players[playerIndex].getResources();
+
+        switch (inputResource)
+        {
+            case "brick":
+                currentResources.setBrick(currentResources.getBrick() - ratio);
+                break;
+            case "ore":
+                currentResources.setBrick(currentResources.getOre() - ratio);
+                break;
+            case "sheep":
+                currentResources.setBrick(currentResources.getSheep() - ratio);
+                break;
+            case "wheat":
+                currentResources.setBrick(currentResources.getWheat() - ratio);
+                break;
+            case "wood":
+                currentResources.setBrick(currentResources.getWood() - ratio);
+                break;
+        }
+
+        switch (outputResource)
+        {
+            case "brick":
+                currentResources.setBrick(currentResources.getBrick() + 1);
+                break;
+            case "ore":
+                currentResources.setBrick(currentResources.getOre() + 1);
+                break;
+            case "sheep":
+                currentResources.setBrick(currentResources.getSheep() + 1);
+                break;
+            case "wheat":
+                currentResources.setBrick(currentResources.getWheat() + 1);
+                break;
+            case "wood":
+                currentResources.setBrick(currentResources.getWood() + 1);
+                break;
+        }
+
+
+
+        return getJsonFromModel();
+    }
 
     /**changes the data of the model according to the monopoly card being played
      *

@@ -338,6 +338,10 @@ public class ServerFacade implements IServer {
         return null;
     }
 
+    public String maritimeTrade(int gameID, int playerIndex, int ratio, String inputResource, String outputResource) {
+        return ServerModel.getInstance().maritimeTrade(gameID,  playerIndex,  ratio,
+                inputResource, outputResource);
+    }
     /**
      * Robs a player
      *
