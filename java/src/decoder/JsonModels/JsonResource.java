@@ -21,22 +21,22 @@ public class JsonResource {
 
     public JsonResource(JsonResource playerResources, JsonResource tradeOffer, boolean isSender)
     {
-        //a trade offer with negative numbers is what the sender is offering, the positive numbers are what they are asking for
+        //a trade offer with positive numbers is what the sender is offering, the negative numbers are what they are asking for
         if(isSender)
-        {
-            this.brick = playerResources.getBrick() - tradeOffer.getBrick();
-            this.wood = playerResources.getWood() - tradeOffer.getWood();
-            this.sheep = playerResources.getSheep() - tradeOffer.getSheep();
-            this.wheat = playerResources.getWheat() - tradeOffer.getWheat();
-            this.ore = playerResources.getOre() - tradeOffer.getOre();
-        }
-        else
         {
             this.brick = playerResources.getBrick() + tradeOffer.getBrick();
             this.wood = playerResources.getWood() + tradeOffer.getWood();
             this.sheep = playerResources.getSheep() + tradeOffer.getSheep();
             this.wheat = playerResources.getWheat() + tradeOffer.getWheat();
             this.ore = playerResources.getOre() + tradeOffer.getOre();
+        }
+        else
+        {
+            this.brick = playerResources.getBrick() - tradeOffer.getBrick();
+            this.wood = playerResources.getWood() - tradeOffer.getWood();
+            this.sheep = playerResources.getSheep() - tradeOffer.getSheep();
+            this.wheat = playerResources.getWheat() - tradeOffer.getWheat();
+            this.ore = playerResources.getOre() - tradeOffer.getOre();
         }
 
 
