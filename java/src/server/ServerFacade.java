@@ -217,6 +217,10 @@ public class ServerFacade implements IServer {
         return null;
     }
 
+    public String acceptTrade(int gameID, int playerIndex, boolean willAccept) {
+        return ServerModel.getInstance().acceptTrade(gameID, playerIndex, willAccept);
+    }
+
     /**
      * Discards the desired cards from the resource hand
      *

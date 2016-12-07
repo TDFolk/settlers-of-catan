@@ -387,4 +387,10 @@ public class ServerModel {
     {
         return getGame(gameID).maritimeTrade(playerIndex, ratio, inputResource, outputResource);
     }
+
+    public String acceptTrade(int gameID, int playerIndex, boolean willAccept) {
+
+        return getGame(gameID).acceptTrade(willAccept);
+
+    }
 }
