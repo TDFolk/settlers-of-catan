@@ -39,6 +39,8 @@ public class BuyDevCardCommand extends Command {
 
             buyDevCard(buyDevCardObject.getPlayerIndex());
 
+            ServerModel.getInstance().getGame(super.gameId).getPlayers()[buyDevCardObject.getPlayerIndex()].decrementDevCard();
+
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){

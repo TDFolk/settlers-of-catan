@@ -196,6 +196,12 @@ public class JsonPlayer {
         settlements++;
     }
 
+    public void decrementDevCard(){
+        resources.setWheat(resources.getWheat() - 1);
+        resources.setOre(resources.getOre() - 1);
+        resources.setSheep(resources.getSheep() - 1);
+    }
+
     public void incrementPoints(){
         victoryPoints++;
     }

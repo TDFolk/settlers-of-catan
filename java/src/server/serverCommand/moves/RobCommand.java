@@ -52,6 +52,13 @@ public class RobCommand extends Command {
             //steal the victim's resource
             stealFromPlayer(robPlayerObject.getPlayerIndex(), robPlayerObject.getVictimIndex());
 
+
+
+
+            
+            ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginPlayingState();
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
+
             //return the model
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
@@ -59,8 +66,6 @@ public class RobCommand extends Command {
                 return new JsonPrimitive("Invalid");
             }
             else {
-                ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginPlayingState();
-                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }
