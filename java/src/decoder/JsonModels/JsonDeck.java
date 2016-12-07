@@ -1,9 +1,13 @@
 package decoder.JsonModels;
 
+import java.util.ArrayList;
+
 /**
  * Created by bvanc on 9/30/2016.
  */
 public class JsonDeck {
+
+//    private ArrayList<Integer> deckList;
     public int getYearOfPlenty() {
         return yearOfPlenty;
     }
@@ -59,4 +63,35 @@ public class JsonDeck {
     private int soldier;
     private int roadBuilding;
     private int monument;
+
+    public int leftInDeck(){
+        int amount = 0;
+        amount += yearOfPlenty;
+        amount += monopoly;
+        amount += roadBuilding;
+        amount += monument;
+        amount += soldier;
+
+        return amount;
+    }
+
+    public void decrementYearOfPlenty(){
+        yearOfPlenty--;
+    }
+
+    public void decrementMonopoly(){
+        monopoly--;
+    }
+
+    public void decrementSoldier(){
+        soldier--;
+    }
+
+    public void decrementRoadBuilding(){
+        roadBuilding--;
+    }
+
+    public void decrementMonument(){
+        monument--;
+    }
 }

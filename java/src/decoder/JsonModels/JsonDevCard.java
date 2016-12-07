@@ -58,4 +58,44 @@ public class JsonDevCard {
         this.roadBuilding = roadBuilding;
         this.monument = monument;
     }
+
+    public void incrementYearOfPlenty(){
+        yearOfPlenty++;
+    }
+
+    public void incrementMonopoly(){
+        monopoly++;
+    }
+
+    public void incrementSoldier(){
+        soldier++;
+    }
+
+    public void incrementRoadBuilding(){
+        roadBuilding++;
+    }
+
+    public void incrementMonument(){
+        monument++;
+    }
+
+    public void decrementYearOfPlenty(){
+        yearOfPlenty--;
+    }
+
+    public void decrementMonopoly(){
+        monopoly--;
+    }
+
+    public void decrementSoldier(){
+        soldier--;
+    }
+
+    public void decrementRoadBuilding(){
+        roadBuilding--;
+    }
+
+    public void decrementMonument(){
+        monument--;
+    }
 }
