@@ -38,13 +38,13 @@ public class MonumentCommand extends Command {
                 ServerModel.getInstance().getGame(super.gameId).getPlayers()[monumentObject.getPlayerIndex()].setVictoryPoints(10);
             }
 
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){
                 return new JsonPrimitive("Invalid");
             }
             else {
-                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }

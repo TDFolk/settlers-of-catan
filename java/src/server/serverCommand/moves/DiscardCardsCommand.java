@@ -74,17 +74,17 @@ public class DiscardCardsCommand extends Command {
 
             }
 
-            String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
+            ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginRobbingState();
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
 
+            String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){
                 return new JsonPrimitive("Invalid");
             }
             else {
                 //start the robbing state after the discarding state
-                ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginRobbingState();
 
-                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }

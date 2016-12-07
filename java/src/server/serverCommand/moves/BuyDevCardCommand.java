@@ -41,6 +41,7 @@ public class BuyDevCardCommand extends Command {
 
             ServerModel.getInstance().getGame(super.gameId).getPlayers()[buyDevCardObject.getPlayerIndex()].decrementDevCard();
 
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){
@@ -49,7 +50,6 @@ public class BuyDevCardCommand extends Command {
             else {
                 // Returns the client model JSON (identical to /game/model)
 
-                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }

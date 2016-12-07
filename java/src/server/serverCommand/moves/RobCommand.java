@@ -55,7 +55,7 @@ public class RobCommand extends Command {
 
 
 
-            
+
             ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginPlayingState();
             ServerModel.getInstance().getGame(super.gameId).incrementVersion();
 

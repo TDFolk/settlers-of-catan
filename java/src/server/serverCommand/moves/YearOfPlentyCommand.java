@@ -48,6 +48,7 @@ public class YearOfPlentyCommand extends Command {
             incrementCards(resource1);
             incrementCards(resource2);
 
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){
@@ -55,7 +56,6 @@ public class YearOfPlentyCommand extends Command {
             }
             else {
                 // Returns the client model JSON (identical to /game/model)
-                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }

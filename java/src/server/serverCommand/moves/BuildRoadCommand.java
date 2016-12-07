@@ -67,6 +67,12 @@ public class BuildRoadCommand extends Command {
                     new JsonPiece(null, 0, edgeDirection.toString(), new JsonLocation(x, y, edgeDirection.toString())),
                     buildRoadObject.getPlayerIndex()));
 
+            calculateMostRoads();
+
+            String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
+            String historyMessage = userName + " has built a road";
+            ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){
@@ -74,14 +80,8 @@ public class BuildRoadCommand extends Command {
             }
             else {
 
-                calculateMostRoads();
-
-                String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
-                String historyMessage = userName + " has built a road";
-                ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
 
                 // Returns the client model JSON (identical to /game/model)
-                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }

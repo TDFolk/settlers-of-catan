@@ -57,22 +57,25 @@ public class BuildCityCommand extends Command {
             //decrement the resources required to buy a city
             ServerModel.getInstance().getGame(super.gameId).getPlayers()[buildCityObject.getPlayerIndex()].buyCity();
 
-            String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             //TODO: INCREMENT POINTS HERE; ERASE SETTLEMENT FROM SETTLEMENTS ARRAY???
             JsonPiece city = new JsonPiece(null, 0, vertexDirection.toString(), new JsonLocation(x, y, vertexDirection.toString()));
             game.getMap().citySettlementSwap(city, buildCityObject.getPlayerIndex());
 
+
+
+            String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
+            String historyMessage = userName + " has built a city";
+            ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
+            String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
+
             if(response == null){
                 return new JsonPrimitive("Invalid");
             }
             else {
-                String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
-                String historyMessage = userName + " has built a city";
-                ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
 
                 // Returns the client model JSON (identical to /game/model)
-                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }

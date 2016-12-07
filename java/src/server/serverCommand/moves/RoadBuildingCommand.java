@@ -80,19 +80,19 @@ public class RoadBuildingCommand extends Command {
                     roadBuildingObject.getPlayerIndex()));
 
 
+            String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
+            String historyMessage = userName + " has built a road";
+            ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
+            ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){
                 return new JsonPrimitive("Invalid");
             }
             else {
-                String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
-                String historyMessage = userName + " has built a road";
-                ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
-                ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);
 
 
-                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }

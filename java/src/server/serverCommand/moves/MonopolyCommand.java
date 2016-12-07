@@ -36,6 +36,7 @@ public class MonopolyCommand extends Command {
 //            String response = ServerFacade.getInstance().monopoly(monopolyObject.getResource(), monopolyObject.getPlayerIndex());
             stealAllResources(monopolyObject.getResource());
 
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
             if(response == null){
@@ -43,7 +44,6 @@ public class MonopolyCommand extends Command {
             }
             else {
                 // Returns the client model JSON (identical to /game/model)
-                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
                 return new JsonPrimitive(response);
             }
         }
