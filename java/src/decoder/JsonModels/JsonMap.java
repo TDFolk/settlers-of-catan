@@ -56,7 +56,7 @@ public class JsonMap {
 
         this.settlements = newSettlements;
 
-        addToArray(this.cities, city, playerIndex);
+        this.cities = addToArray(this.cities, city, playerIndex);
     }
 
     public JsonMap()
