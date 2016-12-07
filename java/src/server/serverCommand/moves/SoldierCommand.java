@@ -59,7 +59,8 @@ public class SoldierCommand extends Command {
                 return new JsonPrimitive("Invalid");
             }
             else {
-                // Returns the client model JSON (identical to /game/model)
+                //SOLDIER ALGORITHM HERE
+                ServerModel.getInstance().getGame(super.gameId).getPlayers()[soldierObject.getPlayerIndex()].incrementPlayedSoldiers();
 
                 //TODO: do we need to change states here?
 //                ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginPlayingState();

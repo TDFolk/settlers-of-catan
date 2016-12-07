@@ -24,6 +24,8 @@ public class JsonPlayer {
     private String name;
     private String color;
 
+    private int playedSoldiers;
+
     public JsonPlayer(String color, String name, int id, int index){
         this.resources = new JsonResource(0, 0, 0, 0, 0);
         this.oldDevCards = new JsonDevCard(0, 0, 0, 0, 0);
@@ -40,6 +42,7 @@ public class JsonPlayer {
         this.playerIndex = index;
         this.name = name;
         this.color = color;
+        playedSoldiers = 0;
 
 
     }
@@ -239,5 +242,13 @@ public class JsonPlayer {
             robList.add("wood");
         }
         return robList;
+    }
+
+    public int getPlayedSoldiers(){
+        return playedSoldiers;
+    }
+
+    public void incrementPlayedSoldiers(){
+        playedSoldiers++;
     }
 }
