@@ -74,6 +74,8 @@ public class BuildRoadCommand extends Command {
             }
             else {
 
+                calculateMostRoads();
+
                 String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
                 String historyMessage = userName + " has built a road";
                 ServerModel.getInstance().getGame(super.gameId).addLog(historyMessage, userName);

@@ -7,6 +7,7 @@ import com.google.gson.JsonPrimitive;
 import com.sun.net.httpserver.HttpExchange;
 
 import command.player.SoldierObject;
+import decoder.JsonModels.JsonPlayer;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
@@ -62,6 +63,8 @@ public class SoldierCommand extends Command {
                 //SOLDIER ALGORITHM HERE
                 ServerModel.getInstance().getGame(super.gameId).getPlayers()[soldierObject.getPlayerIndex()].incrementPlayedSoldiers();
 
+                calculateLargestArmy();
+
                 //TODO: do we need to change states here?
 //                ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginPlayingState();
                 ServerModel.getInstance().getGame(super.gameId).incrementVersion();
@@ -70,6 +73,31 @@ public class SoldierCommand extends Command {
         }
         else {
             return new JsonPrimitive("catan.game and/or catan.user cookies are missing");
+        }
+    }
+
+    private void calculateLargestArmy()
+    {
+
+        JsonPlayer[] players = ServerModel.getInstance().getGame(super.gameId).getPlayers();
+
+        int winner = -1;
+
+        int highestSoldierCardPlays = 0;
+
+        for(int i = 0; i < players.length; i++)
+        {
+            int curPlayerRoads = players[i].getPlayedSoldiers();
+            if( curPlayerRoads > highestSoldierCardPlays)
+            {
+                highestSoldierCardPlays = curPlayerRoads;
+                winner = i;
+            }
+        }
+
+        if(highestSoldierCardPlays >= 3)
+        {
+            ServerModel.getInstance().getGame(super.gameId).newLargestArmy(winner);
         }
     }
 
