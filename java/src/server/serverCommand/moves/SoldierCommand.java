@@ -64,7 +64,7 @@ public class SoldierCommand extends Command {
                 return new JsonPrimitive("Invalid");
             }
             else {
-                
+
                 //TODO: do we need to change states here?
 //                ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginPlayingState();
                 ServerModel.getInstance().getGame(super.gameId).incrementVersion();

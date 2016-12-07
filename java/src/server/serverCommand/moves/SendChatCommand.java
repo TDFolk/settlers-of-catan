@@ -36,6 +36,9 @@ public class SendChatCommand extends Command {
         String userName = ServerModel.getInstance().getUsernameFromID(super.playerId);
 
         if(super.hasGameCookie && super.hasUserCookie){
+
+            ServerModel.getInstance().getGame(super.gameId).incrementVersion();
+
             String response = ServerFacade.getInstance().sendChat(userName, super.gameId,
                                                     sendChatObject.getContent());
 
@@ -44,7 +47,7 @@ public class SendChatCommand extends Command {
             }
             else {
                 // Returns the client model JSON (identical to /game/model)
-                ServerModel.getInstance().getGame(super.gameId).incrementVersion();
+
 
                 return new JsonPrimitive(response);
             }
