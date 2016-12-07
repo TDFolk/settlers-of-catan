@@ -53,6 +53,10 @@ public class SoldierCommand extends Command {
             //steal the resource
             stealFromPlayer(soldierObject.getPlayerIndex(), soldierObject.getVictimIndex());
 
+            //SOLDIER ALGORITHM HERE
+            ServerModel.getInstance().getGame(super.gameId).getPlayers()[soldierObject.getPlayerIndex()].incrementPlayedSoldiers();
+            calculateLargestArmy();
+
             //return the model
             String response = ServerModel.getInstance().getGame(super.gameId).getJsonFromModel();
 
@@ -60,11 +64,7 @@ public class SoldierCommand extends Command {
                 return new JsonPrimitive("Invalid");
             }
             else {
-                //SOLDIER ALGORITHM HERE
-                ServerModel.getInstance().getGame(super.gameId).getPlayers()[soldierObject.getPlayerIndex()].incrementPlayedSoldiers();
-
-                calculateLargestArmy();
-
+                
                 //TODO: do we need to change states here?
 //                ServerModel.getInstance().getGame(super.gameId).getTurnTracker().beginPlayingState();
                 ServerModel.getInstance().getGame(super.gameId).incrementVersion();
