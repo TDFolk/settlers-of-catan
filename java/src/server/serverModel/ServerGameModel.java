@@ -288,16 +288,16 @@ public class ServerGameModel {
                 currentResources.setBrick(currentResources.getBrick() - ratio);
                 break;
             case "ore":
-                currentResources.setBrick(currentResources.getOre() - ratio);
+                currentResources.setOre(currentResources.getOre() - ratio);
                 break;
             case "sheep":
-                currentResources.setBrick(currentResources.getSheep() - ratio);
+                currentResources.setSheep(currentResources.getSheep() - ratio);
                 break;
             case "wheat":
-                currentResources.setBrick(currentResources.getWheat() - ratio);
+                currentResources.setWheat(currentResources.getWheat() - ratio);
                 break;
             case "wood":
-                currentResources.setBrick(currentResources.getWood() - ratio);
+                currentResources.setWood(currentResources.getWood() - ratio);
                 break;
         }
 
@@ -307,16 +307,16 @@ public class ServerGameModel {
                 currentResources.setBrick(currentResources.getBrick() + 1);
                 break;
             case "ore":
-                currentResources.setBrick(currentResources.getOre() + 1);
+                currentResources.setOre(currentResources.getOre() + 1);
                 break;
             case "sheep":
-                currentResources.setBrick(currentResources.getSheep() + 1);
+                currentResources.setSheep(currentResources.getSheep() + 1);
                 break;
             case "wheat":
-                currentResources.setBrick(currentResources.getWheat() + 1);
+                currentResources.setWheat(currentResources.getWheat() + 1);
                 break;
             case "wood":
-                currentResources.setBrick(currentResources.getWood() + 1);
+                currentResources.setWood(currentResources.getWood() + 1);
                 break;
         }
 
