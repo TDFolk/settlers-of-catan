@@ -7,6 +7,7 @@ import command.player.FinishTurnObject;
 import server.ServerFacade;
 import server.serverCommand.Command;
 import server.serverModel.ServerGameModel;
+import server.serverModel.ServerModel;
 
 /**
  * Created by jihoon on 11/7/2016.
@@ -29,6 +30,13 @@ public class FinishTurnCommand extends Command {
     @Override
     public JsonElement execute() {
         if(super.hasGameCookie && super.hasUserCookie){
+
+            for(int i = 0; i < 4; i++){
+                if(ServerModel.getInstance().getGame(super.gameId).getPlayers()[i].getVictoryPoints() >= 10){
+                    ServerModel.getInstance().getGame(super.gameId).setWinner(i);
+                }
+            }
+
             String response = ServerFacade.getInstance().finishTurn(super.gameId);
 
             if(response == null){
