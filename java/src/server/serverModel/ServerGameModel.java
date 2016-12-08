@@ -321,7 +321,7 @@ public class ServerGameModel {
         }
 
 
-
+        incrementVersion();
         return getJsonFromModel();
     }
 
