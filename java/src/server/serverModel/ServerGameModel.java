@@ -179,7 +179,7 @@ public class ServerGameModel {
             players[tradeOffer.getSender()].setResources(senderResult);
 
             //receiver
-            JsonResource receiverResult = new JsonResource(players[tradeOffer.getSender()].getResources(), tradeOffer.getOffer(), false);
+            JsonResource receiverResult = new JsonResource(players[tradeOffer.getReceiver()].getResources(), tradeOffer.getOffer(), false);
             players[tradeOffer.getReceiver()].setResources(receiverResult);
 
             tradeOffer = null;
