@@ -81,7 +81,7 @@ public class CommandFactory {
                 return new OfferTradeCommand(exchange);
             case "acceptTrade":
                 return new AcceptTradeCommand(exchange);
-            case "martimeTrade":
+            case "maritimeTrade":
                 return new MaritimeTradeCommand(exchange);
             case "discardCards":
                 return new DiscardCardsCommand(exchange);
