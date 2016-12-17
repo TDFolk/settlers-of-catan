@@ -174,11 +174,12 @@ public class ServerGameModel {
         {
             //exchange the resources from each player
 
-            //sender
+            //trade sender
             JsonResource senderResult = new JsonResource(players[tradeOffer.getSender()].getResources(), tradeOffer.getOffer(), true);
             players[tradeOffer.getSender()].setResources(senderResult);
 
-            //receiver
+
+            //trade receiver
             JsonResource receiverResult = new JsonResource(players[tradeOffer.getReceiver()].getResources(), tradeOffer.getOffer(), false);
             players[tradeOffer.getReceiver()].setResources(receiverResult);
 
