@@ -406,61 +406,42 @@ public class ServerGameModel {
                 //check each vertex around this hex and reward those players the resource of the hex
                 for(JsonPiece piece : map.getSettlements())
                 {
-                    if (piece.getHexLocation().getX() == hex.getLocation().getX() &&
-                            piece.getHexLocation().getY() == hex.getLocation().getY()) {
-                        addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), false);
-                    }
-                    else if (piece.getHexLocation().getNeighborLoc(EdgeDirection.North).getX() == hex.getLocation().getX() &&
-                            piece.getHexLocation().getNeighborLoc(EdgeDirection.North).getY() == hex.getLocation().getY()) {
-                        addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), false);
-                    }
-                    else {
-                        switch(piece.getVertexDirection()) {
-                            case NorthEast:
-                                if (piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthEast).getX() == hex.getLocation().getX() &&
-                                        piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthEast).getY() == hex.getLocation().getY()) {
-                                    addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), false);
-                                }
-                                break;
-                            case NorthWest:
-                                if (piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthWest).getX() == hex.getLocation().getX() &&
-                                        piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthWest).getY() == hex.getLocation().getY()) {
-                                    addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), false);
-                                }
-                                break;
-                        }
-                    }
+                    determineResource(piece, hex, false);
                 }
 
                 for(JsonPiece piece : map.getCities())
                 {
-                    if (piece.getHexLocation().getX() == hex.getLocation().getX() &&
-                            piece.getHexLocation().getY() == hex.getLocation().getY()) {
-                        addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), true);
-                    }
-                    else if (piece.getHexLocation().getNeighborLoc(EdgeDirection.North).getX() == hex.getLocation().getX() &&
-                            piece.getHexLocation().getNeighborLoc(EdgeDirection.North).getY() == hex.getLocation().getY()) {
-                        addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), true);
-                    }
-                    else {
-                        switch(piece.getVertexDirection()) {
-                            case NorthEast:
-                                if (piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthEast).getX() == hex.getLocation().getX() &&
-                                        piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthEast).getY() == hex.getLocation().getY()) {
-                                    addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), true);
-                                }
-                                break;
-                            case NorthWest:
-                                if (piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthWest).getX() == hex.getLocation().getX() &&
-                                        piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthWest).getY() == hex.getLocation().getY()) {
-                                    addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), true);
-                                }
-                                break;
-                        }
-                    }
+                   determineResource(piece, hex, true);
                 }
             }
 
+        }
+    }
+
+    public void determineResource(JsonPiece piece, JsonHex hex, boolean isCity) {
+        if (piece.getHexLocation().getX() == hex.getLocation().getX() &&
+                piece.getHexLocation().getY() == hex.getLocation().getY()) {
+            addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), isCity);
+        }
+        else if (piece.getHexLocation().getNeighborLoc(EdgeDirection.North).getX() == hex.getLocation().getX() &&
+                piece.getHexLocation().getNeighborLoc(EdgeDirection.North).getY() == hex.getLocation().getY()) {
+            addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), isCity);
+        }
+        else {
+            switch(piece.getVertexDirection()) {
+                case NorthEast:
+                    if (piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthEast).getX() == hex.getLocation().getX() &&
+                            piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthEast).getY() == hex.getLocation().getY()) {
+                        addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), isCity);
+                    }
+                    break;
+                case NorthWest:
+                    if (piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthWest).getX() == hex.getLocation().getX() &&
+                            piece.getHexLocation().getNeighborLoc(EdgeDirection.NorthWest).getY() == hex.getLocation().getY()) {
+                        addResourceFromHexType(getMap().stringToHexType(hex.getResource()), piece.getOwner(), isCity);
+                    }
+                    break;
+            }
         }
     }
 
